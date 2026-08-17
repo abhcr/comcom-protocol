@@ -1,0 +1,82 @@
+name: Publish v0.2 releases
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Publish immutable release gates
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for release in \
+            v0.2.0-alpha.1 v0.2.0-alpha.2 v0.2.0-alpha.3 \
+            v0.2.0-alpha.4 v0.2.0-alpha.5 v0.2.0-alpha.6 \
+            v0.2.0-beta.1 v0.2.0-rc.1 v0.2.0
+          do
+            if gh release view "$release" >/dev/null 2>&1; then
+              echo "$release already exists"
+              continue
+            fi
+
+            case "$release" in
+              v0.2.0-alpha.1)
+                title="Comcom v0.2.0-alpha.1 — Hardened kernel"
+                gate="Hardened kernel: RFC 9727 discovery, manifest, security, envelope, operation, release, raw validation, safe URL, and idempotency rules."
+                ;;
+              v0.2.0-alpha.2)
+                title="Comcom v0.2.0-alpha.2 — Commerce profiles"
+                gate="Commerce batch: 39 catalog, pricing, order, and procurement capabilities."
+                ;;
+              v0.2.0-alpha.3)
+                title="Comcom v0.2.0-alpha.3 — Transaction profiles"
+                gate="Transactions batch: 48 booking, scheduling, service, subscription, and support capabilities."
+                ;;
+              v0.2.0-alpha.4)
+                title="Comcom v0.2.0-alpha.4 — Operations profiles"
+                gate="Operations batch: 42 logistics, inventory, production, digital, IoT, and communication capabilities."
+                ;;
+              v0.2.0-alpha.5)
+                title="Comcom v0.2.0-alpha.5 — Identity profiles"
+                gate="Identity batch: 38 identity, privacy, trust, contract, credential, and workforce capabilities."
+                ;;
+              v0.2.0-alpha.6)
+                title="Comcom v0.2.0-alpha.6 — Regulated and public profiles"
+                gate="Regulated/public batch: 34 finance, government, property, insurance, utility, education, healthcare, and research capabilities."
+                ;;
+              v0.2.0-beta.1)
+                title="Comcom v0.2.0-beta.1 — Complete catalog"
+                gate="Complete 201-capability catalog, documentation, fixtures, bundles, and independent conformance corpus."
+                ;;
+              v0.2.0-rc.1)
+                title="Comcom v0.2.0-rc.1 — Conformance candidate"
+                gate="Node/Python agreement, interoperability journeys, security tests, release digests, and rendered accessibility gates."
+                ;;
+              v0.2.0)
+                title="Comcom v0.2.0 — Experimental final"
+                gate="Experimental final release. No production-readiness or global-interoperability claim."
+                ;;
+            esac
+
+            npm run package:release -- "$release"
+            mapfile -d '' assets < <(find "dist/$release" -type f -print0 | sort -z)
+            notes=$(printf 'Experimental release.\n\n%s\n\nCapability maturity remains independent of release maturity. Published capabilities are not normative until their evidence gates pass.' "$gate")
+
+            if [[ "$release" == "v0.2.0" ]]; then
+              gh release create "$release" "${assets[@]}" --verify-tag --latest --title "$title" --notes "$notes"
+            else
+              gh release create "$release" "${assets[@]}" --verify-tag --prerelease --title "$title" --notes "$notes"
+            fi
+          done
