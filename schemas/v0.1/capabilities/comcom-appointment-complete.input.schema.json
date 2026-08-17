@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-appointment-complete.input.schema.json",
+  "title": "Appointment Complete input",
+  "description": "Complete appointment using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.appointment.complete"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resourceId"
+      ],
+      "properties": {
+        "resourceId": {
+          "type": "string",
+          "description": "Appointment URI.",
+          "format": "uri-reference"
+        },
+        "decisionAt": {
+          "type": "string",
+          "description": "Decision time.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

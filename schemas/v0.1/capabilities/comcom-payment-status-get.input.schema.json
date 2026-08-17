@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-payment-status-get.input.schema.json",
+  "title": "Payment Status Get input",
+  "description": "Retrieve payment status using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.payment.status.get"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resourceId"
+      ],
+      "properties": {
+        "resourceId": {
+          "type": "string",
+          "description": "PaymentStatus URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation time.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/manifest.schema.json",
+  "title": "Comcom capability manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocolVersions",
+    "entity",
+    "roles",
+    "baseUrl",
+    "capabilities"
+  ],
+  "properties": {
+    "protocolVersions": {
+      "type": "array",
+      "description": "Supported protocol versions.",
+      "items": {
+        "type": "string",
+        "description": "Major.minor version.",
+        "pattern": "^[0-9]+\\.[0-9]+$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Entity URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "enum": [
+            "person",
+            "organization",
+            "government",
+            "nonprofit",
+            "system",
+            "device"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name."
+        }
+      }
+    },
+    "roles": {
+      "type": "array",
+      "description": "Conformance roles.",
+      "items": {
+        "enum": [
+          "responder",
+          "initiator",
+          "inboxReceiver",
+          "asyncResponder"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "baseUrl": {
+      "type": "string",
+      "description": "Default API base URL.",
+      "format": "uri"
+    },
+    "securitySchemes": {
+      "type": "object",
+      "description": "OpenAPI-compatible security scheme declarations.",
+      "additionalProperties": true
+    },
+    "capabilities": {
+      "type": "array",
+      "description": "Supported capability subset.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "version",
+          "direction",
+          "inputSchema",
+          "outputSchema",
+          "forms"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Capability ID."
+          },
+          "version": {
+            "type": "string",
+            "description": "Capability version."
+          },
+          "direction": {
+            "enum": [
+              "send",
+              "receive",
+              "both"
+            ]
+          },
+          "inputSchema": {
+            "type": "string",
+            "description": "Input schema URL.",
+            "format": "uri"
+          },
+          "outputSchema": {
+            "type": "string",
+            "description": "Output schema URL.",
+            "format": "uri"
+          },
+          "forms": {
+            "type": "array",
+            "description": "Callable forms.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "href",
+                "method",
+                "contentType"
+              ],
+              "properties": {
+                "href": {
+                  "type": "string",
+                  "description": "Endpoint URL.",
+                  "format": "uri"
+                },
+                "method": {
+                  "enum": [
+                    "GET",
+                    "POST",
+                    "PUT",
+                    "PATCH",
+                    "DELETE"
+                  ]
+                },
+                "contentType": {
+                  "const": "application/json"
+                },
+                "security": {
+                  "type": "array",
+                  "description": "Security scheme names.",
+                  "items": {
+                    "type": "string",
+                    "description": "Scheme name."
+                  },
+                  "uniqueItems": true
+                },
+                "synchronous": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "timeoutSeconds": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 300
+                }
+              }
+            },
+            "minItems": 1
+          }
+        }
+      },
+      "uniqueItems": true
+    },
+    "inbox": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "href",
+        "acceptedCapabilities"
+      ],
+      "properties": {
+        "href": {
+          "type": "string",
+          "description": "Inbox URL.",
+          "format": "uri"
+        },
+        "acceptedCapabilities": {
+          "type": "array",
+          "description": "Accepted event capability IDs.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID."
+          },
+          "uniqueItems": true
+        },
+        "maxBytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "security": {
+          "type": "array",
+          "description": "Security scheme names.",
+          "items": {
+            "type": "string",
+            "description": "Scheme name."
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9-]+(\\.[a-z0-9-]+)+$"
+      },
+      "additionalProperties": true
+    }
+  }
+}

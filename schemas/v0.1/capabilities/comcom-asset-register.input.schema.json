@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-asset-register.input.schema.json",
+  "title": "Asset Register input",
+  "description": "Register asset using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.asset.register"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subject"
+      ],
+      "properties": {
+        "subject": {
+          "type": "object",
+          "description": "The Asset being acted on.",
+          "additionalProperties": false,
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Existing resource URI.",
+              "format": "uri-reference"
+            },
+            "type": {
+              "const": "Asset"
+            },
+            "attributes": {
+              "type": "object",
+              "description": "Typed domain attributes.",
+              "additionalProperties": true
+            }
+          }
+        },
+        "requestedAt": {
+          "type": "string",
+          "description": "Requested effective time.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

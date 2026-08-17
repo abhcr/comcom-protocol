@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-support-case-create.input.schema.json",
+  "title": "Support Case Create input",
+  "description": "Create support case using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.support.case.create"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subject"
+      ],
+      "properties": {
+        "subject": {
+          "type": "object",
+          "description": "The SupportCase being acted on.",
+          "additionalProperties": false,
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Existing resource URI.",
+              "format": "uri-reference"
+            },
+            "type": {
+              "const": "SupportCase"
+            },
+            "attributes": {
+              "type": "object",
+              "description": "Typed domain attributes.",
+              "additionalProperties": true
+            }
+          }
+        },
+        "requestedAt": {
+          "type": "string",
+          "description": "Requested effective time.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

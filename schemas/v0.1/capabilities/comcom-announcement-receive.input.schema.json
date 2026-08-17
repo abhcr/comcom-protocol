@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-announcement-receive.input.schema.json",
+  "title": "Announcement Receive input",
+  "description": "Receive announcement using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.announcement.receive"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "topic",
+        "subject",
+        "content"
+      ],
+      "properties": {
+        "topic": {
+          "type": "string",
+          "description": "Receiver-declared topic identifier."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Short announcement subject.",
+          "maxLength": 200
+        },
+        "content": {
+          "type": "string",
+          "description": "Announcement content.",
+          "maxLength": 10000
+        },
+        "audience": {
+          "type": "array",
+          "description": "Intended audience identifiers.",
+          "items": {
+            "type": "string",
+            "description": "Audience identifier."
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

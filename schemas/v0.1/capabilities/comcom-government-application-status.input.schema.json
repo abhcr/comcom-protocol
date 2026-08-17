@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-government-application-status.input.schema.json",
+  "title": "Government Application Status input",
+  "description": "Retrieve status for government application using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.government.application.status"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resourceId"
+      ],
+      "properties": {
+        "resourceId": {
+          "type": "string",
+          "description": "GovernmentApplication URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation time.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

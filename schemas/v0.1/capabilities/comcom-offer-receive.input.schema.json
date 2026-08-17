@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-offer-receive.input.schema.json",
+  "title": "Offer Receive input",
+  "description": "Receive offer using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.offer.receive"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "offerId",
+        "validUntil",
+        "details"
+      ],
+      "properties": {
+        "offerId": {
+          "type": "string",
+          "description": "Offer URI.",
+          "format": "uri-reference"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Offer expiry.",
+          "format": "date-time"
+        },
+        "details": {
+          "type": "object",
+          "description": "Structured offer details.",
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}

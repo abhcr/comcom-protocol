@@ -1,0 +1,2165 @@
+[
+  {
+    "capability": "comcom.account.statement.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-account-statement-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.account.statement.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.alert.receive",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-alert-receive.input.schema.json",
+    "instance": {
+      "capability": "comcom.alert.receive",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.announcement.publish",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-announcement-publish.input.schema.json",
+    "instance": {
+      "capability": "comcom.announcement.publish",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.announcement.receive",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-announcement-receive.input.schema.json",
+    "instance": {
+      "capability": "comcom.announcement.receive",
+      "parameters": {
+        "topic": "topic-value",
+        "subject": "subject-value",
+        "content": "content-value"
+      }
+    }
+  },
+  {
+    "capability": "comcom.appointment.cancel",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-appointment-cancel.input.schema.json",
+    "instance": {
+      "capability": "comcom.appointment.cancel",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.appointment.checkin",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-appointment-checkin.input.schema.json",
+    "instance": {
+      "capability": "comcom.appointment.checkin",
+      "parameters": {
+        "subject": {
+          "type": "Appointment"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.appointment.complete",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-appointment-complete.input.schema.json",
+    "instance": {
+      "capability": "comcom.appointment.complete",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.appointment.create",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-appointment-create.input.schema.json",
+    "instance": {
+      "capability": "comcom.appointment.create",
+      "parameters": {
+        "serviceId": "https://example.com/serviceId",
+        "customerId": "https://example.com/customerId",
+        "start": "2026-08-18T10:00:00Z",
+        "end": "2026-08-18T10:00:00Z"
+      }
+    }
+  },
+  {
+    "capability": "comcom.appointment.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-appointment-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.appointment.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.appointment.reschedule",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-appointment-reschedule.input.schema.json",
+    "instance": {
+      "capability": "comcom.appointment.reschedule",
+      "parameters": {
+        "subject": {
+          "type": "Appointment"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.assessment.submit",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-assessment-submit.input.schema.json",
+    "instance": {
+      "capability": "comcom.assessment.submit",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.asset.assign",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-asset-assign.input.schema.json",
+    "instance": {
+      "capability": "comcom.asset.assign",
+      "parameters": {
+        "subject": {
+          "type": "Asset"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.asset.maintenance.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-asset-maintenance-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.asset.maintenance.request",
+      "parameters": {
+        "subject": {
+          "type": "AssetMaintenance"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.asset.register",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-asset-register.input.schema.json",
+    "instance": {
+      "capability": "comcom.asset.register",
+      "parameters": {
+        "subject": {
+          "type": "Asset"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.automation.rule.trigger",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-automation-rule-trigger.input.schema.json",
+    "instance": {
+      "capability": "comcom.automation.rule.trigger",
+      "parameters": {
+        "subject": {
+          "type": "AutomationRule"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.availability.calendar.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-availability-calendar-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.availability.calendar.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.availability.check",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-availability-check.input.schema.json",
+    "instance": {
+      "capability": "comcom.availability.check",
+      "parameters": {
+        "serviceId": "https://example.com/serviceId",
+        "start": "2026-08-18T10:00:00Z",
+        "end": "2026-08-18T10:00:00Z"
+      }
+    }
+  },
+  {
+    "capability": "comcom.benefit.apply",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-benefit-apply.input.schema.json",
+    "instance": {
+      "capability": "comcom.benefit.apply",
+      "parameters": {
+        "subject": {
+          "type": "Benefit"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.booking.cancel",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-booking-cancel.input.schema.json",
+    "instance": {
+      "capability": "comcom.booking.cancel",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.booking.create",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-booking-create.input.schema.json",
+    "instance": {
+      "capability": "comcom.booking.create",
+      "parameters": {
+        "offeringId": "https://example.com/offeringId",
+        "customerId": "https://example.com/customerId",
+        "start": "2026-08-18T10:00:00Z",
+        "end": "2026-08-18T10:00:00Z"
+      }
+    }
+  },
+  {
+    "capability": "comcom.booking.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-booking-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.booking.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.booking.modify",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-booking-modify.input.schema.json",
+    "instance": {
+      "capability": "comcom.booking.modify",
+      "parameters": {
+        "subject": {
+          "type": "Booking"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.candidate.status.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-candidate-status-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.candidate.status.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.catalog.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-catalog-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.catalog.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.catalog.list",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-catalog-list.input.schema.json",
+    "instance": {
+      "capability": "comcom.catalog.list",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.catalog.search",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-catalog-search.input.schema.json",
+    "instance": {
+      "capability": "comcom.catalog.search",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.catalog.subscribe",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-catalog-subscribe.input.schema.json",
+    "instance": {
+      "capability": "comcom.catalog.subscribe",
+      "parameters": {
+        "subject": {
+          "type": "Catalog"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.certificate.issue",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-certificate-issue.input.schema.json",
+    "instance": {
+      "capability": "comcom.certificate.issue",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.certificate.verify",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-certificate-verify.input.schema.json",
+    "instance": {
+      "capability": "comcom.certificate.verify",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.complaint.submit",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-complaint-submit.input.schema.json",
+    "instance": {
+      "capability": "comcom.complaint.submit",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.compliance.report.submit",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-compliance-report-submit.input.schema.json",
+    "instance": {
+      "capability": "comcom.compliance.report.submit",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.consent.grant",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-consent-grant.input.schema.json",
+    "instance": {
+      "capability": "comcom.consent.grant",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.consent.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-consent-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.consent.request",
+      "parameters": {
+        "subject": {
+          "type": "Consent"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.consent.revoke",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-consent-revoke.input.schema.json",
+    "instance": {
+      "capability": "comcom.consent.revoke",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.contact.preferences.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-contact-preferences-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.contact.preferences.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.content.license.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-content-license-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.content.license.request",
+      "parameters": {
+        "subject": {
+          "type": "ContentLicense"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.content.search",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-content-search.input.schema.json",
+    "instance": {
+      "capability": "comcom.content.search",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.contract.accept",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-contract-accept.input.schema.json",
+    "instance": {
+      "capability": "comcom.contract.accept",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.contract.propose",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-contract-propose.input.schema.json",
+    "instance": {
+      "capability": "comcom.contract.propose",
+      "parameters": {
+        "subject": {
+          "type": "Contract"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.contract.terminate",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-contract-terminate.input.schema.json",
+    "instance": {
+      "capability": "comcom.contract.terminate",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.credential.issue",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-credential-issue.input.schema.json",
+    "instance": {
+      "capability": "comcom.credential.issue",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.credential.present",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-credential-present.input.schema.json",
+    "instance": {
+      "capability": "comcom.credential.present",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.credential.verify",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-credential-verify.input.schema.json",
+    "instance": {
+      "capability": "comcom.credential.verify",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.credit.note.issue",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-credit-note-issue.input.schema.json",
+    "instance": {
+      "capability": "comcom.credit.note.issue",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.data.access.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-data-access-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.data.access.request",
+      "parameters": {
+        "subject": {
+          "type": "DataAccess"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.data.correction.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-data-correction-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.data.correction.request",
+      "parameters": {
+        "subject": {
+          "type": "DataCorrection"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.data.deletion.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-data-deletion-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.data.deletion.request",
+      "parameters": {
+        "subject": {
+          "type": "DataDeletion"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.data.export.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-data-export-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.data.export.request",
+      "parameters": {
+        "subject": {
+          "type": "DataExport"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.delivery.confirm",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-delivery-confirm.input.schema.json",
+    "instance": {
+      "capability": "comcom.delivery.confirm",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.delivery.estimate.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-delivery-estimate-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.delivery.estimate.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.device.command.send",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-device-command-send.input.schema.json",
+    "instance": {
+      "capability": "comcom.device.command.send",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.device.register",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-device-register.input.schema.json",
+    "instance": {
+      "capability": "comcom.device.register",
+      "parameters": {
+        "subject": {
+          "type": "Device"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.device.status.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-device-status-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.device.status.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.digital.resource.provision",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-digital-resource-provision.input.schema.json",
+    "instance": {
+      "capability": "comcom.digital.resource.provision",
+      "parameters": {
+        "subject": {
+          "type": "DigitalResource"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.directory.search",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-directory-search.input.schema.json",
+    "instance": {
+      "capability": "comcom.directory.search",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.discount.eligibility.check",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-discount-eligibility-check.input.schema.json",
+    "instance": {
+      "capability": "comcom.discount.eligibility.check",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.dispatch.notify",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-dispatch-notify.input.schema.json",
+    "instance": {
+      "capability": "comcom.dispatch.notify",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.dispute.resolve",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-dispute-resolve.input.schema.json",
+    "instance": {
+      "capability": "comcom.dispute.resolve",
+      "parameters": {
+        "subject": {
+          "type": "DisputeResolve"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.education.course.search",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-education-course-search.input.schema.json",
+    "instance": {
+      "capability": "comcom.education.course.search",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.education.enroll",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-education-enroll.input.schema.json",
+    "instance": {
+      "capability": "comcom.education.enroll",
+      "parameters": {
+        "subject": {
+          "type": "Education"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.education.progress.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-education-progress-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.education.progress.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.employee.offboard",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-employee-offboard.input.schema.json",
+    "instance": {
+      "capability": "comcom.employee.offboard",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.employee.onboard",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-employee-onboard.input.schema.json",
+    "instance": {
+      "capability": "comcom.employee.onboard",
+      "parameters": {
+        "subject": {
+          "type": "Employee"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.employment.offer",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-employment-offer.input.schema.json",
+    "instance": {
+      "capability": "comcom.employment.offer",
+      "parameters": {
+        "subject": {
+          "type": "EmploymentOffer"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.entity.profile.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-entity-profile-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.entity.profile.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.entity.profile.publish",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-entity-profile-publish.input.schema.json",
+    "instance": {
+      "capability": "comcom.entity.profile.publish",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.event.register",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-event-register.input.schema.json",
+    "instance": {
+      "capability": "comcom.event.register",
+      "parameters": {
+        "subject": {
+          "type": "Event"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.event.search",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-event-search.input.schema.json",
+    "instance": {
+      "capability": "comcom.event.search",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.exchange.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-exchange-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.exchange.request",
+      "parameters": {
+        "subject": {
+          "type": "Exchange"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.finance.account.balance.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-finance-account-balance-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.finance.account.balance.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.flight.book",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-flight-book.input.schema.json",
+    "instance": {
+      "capability": "comcom.flight.book",
+      "parameters": {
+        "subject": {
+          "type": "Flight"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.flight.search",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-flight-search.input.schema.json",
+    "instance": {
+      "capability": "comcom.flight.search",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.government.application.status",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-government-application-status.input.schema.json",
+    "instance": {
+      "capability": "comcom.government.application.status",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.government.application.submit",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-government-application-submit.input.schema.json",
+    "instance": {
+      "capability": "comcom.government.application.submit",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.government.service.search",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-government-service-search.input.schema.json",
+    "instance": {
+      "capability": "comcom.government.service.search",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.healthcare.provider.search",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-healthcare-provider-search.input.schema.json",
+    "instance": {
+      "capability": "comcom.healthcare.provider.search",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.healthcare.referral.submit",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-healthcare-referral-submit.input.schema.json",
+    "instance": {
+      "capability": "comcom.healthcare.referral.submit",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.healthcare.service.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-healthcare-service-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.healthcare.service.request",
+      "parameters": {
+        "subject": {
+          "type": "HealthcareService"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.identity.verify",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-identity-verify.input.schema.json",
+    "instance": {
+      "capability": "comcom.identity.verify",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.insurance.claim.submit",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-insurance-claim-submit.input.schema.json",
+    "instance": {
+      "capability": "comcom.insurance.claim.submit",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.insurance.quote.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-insurance-quote-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.insurance.quote.request",
+      "parameters": {
+        "subject": {
+          "type": "InsuranceQuote"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.interview.schedule",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-interview-schedule.input.schema.json",
+    "instance": {
+      "capability": "comcom.interview.schedule",
+      "parameters": {
+        "subject": {
+          "type": "Interview"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.inventory.adjust",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-inventory-adjust.input.schema.json",
+    "instance": {
+      "capability": "comcom.inventory.adjust",
+      "parameters": {
+        "subject": {
+          "type": "Inventory"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.inventory.check",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-inventory-check.input.schema.json",
+    "instance": {
+      "capability": "comcom.inventory.check",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.inventory.release",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-inventory-release.input.schema.json",
+    "instance": {
+      "capability": "comcom.inventory.release",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.inventory.reserve",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-inventory-reserve.input.schema.json",
+    "instance": {
+      "capability": "comcom.inventory.reserve",
+      "parameters": {
+        "subject": {
+          "type": "Inventory"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.invoice.dispute",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-invoice-dispute.input.schema.json",
+    "instance": {
+      "capability": "comcom.invoice.dispute",
+      "parameters": {
+        "subject": {
+          "type": "Invoice"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.invoice.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-invoice-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.invoice.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.invoice.issue",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-invoice-issue.input.schema.json",
+    "instance": {
+      "capability": "comcom.invoice.issue",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.invoice.receive",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-invoice-receive.input.schema.json",
+    "instance": {
+      "capability": "comcom.invoice.receive",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.job.apply",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-job-apply.input.schema.json",
+    "instance": {
+      "capability": "comcom.job.apply",
+      "parameters": {
+        "subject": {
+          "type": "Job"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.job.publish",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-job-publish.input.schema.json",
+    "instance": {
+      "capability": "comcom.job.publish",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.journey.itinerary.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-journey-itinerary-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.journey.itinerary.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.leave.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-leave-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.leave.request",
+      "parameters": {
+        "subject": {
+          "type": "Leave"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.license.issue",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-license-issue.input.schema.json",
+    "instance": {
+      "capability": "comcom.license.issue",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.media.stream.authorize",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-media-stream-authorize.input.schema.json",
+    "instance": {
+      "capability": "comcom.media.stream.authorize",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.membership.join",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-membership-join.input.schema.json",
+    "instance": {
+      "capability": "comcom.membership.join",
+      "parameters": {
+        "subject": {
+          "type": "Membership"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.membership.leave",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-membership-leave.input.schema.json",
+    "instance": {
+      "capability": "comcom.membership.leave",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.message.acknowledge",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-message-acknowledge.input.schema.json",
+    "instance": {
+      "capability": "comcom.message.acknowledge",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.message.send",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-message-send.input.schema.json",
+    "instance": {
+      "capability": "comcom.message.send",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.notification.preferences.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-notification-preferences-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.notification.preferences.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.notification.preferences.update",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-notification-preferences-update.input.schema.json",
+    "instance": {
+      "capability": "comcom.notification.preferences.update",
+      "parameters": {
+        "subject": {
+          "type": "NotificationPreferences"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.offer.publish",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-offer-publish.input.schema.json",
+    "instance": {
+      "capability": "comcom.offer.publish",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.offer.receive",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-offer-receive.input.schema.json",
+    "instance": {
+      "capability": "comcom.offer.receive",
+      "parameters": {
+        "offerId": "https://example.com/offerId",
+        "validUntil": "2026-08-18T10:00:00Z",
+        "details": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.offer.withdraw",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-offer-withdraw.input.schema.json",
+    "instance": {
+      "capability": "comcom.offer.withdraw",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.order.acknowledge",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-order-acknowledge.input.schema.json",
+    "instance": {
+      "capability": "comcom.order.acknowledge",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.order.approve",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-order-approve.input.schema.json",
+    "instance": {
+      "capability": "comcom.order.approve",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.order.cancel",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-order-cancel.input.schema.json",
+    "instance": {
+      "capability": "comcom.order.cancel",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.order.change",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-order-change.input.schema.json",
+    "instance": {
+      "capability": "comcom.order.change",
+      "parameters": {
+        "subject": {
+          "type": "Order"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.order.complete",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-order-complete.input.schema.json",
+    "instance": {
+      "capability": "comcom.order.complete",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.order.create",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-order-create.input.schema.json",
+    "instance": {
+      "capability": "comcom.order.create",
+      "parameters": {
+        "buyerId": "https://example.com/buyerId",
+        "sellerId": "https://example.com/sellerId",
+        "lines": [
+          {
+            "itemId": "https://example.com/itemId",
+            "quantity": 1
+          }
+        ]
+      }
+    }
+  },
+  {
+    "capability": "comcom.order.fulfillment.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-order-fulfillment-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.order.fulfillment.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.order.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-order-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.order.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.order.list",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-order-list.input.schema.json",
+    "instance": {
+      "capability": "comcom.order.list",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.order.reject",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-order-reject.input.schema.json",
+    "instance": {
+      "capability": "comcom.order.reject",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.payment.confirm",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-payment-confirm.input.schema.json",
+    "instance": {
+      "capability": "comcom.payment.confirm",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.payment.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-payment-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.payment.request",
+      "parameters": {
+        "subject": {
+          "type": "Payment"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.payment.status.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-payment-status-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.payment.status.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.permission.grant",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-permission-grant.input.schema.json",
+    "instance": {
+      "capability": "comcom.permission.grant",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.permission.revoke",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-permission-revoke.input.schema.json",
+    "instance": {
+      "capability": "comcom.permission.revoke",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.permit.apply",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-permit-apply.input.schema.json",
+    "instance": {
+      "capability": "comcom.permit.apply",
+      "parameters": {
+        "subject": {
+          "type": "Permit"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.permit.status.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-permit-status-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.permit.status.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.pickup.confirm",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-pickup-confirm.input.schema.json",
+    "instance": {
+      "capability": "comcom.pickup.confirm",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.pickup.schedule",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-pickup-schedule.input.schema.json",
+    "instance": {
+      "capability": "comcom.pickup.schedule",
+      "parameters": {
+        "subject": {
+          "type": "Pickup"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.prescription.fulfillment.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-prescription-fulfillment-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.prescription.fulfillment.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.price.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-price-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.price.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.product.compare",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-product-compare.input.schema.json",
+    "instance": {
+      "capability": "comcom.product.compare",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.product.customize.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-product-customize-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.product.customize.request",
+      "parameters": {
+        "subject": {
+          "type": "ProductCustomize"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.product.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-product-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.product.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.product.recommendations.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-product-recommendations-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.product.recommendations.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.product.sample.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-product-sample-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.product.sample.request",
+      "parameters": {
+        "subject": {
+          "type": "ProductSample"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.product.search",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-product-search.input.schema.json",
+    "instance": {
+      "capability": "comcom.product.search",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.production.order.create",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-production-order-create.input.schema.json",
+    "instance": {
+      "capability": "comcom.production.order.create",
+      "parameters": {
+        "subject": {
+          "type": "ProductionOrder"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.production.status.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-production-status-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.production.status.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.proof.of.delivery.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-proof-of-delivery-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.proof.of.delivery.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.property.search",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-property-search.input.schema.json",
+    "instance": {
+      "capability": "comcom.property.search",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.property.viewing.book",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-property-viewing-book.input.schema.json",
+    "instance": {
+      "capability": "comcom.property.viewing.book",
+      "parameters": {
+        "subject": {
+          "type": "PropertyViewing"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.purchase.requisition.submit",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-purchase-requisition-submit.input.schema.json",
+    "instance": {
+      "capability": "comcom.purchase.requisition.submit",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.quote.accept",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-quote-accept.input.schema.json",
+    "instance": {
+      "capability": "comcom.quote.accept",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.quote.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-quote-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.quote.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.quote.reject",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-quote-reject.input.schema.json",
+    "instance": {
+      "capability": "comcom.quote.reject",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.quote.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-quote-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.quote.request",
+      "parameters": {
+        "items": [
+          {
+            "itemId": "https://example.com/itemId",
+            "quantity": 1
+          }
+        ],
+        "currency": "USD"
+      }
+    }
+  },
+  {
+    "capability": "comcom.rate.list",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-rate-list.input.schema.json",
+    "instance": {
+      "capability": "comcom.rate.list",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.receipt.acknowledge",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-receipt-acknowledge.input.schema.json",
+    "instance": {
+      "capability": "comcom.receipt.acknowledge",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.reconciliation.submit",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-reconciliation-submit.input.schema.json",
+    "instance": {
+      "capability": "comcom.reconciliation.submit",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.refund.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-refund-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.refund.request",
+      "parameters": {
+        "subject": {
+          "type": "Refund"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.refund.status.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-refund-status-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.refund.status.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.relationship.accept",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-relationship-accept.input.schema.json",
+    "instance": {
+      "capability": "comcom.relationship.accept",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.relationship.end",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-relationship-end.input.schema.json",
+    "instance": {
+      "capability": "comcom.relationship.end",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.relationship.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-relationship-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.relationship.request",
+      "parameters": {
+        "subject": {
+          "type": "Relationship"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.reminder.receive",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-reminder-receive.input.schema.json",
+    "instance": {
+      "capability": "comcom.reminder.receive",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.replenishment.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-replenishment-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.replenishment.request",
+      "parameters": {
+        "subject": {
+          "type": "Replenishment"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.research.data.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-research-data-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.research.data.request",
+      "parameters": {
+        "subject": {
+          "type": "ResearchData"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.return.authorize",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-return-authorize.input.schema.json",
+    "instance": {
+      "capability": "comcom.return.authorize",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.return.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-return-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.return.request",
+      "parameters": {
+        "subject": {
+          "type": "Return"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.return.status.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-return-status-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.return.status.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.review.publish",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-review-publish.input.schema.json",
+    "instance": {
+      "capability": "comcom.review.publish",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.rfq.publish",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-rfq-publish.input.schema.json",
+    "instance": {
+      "capability": "comcom.rfq.publish",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.rfq.respond",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-rfq-respond.input.schema.json",
+    "instance": {
+      "capability": "comcom.rfq.respond",
+      "parameters": {
+        "subject": {
+          "type": "Rfq"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.room.book",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-room-book.input.schema.json",
+    "instance": {
+      "capability": "comcom.room.book",
+      "parameters": {
+        "subject": {
+          "type": "Room"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.room.search",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-room-search.input.schema.json",
+    "instance": {
+      "capability": "comcom.room.search",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.sensor.reading.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-sensor-reading-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.sensor.reading.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.service.completion.accept",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-service-completion-accept.input.schema.json",
+    "instance": {
+      "capability": "comcom.service.completion.accept",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.service.engagement.start",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-service-engagement-start.input.schema.json",
+    "instance": {
+      "capability": "comcom.service.engagement.start",
+      "parameters": {
+        "subject": {
+          "type": "ServiceEngagement"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.service.estimate.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-service-estimate-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.service.estimate.request",
+      "parameters": {
+        "subject": {
+          "type": "ServiceEstimate"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.service.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-service-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.service.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.service.list",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-service-list.input.schema.json",
+    "instance": {
+      "capability": "comcom.service.list",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.service.progress.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-service-progress-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.service.progress.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.service.requirements.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-service-requirements-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.service.requirements.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.service.search",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-service-search.input.schema.json",
+    "instance": {
+      "capability": "comcom.service.search",
+      "parameters": {
+        "criteria": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.shift.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-shift-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.shift.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.shift.swap.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-shift-swap-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.shift.swap.request",
+      "parameters": {
+        "subject": {
+          "type": "ShiftSwap"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.shipment.cancel",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-shipment-cancel.input.schema.json",
+    "instance": {
+      "capability": "comcom.shipment.cancel",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.shipment.create",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-shipment-create.input.schema.json",
+    "instance": {
+      "capability": "comcom.shipment.create",
+      "parameters": {
+        "subject": {
+          "type": "Shipment"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.shipment.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-shipment-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.shipment.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.shipment.quote.request",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-shipment-quote-request.input.schema.json",
+    "instance": {
+      "capability": "comcom.shipment.quote.request",
+      "parameters": {
+        "subject": {
+          "type": "ShipmentQuote"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.shipment.track",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-shipment-track.input.schema.json",
+    "instance": {
+      "capability": "comcom.shipment.track",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.slot.hold",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-slot-hold.input.schema.json",
+    "instance": {
+      "capability": "comcom.slot.hold",
+      "parameters": {
+        "subject": {
+          "type": "Slot"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.slot.release",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-slot-release.input.schema.json",
+    "instance": {
+      "capability": "comcom.slot.release",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.subscription.cancel",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-subscription-cancel.input.schema.json",
+    "instance": {
+      "capability": "comcom.subscription.cancel",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.subscription.change",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-subscription-change.input.schema.json",
+    "instance": {
+      "capability": "comcom.subscription.change",
+      "parameters": {
+        "subject": {
+          "type": "Subscription"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.subscription.create",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-subscription-create.input.schema.json",
+    "instance": {
+      "capability": "comcom.subscription.create",
+      "parameters": {
+        "subject": {
+          "type": "Subscription"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.subscription.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-subscription-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.subscription.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.subscription.pause",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-subscription-pause.input.schema.json",
+    "instance": {
+      "capability": "comcom.subscription.pause",
+      "parameters": {
+        "subject": {
+          "type": "Subscription"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.subscription.resume",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-subscription-resume.input.schema.json",
+    "instance": {
+      "capability": "comcom.subscription.resume",
+      "parameters": {
+        "subject": {
+          "type": "Subscription"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.supplier.qualify",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-supplier-qualify.input.schema.json",
+    "instance": {
+      "capability": "comcom.supplier.qualify",
+      "parameters": {
+        "subject": {
+          "type": "Supplier"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.support.case.create",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-support-case-create.input.schema.json",
+    "instance": {
+      "capability": "comcom.support.case.create",
+      "parameters": {
+        "subject": {
+          "type": "SupportCase"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.support.case.get",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-support-case-get.input.schema.json",
+    "instance": {
+      "capability": "comcom.support.case.get",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.survey.submit",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-survey-submit.input.schema.json",
+    "instance": {
+      "capability": "comcom.survey.submit",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.tax.filing.submit",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-tax-filing-submit.input.schema.json",
+    "instance": {
+      "capability": "comcom.tax.filing.submit",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.telemetry.publish",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-telemetry-publish.input.schema.json",
+    "instance": {
+      "capability": "comcom.telemetry.publish",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.tender.award.publish",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-tender-award-publish.input.schema.json",
+    "instance": {
+      "capability": "comcom.tender.award.publish",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.tender.bid.submit",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-tender-bid-submit.input.schema.json",
+    "instance": {
+      "capability": "comcom.tender.bid.submit",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.tender.bid.withdraw",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-tender-bid-withdraw.input.schema.json",
+    "instance": {
+      "capability": "comcom.tender.bid.withdraw",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.tender.publish",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-tender-publish.input.schema.json",
+    "instance": {
+      "capability": "comcom.tender.publish",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.tender.question.submit",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-tender-question-submit.input.schema.json",
+    "instance": {
+      "capability": "comcom.tender.question.submit",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.ticket.issue",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-ticket-issue.input.schema.json",
+    "instance": {
+      "capability": "comcom.ticket.issue",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.utility.meter.reading.submit",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-utility-meter-reading-submit.input.schema.json",
+    "instance": {
+      "capability": "comcom.utility.meter.reading.submit",
+      "parameters": {
+        "content": {}
+      }
+    }
+  },
+  {
+    "capability": "comcom.utility.service.start",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-utility-service-start.input.schema.json",
+    "instance": {
+      "capability": "comcom.utility.service.start",
+      "parameters": {
+        "subject": {
+          "type": "UtilityService"
+        }
+      }
+    }
+  },
+  {
+    "capability": "comcom.warranty.check",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-warranty-check.input.schema.json",
+    "instance": {
+      "capability": "comcom.warranty.check",
+      "parameters": {
+        "resourceId": "https://example.com/resourceId"
+      }
+    }
+  },
+  {
+    "capability": "comcom.warranty.claim",
+    "schema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-warranty-claim.input.schema.json",
+    "instance": {
+      "capability": "comcom.warranty.claim",
+      "parameters": {
+        "subject": {
+          "type": "WarrantyClaim"
+        }
+      }
+    }
+  }
+]

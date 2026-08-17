@@ -1,0 +1,23 @@
+{
+  "name": "comcom-protocol",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Deterministic business interaction for the web",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "generate": "node scripts/generate-artifacts.mjs",
+    "check:generated": "node scripts/generate-artifacts.mjs --check",
+    "validate": "node scripts/validate.mjs",
+    "demo": "node reference/server.mjs",
+    "demo:caller": "node reference/caller.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1"
+  },
+  "license": "Apache-2.0"
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-healthcare-provider-search.output.schema.json",
+  "title": "Healthcare Provider Search output",
+  "description": "Deterministic outcome for comcom.healthcare.provider.search.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "items"
+  ],
+  "properties": {
+    "status": {
+      "const": "completed"
+    },
+    "items": {
+      "type": "array",
+      "description": "Matching typed resources.",
+      "items": {
+        "$ref": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/resource.schema.json"
+      }
+    },
+    "nextCursor": {
+      "type": "string",
+      "description": "Opaque continuation cursor."
+    }
+  }
+}

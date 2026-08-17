@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-product-compare.output.schema.json",
+  "title": "Product Compare output",
+  "description": "Deterministic outcome for comcom.product.compare.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "items"
+  ],
+  "properties": {
+    "status": {
+      "const": "completed"
+    },
+    "items": {
+      "type": "array",
+      "description": "Matching typed resources.",
+      "items": {
+        "$ref": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/resource.schema.json"
+      }
+    },
+    "nextCursor": {
+      "type": "string",
+      "description": "Opaque continuation cursor."
+    }
+  }
+}

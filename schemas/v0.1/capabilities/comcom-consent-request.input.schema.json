@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-consent-request.input.schema.json",
+  "title": "Consent Request input",
+  "description": "Request consent using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.consent.request"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subject"
+      ],
+      "properties": {
+        "subject": {
+          "type": "object",
+          "description": "The Consent being acted on.",
+          "additionalProperties": false,
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Existing resource URI.",
+              "format": "uri-reference"
+            },
+            "type": {
+              "const": "Consent"
+            },
+            "attributes": {
+              "type": "object",
+              "description": "Typed domain attributes.",
+              "additionalProperties": true
+            }
+          }
+        },
+        "requestedAt": {
+          "type": "string",
+          "description": "Requested effective time.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

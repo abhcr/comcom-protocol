@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/resource.schema.json",
+  "title": "Comcom resource",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "type",
+    "state"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Globally unique resource URI.",
+      "format": "uri-reference"
+    },
+    "type": {
+      "type": "string",
+      "description": "Registry or namespaced resource type."
+    },
+    "state": {
+      "type": "string",
+      "description": "Stable machine-readable state code."
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Typed resource attributes.",
+      "additionalProperties": true
+    }
+  }
+}

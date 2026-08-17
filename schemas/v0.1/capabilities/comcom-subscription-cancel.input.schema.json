@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-subscription-cancel.input.schema.json",
+  "title": "Subscription Cancel input",
+  "description": "Cancel subscription using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.subscription.cancel"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resourceId"
+      ],
+      "properties": {
+        "resourceId": {
+          "type": "string",
+          "description": "Subscription URI.",
+          "format": "uri-reference"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason code or concise explanation."
+        }
+      }
+    }
+  }
+}

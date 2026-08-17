@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-pickup-confirm.input.schema.json",
+  "title": "Pickup Confirm input",
+  "description": "Confirm pickup using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.pickup.confirm"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resourceId"
+      ],
+      "properties": {
+        "resourceId": {
+          "type": "string",
+          "description": "Pickup URI.",
+          "format": "uri-reference"
+        },
+        "decisionAt": {
+          "type": "string",
+          "description": "Decision time.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

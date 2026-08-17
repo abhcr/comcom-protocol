@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-booking-create.input.schema.json",
+  "title": "Booking Create input",
+  "description": "Create booking using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.booking.create"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "offeringId",
+        "customerId",
+        "start",
+        "end"
+      ],
+      "properties": {
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Booking start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Booking end.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

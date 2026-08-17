@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-purchase-requisition-submit.input.schema.json",
+  "title": "Purchase Requisition Submit input",
+  "description": "Submit purchase requisition using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.purchase.requisition.submit"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "content"
+      ],
+      "properties": {
+        "content": {
+          "type": "object",
+          "description": "Structured PurchaseRequisition content.",
+          "additionalProperties": true
+        },
+        "effectiveAt": {
+          "type": "string",
+          "description": "Effective time.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

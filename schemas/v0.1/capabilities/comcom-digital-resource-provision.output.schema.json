@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-digital-resource-provision.output.schema.json",
+  "title": "Digital Resource Provision output",
+  "description": "Deterministic outcome for comcom.digital.resource.provision.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "resource"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "accepted",
+        "inProgress",
+        "completed",
+        "rejected",
+        "cancelled",
+        "failed"
+      ]
+    },
+    "resource": {
+      "$ref": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/resource.schema.json"
+    },
+    "nextActions": {
+      "type": "array",
+      "description": "Capability IDs permitted next.",
+      "items": {
+        "type": "string",
+        "description": "Capability ID.",
+        "pattern": "^(comcom|[a-z0-9-]+(\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+      },
+      "uniqueItems": true
+    }
+  }
+}

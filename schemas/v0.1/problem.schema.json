@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/problem.schema.json",
+  "title": "Comcom problem details",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "type",
+    "title",
+    "status"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Problem type URI.",
+      "format": "uri-reference"
+    },
+    "title": {
+      "type": "string",
+      "description": "Short stable summary."
+    },
+    "status": {
+      "type": "integer",
+      "minimum": 400,
+      "maximum": 599
+    },
+    "detail": {
+      "type": "string",
+      "description": "Occurrence-specific explanation."
+    },
+    "instance": {
+      "type": "string",
+      "description": "Occurrence URI.",
+      "format": "uri-reference"
+    },
+    "code": {
+      "type": "string",
+      "description": "Stable Comcom error code."
+    },
+    "errors": {
+      "type": "array",
+      "description": "Schema validation errors.",
+      "items": {
+        "type": "object",
+        "description": "Validation error.",
+        "additionalProperties": true
+      }
+    }
+  }
+}

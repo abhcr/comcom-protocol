@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Comcom schema-driven UI</title>
+  <style>
+    :root { color-scheme: light; font: 16px/1.5 system-ui, sans-serif; background: #f4f1ea; color: #17211b; }
+    body { max-width: 840px; margin: 0 auto; padding: 48px 24px; }
+    main { background: white; border: 1px solid #d8d6ce; border-radius: 18px; padding: 28px; box-shadow: 0 18px 50px #24362a14; }
+    h1 { margin: 0 0 8px; font-size: clamp(2rem, 5vw, 3.4rem); letter-spacing: -.04em; }
+    .tagline { color: #536158; margin: 0 0 28px; }
+    label { display: grid; gap: 6px; margin: 16px 0; font-weight: 650; }
+    input, select, button { font: inherit; padding: 11px 13px; border: 1px solid #aeb7b1; border-radius: 9px; }
+    button { background: #13643a; color: white; border: 0; cursor: pointer; font-weight: 700; margin-top: 10px; }
+    pre { overflow: auto; background: #101814; color: #d8f6e3; padding: 18px; border-radius: 10px; min-height: 80px; }
+    small { color: #657269; font-weight: 400; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Schema-driven Comcom UI</h1>
+    <p class="tagline">This form is generated from the same schemas used by direct automation. It uses no AI.</p>
+    <label>Capability<select id="capability"></select></label>
+    <form id="form"></form>
+    <pre id="output">Select a capability.</pre>
+  </main>
+  <script type="module">
+    const manifest = await fetch('/comcom/manifest').then(response => response.json());
+    const select = document.querySelector('#capability');
+    const form = document.querySelector('#form');
+    const output = document.querySelector('#output');
+    const supported = manifest.capabilities.filter(item => ['comcom.availability.check', 'comcom.booking.create'].includes(item.id));
+    for (const capability of supported) select.add(new Option(capability.id, capability.id));
+
+    async function render() {
+      form.replaceChildren();
+      const declaration = supported.find(item => item.id === select.value);
+      const path = new URL(declaration.inputSchema).pathname.replace('/comcom-protocol', '');
+      const schema = await fetch(path).then(response => response.json());
+      const parameters = schema.properties.parameters;
+      for (const [name, property] of Object.entries(parameters.properties)) {
+        const label = document.createElement('label');
+        label.textContent = name;
+        const hint = document.createElement('small');
+        hint.textContent = property.description ?? '';
+        const input = document.createElement('input');
+        input.name = name;
+        input.required = parameters.required.includes(name);
+        input.type = property.format === 'date-time' ? 'datetime-local' : property.type === 'integer' ? 'number' : 'text';
+        if (property.minimum) input.min = property.minimum;
+        label.append(hint, input);
+        form.append(label);
+      }
+      const button = document.createElement('button');
+      button.textContent = `Submit ${declaration.id}`;
+      form.append(button);
+      form.onsubmit = async event => {
+        event.preventDefault();
+        const raw = Object.fromEntries(new FormData(form));
+        for (const [name, property] of Object.entries(parameters.properties)) {
+          if (raw[name] === '') { delete raw[name]; continue; }
+          if (property.format === 'date-time' && raw[name]) raw[name] = new Date(raw[name]).toISOString();
+          if (property.type === 'integer' && raw[name]) raw[name] = Number(raw[name]);
+        }
+        const id = crypto.randomUUID();
+        const message = {
+          protocolVersion: '0.1', id: `urn:uuid:${id}`, kind: declaration.id.endsWith('.check') ? 'query' : 'command',
+          capability: { id: declaration.id, version: '0.1' },
+          principal: { id: 'https://customer.example', type: 'person', name: 'Form user' },
+          sender: { id: 'https://customer.example/browser', type: 'system', name: 'Generated form' },
+          recipient: manifest.entity, agent: { id: location.href, type: 'system', name: 'Schema-driven UI' },
+          issuedAt: new Date().toISOString(), ...(declaration.id.endsWith('.check') ? {} : { idempotencyKey: `ui-${id}` }),
+          payload: { capability: declaration.id, parameters: raw }
+        };
+        const response = await fetch(declaration.forms[0].href, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(message) });
+        output.textContent = JSON.stringify(await response.json(), null, 2);
+      };
+    }
+    select.addEventListener('change', render);
+    await render();
+  </script>
+</body>
+</html>

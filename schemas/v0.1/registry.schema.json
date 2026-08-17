@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/registry.schema.json",
+  "title": "Comcom capability registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocolVersion",
+    "status",
+    "capabilities"
+  ],
+  "properties": {
+    "protocolVersion": {
+      "const": "0.1"
+    },
+    "status": {
+      "const": "normative"
+    },
+    "capabilities": {
+      "type": "array",
+      "description": "Normative capabilities.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "version",
+          "status",
+          "domain",
+          "title",
+          "purpose",
+          "kind",
+          "action",
+          "resourceType",
+          "roles",
+          "inputSchema",
+          "outputSchema",
+          "preconditions",
+          "transitions",
+          "retry",
+          "reversal",
+          "standards"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Capability ID."
+          },
+          "version": {
+            "const": "0.1"
+          },
+          "status": {
+            "const": "normative"
+          },
+          "domain": {
+            "type": "string",
+            "description": "Domain group."
+          },
+          "title": {
+            "type": "string",
+            "description": "Human title."
+          },
+          "purpose": {
+            "type": "string",
+            "description": "Business purpose."
+          },
+          "kind": {
+            "enum": [
+              "query",
+              "command",
+              "event"
+            ]
+          },
+          "action": {
+            "type": "string",
+            "description": "Normalized action."
+          },
+          "resourceType": {
+            "type": "string",
+            "description": "Normalized resource type."
+          },
+          "roles": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "initiator",
+              "responder"
+            ],
+            "properties": {
+              "initiator": {
+                "type": "string",
+                "description": "Initiator role."
+              },
+              "responder": {
+                "type": "string",
+                "description": "Responder role."
+              }
+            }
+          },
+          "inputSchema": {
+            "type": "string",
+            "description": "Input schema URL.",
+            "format": "uri"
+          },
+          "outputSchema": {
+            "type": "string",
+            "description": "Output schema URL.",
+            "format": "uri"
+          },
+          "preconditions": {
+            "type": "array",
+            "description": "Preconditions.",
+            "items": {
+              "type": "string",
+              "description": "Precondition."
+            },
+            "minItems": 1
+          },
+          "transitions": {
+            "type": "array",
+            "description": "Allowed state transitions.",
+            "items": {
+              "type": "string",
+              "description": "Transition."
+            },
+            "minItems": 1
+          },
+          "retry": {
+            "type": "string",
+            "description": "Retry rule."
+          },
+          "reversal": {
+            "type": "string",
+            "description": "Reversal rule."
+          },
+          "standards": {
+            "type": "array",
+            "description": "Informative standard mappings.",
+            "items": {
+              "type": "string",
+              "description": "Standard URL.",
+              "format": "uri"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        }
+      },
+      "minItems": 150,
+      "maxItems": 250
+    }
+  }
+}

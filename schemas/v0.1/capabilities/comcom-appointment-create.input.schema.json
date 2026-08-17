@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-appointment-create.input.schema.json",
+  "title": "Appointment Create input",
+  "description": "Create appointment using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.appointment.create"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "serviceId",
+        "customerId",
+        "start",
+        "end"
+      ],
+      "properties": {
+        "serviceId": {
+          "type": "string",
+          "description": "Service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Appointment start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Appointment end.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

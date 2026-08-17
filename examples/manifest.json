@@ -1,0 +1,40 @@
+{
+  "protocolVersions": ["0.1"],
+  "entity": {
+    "id": "https://vendor.example",
+    "type": "organization",
+    "name": "Example Vendor"
+  },
+  "roles": ["responder", "inboxReceiver"],
+  "baseUrl": "https://vendor.example/comcom",
+  "securitySchemes": {
+    "public": {
+      "type": "none"
+    }
+  },
+  "capabilities": [
+    {
+      "id": "comcom.product.search",
+      "version": "0.1",
+      "direction": "receive",
+      "inputSchema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-product-search.input.schema.json",
+      "outputSchema": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-product-search.output.schema.json",
+      "forms": [
+        {
+          "href": "https://vendor.example/comcom/interactions",
+          "method": "POST",
+          "contentType": "application/json",
+          "security": ["public"],
+          "synchronous": true,
+          "timeoutSeconds": 30
+        }
+      ]
+    }
+  ],
+  "inbox": {
+    "href": "https://vendor.example/comcom/inbox",
+    "acceptedCapabilities": ["comcom.announcement.receive"],
+    "maxBytes": 65536,
+    "security": ["public"]
+  }
+}

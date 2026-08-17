@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-order-create.input.schema.json",
+  "title": "Order Create input",
+  "description": "Create order using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.order.create"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "buyerId",
+        "sellerId",
+        "lines"
+      ],
+      "properties": {
+        "buyerId": {
+          "type": "string",
+          "description": "Buyer URI.",
+          "format": "uri-reference"
+        },
+        "sellerId": {
+          "type": "string",
+          "description": "Seller URI.",
+          "format": "uri-reference"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Order lines.",
+          "items": {
+            "type": "object",
+            "description": "Order line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "quantity": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "quoteId": {
+          "type": "string",
+          "description": "Accepted quote URI.",
+          "format": "uri-reference"
+        }
+      }
+    }
+  }
+}

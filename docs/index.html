@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Comcom Protocol: deterministic business interaction for the web.">
+  <title>Comcom Protocol</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="hero">
+    <nav>
+      <a class="mark" href="#top" aria-label="Comcom home"><span>CC</span> Comcom</a>
+      <div><a href="#how">How it works</a><a href="#catalog">Capabilities</a><a href="https://github.com/abhcr/comcom-protocol">GitHub</a></div>
+    </nav>
+    <div class="hero-grid" id="top">
+      <div>
+        <p class="eyebrow">Open protocol · v0.1</p>
+        <h1>Humans speak naturally.<br><em>Businesses communicate precisely.</em></h1>
+        <p class="lead">Discover what a business can do, send schema-validated requests, and receive exact results—without AI between systems.</p>
+        <div class="actions"><a class="button primary" href="#quickstart">Start implementing</a><a class="button" href="https://github.com/abhcr/comcom-protocol/blob/main/spec/v0.1/specification.md">Read the specification</a></div>
+      </div>
+      <div class="signal" aria-label="Comcom communication model">
+        <div><small>Human boundary</small><strong>Human</strong><span>↕</span><strong>UI or AI</strong></div>
+        <i>Comcom begins here</i>
+        <div class="precise"><small>Deterministic exchange</small><strong>Business A</strong><span>⇄</span><strong>Business B</strong></div>
+        <p>No phone imitation. No model-to-model guesswork. No token cost on the wire.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="principles">
+      <article><b>Exact</b><span>Capability IDs, schemas, and state machines determine meaning.</span></article>
+      <article><b>Lightweight</b><span>Start with one static discovery file and one endpoint.</span></article>
+      <article><b>Composable</b><span>Implement one capability or any subset your business needs.</span></article>
+      <article><b>Human-ready</b><span>The same schema drives apps, forms, workflows, and AI adapters.</span></article>
+    </section>
+
+    <section id="how">
+      <p class="eyebrow">The protocol path</p>
+      <h2>Known website in. Completed work out.</h2>
+      <ol class="steps">
+        <li><span>01</span><div><b>Discover</b><p>Fetch <code>/.well-known/comcom</code> from the business website.</p></div></li>
+        <li><span>02</span><div><b>Match</b><p>Select an exact versioned capability from its manifest.</p></div></li>
+        <li><span>03</span><div><b>Validate</b><p>Check the request locally against the published JSON Schema.</p></div></li>
+        <li><span>04</span><div><b>Invoke</b><p>Call the standard gateway or the declared existing API mapping.</p></div></li>
+        <li><span>05</span><div><b>Act</b><p>Use the typed result as the authoritative business record.</p></div></li>
+      </ol>
+    </section>
+
+    <section id="quickstart" class="quickstart">
+      <div>
+        <p class="eyebrow">Smallest implementation</p>
+        <h2>Publish one file.</h2>
+        <p>A static discovery document is enough to tell callers where your capability manifest lives.</p>
+      </div>
+      <div class="code-card"><button data-copy="discovery">Copy</button><pre id="discovery"><code>{
+  "versions": ["0.1"],
+  "manifest": "https://business.example/comcom/manifest"
+}</code></pre></div>
+    </section>
+
+    <section id="catalog">
+      <div class="catalog-head">
+        <div><p class="eyebrow">Normative registry</p><h2><span id="count">201</span> precise capabilities.</h2></div>
+        <label>Search capabilities<input id="search" type="search" placeholder="booking, invoice, product search…"></label>
+      </div>
+      <div id="domains" class="domains" role="group" aria-label="Filter domains"></div>
+      <div id="capabilities" class="capabilities" aria-live="polite"></div>
+    </section>
+
+    <section class="edge">
+      <p class="eyebrow">AI and UI at the edge</p>
+      <h2>One structured core. Many human experiences.</h2>
+      <div class="edge-grid">
+        <article><b>Direct automation</b><p>An ERP or workflow invokes exact capabilities with no human or model involved.</p></article>
+        <article><b>Generated interface</b><p>A conventional application renders input controls from the same schemas used for validation.</p></article>
+        <article><b>AI assistance</b><p>An AI maps natural intent to a capability, gathers fields, and explains the structured result.</p></article>
+      </div>
+      <p class="rule">The adapter can explain the record. It cannot replace or reinterpret it.</p>
+    </section>
+  </main>
+
+  <footer><div class="mark"><span>CC</span> Comcom</div><p>Deterministic business interaction for the web. Apache-2.0.</p></footer>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-invoice-issue.input.schema.json",
+  "title": "Invoice Issue input",
+  "description": "Issue invoice using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.invoice.issue"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "content"
+      ],
+      "properties": {
+        "content": {
+          "type": "object",
+          "description": "Structured Invoice content.",
+          "additionalProperties": true
+        },
+        "effectiveAt": {
+          "type": "string",
+          "description": "Effective time.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

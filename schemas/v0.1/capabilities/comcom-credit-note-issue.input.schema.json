@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-credit-note-issue.input.schema.json",
+  "title": "Credit Note Issue input",
+  "description": "Issue credit note using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.credit.note.issue"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "content"
+      ],
+      "properties": {
+        "content": {
+          "type": "object",
+          "description": "Structured CreditNote content.",
+          "additionalProperties": true
+        },
+        "effectiveAt": {
+          "type": "string",
+          "description": "Effective time.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

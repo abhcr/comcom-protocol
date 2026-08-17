@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/envelope.schema.json",
+  "title": "Comcom message envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocolVersion",
+    "id",
+    "kind",
+    "capability",
+    "principal",
+    "sender",
+    "recipient",
+    "issuedAt",
+    "payload"
+  ],
+  "properties": {
+    "protocolVersion": {
+      "const": "0.1"
+    },
+    "id": {
+      "type": "string",
+      "description": "Unique message URI.",
+      "format": "uri-reference"
+    },
+    "kind": {
+      "enum": [
+        "query",
+        "command",
+        "event",
+        "result",
+        "receipt"
+      ]
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Capability ID.",
+          "pattern": "^(comcom|[a-z0-9-]+(\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+        },
+        "version": {
+          "type": "string",
+          "description": "Capability version.",
+          "pattern": "^[0-9]+\\.[0-9]+$"
+        }
+      }
+    },
+    "principal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Entity URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "enum": [
+            "person",
+            "organization",
+            "government",
+            "nonprofit",
+            "system",
+            "device"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name."
+        }
+      }
+    },
+    "sender": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Entity URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "enum": [
+            "person",
+            "organization",
+            "government",
+            "nonprofit",
+            "system",
+            "device"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name."
+        }
+      }
+    },
+    "recipient": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Entity URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "enum": [
+            "person",
+            "organization",
+            "government",
+            "nonprofit",
+            "system",
+            "device"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name."
+        }
+      }
+    },
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Entity URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "enum": [
+            "person",
+            "organization",
+            "government",
+            "nonprofit",
+            "system",
+            "device"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name."
+        }
+      }
+    },
+    "authorization": {
+      "type": "string",
+      "description": "External authorization or delegation reference.",
+      "format": "uri-reference"
+    },
+    "issuedAt": {
+      "type": "string",
+      "description": "Message creation time.",
+      "format": "date-time"
+    },
+    "expiresAt": {
+      "type": "string",
+      "description": "Time after which the message must not be acted on.",
+      "format": "date-time"
+    },
+    "conversationId": {
+      "type": "string",
+      "description": "Multi-step conversation URI.",
+      "format": "uri-reference"
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "Message URI being answered.",
+      "format": "uri-reference"
+    },
+    "idempotencyKey": {
+      "type": "string",
+      "description": "Sender-scoped idempotency key.",
+      "minLength": 16,
+      "maxLength": 200
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "type": "string",
+          "description": "Resource type."
+        }
+      }
+    },
+    "payload": {
+      "type": "object"
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9-]+(\\.[a-z0-9-]+)+$"
+      },
+      "additionalProperties": true
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "enum": [
+              "command",
+              "event"
+            ]
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "idempotencyKey": true
+        },
+        "required": [
+          "idempotencyKey"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "enum": [
+              "result",
+              "receipt"
+            ]
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "correlationId": true
+        },
+        "required": [
+          "correlationId"
+        ]
+      }
+    }
+  ]
+}

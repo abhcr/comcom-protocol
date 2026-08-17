@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/schemas/v0.1/capabilities/comcom-membership-leave.input.schema.json",
+  "title": "Membership Leave input",
+  "description": "Leave membership using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.membership.leave"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resourceId"
+      ],
+      "properties": {
+        "resourceId": {
+          "type": "string",
+          "description": "Membership URI.",
+          "format": "uri-reference"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason code or concise explanation."
+        }
+      }
+    }
+  }
+}
