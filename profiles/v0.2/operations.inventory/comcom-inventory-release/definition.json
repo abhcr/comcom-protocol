@@ -1,0 +1,63 @@
+{
+  "id": "comcom.inventory.release",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "operations.inventory",
+  "batch": 4,
+  "title": "Inventory Release",
+  "purpose": "Release inventory using the typed Comcom v0.2 profile.",
+  "requestKind": "command",
+  "resourceType": "Inventory",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "authenticated",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-release/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-release/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-release/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "authenticated-sender",
+    "authorized-principal",
+    "valid-resource-state"
+  ],
+  "lifecycle": {
+    "states": [
+      "active",
+      "released"
+    ],
+    "transitions": [
+      {
+        "from": "active",
+        "to": "released"
+      }
+    ]
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": true,
+    "equality": "RFC8785-semantic-projection"
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient",
+    "invalid-state-transition",
+    "idempotency-conflict"
+  ],
+  "standards": [
+    "https://ref.gs1.org/standards/epcis/2.0.1/"
+  ]
+}

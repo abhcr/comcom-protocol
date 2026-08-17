@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.prescription.fulfillment.get",
+  "parameters": {
+    "prescriptionFulfillmentId": "https://business.example/prescriptionFulfillment/example"
+  }
+}

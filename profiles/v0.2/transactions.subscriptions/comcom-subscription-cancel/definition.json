@@ -1,0 +1,68 @@
+{
+  "id": "comcom.subscription.cancel",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "transactions.subscriptions",
+  "batch": 3,
+  "title": "Subscription Cancel",
+  "purpose": "Cancel subscription using the typed Comcom v0.2 profile.",
+  "requestKind": "command",
+  "resourceType": "Subscription",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "authenticated",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-cancel/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-cancel/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-cancel/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "authenticated-sender",
+    "authorized-principal",
+    "valid-resource-state"
+  ],
+  "lifecycle": {
+    "states": [
+      "accepted",
+      "active",
+      "cancelled"
+    ],
+    "transitions": [
+      {
+        "from": "accepted",
+        "to": "cancelled"
+      },
+      {
+        "from": "active",
+        "to": "cancelled"
+      }
+    ]
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": true,
+    "equality": "RFC8785-semantic-projection"
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient",
+    "invalid-state-transition",
+    "idempotency-conflict"
+  ],
+  "standards": [
+    "https://schema.org/JoinAction"
+  ]
+}

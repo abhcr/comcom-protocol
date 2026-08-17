@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.relationship.end",
+  "parameters": {
+    "relationshipId": "https://business.example/relationship/example"
+  }
+}

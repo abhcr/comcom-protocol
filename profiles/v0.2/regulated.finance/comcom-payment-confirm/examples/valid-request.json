@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.payment.confirm",
+  "parameters": {
+    "paymentId": "https://business.example/payment/example"
+  }
+}

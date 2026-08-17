@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "quoteId": "https://business.example/quote/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

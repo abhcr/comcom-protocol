@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.payment.status.get",
+  "parameters": {
+    "paymentStatusId": "https://business.example/paymentStatus/example"
+  }
+}

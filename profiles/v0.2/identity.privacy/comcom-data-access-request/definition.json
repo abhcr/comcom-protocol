@@ -1,0 +1,64 @@
+{
+  "id": "comcom.data.access.request",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "identity.privacy",
+  "batch": 5,
+  "title": "Data Access Request",
+  "purpose": "Request data access using the typed Comcom v0.2 profile.",
+  "requestKind": "command",
+  "resourceType": "DataAccess",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "authenticated",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.privacy/comcom-data-access-request/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.privacy/comcom-data-access-request/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.privacy/comcom-data-access-request/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "authenticated-sender",
+    "authorized-principal",
+    "valid-resource-state"
+  ],
+  "lifecycle": {
+    "states": [
+      "submitted",
+      "accepted",
+      "rejected"
+    ],
+    "transitions": [
+      {
+        "from": "none",
+        "to": "submitted"
+      }
+    ]
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": true,
+    "equality": "RFC8785-semantic-projection"
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient",
+    "invalid-state-transition",
+    "idempotency-conflict"
+  ],
+  "standards": [
+    "https://www.w3.org/TR/vc-data-model-2.0/"
+  ]
+}

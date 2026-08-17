@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "appointmentId": "https://business.example/appointment/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "id": "comcom.permit.apply",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "identity.trust",
+  "batch": 5,
+  "title": "Permit Apply",
+  "purpose": "Apply for permit using the typed Comcom v0.2 profile.",
+  "requestKind": "command",
+  "resourceType": "Permit",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "authenticated",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.trust/comcom-permit-apply/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.trust/comcom-permit-apply/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.trust/comcom-permit-apply/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "authenticated-sender",
+    "authorized-principal",
+    "valid-resource-state"
+  ],
+  "lifecycle": {
+    "states": [
+      "submitted",
+      "accepted",
+      "rejected"
+    ],
+    "transitions": [
+      {
+        "from": "none",
+        "to": "submitted"
+      }
+    ]
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": true,
+    "equality": "RFC8785-semantic-projection"
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient",
+    "invalid-state-transition",
+    "idempotency-conflict"
+  ],
+  "standards": [
+    "https://www.w3.org/TR/vc-data-model-2.0/"
+  ]
+}

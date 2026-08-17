@@ -1,0 +1,3163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/operations.digital.bundle.json",
+  "profile": "operations.digital",
+  "version": "0.2.0",
+  "capabilityIds": [
+    "comcom.automation.rule.trigger",
+    "comcom.content.license.request",
+    "comcom.content.search",
+    "comcom.device.command.send",
+    "comcom.device.register",
+    "comcom.device.status.get",
+    "comcom.digital.resource.provision",
+    "comcom.media.stream.authorize",
+    "comcom.sensor.reading.get",
+    "comcom.telemetry.publish"
+  ],
+  "capabilities": [
+    {
+      "definition": {
+        "id": "comcom.automation.rule.trigger",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.digital",
+        "batch": 4,
+        "title": "Automation Rule Trigger",
+        "purpose": "Trigger automation rule using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "AutomationRule",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-automation-rule-trigger/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-automation-rule-trigger/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-automation-rule-trigger/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "active",
+              "revisionRequired": true
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.automation.rule.trigger",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.automation.rule.trigger",
+          "parameters": {
+            "automationRule": {
+              "assetId": "https://business.example/assetId/example",
+              "locationId": "https://business.example/locationId/example",
+              "metricCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "automationRule": {
+                "assetId": "https://business.example/assetId/example",
+                "locationId": "https://business.example/locationId/example",
+                "metricCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.automation.rule.trigger-allowed-1",
+              "from": "active",
+              "to": "active",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/automationRule/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.content.license.request",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.digital",
+        "batch": 4,
+        "title": "Content License Request",
+        "purpose": "Request content license using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "ContentLicense",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-license-request/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-license-request/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-license-request/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.content.license.request",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.content.license.request",
+          "parameters": {
+            "contentLicense": {
+              "name": "example",
+              "categoryCode": "example",
+              "sku": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "contentLicense": {
+                "name": "example",
+                "categoryCode": "example",
+                "sku": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.content.license.request-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.content.license.request-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/contentLicense/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.content.search",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.digital",
+        "batch": 4,
+        "title": "Content Search",
+        "purpose": "Search for content using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Content",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-search/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-search/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-search/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.content.search",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.content.search",
+          "parameters": {
+            "filters": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "filters": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/content/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.device.command.send",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.digital",
+        "batch": 4,
+        "title": "Device Command Send",
+        "purpose": "Send device command using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "DeviceCommand",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-command-send/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-command-send/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-command-send/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.device.command.send",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.device.command.send",
+          "parameters": {
+            "deviceCommand": {
+              "assetId": "https://business.example/assetId/example",
+              "locationId": "https://business.example/locationId/example",
+              "metricCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "deviceCommand": {
+                "assetId": "https://business.example/assetId/example",
+                "locationId": "https://business.example/locationId/example",
+                "metricCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/deviceCommand/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.device.register",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.digital",
+        "batch": 4,
+        "title": "Device Register",
+        "purpose": "Register device using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Device",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-register/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-register/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-register/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.device.register",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.device.register",
+          "parameters": {
+            "device": {
+              "assetId": "https://business.example/assetId/example",
+              "locationId": "https://business.example/locationId/example",
+              "metricCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "device": {
+                "assetId": "https://business.example/assetId/example",
+                "locationId": "https://business.example/locationId/example",
+                "metricCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.device.register-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.device.register-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.device.register-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.device.register-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/device/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.device.status.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.digital",
+        "batch": 4,
+        "title": "Device Status Get",
+        "purpose": "Retrieve device status using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "DeviceStatus",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-status-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-status-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-status-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.device.status.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.device.status.get",
+          "parameters": {
+            "deviceStatusId": "https://business.example/deviceStatus/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "deviceStatusId": "https://business.example/deviceStatus/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/deviceStatus/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.digital.resource.provision",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.digital",
+        "batch": 4,
+        "title": "Digital Resource Provision",
+        "purpose": "Provision digital resource using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "DigitalResource",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-digital-resource-provision/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-digital-resource-provision/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-digital-resource-provision/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.digital.resource.provision",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.digital.resource.provision",
+          "parameters": {
+            "digitalResource": {
+              "assetId": "https://business.example/assetId/example",
+              "locationId": "https://business.example/locationId/example",
+              "metricCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "digitalResource": {
+                "assetId": "https://business.example/assetId/example",
+                "locationId": "https://business.example/locationId/example",
+                "metricCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.digital.resource.provision-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.digital.resource.provision-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.digital.resource.provision-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.digital.resource.provision-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/digitalResource/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.media.stream.authorize",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.digital",
+        "batch": 4,
+        "title": "Media Stream Authorize",
+        "purpose": "Authorize media stream using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "MediaStream",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-media-stream-authorize/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-media-stream-authorize/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-media-stream-authorize/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "requested",
+            "proposed",
+            "accepted"
+          ],
+          "transitions": [
+            {
+              "from": "requested",
+              "to": "accepted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.media.stream.authorize",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.media.stream.authorize",
+          "parameters": {
+            "mediaStreamId": "https://business.example/mediaStream/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "mediaStreamId": "https://business.example/mediaStream/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.media.stream.authorize-allowed-1",
+              "from": "requested",
+              "to": "accepted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.media.stream.authorize-forbidden-1",
+              "from": "accepted",
+              "to": "requested",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/mediaStream/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.sensor.reading.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.digital",
+        "batch": 4,
+        "title": "Sensor Reading Get",
+        "purpose": "Retrieve sensor reading using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "SensorReading",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-sensor-reading-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-sensor-reading-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-sensor-reading-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.sensor.reading.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.sensor.reading.get",
+          "parameters": {
+            "sensorReadingId": "https://business.example/sensorReading/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "sensorReadingId": "https://business.example/sensorReading/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/sensorReading/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.telemetry.publish",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.digital",
+        "batch": 4,
+        "title": "Telemetry Publish",
+        "purpose": "Publish telemetry using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "Telemetry",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-telemetry-publish/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-telemetry-publish/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-telemetry-publish/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.telemetry.publish",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/wot-thing-description11/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.telemetry.publish",
+          "parameters": {
+            "telemetry": {
+              "assetId": "https://business.example/assetId/example",
+              "locationId": "https://business.example/locationId/example",
+              "metricCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "telemetry": {
+                "assetId": "https://business.example/assetId/example",
+                "locationId": "https://business.example/locationId/example",
+                "metricCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/telemetry/example"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "profiles__v0.2__operations.digital__comcom-automation-rule-trigger__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-automation-rule-trigger/schemas/input.schema.json",
+      "title": "Automation Rule Trigger input",
+      "description": "Trigger automation rule using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.automation.rule.trigger"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Automation Rule Trigger parameters.",
+          "additionalProperties": false,
+          "required": [
+            "automationRule"
+          ],
+          "properties": {
+            "automationRule": {
+              "type": "object",
+              "description": "Typed AutomationRule data.",
+              "additionalProperties": false,
+              "required": [
+                "assetId",
+                "locationId",
+                "metricCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "assetId": {
+                  "type": "string",
+                  "description": "Asset or device URI.",
+                  "format": "uri-reference"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "metricCode": {
+                  "type": "string",
+                  "description": "Metric or operation code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Measured or requested numeric value.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "UNECE or profile-declared unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "observedAt": {
+                  "type": "string",
+                  "description": "Observation instant.",
+                  "format": "date-time"
+                },
+                "commandCode": {
+                  "type": "string",
+                  "description": "Command or rule code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-automation-rule-trigger__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-automation-rule-trigger/schemas/output.schema.json",
+      "title": "Automation Rule Trigger output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-automation-rule-trigger/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-automation-rule-trigger__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-automation-rule-trigger/schemas/resource.schema.json",
+      "title": "AutomationRule resource for comcom.automation.rule.trigger",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "AutomationRule"
+        },
+        "state": {
+          "enum": [
+            "active"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-content-license-request__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-license-request/schemas/input.schema.json",
+      "title": "Content License Request input",
+      "description": "Request content license using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.content.license.request"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Content License Request parameters.",
+          "additionalProperties": false,
+          "required": [
+            "contentLicense"
+          ],
+          "properties": {
+            "contentLicense": {
+              "type": "object",
+              "description": "Typed ContentLicense data.",
+              "additionalProperties": false,
+              "required": [
+                "name",
+                "categoryCode",
+                "sku"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Display name.",
+                  "minLength": 1,
+                  "maxLength": 300
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description.",
+                  "maxLength": 5000
+                },
+                "categoryCode": {
+                  "type": "string",
+                  "description": "Standard or provider category code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "sku": {
+                  "type": "string",
+                  "description": "Seller stock-keeping unit.",
+                  "maxLength": 100
+                },
+                "gtin": {
+                  "type": "string",
+                  "description": "GS1 Global Trade Item Number.",
+                  "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Price amount.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "available": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-content-license-request__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-license-request/schemas/output.schema.json",
+      "title": "Content License Request output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-license-request/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-content-license-request__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-license-request/schemas/resource.schema.json",
+      "title": "ContentLicense resource for comcom.content.license.request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "ContentLicense"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name.",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "description": {
+          "type": "string",
+          "description": "Description.",
+          "maxLength": 5000
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Standard or provider category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "sku": {
+          "type": "string",
+          "description": "Seller stock-keeping unit.",
+          "maxLength": 100
+        },
+        "gtin": {
+          "type": "string",
+          "description": "GS1 Global Trade Item Number.",
+          "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Price amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "available": {
+          "type": "boolean"
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-content-search__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-search/schemas/input.schema.json",
+      "title": "Content Search input",
+      "description": "Search for content using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.content.search"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Typed Content discovery parameters.",
+          "additionalProperties": false,
+          "required": [
+            "filters"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+              "maxLength": 500
+            },
+            "filters": {
+              "type": "object",
+              "description": "Typed Content filters.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Display name.",
+                  "minLength": 1,
+                  "maxLength": 300
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description.",
+                  "maxLength": 5000
+                },
+                "categoryCode": {
+                  "type": "string",
+                  "description": "Standard or provider category code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "sku": {
+                  "type": "string",
+                  "description": "Seller stock-keeping unit.",
+                  "maxLength": 100
+                },
+                "gtin": {
+                  "type": "string",
+                  "description": "GS1 Global Trade Item Number.",
+                  "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Price amount.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                }
+              }
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "cursor": {
+              "type": "string",
+              "description": "Opaque continuation cursor.",
+              "maxLength": 500
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-content-search__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-search/schemas/output.schema.json",
+      "title": "Content Search output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "items"
+      ],
+      "properties": {
+        "status": {
+          "const": "completed"
+        },
+        "items": {
+          "type": "array",
+          "description": "Matching Content resources.",
+          "items": {
+            "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-search/schemas/resource.schema.json"
+          },
+          "maxItems": 100
+        },
+        "nextCursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-content-search__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-search/schemas/resource.schema.json",
+      "title": "Content resource for comcom.content.search",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Content"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name.",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "description": {
+          "type": "string",
+          "description": "Description.",
+          "maxLength": 5000
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Standard or provider category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "sku": {
+          "type": "string",
+          "description": "Seller stock-keeping unit.",
+          "maxLength": 100
+        },
+        "gtin": {
+          "type": "string",
+          "description": "GS1 Global Trade Item Number.",
+          "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Price amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "available": {
+          "type": "boolean"
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-device-command-send__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-command-send/schemas/input.schema.json",
+      "title": "Device Command Send input",
+      "description": "Send device command using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.device.command.send"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Device Command Send parameters.",
+          "additionalProperties": false,
+          "required": [
+            "deviceCommand"
+          ],
+          "properties": {
+            "deviceCommand": {
+              "type": "object",
+              "description": "Typed DeviceCommand data.",
+              "additionalProperties": false,
+              "required": [
+                "assetId",
+                "locationId",
+                "metricCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "assetId": {
+                  "type": "string",
+                  "description": "Asset or device URI.",
+                  "format": "uri-reference"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "metricCode": {
+                  "type": "string",
+                  "description": "Metric or operation code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Measured or requested numeric value.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "UNECE or profile-declared unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "observedAt": {
+                  "type": "string",
+                  "description": "Observation instant.",
+                  "format": "date-time"
+                },
+                "commandCode": {
+                  "type": "string",
+                  "description": "Command or rule code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-device-command-send__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-command-send/schemas/output.schema.json",
+      "title": "Device Command Send output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-device-command-send__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-command-send/schemas/resource.schema.json",
+      "title": "DeviceCommand resource for comcom.device.command.send",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "DeviceCommand"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-device-register__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-register/schemas/input.schema.json",
+      "title": "Device Register input",
+      "description": "Register device using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.device.register"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Device Register parameters.",
+          "additionalProperties": false,
+          "required": [
+            "device"
+          ],
+          "properties": {
+            "device": {
+              "type": "object",
+              "description": "Typed Device data.",
+              "additionalProperties": false,
+              "required": [
+                "assetId",
+                "locationId",
+                "metricCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "assetId": {
+                  "type": "string",
+                  "description": "Asset or device URI.",
+                  "format": "uri-reference"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "metricCode": {
+                  "type": "string",
+                  "description": "Metric or operation code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Measured or requested numeric value.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "UNECE or profile-declared unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "observedAt": {
+                  "type": "string",
+                  "description": "Observation instant.",
+                  "format": "date-time"
+                },
+                "commandCode": {
+                  "type": "string",
+                  "description": "Command or rule code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-device-register__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-register/schemas/output.schema.json",
+      "title": "Device Register output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-register/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-device-register__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-register/schemas/resource.schema.json",
+      "title": "Device resource for comcom.device.register",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Device"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-device-status-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-status-get/schemas/input.schema.json",
+      "title": "Device Status Get input",
+      "description": "Retrieve device status using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.device.status.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the DeviceStatus to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "deviceStatusId"
+          ],
+          "properties": {
+            "deviceStatusId": {
+              "type": "string",
+              "description": "DeviceStatus URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-device-status-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-status-get/schemas/output.schema.json",
+      "title": "Device Status Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-status-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-device-status-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-status-get/schemas/resource.schema.json",
+      "title": "DeviceStatus resource for comcom.device.status.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "DeviceStatus"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-digital-resource-provision__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-digital-resource-provision/schemas/input.schema.json",
+      "title": "Digital Resource Provision input",
+      "description": "Provision digital resource using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.digital.resource.provision"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Digital Resource Provision parameters.",
+          "additionalProperties": false,
+          "required": [
+            "digitalResource"
+          ],
+          "properties": {
+            "digitalResource": {
+              "type": "object",
+              "description": "Typed DigitalResource data.",
+              "additionalProperties": false,
+              "required": [
+                "assetId",
+                "locationId",
+                "metricCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "assetId": {
+                  "type": "string",
+                  "description": "Asset or device URI.",
+                  "format": "uri-reference"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "metricCode": {
+                  "type": "string",
+                  "description": "Metric or operation code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Measured or requested numeric value.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "UNECE or profile-declared unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "observedAt": {
+                  "type": "string",
+                  "description": "Observation instant.",
+                  "format": "date-time"
+                },
+                "commandCode": {
+                  "type": "string",
+                  "description": "Command or rule code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-digital-resource-provision__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-digital-resource-provision/schemas/output.schema.json",
+      "title": "Digital Resource Provision output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-digital-resource-provision/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-digital-resource-provision__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-digital-resource-provision/schemas/resource.schema.json",
+      "title": "DigitalResource resource for comcom.digital.resource.provision",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "DigitalResource"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-media-stream-authorize__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-media-stream-authorize/schemas/input.schema.json",
+      "title": "Media Stream Authorize input",
+      "description": "Authorize media stream using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.media.stream.authorize"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Media Stream Authorize parameters.",
+          "additionalProperties": false,
+          "required": [
+            "mediaStreamId"
+          ],
+          "properties": {
+            "mediaStreamId": {
+              "type": "string",
+              "description": "MediaStream URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-media-stream-authorize__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-media-stream-authorize/schemas/output.schema.json",
+      "title": "Media Stream Authorize output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-media-stream-authorize/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-media-stream-authorize__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-media-stream-authorize/schemas/resource.schema.json",
+      "title": "MediaStream resource for comcom.media.stream.authorize",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "MediaStream"
+        },
+        "state": {
+          "enum": [
+            "requested",
+            "proposed",
+            "accepted"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-sensor-reading-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-sensor-reading-get/schemas/input.schema.json",
+      "title": "Sensor Reading Get input",
+      "description": "Retrieve sensor reading using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.sensor.reading.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the SensorReading to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "sensorReadingId"
+          ],
+          "properties": {
+            "sensorReadingId": {
+              "type": "string",
+              "description": "SensorReading URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-sensor-reading-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-sensor-reading-get/schemas/output.schema.json",
+      "title": "Sensor Reading Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-sensor-reading-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-sensor-reading-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-sensor-reading-get/schemas/resource.schema.json",
+      "title": "SensorReading resource for comcom.sensor.reading.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "SensorReading"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-telemetry-publish__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-telemetry-publish/schemas/input.schema.json",
+      "title": "Telemetry Publish input",
+      "description": "Publish telemetry using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.telemetry.publish"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Telemetry Publish parameters.",
+          "additionalProperties": false,
+          "required": [
+            "telemetry"
+          ],
+          "properties": {
+            "telemetry": {
+              "type": "object",
+              "description": "Typed Telemetry data.",
+              "additionalProperties": false,
+              "required": [
+                "assetId",
+                "locationId",
+                "metricCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "assetId": {
+                  "type": "string",
+                  "description": "Asset or device URI.",
+                  "format": "uri-reference"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "metricCode": {
+                  "type": "string",
+                  "description": "Metric or operation code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Measured or requested numeric value.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "UNECE or profile-declared unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "observedAt": {
+                  "type": "string",
+                  "description": "Observation instant.",
+                  "format": "date-time"
+                },
+                "commandCode": {
+                  "type": "string",
+                  "description": "Command or rule code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-telemetry-publish__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-telemetry-publish/schemas/output.schema.json",
+      "title": "Telemetry Publish output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.digital__comcom-telemetry-publish__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-telemetry-publish/schemas/resource.schema.json",
+      "title": "Telemetry resource for comcom.telemetry.publish",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Telemetry"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    }
+  }
+}

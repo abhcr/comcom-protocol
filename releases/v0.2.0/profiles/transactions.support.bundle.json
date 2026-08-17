@@ -1,0 +1,3101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/transactions.support.bundle.json",
+  "profile": "transactions.support",
+  "version": "0.2.0",
+  "capabilityIds": [
+    "comcom.complaint.submit",
+    "comcom.dispute.resolve",
+    "comcom.exchange.request",
+    "comcom.return.authorize",
+    "comcom.return.request",
+    "comcom.return.status.get",
+    "comcom.support.case.create",
+    "comcom.support.case.get",
+    "comcom.warranty.check",
+    "comcom.warranty.claim"
+  ],
+  "capabilities": [
+    {
+      "definition": {
+        "id": "comcom.complaint.submit",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.support",
+        "batch": 3,
+        "title": "Complaint Submit",
+        "purpose": "Submit complaint using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Complaint",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-complaint-submit/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-complaint-submit/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-complaint-submit/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/ReturnAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.complaint.submit",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/ReturnAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.complaint.submit",
+          "parameters": {
+            "complaint": {
+              "customerId": "https://business.example/customerId/example",
+              "itemId": "https://business.example/itemId/example",
+              "categoryCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "complaint": {
+                "customerId": "https://business.example/customerId/example",
+                "itemId": "https://business.example/itemId/example",
+                "categoryCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.complaint.submit-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.complaint.submit-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/complaint/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.dispute.resolve",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.support",
+        "batch": 3,
+        "title": "Dispute Resolve",
+        "purpose": "Execute dispute resolve using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "DisputeResolve",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-dispute-resolve/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-dispute-resolve/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-dispute-resolve/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "requested",
+            "proposed",
+            "resolved"
+          ],
+          "transitions": [
+            {
+              "from": "requested",
+              "to": "resolved"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/ReturnAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.dispute.resolve",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/ReturnAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.dispute.resolve",
+          "parameters": {
+            "disputeResolveId": "https://business.example/disputeResolve/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "disputeResolveId": "https://business.example/disputeResolve/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.dispute.resolve-allowed-1",
+              "from": "requested",
+              "to": "resolved",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.dispute.resolve-forbidden-1",
+              "from": "resolved",
+              "to": "requested",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/disputeResolve/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.exchange.request",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.support",
+        "batch": 3,
+        "title": "Exchange Request",
+        "purpose": "Request exchange using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Exchange",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-exchange-request/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-exchange-request/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-exchange-request/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/ReturnAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.exchange.request",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/ReturnAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.exchange.request",
+          "parameters": {
+            "exchange": {
+              "customerId": "https://business.example/customerId/example",
+              "itemId": "https://business.example/itemId/example",
+              "categoryCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "exchange": {
+                "customerId": "https://business.example/customerId/example",
+                "itemId": "https://business.example/itemId/example",
+                "categoryCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.exchange.request-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.exchange.request-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/exchange/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.return.authorize",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.support",
+        "batch": 3,
+        "title": "Return Authorize",
+        "purpose": "Authorize return using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Return",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-authorize/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-authorize/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-authorize/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "requested",
+            "proposed",
+            "accepted"
+          ],
+          "transitions": [
+            {
+              "from": "requested",
+              "to": "accepted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/ReturnAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.return.authorize",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/ReturnAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.return.authorize",
+          "parameters": {
+            "returnId": "https://business.example/return/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "returnId": "https://business.example/return/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.return.authorize-allowed-1",
+              "from": "requested",
+              "to": "accepted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.return.authorize-forbidden-1",
+              "from": "accepted",
+              "to": "requested",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/return/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.return.request",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.support",
+        "batch": 3,
+        "title": "Return Request",
+        "purpose": "Request return using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Return",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-request/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-request/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-request/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/ReturnAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.return.request",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/ReturnAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.return.request",
+          "parameters": {
+            "return": {
+              "customerId": "https://business.example/customerId/example",
+              "itemId": "https://business.example/itemId/example",
+              "categoryCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "return": {
+                "customerId": "https://business.example/customerId/example",
+                "itemId": "https://business.example/itemId/example",
+                "categoryCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.return.request-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.return.request-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/return/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.return.status.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.support",
+        "batch": 3,
+        "title": "Return Status Get",
+        "purpose": "Retrieve return status using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "ReturnStatus",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-status-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-status-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-status-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/ReturnAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.return.status.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/ReturnAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.return.status.get",
+          "parameters": {
+            "returnStatusId": "https://business.example/returnStatus/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "returnStatusId": "https://business.example/returnStatus/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/returnStatus/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.support.case.create",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.support",
+        "batch": 3,
+        "title": "Support Case Create",
+        "purpose": "Create support case using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "SupportCase",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-support-case-create/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-support-case-create/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-support-case-create/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/ReturnAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.support.case.create",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/ReturnAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.support.case.create",
+          "parameters": {
+            "supportCase": {
+              "customerId": "https://business.example/customerId/example",
+              "itemId": "https://business.example/itemId/example",
+              "categoryCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "supportCase": {
+                "customerId": "https://business.example/customerId/example",
+                "itemId": "https://business.example/itemId/example",
+                "categoryCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.support.case.create-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.support.case.create-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.support.case.create-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.support.case.create-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/supportCase/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.support.case.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.support",
+        "batch": 3,
+        "title": "Support Case Get",
+        "purpose": "Retrieve support case using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "SupportCase",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-support-case-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-support-case-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-support-case-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/ReturnAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.support.case.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/ReturnAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.support.case.get",
+          "parameters": {
+            "supportCaseId": "https://business.example/supportCase/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "supportCaseId": "https://business.example/supportCase/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/supportCase/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.warranty.check",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.support",
+        "batch": 3,
+        "title": "Warranty Check",
+        "purpose": "Check warranty using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Warranty",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-warranty-check/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-warranty-check/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-warranty-check/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/ReturnAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.warranty.check",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/ReturnAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.warranty.check",
+          "parameters": {
+            "warrantyId": "https://business.example/warranty/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "warrantyId": "https://business.example/warranty/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/warranty/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.warranty.claim",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.support",
+        "batch": 3,
+        "title": "Warranty Claim",
+        "purpose": "Execute warranty claim using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "WarrantyClaim",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-warranty-claim/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-warranty-claim/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-warranty-claim/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/ReturnAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.warranty.claim",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/ReturnAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.warranty.claim",
+          "parameters": {
+            "warrantyClaim": {
+              "customerId": "https://business.example/customerId/example",
+              "itemId": "https://business.example/itemId/example",
+              "categoryCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "warrantyClaim": {
+                "customerId": "https://business.example/customerId/example",
+                "itemId": "https://business.example/itemId/example",
+                "categoryCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.warranty.claim-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.warranty.claim-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/warrantyClaim/example"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "profiles__v0.2__transactions.support__comcom-complaint-submit__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-complaint-submit/schemas/input.schema.json",
+      "title": "Complaint Submit input",
+      "description": "Submit complaint using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.complaint.submit"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Complaint Submit parameters.",
+          "additionalProperties": false,
+          "required": [
+            "complaint"
+          ],
+          "properties": {
+            "complaint": {
+              "type": "object",
+              "description": "Typed Complaint data.",
+              "additionalProperties": false,
+              "required": [
+                "customerId",
+                "itemId",
+                "categoryCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "itemId": {
+                  "type": "string",
+                  "description": "Affected product, order, or service URI.",
+                  "format": "uri-reference"
+                },
+                "categoryCode": {
+                  "type": "string",
+                  "description": "Case category code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "reasonCode": {
+                  "type": "string",
+                  "description": "Reason code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Case summary.",
+                  "maxLength": 1000
+                },
+                "requestedResolutionCode": {
+                  "type": "string",
+                  "description": "Requested resolution code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "openedAt": {
+                  "type": "string",
+                  "description": "Case creation instant.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-complaint-submit__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-complaint-submit/schemas/output.schema.json",
+      "title": "Complaint Submit output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-complaint-submit/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-complaint-submit__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-complaint-submit/schemas/resource.schema.json",
+      "title": "Complaint resource for comcom.complaint.submit",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Complaint"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "itemId": {
+          "type": "string",
+          "description": "Affected product, order, or service URI.",
+          "format": "uri-reference"
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Case category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Reason code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Case summary.",
+          "maxLength": 1000
+        },
+        "requestedResolutionCode": {
+          "type": "string",
+          "description": "Requested resolution code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "openedAt": {
+          "type": "string",
+          "description": "Case creation instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-dispute-resolve__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-dispute-resolve/schemas/input.schema.json",
+      "title": "Dispute Resolve input",
+      "description": "Execute dispute resolve using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.dispute.resolve"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Dispute Resolve parameters.",
+          "additionalProperties": false,
+          "required": [
+            "disputeResolveId"
+          ],
+          "properties": {
+            "disputeResolveId": {
+              "type": "string",
+              "description": "DisputeResolve URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-dispute-resolve__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-dispute-resolve/schemas/output.schema.json",
+      "title": "Dispute Resolve output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-dispute-resolve/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-dispute-resolve__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-dispute-resolve/schemas/resource.schema.json",
+      "title": "DisputeResolve resource for comcom.dispute.resolve",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "DisputeResolve"
+        },
+        "state": {
+          "enum": [
+            "requested",
+            "proposed",
+            "resolved"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "itemId": {
+          "type": "string",
+          "description": "Affected product, order, or service URI.",
+          "format": "uri-reference"
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Case category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Reason code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Case summary.",
+          "maxLength": 1000
+        },
+        "requestedResolutionCode": {
+          "type": "string",
+          "description": "Requested resolution code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "openedAt": {
+          "type": "string",
+          "description": "Case creation instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-exchange-request__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-exchange-request/schemas/input.schema.json",
+      "title": "Exchange Request input",
+      "description": "Request exchange using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.exchange.request"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Exchange Request parameters.",
+          "additionalProperties": false,
+          "required": [
+            "exchange"
+          ],
+          "properties": {
+            "exchange": {
+              "type": "object",
+              "description": "Typed Exchange data.",
+              "additionalProperties": false,
+              "required": [
+                "customerId",
+                "itemId",
+                "categoryCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "itemId": {
+                  "type": "string",
+                  "description": "Affected product, order, or service URI.",
+                  "format": "uri-reference"
+                },
+                "categoryCode": {
+                  "type": "string",
+                  "description": "Case category code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "reasonCode": {
+                  "type": "string",
+                  "description": "Reason code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Case summary.",
+                  "maxLength": 1000
+                },
+                "requestedResolutionCode": {
+                  "type": "string",
+                  "description": "Requested resolution code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "openedAt": {
+                  "type": "string",
+                  "description": "Case creation instant.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-exchange-request__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-exchange-request/schemas/output.schema.json",
+      "title": "Exchange Request output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-exchange-request/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-exchange-request__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-exchange-request/schemas/resource.schema.json",
+      "title": "Exchange resource for comcom.exchange.request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Exchange"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "itemId": {
+          "type": "string",
+          "description": "Affected product, order, or service URI.",
+          "format": "uri-reference"
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Case category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Reason code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Case summary.",
+          "maxLength": 1000
+        },
+        "requestedResolutionCode": {
+          "type": "string",
+          "description": "Requested resolution code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "openedAt": {
+          "type": "string",
+          "description": "Case creation instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-return-authorize__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-authorize/schemas/input.schema.json",
+      "title": "Return Authorize input",
+      "description": "Authorize return using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.return.authorize"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Return Authorize parameters.",
+          "additionalProperties": false,
+          "required": [
+            "returnId"
+          ],
+          "properties": {
+            "returnId": {
+              "type": "string",
+              "description": "Return URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-return-authorize__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-authorize/schemas/output.schema.json",
+      "title": "Return Authorize output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-authorize/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-return-authorize__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-authorize/schemas/resource.schema.json",
+      "title": "Return resource for comcom.return.authorize",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Return"
+        },
+        "state": {
+          "enum": [
+            "requested",
+            "proposed",
+            "accepted"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "itemId": {
+          "type": "string",
+          "description": "Affected product, order, or service URI.",
+          "format": "uri-reference"
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Case category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Reason code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Case summary.",
+          "maxLength": 1000
+        },
+        "requestedResolutionCode": {
+          "type": "string",
+          "description": "Requested resolution code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "openedAt": {
+          "type": "string",
+          "description": "Case creation instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-return-request__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-request/schemas/input.schema.json",
+      "title": "Return Request input",
+      "description": "Request return using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.return.request"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Return Request parameters.",
+          "additionalProperties": false,
+          "required": [
+            "return"
+          ],
+          "properties": {
+            "return": {
+              "type": "object",
+              "description": "Typed Return data.",
+              "additionalProperties": false,
+              "required": [
+                "customerId",
+                "itemId",
+                "categoryCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "itemId": {
+                  "type": "string",
+                  "description": "Affected product, order, or service URI.",
+                  "format": "uri-reference"
+                },
+                "categoryCode": {
+                  "type": "string",
+                  "description": "Case category code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "reasonCode": {
+                  "type": "string",
+                  "description": "Reason code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Case summary.",
+                  "maxLength": 1000
+                },
+                "requestedResolutionCode": {
+                  "type": "string",
+                  "description": "Requested resolution code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "openedAt": {
+                  "type": "string",
+                  "description": "Case creation instant.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-return-request__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-request/schemas/output.schema.json",
+      "title": "Return Request output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-request/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-return-request__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-request/schemas/resource.schema.json",
+      "title": "Return resource for comcom.return.request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Return"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "itemId": {
+          "type": "string",
+          "description": "Affected product, order, or service URI.",
+          "format": "uri-reference"
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Case category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Reason code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Case summary.",
+          "maxLength": 1000
+        },
+        "requestedResolutionCode": {
+          "type": "string",
+          "description": "Requested resolution code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "openedAt": {
+          "type": "string",
+          "description": "Case creation instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-return-status-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-status-get/schemas/input.schema.json",
+      "title": "Return Status Get input",
+      "description": "Retrieve return status using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.return.status.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the ReturnStatus to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "returnStatusId"
+          ],
+          "properties": {
+            "returnStatusId": {
+              "type": "string",
+              "description": "ReturnStatus URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-return-status-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-status-get/schemas/output.schema.json",
+      "title": "Return Status Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-status-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-return-status-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-return-status-get/schemas/resource.schema.json",
+      "title": "ReturnStatus resource for comcom.return.status.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "ReturnStatus"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "itemId": {
+          "type": "string",
+          "description": "Affected product, order, or service URI.",
+          "format": "uri-reference"
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Case category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Reason code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Case summary.",
+          "maxLength": 1000
+        },
+        "requestedResolutionCode": {
+          "type": "string",
+          "description": "Requested resolution code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "openedAt": {
+          "type": "string",
+          "description": "Case creation instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-support-case-create__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-support-case-create/schemas/input.schema.json",
+      "title": "Support Case Create input",
+      "description": "Create support case using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.support.case.create"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Support Case Create parameters.",
+          "additionalProperties": false,
+          "required": [
+            "supportCase"
+          ],
+          "properties": {
+            "supportCase": {
+              "type": "object",
+              "description": "Typed SupportCase data.",
+              "additionalProperties": false,
+              "required": [
+                "customerId",
+                "itemId",
+                "categoryCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "itemId": {
+                  "type": "string",
+                  "description": "Affected product, order, or service URI.",
+                  "format": "uri-reference"
+                },
+                "categoryCode": {
+                  "type": "string",
+                  "description": "Case category code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "reasonCode": {
+                  "type": "string",
+                  "description": "Reason code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Case summary.",
+                  "maxLength": 1000
+                },
+                "requestedResolutionCode": {
+                  "type": "string",
+                  "description": "Requested resolution code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "openedAt": {
+                  "type": "string",
+                  "description": "Case creation instant.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-support-case-create__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-support-case-create/schemas/output.schema.json",
+      "title": "Support Case Create output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-support-case-create/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-support-case-create__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-support-case-create/schemas/resource.schema.json",
+      "title": "SupportCase resource for comcom.support.case.create",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "SupportCase"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "itemId": {
+          "type": "string",
+          "description": "Affected product, order, or service URI.",
+          "format": "uri-reference"
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Case category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Reason code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Case summary.",
+          "maxLength": 1000
+        },
+        "requestedResolutionCode": {
+          "type": "string",
+          "description": "Requested resolution code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "openedAt": {
+          "type": "string",
+          "description": "Case creation instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-support-case-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-support-case-get/schemas/input.schema.json",
+      "title": "Support Case Get input",
+      "description": "Retrieve support case using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.support.case.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the SupportCase to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "supportCaseId"
+          ],
+          "properties": {
+            "supportCaseId": {
+              "type": "string",
+              "description": "SupportCase URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-support-case-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-support-case-get/schemas/output.schema.json",
+      "title": "Support Case Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-support-case-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-support-case-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-support-case-get/schemas/resource.schema.json",
+      "title": "SupportCase resource for comcom.support.case.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "SupportCase"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "itemId": {
+          "type": "string",
+          "description": "Affected product, order, or service URI.",
+          "format": "uri-reference"
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Case category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Reason code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Case summary.",
+          "maxLength": 1000
+        },
+        "requestedResolutionCode": {
+          "type": "string",
+          "description": "Requested resolution code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "openedAt": {
+          "type": "string",
+          "description": "Case creation instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-warranty-check__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-warranty-check/schemas/input.schema.json",
+      "title": "Warranty Check input",
+      "description": "Check warranty using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.warranty.check"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the Warranty to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "warrantyId"
+          ],
+          "properties": {
+            "warrantyId": {
+              "type": "string",
+              "description": "Warranty URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-warranty-check__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-warranty-check/schemas/output.schema.json",
+      "title": "Warranty Check output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-warranty-check/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-warranty-check__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-warranty-check/schemas/resource.schema.json",
+      "title": "Warranty resource for comcom.warranty.check",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Warranty"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "itemId": {
+          "type": "string",
+          "description": "Affected product, order, or service URI.",
+          "format": "uri-reference"
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Case category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Reason code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Case summary.",
+          "maxLength": 1000
+        },
+        "requestedResolutionCode": {
+          "type": "string",
+          "description": "Requested resolution code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "openedAt": {
+          "type": "string",
+          "description": "Case creation instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-warranty-claim__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-warranty-claim/schemas/input.schema.json",
+      "title": "Warranty Claim input",
+      "description": "Execute warranty claim using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.warranty.claim"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Warranty Claim parameters.",
+          "additionalProperties": false,
+          "required": [
+            "warrantyClaim"
+          ],
+          "properties": {
+            "warrantyClaim": {
+              "type": "object",
+              "description": "Typed WarrantyClaim data.",
+              "additionalProperties": false,
+              "required": [
+                "customerId",
+                "itemId",
+                "categoryCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "itemId": {
+                  "type": "string",
+                  "description": "Affected product, order, or service URI.",
+                  "format": "uri-reference"
+                },
+                "categoryCode": {
+                  "type": "string",
+                  "description": "Case category code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "reasonCode": {
+                  "type": "string",
+                  "description": "Reason code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Case summary.",
+                  "maxLength": 1000
+                },
+                "requestedResolutionCode": {
+                  "type": "string",
+                  "description": "Requested resolution code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "openedAt": {
+                  "type": "string",
+                  "description": "Case creation instant.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-warranty-claim__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-warranty-claim/schemas/output.schema.json",
+      "title": "Warranty Claim output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-warranty-claim/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.support__comcom-warranty-claim__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-warranty-claim/schemas/resource.schema.json",
+      "title": "WarrantyClaim resource for comcom.warranty.claim",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "WarrantyClaim"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "itemId": {
+          "type": "string",
+          "description": "Affected product, order, or service URI.",
+          "format": "uri-reference"
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Case category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Reason code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Case summary.",
+          "maxLength": 1000
+        },
+        "requestedResolutionCode": {
+          "type": "string",
+          "description": "Requested resolution code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "openedAt": {
+          "type": "string",
+          "description": "Case creation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

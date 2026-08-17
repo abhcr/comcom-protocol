@@ -1,0 +1,30 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.appointment.complete-allowed-1",
+      "from": "accepted",
+      "to": "completed",
+      "expected": "allowed"
+    },
+    {
+      "case": "comcom.appointment.complete-allowed-2",
+      "from": "active",
+      "to": "completed",
+      "expected": "allowed"
+    },
+    {
+      "case": "comcom.appointment.complete-allowed-3",
+      "from": "inProgress",
+      "to": "completed",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.appointment.complete-forbidden-1",
+      "from": "completed",
+      "to": "accepted",
+      "expected": "forbidden"
+    }
+  ]
+}

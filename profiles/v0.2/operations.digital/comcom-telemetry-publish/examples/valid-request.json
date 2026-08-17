@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.telemetry.publish",
+  "parameters": {
+    "telemetry": {
+      "assetId": "https://business.example/assetId/example",
+      "locationId": "https://business.example/locationId/example",
+      "metricCode": "example"
+    }
+  }
+}

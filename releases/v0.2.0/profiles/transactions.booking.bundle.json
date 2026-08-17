@@ -1,0 +1,4016 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/transactions.booking.bundle.json",
+  "profile": "transactions.booking",
+  "version": "0.2.0",
+  "capabilityIds": [
+    "comcom.booking.cancel",
+    "comcom.booking.create",
+    "comcom.booking.get",
+    "comcom.booking.modify",
+    "comcom.event.register",
+    "comcom.event.search",
+    "comcom.flight.book",
+    "comcom.flight.search",
+    "comcom.journey.itinerary.get",
+    "comcom.room.book",
+    "comcom.room.search",
+    "comcom.ticket.issue"
+  ],
+  "capabilities": [
+    {
+      "definition": {
+        "id": "comcom.booking.cancel",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.booking",
+        "batch": 3,
+        "title": "Booking Cancel",
+        "purpose": "Cancel booking using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Booking",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-cancel/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-cancel/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-cancel/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "accepted",
+            "active",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "accepted",
+              "to": "cancelled"
+            },
+            {
+              "from": "active",
+              "to": "cancelled"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.booking.cancel",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.booking.cancel",
+          "parameters": {
+            "bookingId": "https://business.example/booking/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "bookingId": "https://business.example/booking/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.booking.cancel-allowed-1",
+              "from": "accepted",
+              "to": "cancelled",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.booking.cancel-allowed-2",
+              "from": "active",
+              "to": "cancelled",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.booking.cancel-forbidden-1",
+              "from": "cancelled",
+              "to": "accepted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/booking/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.booking.create",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.booking",
+        "batch": 3,
+        "title": "Booking Create",
+        "purpose": "Create booking using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Booking",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.booking.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.booking.create",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.booking.create",
+          "parameters": {
+            "booking": {
+              "offeringId": "https://business.example/offeringId/example",
+              "customerId": "https://business.example/customerId/example",
+              "providerId": "https://business.example/providerId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "booking": {
+                "offeringId": "https://business.example/offeringId/example",
+                "customerId": "https://business.example/customerId/example",
+                "providerId": "https://business.example/providerId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.booking.create-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.booking.create-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.booking.create-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.booking.create-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "capability": "comcom.booking.cancel",
+          "originalResource": "https://business.example/booking/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.booking.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.booking",
+        "batch": 3,
+        "title": "Booking Get",
+        "purpose": "Retrieve booking using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Booking",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.booking.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.booking.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.booking.get",
+          "parameters": {
+            "bookingId": "https://business.example/booking/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "bookingId": "https://business.example/booking/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "capability": "comcom.booking.cancel",
+          "originalResource": "https://business.example/booking/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.booking.modify",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.booking",
+        "batch": 3,
+        "title": "Booking Modify",
+        "purpose": "Modify booking using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Booking",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-modify/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-modify/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-modify/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "active",
+              "revisionRequired": true
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.booking.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.booking.modify",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.booking.modify",
+          "parameters": {
+            "bookingId": "https://business.example/booking/example",
+            "expectedRevision": 0,
+            "changes": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "bookingId": "https://business.example/booking/example",
+              "expectedRevision": 0,
+              "changes": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.booking.modify-allowed-1",
+              "from": "active",
+              "to": "active",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": []
+        },
+        "reversal": {
+          "capability": "comcom.booking.cancel",
+          "originalResource": "https://business.example/booking/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.event.register",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.booking",
+        "batch": 3,
+        "title": "Event Register",
+        "purpose": "Register event using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Event",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-event-register/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-event-register/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-event-register/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.event.register",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.event.register",
+          "parameters": {
+            "event": {
+              "offeringId": "https://business.example/offeringId/example",
+              "customerId": "https://business.example/customerId/example",
+              "providerId": "https://business.example/providerId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "event": {
+                "offeringId": "https://business.example/offeringId/example",
+                "customerId": "https://business.example/customerId/example",
+                "providerId": "https://business.example/providerId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.event.register-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.event.register-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.event.register-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.event.register-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/event/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.event.search",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.booking",
+        "batch": 3,
+        "title": "Event Search",
+        "purpose": "Search for event using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Event",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-event-search/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-event-search/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-event-search/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.event.search",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.event.search",
+          "parameters": {
+            "filters": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "filters": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/event/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.flight.book",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.booking",
+        "batch": 3,
+        "title": "Flight Book",
+        "purpose": "Book flight using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Flight",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-flight-book/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-flight-book/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-flight-book/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.flight.book",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.flight.book",
+          "parameters": {
+            "flight": {
+              "offeringId": "https://business.example/offeringId/example",
+              "customerId": "https://business.example/customerId/example",
+              "providerId": "https://business.example/providerId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "flight": {
+                "offeringId": "https://business.example/offeringId/example",
+                "customerId": "https://business.example/customerId/example",
+                "providerId": "https://business.example/providerId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.flight.book-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.flight.book-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.flight.book-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.flight.book-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/flight/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.flight.search",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.booking",
+        "batch": 3,
+        "title": "Flight Search",
+        "purpose": "Search for flight using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Flight",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-flight-search/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-flight-search/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-flight-search/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.flight.search",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.flight.search",
+          "parameters": {
+            "filters": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "filters": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/flight/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.journey.itinerary.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.booking",
+        "batch": 3,
+        "title": "Journey Itinerary Get",
+        "purpose": "Retrieve journey itinerary using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "JourneyItinerary",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-journey-itinerary-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-journey-itinerary-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-journey-itinerary-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.journey.itinerary.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.journey.itinerary.get",
+          "parameters": {
+            "journeyItineraryId": "https://business.example/journeyItinerary/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "journeyItineraryId": "https://business.example/journeyItinerary/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/journeyItinerary/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.room.book",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.booking",
+        "batch": 3,
+        "title": "Room Book",
+        "purpose": "Book room using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Room",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-book/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-book/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-book/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.room.book",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.room.book",
+          "parameters": {
+            "room": {
+              "offeringId": "https://business.example/offeringId/example",
+              "customerId": "https://business.example/customerId/example",
+              "providerId": "https://business.example/providerId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "room": {
+                "offeringId": "https://business.example/offeringId/example",
+                "customerId": "https://business.example/customerId/example",
+                "providerId": "https://business.example/providerId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.room.book-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.room.book-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.room.book-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.room.book-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/room/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.room.search",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.booking",
+        "batch": 3,
+        "title": "Room Search",
+        "purpose": "Search for room using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Room",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-search/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-search/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-search/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.room.search",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.room.search",
+          "parameters": {
+            "filters": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "filters": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/room/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.ticket.issue",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.booking",
+        "batch": 3,
+        "title": "Ticket Issue",
+        "purpose": "Issue ticket using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Ticket",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-ticket-issue/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-ticket-issue/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-ticket-issue/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.ticket.issue",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Reservation",
+          "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.ticket.issue",
+          "parameters": {
+            "ticket": {
+              "offeringId": "https://business.example/offeringId/example",
+              "customerId": "https://business.example/customerId/example",
+              "providerId": "https://business.example/providerId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "ticket": {
+                "offeringId": "https://business.example/offeringId/example",
+                "customerId": "https://business.example/customerId/example",
+                "providerId": "https://business.example/providerId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.ticket.issue-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.ticket.issue-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.ticket.issue-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.ticket.issue-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/ticket/example"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "profiles__v0.2__transactions.booking__comcom-booking-cancel__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-cancel/schemas/input.schema.json",
+      "title": "Booking Cancel input",
+      "description": "Cancel booking using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.booking.cancel"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Booking Cancel parameters.",
+          "additionalProperties": false,
+          "required": [
+            "bookingId"
+          ],
+          "properties": {
+            "bookingId": {
+              "type": "string",
+              "description": "Booking URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-booking-cancel__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-cancel/schemas/output.schema.json",
+      "title": "Booking Cancel output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-cancel/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-booking-cancel__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-cancel/schemas/resource.schema.json",
+      "title": "Booking resource for comcom.booking.cancel",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Booking"
+        },
+        "state": {
+          "enum": [
+            "accepted",
+            "active",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-booking-create__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/input.schema.json",
+      "title": "Booking Create input",
+      "description": "Create booking using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.booking.create"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Booking Create parameters.",
+          "additionalProperties": false,
+          "required": [
+            "booking"
+          ],
+          "properties": {
+            "booking": {
+              "type": "object",
+              "description": "Typed Booking data.",
+              "additionalProperties": false,
+              "required": [
+                "offeringId",
+                "customerId",
+                "providerId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "partySize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-booking-create__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/output.schema.json",
+      "title": "Booking Create output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-booking-create__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/resource.schema.json",
+      "title": "Booking resource for comcom.booking.create",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Booking"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-booking-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-get/schemas/input.schema.json",
+      "title": "Booking Get input",
+      "description": "Retrieve booking using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.booking.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the Booking to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "bookingId"
+          ],
+          "properties": {
+            "bookingId": {
+              "type": "string",
+              "description": "Booking URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-booking-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-get/schemas/output.schema.json",
+      "title": "Booking Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-booking-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-get/schemas/resource.schema.json",
+      "title": "Booking resource for comcom.booking.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Booking"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-booking-modify__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-modify/schemas/input.schema.json",
+      "title": "Booking Modify input",
+      "description": "Modify booking using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.booking.modify"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Booking Modify parameters.",
+          "additionalProperties": false,
+          "required": [
+            "bookingId",
+            "expectedRevision",
+            "changes"
+          ],
+          "properties": {
+            "bookingId": {
+              "type": "string",
+              "description": "Booking URI.",
+              "format": "uri-reference"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "changes": {
+              "type": "object",
+              "description": "Permitted Booking changes.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "partySize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-booking-modify__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-modify/schemas/output.schema.json",
+      "title": "Booking Modify output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-modify/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-booking-modify__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-modify/schemas/resource.schema.json",
+      "title": "Booking resource for comcom.booking.modify",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Booking"
+        },
+        "state": {
+          "enum": [
+            "active"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-event-register__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-event-register/schemas/input.schema.json",
+      "title": "Event Register input",
+      "description": "Register event using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.event.register"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Event Register parameters.",
+          "additionalProperties": false,
+          "required": [
+            "event"
+          ],
+          "properties": {
+            "event": {
+              "type": "object",
+              "description": "Typed Event data.",
+              "additionalProperties": false,
+              "required": [
+                "offeringId",
+                "customerId",
+                "providerId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "partySize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-event-register__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-event-register/schemas/output.schema.json",
+      "title": "Event Register output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-event-register/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-event-register__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-event-register/schemas/resource.schema.json",
+      "title": "Event resource for comcom.event.register",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Event"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-event-search__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-event-search/schemas/input.schema.json",
+      "title": "Event Search input",
+      "description": "Search for event using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.event.search"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Typed Event discovery parameters.",
+          "additionalProperties": false,
+          "required": [
+            "filters"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+              "maxLength": 500
+            },
+            "filters": {
+              "type": "object",
+              "description": "Typed Event filters.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                }
+              }
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "cursor": {
+              "type": "string",
+              "description": "Opaque continuation cursor.",
+              "maxLength": 500
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-event-search__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-event-search/schemas/output.schema.json",
+      "title": "Event Search output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "items"
+      ],
+      "properties": {
+        "status": {
+          "const": "completed"
+        },
+        "items": {
+          "type": "array",
+          "description": "Matching Event resources.",
+          "items": {
+            "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-event-search/schemas/resource.schema.json"
+          },
+          "maxItems": 100
+        },
+        "nextCursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-event-search__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-event-search/schemas/resource.schema.json",
+      "title": "Event resource for comcom.event.search",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Event"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-flight-book__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-flight-book/schemas/input.schema.json",
+      "title": "Flight Book input",
+      "description": "Book flight using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.flight.book"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Flight Book parameters.",
+          "additionalProperties": false,
+          "required": [
+            "flight"
+          ],
+          "properties": {
+            "flight": {
+              "type": "object",
+              "description": "Typed Flight data.",
+              "additionalProperties": false,
+              "required": [
+                "offeringId",
+                "customerId",
+                "providerId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "partySize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-flight-book__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-flight-book/schemas/output.schema.json",
+      "title": "Flight Book output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-flight-book/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-flight-book__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-flight-book/schemas/resource.schema.json",
+      "title": "Flight resource for comcom.flight.book",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Flight"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-flight-search__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-flight-search/schemas/input.schema.json",
+      "title": "Flight Search input",
+      "description": "Search for flight using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.flight.search"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Typed Flight discovery parameters.",
+          "additionalProperties": false,
+          "required": [
+            "filters"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+              "maxLength": 500
+            },
+            "filters": {
+              "type": "object",
+              "description": "Typed Flight filters.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                }
+              }
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "cursor": {
+              "type": "string",
+              "description": "Opaque continuation cursor.",
+              "maxLength": 500
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-flight-search__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-flight-search/schemas/output.schema.json",
+      "title": "Flight Search output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "items"
+      ],
+      "properties": {
+        "status": {
+          "const": "completed"
+        },
+        "items": {
+          "type": "array",
+          "description": "Matching Flight resources.",
+          "items": {
+            "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-flight-search/schemas/resource.schema.json"
+          },
+          "maxItems": 100
+        },
+        "nextCursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-flight-search__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-flight-search/schemas/resource.schema.json",
+      "title": "Flight resource for comcom.flight.search",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Flight"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-journey-itinerary-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-journey-itinerary-get/schemas/input.schema.json",
+      "title": "Journey Itinerary Get input",
+      "description": "Retrieve journey itinerary using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.journey.itinerary.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the JourneyItinerary to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "journeyItineraryId"
+          ],
+          "properties": {
+            "journeyItineraryId": {
+              "type": "string",
+              "description": "JourneyItinerary URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-journey-itinerary-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-journey-itinerary-get/schemas/output.schema.json",
+      "title": "Journey Itinerary Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-journey-itinerary-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-journey-itinerary-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-journey-itinerary-get/schemas/resource.schema.json",
+      "title": "JourneyItinerary resource for comcom.journey.itinerary.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "JourneyItinerary"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-room-book__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-book/schemas/input.schema.json",
+      "title": "Room Book input",
+      "description": "Book room using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.room.book"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Room Book parameters.",
+          "additionalProperties": false,
+          "required": [
+            "room"
+          ],
+          "properties": {
+            "room": {
+              "type": "object",
+              "description": "Typed Room data.",
+              "additionalProperties": false,
+              "required": [
+                "offeringId",
+                "customerId",
+                "providerId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "partySize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-room-book__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-book/schemas/output.schema.json",
+      "title": "Room Book output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-book/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-room-book__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-book/schemas/resource.schema.json",
+      "title": "Room resource for comcom.room.book",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Room"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-room-search__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-search/schemas/input.schema.json",
+      "title": "Room Search input",
+      "description": "Search for room using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.room.search"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Typed Room discovery parameters.",
+          "additionalProperties": false,
+          "required": [
+            "filters"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+              "maxLength": 500
+            },
+            "filters": {
+              "type": "object",
+              "description": "Typed Room filters.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                }
+              }
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "cursor": {
+              "type": "string",
+              "description": "Opaque continuation cursor.",
+              "maxLength": 500
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-room-search__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-search/schemas/output.schema.json",
+      "title": "Room Search output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "items"
+      ],
+      "properties": {
+        "status": {
+          "const": "completed"
+        },
+        "items": {
+          "type": "array",
+          "description": "Matching Room resources.",
+          "items": {
+            "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-search/schemas/resource.schema.json"
+          },
+          "maxItems": 100
+        },
+        "nextCursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-room-search__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-search/schemas/resource.schema.json",
+      "title": "Room resource for comcom.room.search",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Room"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-ticket-issue__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-ticket-issue/schemas/input.schema.json",
+      "title": "Ticket Issue input",
+      "description": "Issue ticket using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.ticket.issue"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Ticket Issue parameters.",
+          "additionalProperties": false,
+          "required": [
+            "ticket"
+          ],
+          "properties": {
+            "ticket": {
+              "type": "object",
+              "description": "Typed Ticket data.",
+              "additionalProperties": false,
+              "required": [
+                "offeringId",
+                "customerId",
+                "providerId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "partySize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-ticket-issue__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-ticket-issue/schemas/output.schema.json",
+      "title": "Ticket Issue output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-ticket-issue/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.booking__comcom-ticket-issue__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-ticket-issue/schemas/resource.schema.json",
+      "title": "Ticket resource for comcom.ticket.issue",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Ticket"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    }
+  }
+}

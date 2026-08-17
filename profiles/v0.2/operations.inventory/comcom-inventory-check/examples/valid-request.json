@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.inventory.check",
+  "parameters": {
+    "inventoryId": "https://business.example/inventory/example"
+  }
+}

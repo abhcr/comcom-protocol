@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.healthcare.service.request",
+  "parameters": {
+    "healthcareService": {
+      "patientId": "https://business.example/patientId/example",
+      "providerId": "https://business.example/providerId/example",
+      "serviceCode": "example"
+    }
+  }
+}

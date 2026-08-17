@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.credential.verify",
+  "parameters": {
+    "credentialId": "https://business.example/credential/example"
+  }
+}

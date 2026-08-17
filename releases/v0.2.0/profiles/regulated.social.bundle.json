@@ -1,0 +1,3143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/regulated.social.bundle.json",
+  "profile": "regulated.social",
+  "version": "0.2.0",
+  "capabilityIds": [
+    "comcom.assessment.submit",
+    "comcom.certificate.verify",
+    "comcom.education.course.search",
+    "comcom.education.enroll",
+    "comcom.education.progress.get",
+    "comcom.healthcare.provider.search",
+    "comcom.healthcare.referral.submit",
+    "comcom.healthcare.service.request",
+    "comcom.prescription.fulfillment.get",
+    "comcom.research.data.request"
+  ],
+  "capabilities": [
+    {
+      "definition": {
+        "id": "comcom.assessment.submit",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.social",
+        "batch": 6,
+        "title": "Assessment Submit",
+        "purpose": "Submit assessment using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Assessment",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-assessment-submit/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-assessment-submit/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-assessment-submit/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://hl7.org/fhir/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.assessment.submit",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://hl7.org/fhir/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.assessment.submit",
+          "parameters": {
+            "assessment": {
+              "learnerId": "https://business.example/learnerId/example",
+              "providerId": "https://business.example/providerId/example",
+              "courseId": "https://business.example/courseId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "assessment": {
+                "learnerId": "https://business.example/learnerId/example",
+                "providerId": "https://business.example/providerId/example",
+                "courseId": "https://business.example/courseId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.assessment.submit-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.assessment.submit-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/assessment/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.certificate.verify",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.social",
+        "batch": 6,
+        "title": "Certificate Verify",
+        "purpose": "Verify certificate using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Certificate",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-certificate-verify/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-certificate-verify/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-certificate-verify/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://hl7.org/fhir/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.certificate.verify",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://hl7.org/fhir/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.certificate.verify",
+          "parameters": {
+            "certificateId": "https://business.example/certificate/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "certificateId": "https://business.example/certificate/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/certificate/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.education.course.search",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.social",
+        "batch": 6,
+        "title": "Education Course Search",
+        "purpose": "Search for education course using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "EducationCourse",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-course-search/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-course-search/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-course-search/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://hl7.org/fhir/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.education.course.search",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://hl7.org/fhir/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.education.course.search",
+          "parameters": {
+            "filters": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "filters": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/educationCourse/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.education.enroll",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.social",
+        "batch": 6,
+        "title": "Education Enroll",
+        "purpose": "Enroll in education using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Education",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-enroll/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-enroll/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-enroll/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://hl7.org/fhir/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.education.enroll",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://hl7.org/fhir/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.education.enroll",
+          "parameters": {
+            "education": {
+              "learnerId": "https://business.example/learnerId/example",
+              "providerId": "https://business.example/providerId/example",
+              "courseId": "https://business.example/courseId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "education": {
+                "learnerId": "https://business.example/learnerId/example",
+                "providerId": "https://business.example/providerId/example",
+                "courseId": "https://business.example/courseId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.education.enroll-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.education.enroll-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.education.enroll-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.education.enroll-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/education/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.education.progress.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.social",
+        "batch": 6,
+        "title": "Education Progress Get",
+        "purpose": "Retrieve education progress using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "EducationProgress",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-progress-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-progress-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-progress-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://hl7.org/fhir/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.education.progress.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://hl7.org/fhir/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.education.progress.get",
+          "parameters": {
+            "educationProgressId": "https://business.example/educationProgress/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "educationProgressId": "https://business.example/educationProgress/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/educationProgress/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.healthcare.provider.search",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.social",
+        "batch": 6,
+        "title": "Healthcare Provider Search",
+        "purpose": "Search for healthcare provider using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "HealthcareProvider",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-provider-search/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-provider-search/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-provider-search/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://hl7.org/fhir/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.healthcare.provider.search",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://hl7.org/fhir/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.healthcare.provider.search",
+          "parameters": {
+            "filters": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "filters": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/healthcareProvider/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.healthcare.referral.submit",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.social",
+        "batch": 6,
+        "title": "Healthcare Referral Submit",
+        "purpose": "Submit healthcare referral using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "HealthcareReferral",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-referral-submit/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-referral-submit/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-referral-submit/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://hl7.org/fhir/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.healthcare.referral.submit",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://hl7.org/fhir/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.healthcare.referral.submit",
+          "parameters": {
+            "healthcareReferral": {
+              "patientId": "https://business.example/patientId/example",
+              "providerId": "https://business.example/providerId/example",
+              "serviceCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "healthcareReferral": {
+                "patientId": "https://business.example/patientId/example",
+                "providerId": "https://business.example/providerId/example",
+                "serviceCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.healthcare.referral.submit-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.healthcare.referral.submit-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/healthcareReferral/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.healthcare.service.request",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.social",
+        "batch": 6,
+        "title": "Healthcare Service Request",
+        "purpose": "Request healthcare service using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "HealthcareService",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-service-request/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-service-request/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-service-request/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://hl7.org/fhir/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.healthcare.service.request",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://hl7.org/fhir/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.healthcare.service.request",
+          "parameters": {
+            "healthcareService": {
+              "patientId": "https://business.example/patientId/example",
+              "providerId": "https://business.example/providerId/example",
+              "serviceCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "healthcareService": {
+                "patientId": "https://business.example/patientId/example",
+                "providerId": "https://business.example/providerId/example",
+                "serviceCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.healthcare.service.request-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.healthcare.service.request-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/healthcareService/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.prescription.fulfillment.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.social",
+        "batch": 6,
+        "title": "Prescription Fulfillment Get",
+        "purpose": "Retrieve prescription fulfillment using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "PrescriptionFulfillment",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-prescription-fulfillment-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-prescription-fulfillment-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-prescription-fulfillment-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://hl7.org/fhir/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.prescription.fulfillment.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://hl7.org/fhir/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.prescription.fulfillment.get",
+          "parameters": {
+            "prescriptionFulfillmentId": "https://business.example/prescriptionFulfillment/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "prescriptionFulfillmentId": "https://business.example/prescriptionFulfillment/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/prescriptionFulfillment/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.research.data.request",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.social",
+        "batch": 6,
+        "title": "Research Data Request",
+        "purpose": "Request research data using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "ResearchData",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-research-data-request/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-research-data-request/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-research-data-request/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://hl7.org/fhir/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.research.data.request",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://hl7.org/fhir/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.research.data.request",
+          "parameters": {
+            "researchData": {
+              "subjectId": "https://business.example/subjectId/example",
+              "issuerId": "https://business.example/issuerId/example",
+              "referenceNumber": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "researchData": {
+                "subjectId": "https://business.example/subjectId/example",
+                "issuerId": "https://business.example/issuerId/example",
+                "referenceNumber": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.research.data.request-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.research.data.request-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/researchData/example"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "profiles__v0.2__regulated.social__comcom-assessment-submit__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-assessment-submit/schemas/input.schema.json",
+      "title": "Assessment Submit input",
+      "description": "Submit assessment using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.assessment.submit"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Assessment Submit parameters.",
+          "additionalProperties": false,
+          "required": [
+            "assessment"
+          ],
+          "properties": {
+            "assessment": {
+              "type": "object",
+              "description": "Typed Assessment data.",
+              "additionalProperties": false,
+              "required": [
+                "learnerId",
+                "providerId",
+                "courseId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "learnerId": {
+                  "type": "string",
+                  "description": "Learner URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Education or research provider URI.",
+                  "format": "uri-reference"
+                },
+                "courseId": {
+                  "type": "string",
+                  "description": "Course URI.",
+                  "format": "uri-reference"
+                },
+                "assessmentCode": {
+                  "type": "string",
+                  "description": "Assessment or progress code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "score": {
+                  "type": "string",
+                  "description": "Score or measured progress.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "completedAt": {
+                  "type": "string",
+                  "description": "Completion instant.",
+                  "format": "date-time"
+                },
+                "purposeCode": {
+                  "type": "string",
+                  "description": "Research or education purpose code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-assessment-submit__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-assessment-submit/schemas/output.schema.json",
+      "title": "Assessment Submit output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-assessment-submit/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-assessment-submit__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-assessment-submit/schemas/resource.schema.json",
+      "title": "Assessment resource for comcom.assessment.submit",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Assessment"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "learnerId": {
+          "type": "string",
+          "description": "Learner URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Education or research provider URI.",
+          "format": "uri-reference"
+        },
+        "courseId": {
+          "type": "string",
+          "description": "Course URI.",
+          "format": "uri-reference"
+        },
+        "assessmentCode": {
+          "type": "string",
+          "description": "Assessment or progress code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "score": {
+          "type": "string",
+          "description": "Score or measured progress.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "completedAt": {
+          "type": "string",
+          "description": "Completion instant.",
+          "format": "date-time"
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Research or education purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-certificate-verify__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-certificate-verify/schemas/input.schema.json",
+      "title": "Certificate Verify input",
+      "description": "Verify certificate using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.certificate.verify"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the Certificate to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "certificateId"
+          ],
+          "properties": {
+            "certificateId": {
+              "type": "string",
+              "description": "Certificate URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-certificate-verify__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-certificate-verify/schemas/output.schema.json",
+      "title": "Certificate Verify output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-certificate-verify/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-certificate-verify__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-certificate-verify/schemas/resource.schema.json",
+      "title": "Certificate resource for comcom.certificate.verify",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Certificate"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subjectId": {
+          "type": "string",
+          "description": "Subject URI.",
+          "format": "uri-reference"
+        },
+        "issuerId": {
+          "type": "string",
+          "description": "Issuing or controlling entity URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Authority or document reference.",
+          "maxLength": 160
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Declared purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "claimCodes": {
+          "type": "array",
+          "description": "Declared claim codes.",
+          "items": {
+            "type": "string",
+            "description": "Claim code.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "uniqueItems": true,
+          "maxItems": 100
+        },
+        "validFrom": {
+          "type": "string",
+          "description": "Validity start.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity end.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-education-course-search__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-course-search/schemas/input.schema.json",
+      "title": "Education Course Search input",
+      "description": "Search for education course using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.education.course.search"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Typed EducationCourse discovery parameters.",
+          "additionalProperties": false,
+          "required": [
+            "filters"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+              "maxLength": 500
+            },
+            "filters": {
+              "type": "object",
+              "description": "Typed EducationCourse filters.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Display name.",
+                  "minLength": 1,
+                  "maxLength": 300
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description.",
+                  "maxLength": 5000
+                },
+                "categoryCode": {
+                  "type": "string",
+                  "description": "Standard or provider category code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "sku": {
+                  "type": "string",
+                  "description": "Seller stock-keeping unit.",
+                  "maxLength": 100
+                },
+                "gtin": {
+                  "type": "string",
+                  "description": "GS1 Global Trade Item Number.",
+                  "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Price amount.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                }
+              }
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "cursor": {
+              "type": "string",
+              "description": "Opaque continuation cursor.",
+              "maxLength": 500
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-education-course-search__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-course-search/schemas/output.schema.json",
+      "title": "Education Course Search output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "items"
+      ],
+      "properties": {
+        "status": {
+          "const": "completed"
+        },
+        "items": {
+          "type": "array",
+          "description": "Matching EducationCourse resources.",
+          "items": {
+            "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-course-search/schemas/resource.schema.json"
+          },
+          "maxItems": 100
+        },
+        "nextCursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-education-course-search__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-course-search/schemas/resource.schema.json",
+      "title": "EducationCourse resource for comcom.education.course.search",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "EducationCourse"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name.",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "description": {
+          "type": "string",
+          "description": "Description.",
+          "maxLength": 5000
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Standard or provider category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "sku": {
+          "type": "string",
+          "description": "Seller stock-keeping unit.",
+          "maxLength": 100
+        },
+        "gtin": {
+          "type": "string",
+          "description": "GS1 Global Trade Item Number.",
+          "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Price amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "available": {
+          "type": "boolean"
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-education-enroll__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-enroll/schemas/input.schema.json",
+      "title": "Education Enroll input",
+      "description": "Enroll in education using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.education.enroll"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Education Enroll parameters.",
+          "additionalProperties": false,
+          "required": [
+            "education"
+          ],
+          "properties": {
+            "education": {
+              "type": "object",
+              "description": "Typed Education data.",
+              "additionalProperties": false,
+              "required": [
+                "learnerId",
+                "providerId",
+                "courseId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "learnerId": {
+                  "type": "string",
+                  "description": "Learner URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Education or research provider URI.",
+                  "format": "uri-reference"
+                },
+                "courseId": {
+                  "type": "string",
+                  "description": "Course URI.",
+                  "format": "uri-reference"
+                },
+                "assessmentCode": {
+                  "type": "string",
+                  "description": "Assessment or progress code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "score": {
+                  "type": "string",
+                  "description": "Score or measured progress.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "completedAt": {
+                  "type": "string",
+                  "description": "Completion instant.",
+                  "format": "date-time"
+                },
+                "purposeCode": {
+                  "type": "string",
+                  "description": "Research or education purpose code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-education-enroll__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-enroll/schemas/output.schema.json",
+      "title": "Education Enroll output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-enroll/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-education-enroll__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-enroll/schemas/resource.schema.json",
+      "title": "Education resource for comcom.education.enroll",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Education"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "learnerId": {
+          "type": "string",
+          "description": "Learner URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Education or research provider URI.",
+          "format": "uri-reference"
+        },
+        "courseId": {
+          "type": "string",
+          "description": "Course URI.",
+          "format": "uri-reference"
+        },
+        "assessmentCode": {
+          "type": "string",
+          "description": "Assessment or progress code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "score": {
+          "type": "string",
+          "description": "Score or measured progress.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "completedAt": {
+          "type": "string",
+          "description": "Completion instant.",
+          "format": "date-time"
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Research or education purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-education-progress-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-progress-get/schemas/input.schema.json",
+      "title": "Education Progress Get input",
+      "description": "Retrieve education progress using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.education.progress.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the EducationProgress to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "educationProgressId"
+          ],
+          "properties": {
+            "educationProgressId": {
+              "type": "string",
+              "description": "EducationProgress URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-education-progress-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-progress-get/schemas/output.schema.json",
+      "title": "Education Progress Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-progress-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-education-progress-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-progress-get/schemas/resource.schema.json",
+      "title": "EducationProgress resource for comcom.education.progress.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "EducationProgress"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "learnerId": {
+          "type": "string",
+          "description": "Learner URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Education or research provider URI.",
+          "format": "uri-reference"
+        },
+        "courseId": {
+          "type": "string",
+          "description": "Course URI.",
+          "format": "uri-reference"
+        },
+        "assessmentCode": {
+          "type": "string",
+          "description": "Assessment or progress code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "score": {
+          "type": "string",
+          "description": "Score or measured progress.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "completedAt": {
+          "type": "string",
+          "description": "Completion instant.",
+          "format": "date-time"
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Research or education purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-healthcare-provider-search__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-provider-search/schemas/input.schema.json",
+      "title": "Healthcare Provider Search input",
+      "description": "Search for healthcare provider using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.healthcare.provider.search"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Typed HealthcareProvider discovery parameters.",
+          "additionalProperties": false,
+          "required": [
+            "filters"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+              "maxLength": 500
+            },
+            "filters": {
+              "type": "object",
+              "description": "Typed HealthcareProvider filters.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "patientId": {
+                  "type": "string",
+                  "description": "Patient URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Healthcare provider URI.",
+                  "format": "uri-reference"
+                },
+                "serviceCode": {
+                  "type": "string",
+                  "description": "Clinical service code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "referralId": {
+                  "type": "string",
+                  "description": "Referral URI.",
+                  "format": "uri-reference"
+                },
+                "prescriptionId": {
+                  "type": "string",
+                  "description": "Prescription URI.",
+                  "format": "uri-reference"
+                },
+                "scheduledAt": {
+                  "type": "string",
+                  "description": "Scheduled instant.",
+                  "format": "date-time"
+                },
+                "purposeCode": {
+                  "type": "string",
+                  "description": "Authorized purpose code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "cursor": {
+              "type": "string",
+              "description": "Opaque continuation cursor.",
+              "maxLength": 500
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-healthcare-provider-search__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-provider-search/schemas/output.schema.json",
+      "title": "Healthcare Provider Search output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "items"
+      ],
+      "properties": {
+        "status": {
+          "const": "completed"
+        },
+        "items": {
+          "type": "array",
+          "description": "Matching HealthcareProvider resources.",
+          "items": {
+            "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-provider-search/schemas/resource.schema.json"
+          },
+          "maxItems": 100
+        },
+        "nextCursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-healthcare-provider-search__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-provider-search/schemas/resource.schema.json",
+      "title": "HealthcareProvider resource for comcom.healthcare.provider.search",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "HealthcareProvider"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "patientId": {
+          "type": "string",
+          "description": "Patient URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Healthcare provider URI.",
+          "format": "uri-reference"
+        },
+        "serviceCode": {
+          "type": "string",
+          "description": "Clinical service code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "referralId": {
+          "type": "string",
+          "description": "Referral URI.",
+          "format": "uri-reference"
+        },
+        "prescriptionId": {
+          "type": "string",
+          "description": "Prescription URI.",
+          "format": "uri-reference"
+        },
+        "scheduledAt": {
+          "type": "string",
+          "description": "Scheduled instant.",
+          "format": "date-time"
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Authorized purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-healthcare-referral-submit__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-referral-submit/schemas/input.schema.json",
+      "title": "Healthcare Referral Submit input",
+      "description": "Submit healthcare referral using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.healthcare.referral.submit"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Healthcare Referral Submit parameters.",
+          "additionalProperties": false,
+          "required": [
+            "healthcareReferral"
+          ],
+          "properties": {
+            "healthcareReferral": {
+              "type": "object",
+              "description": "Typed HealthcareReferral data.",
+              "additionalProperties": false,
+              "required": [
+                "patientId",
+                "providerId",
+                "serviceCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "patientId": {
+                  "type": "string",
+                  "description": "Patient URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Healthcare provider URI.",
+                  "format": "uri-reference"
+                },
+                "serviceCode": {
+                  "type": "string",
+                  "description": "Clinical service code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "referralId": {
+                  "type": "string",
+                  "description": "Referral URI.",
+                  "format": "uri-reference"
+                },
+                "prescriptionId": {
+                  "type": "string",
+                  "description": "Prescription URI.",
+                  "format": "uri-reference"
+                },
+                "scheduledAt": {
+                  "type": "string",
+                  "description": "Scheduled instant.",
+                  "format": "date-time"
+                },
+                "purposeCode": {
+                  "type": "string",
+                  "description": "Authorized purpose code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-healthcare-referral-submit__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-referral-submit/schemas/output.schema.json",
+      "title": "Healthcare Referral Submit output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-referral-submit/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-healthcare-referral-submit__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-referral-submit/schemas/resource.schema.json",
+      "title": "HealthcareReferral resource for comcom.healthcare.referral.submit",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "HealthcareReferral"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "patientId": {
+          "type": "string",
+          "description": "Patient URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Healthcare provider URI.",
+          "format": "uri-reference"
+        },
+        "serviceCode": {
+          "type": "string",
+          "description": "Clinical service code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "referralId": {
+          "type": "string",
+          "description": "Referral URI.",
+          "format": "uri-reference"
+        },
+        "prescriptionId": {
+          "type": "string",
+          "description": "Prescription URI.",
+          "format": "uri-reference"
+        },
+        "scheduledAt": {
+          "type": "string",
+          "description": "Scheduled instant.",
+          "format": "date-time"
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Authorized purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-healthcare-service-request__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-service-request/schemas/input.schema.json",
+      "title": "Healthcare Service Request input",
+      "description": "Request healthcare service using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.healthcare.service.request"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Healthcare Service Request parameters.",
+          "additionalProperties": false,
+          "required": [
+            "healthcareService"
+          ],
+          "properties": {
+            "healthcareService": {
+              "type": "object",
+              "description": "Typed HealthcareService data.",
+              "additionalProperties": false,
+              "required": [
+                "patientId",
+                "providerId",
+                "serviceCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "patientId": {
+                  "type": "string",
+                  "description": "Patient URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Healthcare provider URI.",
+                  "format": "uri-reference"
+                },
+                "serviceCode": {
+                  "type": "string",
+                  "description": "Clinical service code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "referralId": {
+                  "type": "string",
+                  "description": "Referral URI.",
+                  "format": "uri-reference"
+                },
+                "prescriptionId": {
+                  "type": "string",
+                  "description": "Prescription URI.",
+                  "format": "uri-reference"
+                },
+                "scheduledAt": {
+                  "type": "string",
+                  "description": "Scheduled instant.",
+                  "format": "date-time"
+                },
+                "purposeCode": {
+                  "type": "string",
+                  "description": "Authorized purpose code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-healthcare-service-request__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-service-request/schemas/output.schema.json",
+      "title": "Healthcare Service Request output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-service-request/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-healthcare-service-request__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-healthcare-service-request/schemas/resource.schema.json",
+      "title": "HealthcareService resource for comcom.healthcare.service.request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "HealthcareService"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "patientId": {
+          "type": "string",
+          "description": "Patient URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Healthcare provider URI.",
+          "format": "uri-reference"
+        },
+        "serviceCode": {
+          "type": "string",
+          "description": "Clinical service code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "referralId": {
+          "type": "string",
+          "description": "Referral URI.",
+          "format": "uri-reference"
+        },
+        "prescriptionId": {
+          "type": "string",
+          "description": "Prescription URI.",
+          "format": "uri-reference"
+        },
+        "scheduledAt": {
+          "type": "string",
+          "description": "Scheduled instant.",
+          "format": "date-time"
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Authorized purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-prescription-fulfillment-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-prescription-fulfillment-get/schemas/input.schema.json",
+      "title": "Prescription Fulfillment Get input",
+      "description": "Retrieve prescription fulfillment using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.prescription.fulfillment.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the PrescriptionFulfillment to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "prescriptionFulfillmentId"
+          ],
+          "properties": {
+            "prescriptionFulfillmentId": {
+              "type": "string",
+              "description": "PrescriptionFulfillment URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-prescription-fulfillment-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-prescription-fulfillment-get/schemas/output.schema.json",
+      "title": "Prescription Fulfillment Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-prescription-fulfillment-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-prescription-fulfillment-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-prescription-fulfillment-get/schemas/resource.schema.json",
+      "title": "PrescriptionFulfillment resource for comcom.prescription.fulfillment.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "PrescriptionFulfillment"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "patientId": {
+          "type": "string",
+          "description": "Patient URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Healthcare provider URI.",
+          "format": "uri-reference"
+        },
+        "serviceCode": {
+          "type": "string",
+          "description": "Clinical service code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "referralId": {
+          "type": "string",
+          "description": "Referral URI.",
+          "format": "uri-reference"
+        },
+        "prescriptionId": {
+          "type": "string",
+          "description": "Prescription URI.",
+          "format": "uri-reference"
+        },
+        "scheduledAt": {
+          "type": "string",
+          "description": "Scheduled instant.",
+          "format": "date-time"
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Authorized purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-research-data-request__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-research-data-request/schemas/input.schema.json",
+      "title": "Research Data Request input",
+      "description": "Request research data using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.research.data.request"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Research Data Request parameters.",
+          "additionalProperties": false,
+          "required": [
+            "researchData"
+          ],
+          "properties": {
+            "researchData": {
+              "type": "object",
+              "description": "Typed ResearchData data.",
+              "additionalProperties": false,
+              "required": [
+                "subjectId",
+                "issuerId",
+                "referenceNumber"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "subjectId": {
+                  "type": "string",
+                  "description": "Subject URI.",
+                  "format": "uri-reference"
+                },
+                "issuerId": {
+                  "type": "string",
+                  "description": "Issuing or controlling entity URI.",
+                  "format": "uri-reference"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Authority or document reference.",
+                  "maxLength": 160
+                },
+                "purposeCode": {
+                  "type": "string",
+                  "description": "Declared purpose code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "claimCodes": {
+                  "type": "array",
+                  "description": "Declared claim codes.",
+                  "items": {
+                    "type": "string",
+                    "description": "Claim code.",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                  },
+                  "uniqueItems": true,
+                  "maxItems": 100
+                },
+                "validFrom": {
+                  "type": "string",
+                  "description": "Validity start.",
+                  "format": "date-time"
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity end.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-research-data-request__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-research-data-request/schemas/output.schema.json",
+      "title": "Research Data Request output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-research-data-request/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.social__comcom-research-data-request__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-research-data-request/schemas/resource.schema.json",
+      "title": "ResearchData resource for comcom.research.data.request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "ResearchData"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subjectId": {
+          "type": "string",
+          "description": "Subject URI.",
+          "format": "uri-reference"
+        },
+        "issuerId": {
+          "type": "string",
+          "description": "Issuing or controlling entity URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Authority or document reference.",
+          "maxLength": 160
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Declared purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "claimCodes": {
+          "type": "array",
+          "description": "Declared claim codes.",
+          "items": {
+            "type": "string",
+            "description": "Claim code.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "uniqueItems": true,
+          "maxItems": 100
+        },
+        "validFrom": {
+          "type": "string",
+          "description": "Validity start.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity end.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

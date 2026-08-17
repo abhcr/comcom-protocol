@@ -1,0 +1,4 @@
+{
+  "capability": "comcom.appointment.cancel",
+  "originalResource": "https://business.example/appointment/example"
+}

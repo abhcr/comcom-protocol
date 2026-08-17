@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.utility.meter.reading.submit",
+  "parameters": {
+    "utilityMeterReading": {
+      "applicantId": "https://business.example/applicantId/example",
+      "authorityId": "https://business.example/authorityId/example",
+      "serviceCode": "example"
+    }
+  }
+}

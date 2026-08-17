@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.healthcare.provider.search",
+  "parameters": {
+    "filters": {}
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-digital-resource-provision/schemas/input.schema.json",
+  "title": "Digital Resource Provision input",
+  "description": "Provision digital resource using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.digital.resource.provision"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Digital Resource Provision parameters.",
+      "additionalProperties": false,
+      "required": [
+        "digitalResource"
+      ],
+      "properties": {
+        "digitalResource": {
+          "type": "object",
+          "description": "Typed DigitalResource data.",
+          "additionalProperties": false,
+          "required": [
+            "assetId",
+            "locationId",
+            "metricCode"
+          ],
+          "properties": {
+            "statusCode": {
+              "type": "string",
+              "description": "Profile-defined business state.",
+              "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+            },
+            "assetId": {
+              "type": "string",
+              "description": "Asset or device URI.",
+              "format": "uri-reference"
+            },
+            "locationId": {
+              "type": "string",
+              "description": "Location URI.",
+              "format": "uri-reference"
+            },
+            "metricCode": {
+              "type": "string",
+              "description": "Metric or operation code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "value": {
+              "type": "string",
+              "description": "Measured or requested numeric value.",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            },
+            "unitCode": {
+              "type": "string",
+              "description": "UNECE or profile-declared unit code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "observedAt": {
+              "type": "string",
+              "description": "Observation instant.",
+              "format": "date-time"
+            },
+            "commandCode": {
+              "type": "string",
+              "description": "Command or rule code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            }
+          }
+        },
+        "requestedAt": {
+          "type": "string",
+          "description": "Requested effective instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

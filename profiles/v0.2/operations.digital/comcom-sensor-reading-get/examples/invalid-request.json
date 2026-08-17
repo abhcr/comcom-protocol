@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "sensorReadingId": "https://business.example/sensorReading/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

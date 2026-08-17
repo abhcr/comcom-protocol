@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.catalog.search",
+  "parameters": {
+    "filters": {}
+  }
+}

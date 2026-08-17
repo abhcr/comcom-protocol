@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "productionStatusId": "https://business.example/productionStatus/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

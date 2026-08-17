@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.finance/comcom-refund-status-get/schemas/input.schema.json",
+  "title": "Refund Status Get input",
+  "description": "Retrieve refund status using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.refund.status.get"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the RefundStatus to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "refundStatusId"
+      ],
+      "properties": {
+        "refundStatusId": {
+          "type": "string",
+          "description": "RefundStatus URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

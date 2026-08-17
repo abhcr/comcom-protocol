@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.identity.verify",
+  "parameters": {
+    "identityId": "https://business.example/identity/example"
+  }
+}

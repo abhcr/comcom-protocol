@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "certificateId": "https://business.example/certificate/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.notification.preferences.get",
+  "parameters": {
+    "notificationPreferencesId": "https://business.example/notificationPreferences/example"
+  }
+}

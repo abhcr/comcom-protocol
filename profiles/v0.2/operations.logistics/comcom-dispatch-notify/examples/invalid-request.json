@@ -1,0 +1,15 @@
+{
+  "instance": {
+    "parameters": {
+      "dispatch": {
+        "shipmentId": "https://business.example/shipmentId/example",
+        "carrierId": "https://business.example/carrierId/example",
+        "trackingCode": "example"
+      }
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

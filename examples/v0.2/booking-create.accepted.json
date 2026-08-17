@@ -1,0 +1,31 @@
+{
+  "protocolVersion": "0.2",
+  "id": "urn:uuid:0bb1337f-3da7-48d2-86a2-b9d69e6ae780",
+  "kind": "result",
+  "capability": {
+    "id": "comcom.booking.create",
+    "version": "0.2.0"
+  },
+  "principal": {
+    "id": "https://buyer.example/customers/123",
+    "type": "person"
+  },
+  "sender": {
+    "id": "https://vendor.example",
+    "type": "organization"
+  },
+  "recipient": {
+    "id": "https://buyer.example",
+    "type": "organization"
+  },
+  "issuedAt": "2026-08-17T09:00:01Z",
+  "correlationId": "urn:uuid:28d1eb49-5024-4d98-aa2a-c76f5c822ca5",
+  "payload": {
+    "id": "https://vendor.example/operations/abc",
+    "statusUrl": "https://vendor.example/comcom/interactions/abc",
+    "state": "accepted",
+    "acceptedAt": "2026-08-17T09:00:01Z",
+    "updatedAt": "2026-08-17T09:00:01Z",
+    "originalCorrelationId": "urn:uuid:28d1eb49-5024-4d98-aa2a-c76f5c822ca5"
+  }
+}

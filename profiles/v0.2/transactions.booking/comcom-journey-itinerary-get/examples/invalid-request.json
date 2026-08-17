@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "journeyItineraryId": "https://business.example/journeyItinerary/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

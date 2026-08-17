@@ -1,0 +1,46 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-release/schemas/input.schema.json",
+  "title": "Inventory Release input",
+  "description": "Release inventory using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.inventory.release"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Inventory Release parameters.",
+      "additionalProperties": false,
+      "required": [
+        "inventoryId"
+      ],
+      "properties": {
+        "inventoryId": {
+          "type": "string",
+          "description": "Inventory URI.",
+          "format": "uri-reference"
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Profile-defined reason code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "effectiveAt": {
+          "type": "string",
+          "description": "Requested effective instant.",
+          "format": "date-time"
+        },
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

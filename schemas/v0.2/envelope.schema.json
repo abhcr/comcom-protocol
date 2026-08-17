@@ -1,0 +1,74 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/envelope.schema.json",
+  "title": "Comcom v0.2 message envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["protocolVersion", "id", "kind", "capability", "principal", "sender", "recipient", "issuedAt", "payload"],
+  "properties": {
+    "protocolVersion": { "const": "0.2" },
+    "id": { "type": "string", "format": "uri" },
+    "kind": { "enum": ["query", "command", "event", "result", "receipt"] },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$" },
+        "version": { "type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$" }
+      }
+    },
+    "principal": { "$ref": "entity.schema.json" },
+    "sender": { "$ref": "entity.schema.json" },
+    "recipient": { "$ref": "entity.schema.json" },
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "type": "string", "format": "uri" },
+        "type": { "enum": ["software", "ui", "workflow", "ai"] },
+        "name": { "type": "string", "maxLength": 300 }
+      }
+    },
+    "authorization": { "type": "string", "format": "uri" },
+    "issuedAt": { "type": "string", "format": "date-time" },
+    "expiresAt": { "type": "string", "format": "date-time" },
+    "conversationId": { "type": "string", "format": "uri" },
+    "correlationId": { "type": "string", "format": "uri" },
+    "idempotencyKey": { "type": "string", "minLength": 16, "maxLength": 200, "pattern": "^[A-Za-z0-9._~-]+$" },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "type": "string", "format": "uri" },
+        "type": { "type": "string", "pattern": "^[A-Z][A-Za-z0-9]{0,63}$" },
+        "revision": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "criticalExtensions": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9-]+(?:\\.[a-z0-9-]+)+$" },
+      "uniqueItems": true,
+      "maxItems": 32
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": { "type": "string", "pattern": "^[a-z0-9-]+(?:\\.[a-z0-9-]+)+$" },
+      "additionalProperties": true,
+      "maxProperties": 64
+    },
+    "payload": true
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "kind": { "enum": ["command", "event"] } }, "required": ["kind"] },
+      "then": { "required": ["idempotencyKey"] }
+    },
+    {
+      "if": { "properties": { "kind": { "enum": ["result", "receipt"] } }, "required": ["kind"] },
+      "then": { "required": ["correlationId"] }
+    }
+  ]
+}

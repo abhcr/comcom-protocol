@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "availabilityCalendarId": "https://business.example/availabilityCalendar/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Booking Create · Comcom</title><link rel="stylesheet" href="../styles.css"></head>
+<body><a class="skip" href="#content">Skip to content</a><header class="subhead"><nav aria-label="Primary"><a class="mark" href="../"><span>CC</span> Comcom</a><div><a href="./">All capabilities</a><a href="../#checker">Validate</a><a href="https://github.com/abhcr/comcom-protocol">GitHub</a></div></nav></header>
+<main id="content" class="detail"><p class="notice"><strong>Draft v0.2 profile.</strong> Catalog presence is not normative status.</p><p class="eyebrow">transactions.booking · draft</p><h1>Booking Create</h1><p class="lead dark">Create booking using the typed Comcom v0.2 profile.</p>
+<dl class="facts"><div><dt>Capability</dt><dd><code>comcom.booking.create@0.2.0</code></dd></div><div><dt>Kind</dt><dd>command</dd></div><div><dt>Security floor</dt><dd>authenticated</dd></div><div><dt>Execution</dt><dd>synchronous, asynchronous</dd></div></dl>
+<section><h2>Schemas</h2><ul><li><a href="https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/input.schema.json">Input schema</a></li><li><a href="https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/output.schema.json">Output schema</a></li><li><a href="https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/resource.schema.json">Resource schema</a></li></ul><h3>Valid payload</h3><pre><code>{
+  &quot;capability&quot;: &quot;comcom.booking.create&quot;,
+  &quot;parameters&quot;: {
+    &quot;booking&quot;: {
+      &quot;offeringId&quot;: &quot;https://business.example/offeringId/example&quot;,
+      &quot;customerId&quot;: &quot;https://business.example/customerId/example&quot;,
+      &quot;providerId&quot;: &quot;https://business.example/providerId/example&quot;
+    }
+  }
+}</code></pre></section>
+<section><h2>Lifecycle and reversal</h2><div class="table-scroll"><table><thead><tr><th>From</th><th>To</th><th>Rule</th></tr></thead><tbody><tr><td>none</td><td>proposed</td><td>allowed</td></tr><tr><td>proposed</td><td>accepted</td><td>allowed</td></tr><tr><td>proposed</td><td>rejected</td><td>allowed</td></tr></tbody></table></div><h3>Reversal</h3><pre><code>{
+  &quot;capability&quot;: &quot;comcom.booking.cancel&quot;,
+  &quot;originalResource&quot;: &quot;https://business.example/booking/example&quot;
+}</code></pre></section>
+<section><h2>Errors and mappings</h2><p><code>schema-invalid</code> · <code>authorization-insufficient</code> · <code>invalid-state-transition</code> · <code>idempotency-conflict</code></p><ul><li><a href="https://schema.org/Reservation">https://schema.org/Reservation</a></li><li><a href="https://www.iata.org/en/programs/airline-distribution/retailing/ndc/">https://www.iata.org/en/programs/airline-distribution/retailing/ndc/</a></li></ul></section>
+<section><h2>Evidence</h2><p>Domain review: <strong>incomplete</strong>. Security review: <strong>incomplete</strong>. Interoperability journeys: <strong>0</strong>.</p><p><a href="https://github.com/abhcr/comcom-protocol/tree/main/profiles/v0.2/transactions.booking/comcom-booking-create">Inspect authored source and fixtures</a></p></section></main><footer><a href="./">Back to all 201 capabilities</a></footer></body></html>

@@ -1,0 +1,64 @@
+{
+  "id": "comcom.media.stream.authorize",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "operations.digital",
+  "batch": 4,
+  "title": "Media Stream Authorize",
+  "purpose": "Authorize media stream using the typed Comcom v0.2 profile.",
+  "requestKind": "command",
+  "resourceType": "MediaStream",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "authenticated",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-media-stream-authorize/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-media-stream-authorize/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-media-stream-authorize/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "authenticated-sender",
+    "authorized-principal",
+    "valid-resource-state"
+  ],
+  "lifecycle": {
+    "states": [
+      "requested",
+      "proposed",
+      "accepted"
+    ],
+    "transitions": [
+      {
+        "from": "requested",
+        "to": "accepted"
+      }
+    ]
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": true,
+    "equality": "RFC8785-semantic-projection"
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient",
+    "invalid-state-transition",
+    "idempotency-conflict"
+  ],
+  "standards": [
+    "https://www.w3.org/TR/wot-thing-description11/"
+  ]
+}

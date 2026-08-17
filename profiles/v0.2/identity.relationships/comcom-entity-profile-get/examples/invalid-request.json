@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "entityProfileId": "https://business.example/entityProfile/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "tenderBidId": "https://business.example/tenderBid/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "educationProgressId": "https://business.example/educationProgress/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

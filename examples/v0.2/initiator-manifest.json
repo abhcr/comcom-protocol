@@ -1,0 +1,17 @@
+{
+  "protocolVersions": ["0.2"],
+  "entity": {
+    "id": "https://buyer.example",
+    "type": "organization",
+    "name": "Example Buyer"
+  },
+  "roles": ["initiator"],
+  "serviceOrigins": ["https://buyer.example"],
+  "profiles": [],
+  "capabilities": [],
+  "limits": {
+    "messageBytes": 1048576,
+    "schemaBytes": 1048576,
+    "idempotencyRetentionSeconds": 86400
+  }
+}

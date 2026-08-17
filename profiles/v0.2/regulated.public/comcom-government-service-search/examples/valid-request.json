@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.government.service.search",
+  "parameters": {
+    "filters": {}
+  }
+}

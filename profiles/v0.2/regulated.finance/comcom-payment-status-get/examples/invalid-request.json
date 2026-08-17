@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "paymentStatusId": "https://business.example/paymentStatus/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

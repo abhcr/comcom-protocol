@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-production-status-get/schemas/input.schema.json",
+  "title": "Production Status Get input",
+  "description": "Retrieve production status using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.production.status.get"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the ProductionStatus to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "productionStatusId"
+      ],
+      "properties": {
+        "productionStatusId": {
+          "type": "string",
+          "description": "ProductionStatus URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

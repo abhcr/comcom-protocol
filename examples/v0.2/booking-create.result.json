@@ -1,0 +1,41 @@
+{
+  "protocolVersion": "0.2",
+  "id": "urn:uuid:036f0c76-41c7-4408-b6fc-742b5a442846",
+  "kind": "result",
+  "capability": {
+    "id": "comcom.booking.create",
+    "version": "0.2.0"
+  },
+  "principal": {
+    "id": "https://buyer.example/customers/123",
+    "type": "person"
+  },
+  "sender": {
+    "id": "https://vendor.example",
+    "type": "organization"
+  },
+  "recipient": {
+    "id": "https://buyer.example",
+    "type": "organization"
+  },
+  "issuedAt": "2026-08-17T09:00:01Z",
+  "correlationId": "urn:uuid:28d1eb49-5024-4d98-aa2a-c76f5c822ca5",
+  "payload": {
+    "status": "completed",
+    "resource": {
+      "id": "https://vendor.example/bookings/789",
+      "type": "Booking",
+      "state": "accepted",
+      "revision": 1,
+      "createdAt": "2026-08-17T09:00:01Z",
+      "updatedAt": "2026-08-17T09:00:01Z",
+      "offeringId": "https://vendor.example/services/dentistry",
+      "customerId": "https://buyer.example/customers/123",
+      "providerId": "https://vendor.example/providers/42",
+      "start": "2026-08-18T09:00:00Z",
+      "end": "2026-08-18T09:30:00Z",
+      "timeZone": "Asia/Kolkata"
+    },
+    "nextActions": ["comcom.booking.get", "comcom.booking.cancel"]
+  }
+}

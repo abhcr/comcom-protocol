@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.slot.release",
+  "parameters": {
+    "slotId": "https://business.example/slot/example"
+  }
+}

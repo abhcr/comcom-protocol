@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.warranty.claim",
+  "parameters": {
+    "warrantyClaim": {
+      "customerId": "https://business.example/customerId/example",
+      "itemId": "https://business.example/itemId/example",
+      "categoryCode": "example"
+    }
+  }
+}

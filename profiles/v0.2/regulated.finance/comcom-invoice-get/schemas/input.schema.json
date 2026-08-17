@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.finance/comcom-invoice-get/schemas/input.schema.json",
+  "title": "Invoice Get input",
+  "description": "Retrieve invoice using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.invoice.get"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the Invoice to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "invoiceId"
+      ],
+      "properties": {
+        "invoiceId": {
+          "type": "string",
+          "description": "Invoice URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

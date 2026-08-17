@@ -1,0 +1,2397 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/identity.relationships.bundle.json",
+  "profile": "identity.relationships",
+  "version": "0.2.0",
+  "capabilityIds": [
+    "comcom.contact.preferences.get",
+    "comcom.directory.search",
+    "comcom.entity.profile.get",
+    "comcom.entity.profile.publish",
+    "comcom.identity.verify",
+    "comcom.relationship.accept",
+    "comcom.relationship.end",
+    "comcom.relationship.request"
+  ],
+  "capabilities": [
+    {
+      "definition": {
+        "id": "comcom.contact.preferences.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.relationships",
+        "batch": 5,
+        "title": "Contact Preferences Get",
+        "purpose": "Retrieve contact preferences using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "ContactPreferences",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-contact-preferences-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-contact-preferences-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-contact-preferences-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.contact.preferences.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.contact.preferences.get",
+          "parameters": {
+            "contactPreferencesId": "https://business.example/contactPreferences/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "contactPreferencesId": "https://business.example/contactPreferences/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/contactPreferences/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.directory.search",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.relationships",
+        "batch": 5,
+        "title": "Directory Search",
+        "purpose": "Search for directory using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Directory",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-directory-search/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-directory-search/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-directory-search/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.directory.search",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.directory.search",
+          "parameters": {
+            "filters": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "filters": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/directory/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.entity.profile.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.relationships",
+        "batch": 5,
+        "title": "Entity Profile Get",
+        "purpose": "Retrieve entity profile using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "EntityProfile",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-entity-profile-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-entity-profile-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-entity-profile-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.entity.profile.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.entity.profile.get",
+          "parameters": {
+            "entityProfileId": "https://business.example/entityProfile/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "entityProfileId": "https://business.example/entityProfile/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/entityProfile/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.entity.profile.publish",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.relationships",
+        "batch": 5,
+        "title": "Entity Profile Publish",
+        "purpose": "Publish entity profile using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "EntityProfile",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-entity-profile-publish/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-entity-profile-publish/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-entity-profile-publish/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.entity.profile.publish",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.entity.profile.publish",
+          "parameters": {
+            "entityProfile": {
+              "subjectId": "https://business.example/subjectId/example",
+              "issuerId": "https://business.example/issuerId/example",
+              "referenceNumber": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "entityProfile": {
+                "subjectId": "https://business.example/subjectId/example",
+                "issuerId": "https://business.example/issuerId/example",
+                "referenceNumber": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/entityProfile/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.identity.verify",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.relationships",
+        "batch": 5,
+        "title": "Identity Verify",
+        "purpose": "Verify identity using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Identity",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-identity-verify/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-identity-verify/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-identity-verify/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.identity.verify",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.identity.verify",
+          "parameters": {
+            "identityId": "https://business.example/identity/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "identityId": "https://business.example/identity/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/identity/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.relationship.accept",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.relationships",
+        "batch": 5,
+        "title": "Relationship Accept",
+        "purpose": "Accept relationship using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Relationship",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-accept/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-accept/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-accept/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "requested",
+            "proposed",
+            "accepted"
+          ],
+          "transitions": [
+            {
+              "from": "proposed",
+              "to": "accepted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.relationship.accept",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.relationship.accept",
+          "parameters": {
+            "relationshipId": "https://business.example/relationship/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "relationshipId": "https://business.example/relationship/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.relationship.accept-allowed-1",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.relationship.accept-forbidden-1",
+              "from": "accepted",
+              "to": "requested",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/relationship/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.relationship.end",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.relationships",
+        "batch": 5,
+        "title": "Relationship End",
+        "purpose": "End relationship using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Relationship",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-end/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-end/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-end/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active",
+            "ended"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "ended"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.relationship.end",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.relationship.end",
+          "parameters": {
+            "relationshipId": "https://business.example/relationship/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "relationshipId": "https://business.example/relationship/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.relationship.end-allowed-1",
+              "from": "active",
+              "to": "ended",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.relationship.end-forbidden-1",
+              "from": "ended",
+              "to": "active",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/relationship/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.relationship.request",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.relationships",
+        "batch": 5,
+        "title": "Relationship Request",
+        "purpose": "Request relationship using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Relationship",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-request/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-request/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-request/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.relationship.request",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Organization",
+          "https://www.w3.org/TR/vc-data-model-2.0/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.relationship.request",
+          "parameters": {
+            "relationship": {
+              "subjectId": "https://business.example/subjectId/example",
+              "issuerId": "https://business.example/issuerId/example",
+              "referenceNumber": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "relationship": {
+                "subjectId": "https://business.example/subjectId/example",
+                "issuerId": "https://business.example/issuerId/example",
+                "referenceNumber": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.relationship.request-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.relationship.request-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/relationship/example"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "profiles__v0.2__identity.relationships__comcom-contact-preferences-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-contact-preferences-get/schemas/input.schema.json",
+      "title": "Contact Preferences Get input",
+      "description": "Retrieve contact preferences using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.contact.preferences.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the ContactPreferences to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "contactPreferencesId"
+          ],
+          "properties": {
+            "contactPreferencesId": {
+              "type": "string",
+              "description": "ContactPreferences URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-contact-preferences-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-contact-preferences-get/schemas/output.schema.json",
+      "title": "Contact Preferences Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-contact-preferences-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-contact-preferences-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-contact-preferences-get/schemas/resource.schema.json",
+      "title": "ContactPreferences resource for comcom.contact.preferences.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "ContactPreferences"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subjectId": {
+          "type": "string",
+          "description": "Subject URI.",
+          "format": "uri-reference"
+        },
+        "issuerId": {
+          "type": "string",
+          "description": "Issuing or controlling entity URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Authority or document reference.",
+          "maxLength": 160
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Declared purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "claimCodes": {
+          "type": "array",
+          "description": "Declared claim codes.",
+          "items": {
+            "type": "string",
+            "description": "Claim code.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "uniqueItems": true,
+          "maxItems": 100
+        },
+        "validFrom": {
+          "type": "string",
+          "description": "Validity start.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity end.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-directory-search__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-directory-search/schemas/input.schema.json",
+      "title": "Directory Search input",
+      "description": "Search for directory using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.directory.search"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Typed Directory discovery parameters.",
+          "additionalProperties": false,
+          "required": [
+            "filters"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+              "maxLength": 500
+            },
+            "filters": {
+              "type": "object",
+              "description": "Typed Directory filters.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "subjectId": {
+                  "type": "string",
+                  "description": "Subject URI.",
+                  "format": "uri-reference"
+                },
+                "issuerId": {
+                  "type": "string",
+                  "description": "Issuing or controlling entity URI.",
+                  "format": "uri-reference"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Authority or document reference.",
+                  "maxLength": 160
+                },
+                "purposeCode": {
+                  "type": "string",
+                  "description": "Declared purpose code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "claimCodes": {
+                  "type": "array",
+                  "description": "Declared claim codes.",
+                  "items": {
+                    "type": "string",
+                    "description": "Claim code.",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                  },
+                  "uniqueItems": true,
+                  "maxItems": 100
+                },
+                "validFrom": {
+                  "type": "string",
+                  "description": "Validity start.",
+                  "format": "date-time"
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity end.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "cursor": {
+              "type": "string",
+              "description": "Opaque continuation cursor.",
+              "maxLength": 500
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-directory-search__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-directory-search/schemas/output.schema.json",
+      "title": "Directory Search output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "items"
+      ],
+      "properties": {
+        "status": {
+          "const": "completed"
+        },
+        "items": {
+          "type": "array",
+          "description": "Matching Directory resources.",
+          "items": {
+            "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-directory-search/schemas/resource.schema.json"
+          },
+          "maxItems": 100
+        },
+        "nextCursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-directory-search__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-directory-search/schemas/resource.schema.json",
+      "title": "Directory resource for comcom.directory.search",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Directory"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subjectId": {
+          "type": "string",
+          "description": "Subject URI.",
+          "format": "uri-reference"
+        },
+        "issuerId": {
+          "type": "string",
+          "description": "Issuing or controlling entity URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Authority or document reference.",
+          "maxLength": 160
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Declared purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "claimCodes": {
+          "type": "array",
+          "description": "Declared claim codes.",
+          "items": {
+            "type": "string",
+            "description": "Claim code.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "uniqueItems": true,
+          "maxItems": 100
+        },
+        "validFrom": {
+          "type": "string",
+          "description": "Validity start.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity end.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-entity-profile-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-entity-profile-get/schemas/input.schema.json",
+      "title": "Entity Profile Get input",
+      "description": "Retrieve entity profile using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.entity.profile.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the EntityProfile to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "entityProfileId"
+          ],
+          "properties": {
+            "entityProfileId": {
+              "type": "string",
+              "description": "EntityProfile URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-entity-profile-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-entity-profile-get/schemas/output.schema.json",
+      "title": "Entity Profile Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-entity-profile-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-entity-profile-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-entity-profile-get/schemas/resource.schema.json",
+      "title": "EntityProfile resource for comcom.entity.profile.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "EntityProfile"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subjectId": {
+          "type": "string",
+          "description": "Subject URI.",
+          "format": "uri-reference"
+        },
+        "issuerId": {
+          "type": "string",
+          "description": "Issuing or controlling entity URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Authority or document reference.",
+          "maxLength": 160
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Declared purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "claimCodes": {
+          "type": "array",
+          "description": "Declared claim codes.",
+          "items": {
+            "type": "string",
+            "description": "Claim code.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "uniqueItems": true,
+          "maxItems": 100
+        },
+        "validFrom": {
+          "type": "string",
+          "description": "Validity start.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity end.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-entity-profile-publish__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-entity-profile-publish/schemas/input.schema.json",
+      "title": "Entity Profile Publish input",
+      "description": "Publish entity profile using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.entity.profile.publish"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Entity Profile Publish parameters.",
+          "additionalProperties": false,
+          "required": [
+            "entityProfile"
+          ],
+          "properties": {
+            "entityProfile": {
+              "type": "object",
+              "description": "Typed EntityProfile data.",
+              "additionalProperties": false,
+              "required": [
+                "subjectId",
+                "issuerId",
+                "referenceNumber"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "subjectId": {
+                  "type": "string",
+                  "description": "Subject URI.",
+                  "format": "uri-reference"
+                },
+                "issuerId": {
+                  "type": "string",
+                  "description": "Issuing or controlling entity URI.",
+                  "format": "uri-reference"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Authority or document reference.",
+                  "maxLength": 160
+                },
+                "purposeCode": {
+                  "type": "string",
+                  "description": "Declared purpose code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "claimCodes": {
+                  "type": "array",
+                  "description": "Declared claim codes.",
+                  "items": {
+                    "type": "string",
+                    "description": "Claim code.",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                  },
+                  "uniqueItems": true,
+                  "maxItems": 100
+                },
+                "validFrom": {
+                  "type": "string",
+                  "description": "Validity start.",
+                  "format": "date-time"
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity end.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-entity-profile-publish__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-entity-profile-publish/schemas/output.schema.json",
+      "title": "Entity Profile Publish output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-entity-profile-publish__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-entity-profile-publish/schemas/resource.schema.json",
+      "title": "EntityProfile resource for comcom.entity.profile.publish",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "EntityProfile"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subjectId": {
+          "type": "string",
+          "description": "Subject URI.",
+          "format": "uri-reference"
+        },
+        "issuerId": {
+          "type": "string",
+          "description": "Issuing or controlling entity URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Authority or document reference.",
+          "maxLength": 160
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Declared purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "claimCodes": {
+          "type": "array",
+          "description": "Declared claim codes.",
+          "items": {
+            "type": "string",
+            "description": "Claim code.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "uniqueItems": true,
+          "maxItems": 100
+        },
+        "validFrom": {
+          "type": "string",
+          "description": "Validity start.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity end.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-identity-verify__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-identity-verify/schemas/input.schema.json",
+      "title": "Identity Verify input",
+      "description": "Verify identity using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.identity.verify"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the Identity to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "identityId"
+          ],
+          "properties": {
+            "identityId": {
+              "type": "string",
+              "description": "Identity URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-identity-verify__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-identity-verify/schemas/output.schema.json",
+      "title": "Identity Verify output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-identity-verify/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-identity-verify__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-identity-verify/schemas/resource.schema.json",
+      "title": "Identity resource for comcom.identity.verify",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Identity"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subjectId": {
+          "type": "string",
+          "description": "Subject URI.",
+          "format": "uri-reference"
+        },
+        "issuerId": {
+          "type": "string",
+          "description": "Issuing or controlling entity URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Authority or document reference.",
+          "maxLength": 160
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Declared purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "claimCodes": {
+          "type": "array",
+          "description": "Declared claim codes.",
+          "items": {
+            "type": "string",
+            "description": "Claim code.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "uniqueItems": true,
+          "maxItems": 100
+        },
+        "validFrom": {
+          "type": "string",
+          "description": "Validity start.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity end.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-relationship-accept__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-accept/schemas/input.schema.json",
+      "title": "Relationship Accept input",
+      "description": "Accept relationship using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.relationship.accept"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Relationship Accept parameters.",
+          "additionalProperties": false,
+          "required": [
+            "relationshipId"
+          ],
+          "properties": {
+            "relationshipId": {
+              "type": "string",
+              "description": "Relationship URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-relationship-accept__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-accept/schemas/output.schema.json",
+      "title": "Relationship Accept output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-accept/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-relationship-accept__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-accept/schemas/resource.schema.json",
+      "title": "Relationship resource for comcom.relationship.accept",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Relationship"
+        },
+        "state": {
+          "enum": [
+            "requested",
+            "proposed",
+            "accepted"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subjectId": {
+          "type": "string",
+          "description": "Subject URI.",
+          "format": "uri-reference"
+        },
+        "issuerId": {
+          "type": "string",
+          "description": "Issuing or controlling entity URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Authority or document reference.",
+          "maxLength": 160
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Declared purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "claimCodes": {
+          "type": "array",
+          "description": "Declared claim codes.",
+          "items": {
+            "type": "string",
+            "description": "Claim code.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "uniqueItems": true,
+          "maxItems": 100
+        },
+        "validFrom": {
+          "type": "string",
+          "description": "Validity start.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity end.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-relationship-end__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-end/schemas/input.schema.json",
+      "title": "Relationship End input",
+      "description": "End relationship using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.relationship.end"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Relationship End parameters.",
+          "additionalProperties": false,
+          "required": [
+            "relationshipId"
+          ],
+          "properties": {
+            "relationshipId": {
+              "type": "string",
+              "description": "Relationship URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-relationship-end__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-end/schemas/output.schema.json",
+      "title": "Relationship End output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-end/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-relationship-end__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-end/schemas/resource.schema.json",
+      "title": "Relationship resource for comcom.relationship.end",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Relationship"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "ended"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subjectId": {
+          "type": "string",
+          "description": "Subject URI.",
+          "format": "uri-reference"
+        },
+        "issuerId": {
+          "type": "string",
+          "description": "Issuing or controlling entity URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Authority or document reference.",
+          "maxLength": 160
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Declared purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "claimCodes": {
+          "type": "array",
+          "description": "Declared claim codes.",
+          "items": {
+            "type": "string",
+            "description": "Claim code.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "uniqueItems": true,
+          "maxItems": 100
+        },
+        "validFrom": {
+          "type": "string",
+          "description": "Validity start.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity end.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-relationship-request__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-request/schemas/input.schema.json",
+      "title": "Relationship Request input",
+      "description": "Request relationship using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.relationship.request"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Relationship Request parameters.",
+          "additionalProperties": false,
+          "required": [
+            "relationship"
+          ],
+          "properties": {
+            "relationship": {
+              "type": "object",
+              "description": "Typed Relationship data.",
+              "additionalProperties": false,
+              "required": [
+                "subjectId",
+                "issuerId",
+                "referenceNumber"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "subjectId": {
+                  "type": "string",
+                  "description": "Subject URI.",
+                  "format": "uri-reference"
+                },
+                "issuerId": {
+                  "type": "string",
+                  "description": "Issuing or controlling entity URI.",
+                  "format": "uri-reference"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Authority or document reference.",
+                  "maxLength": 160
+                },
+                "purposeCode": {
+                  "type": "string",
+                  "description": "Declared purpose code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "claimCodes": {
+                  "type": "array",
+                  "description": "Declared claim codes.",
+                  "items": {
+                    "type": "string",
+                    "description": "Claim code.",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                  },
+                  "uniqueItems": true,
+                  "maxItems": 100
+                },
+                "validFrom": {
+                  "type": "string",
+                  "description": "Validity start.",
+                  "format": "date-time"
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity end.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-relationship-request__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-request/schemas/output.schema.json",
+      "title": "Relationship Request output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-request/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__identity.relationships__comcom-relationship-request__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-request/schemas/resource.schema.json",
+      "title": "Relationship resource for comcom.relationship.request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Relationship"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subjectId": {
+          "type": "string",
+          "description": "Subject URI.",
+          "format": "uri-reference"
+        },
+        "issuerId": {
+          "type": "string",
+          "description": "Issuing or controlling entity URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Authority or document reference.",
+          "maxLength": 160
+        },
+        "purposeCode": {
+          "type": "string",
+          "description": "Declared purpose code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "claimCodes": {
+          "type": "array",
+          "description": "Declared claim codes.",
+          "items": {
+            "type": "string",
+            "description": "Claim code.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "uniqueItems": true,
+          "maxItems": 100
+        },
+        "validFrom": {
+          "type": "string",
+          "description": "Validity start.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity end.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

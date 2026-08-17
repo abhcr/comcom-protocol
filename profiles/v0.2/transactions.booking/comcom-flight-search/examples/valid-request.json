@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.flight.search",
+  "parameters": {
+    "filters": {}
+  }
+}

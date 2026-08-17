@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.consent.revoke",
+  "parameters": {
+    "consentId": "https://business.example/consent/example"
+  }
+}

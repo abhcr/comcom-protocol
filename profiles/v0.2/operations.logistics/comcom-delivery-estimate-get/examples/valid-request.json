@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.delivery.estimate.get",
+  "parameters": {
+    "deliveryEstimateId": "https://business.example/deliveryEstimate/example"
+  }
+}

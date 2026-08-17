@@ -1,0 +1,4 @@
+{
+  "capability": "comcom.shipment.cancel",
+  "originalResource": "https://business.example/shipment/example"
+}

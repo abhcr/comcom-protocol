@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.employee.offboard-allowed-1",
+      "from": "active",
+      "to": "offboarded",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.employee.offboard-forbidden-1",
+      "from": "offboarded",
+      "to": "active",
+      "expected": "forbidden"
+    }
+  ]
+}

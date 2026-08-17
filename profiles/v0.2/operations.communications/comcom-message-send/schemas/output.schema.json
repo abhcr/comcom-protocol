@@ -1,0 +1,30 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-send/schemas/output.schema.json",
+  "title": "Message Send output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "disposition",
+    "receivedAt"
+  ],
+  "properties": {
+    "disposition": {
+      "enum": [
+        "accepted",
+        "discarded",
+        "duplicate"
+      ]
+    },
+    "receivedAt": {
+      "type": "string",
+      "description": "Receipt instant.",
+      "format": "date-time"
+    },
+    "policyCode": {
+      "type": "string",
+      "description": "Admission policy code.",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.room.search",
+  "parameters": {
+    "filters": {}
+  }
+}

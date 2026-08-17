@@ -1,0 +1,43 @@
+{
+  "protocolVersion": "0.2",
+  "id": "urn:uuid:28d1eb49-5024-4d98-aa2a-c76f5c822ca5",
+  "kind": "command",
+  "capability": {
+    "id": "comcom.booking.create",
+    "version": "0.2.0"
+  },
+  "principal": {
+    "id": "https://buyer.example/customers/123",
+    "type": "person"
+  },
+  "sender": {
+    "id": "https://buyer.example",
+    "type": "organization"
+  },
+  "recipient": {
+    "id": "https://vendor.example",
+    "type": "organization"
+  },
+  "agent": {
+    "id": "https://buyer.example/software/booking-ui",
+    "type": "ui",
+    "name": "Booking form"
+  },
+  "authorization": "https://buyer.example/authorizations/456",
+  "issuedAt": "2026-08-17T09:00:00Z",
+  "expiresAt": "2026-08-17T09:05:00Z",
+  "idempotencyKey": "booking-28d1eb49-5024-4d98-aa2a",
+  "payload": {
+    "capability": "comcom.booking.create",
+    "parameters": {
+      "booking": {
+        "offeringId": "https://vendor.example/services/dentistry",
+        "customerId": "https://buyer.example/customers/123",
+        "providerId": "https://vendor.example/providers/42",
+        "start": "2026-08-18T09:00:00Z",
+        "end": "2026-08-18T09:30:00Z",
+        "timeZone": "Asia/Kolkata"
+      }
+    }
+  }
+}

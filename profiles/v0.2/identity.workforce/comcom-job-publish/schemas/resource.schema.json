@@ -1,0 +1,84 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-job-publish/schemas/resource.schema.json",
+  "title": "Job resource for comcom.job.publish",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "type",
+    "state",
+    "revision",
+    "createdAt",
+    "updatedAt"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Globally unique resource URI.",
+      "format": "uri-reference"
+    },
+    "type": {
+      "const": "Job"
+    },
+    "state": {
+      "type": "string",
+      "description": "Profile-defined state.",
+      "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Creation instant.",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Last update instant.",
+      "format": "date-time"
+    },
+    "statusCode": {
+      "type": "string",
+      "description": "Profile-defined business state.",
+      "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+    },
+    "personId": {
+      "type": "string",
+      "description": "Person URI.",
+      "format": "uri-reference"
+    },
+    "organizationId": {
+      "type": "string",
+      "description": "Organization URI.",
+      "format": "uri-reference"
+    },
+    "roleCode": {
+      "type": "string",
+      "description": "Job or role code.",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "start": {
+      "type": "string",
+      "description": "Employment or assignment start.",
+      "format": "date-time"
+    },
+    "end": {
+      "type": "string",
+      "description": "Employment or assignment end.",
+      "format": "date-time"
+    },
+    "locationId": {
+      "type": "string",
+      "description": "Work location URI.",
+      "format": "uri-reference"
+    },
+    "summary": {
+      "type": "string",
+      "description": "Role or request summary.",
+      "maxLength": 2000
+    }
+  }
+}

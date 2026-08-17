@@ -1,0 +1,2410 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/transactions.services.bundle.json",
+  "profile": "transactions.services",
+  "version": "0.2.0",
+  "capabilityIds": [
+    "comcom.service.completion.accept",
+    "comcom.service.engagement.start",
+    "comcom.service.estimate.request",
+    "comcom.service.get",
+    "comcom.service.list",
+    "comcom.service.progress.get",
+    "comcom.service.requirements.get",
+    "comcom.service.search"
+  ],
+  "capabilities": [
+    {
+      "definition": {
+        "id": "comcom.service.completion.accept",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.services",
+        "batch": 3,
+        "title": "Service Completion Accept",
+        "purpose": "Accept service completion using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "ServiceCompletion",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-completion-accept/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-completion-accept/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-completion-accept/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "requested",
+            "proposed",
+            "accepted"
+          ],
+          "transitions": [
+            {
+              "from": "proposed",
+              "to": "accepted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Service"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.service.completion.accept",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Service"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.service.completion.accept",
+          "parameters": {
+            "serviceCompletionId": "https://business.example/serviceCompletion/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "serviceCompletionId": "https://business.example/serviceCompletion/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.service.completion.accept-allowed-1",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.service.completion.accept-forbidden-1",
+              "from": "accepted",
+              "to": "requested",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/serviceCompletion/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.service.engagement.start",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.services",
+        "batch": 3,
+        "title": "Service Engagement Start",
+        "purpose": "Start service engagement using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "ServiceEngagement",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-engagement-start/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-engagement-start/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-engagement-start/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Service"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.service.engagement.start",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Service"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.service.engagement.start",
+          "parameters": {
+            "serviceEngagement": {
+              "applicantId": "https://business.example/applicantId/example",
+              "authorityId": "https://business.example/authorityId/example",
+              "serviceCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "serviceEngagement": {
+                "applicantId": "https://business.example/applicantId/example",
+                "authorityId": "https://business.example/authorityId/example",
+                "serviceCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.service.engagement.start-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.service.engagement.start-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.service.engagement.start-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.service.engagement.start-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/serviceEngagement/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.service.estimate.request",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.services",
+        "batch": 3,
+        "title": "Service Estimate Request",
+        "purpose": "Request service estimate using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "ServiceEstimate",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-estimate-request/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-estimate-request/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-estimate-request/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Service"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.service.estimate.request",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Service"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.service.estimate.request",
+          "parameters": {
+            "serviceEstimate": {
+              "applicantId": "https://business.example/applicantId/example",
+              "authorityId": "https://business.example/authorityId/example",
+              "serviceCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "serviceEstimate": {
+                "applicantId": "https://business.example/applicantId/example",
+                "authorityId": "https://business.example/authorityId/example",
+                "serviceCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.service.estimate.request-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.service.estimate.request-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/serviceEstimate/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.service.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.services",
+        "batch": 3,
+        "title": "Service Get",
+        "purpose": "Retrieve service using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Service",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Service"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.service.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Service"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.service.get",
+          "parameters": {
+            "serviceId": "https://business.example/service/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "serviceId": "https://business.example/service/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/service/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.service.list",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.services",
+        "batch": 3,
+        "title": "Service List",
+        "purpose": "List service using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Service",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-list/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-list/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-list/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Service"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.service.list",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Service"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.service.list",
+          "parameters": {}
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {}
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/service/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.service.progress.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.services",
+        "batch": 3,
+        "title": "Service Progress Get",
+        "purpose": "Retrieve service progress using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "ServiceProgress",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-progress-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-progress-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-progress-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Service"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.service.progress.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Service"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.service.progress.get",
+          "parameters": {
+            "serviceProgressId": "https://business.example/serviceProgress/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "serviceProgressId": "https://business.example/serviceProgress/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/serviceProgress/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.service.requirements.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.services",
+        "batch": 3,
+        "title": "Service Requirements Get",
+        "purpose": "Retrieve service requirements using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "ServiceRequirements",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-requirements-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-requirements-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-requirements-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Service"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.service.requirements.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Service"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.service.requirements.get",
+          "parameters": {
+            "serviceRequirementsId": "https://business.example/serviceRequirements/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "serviceRequirementsId": "https://business.example/serviceRequirements/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/serviceRequirements/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.service.search",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.services",
+        "batch": 3,
+        "title": "Service Search",
+        "purpose": "Search for service using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Service",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-search/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-search/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-search/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Service"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.service.search",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Service"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.service.search",
+          "parameters": {
+            "filters": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "filters": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/service/example"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "profiles__v0.2__transactions.services__comcom-service-completion-accept__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-completion-accept/schemas/input.schema.json",
+      "title": "Service Completion Accept input",
+      "description": "Accept service completion using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.service.completion.accept"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Service Completion Accept parameters.",
+          "additionalProperties": false,
+          "required": [
+            "serviceCompletionId"
+          ],
+          "properties": {
+            "serviceCompletionId": {
+              "type": "string",
+              "description": "ServiceCompletion URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-completion-accept__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-completion-accept/schemas/output.schema.json",
+      "title": "Service Completion Accept output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-completion-accept/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-completion-accept__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-completion-accept/schemas/resource.schema.json",
+      "title": "ServiceCompletion resource for comcom.service.completion.accept",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "ServiceCompletion"
+        },
+        "state": {
+          "enum": [
+            "requested",
+            "proposed",
+            "accepted"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "applicantId": {
+          "type": "string",
+          "description": "Applicant or customer URI.",
+          "format": "uri-reference"
+        },
+        "authorityId": {
+          "type": "string",
+          "description": "Responsible authority or provider URI.",
+          "format": "uri-reference"
+        },
+        "serviceCode": {
+          "type": "string",
+          "description": "Public, regulated, or professional service code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Application reference.",
+          "maxLength": 160
+        },
+        "submittedAt": {
+          "type": "string",
+          "description": "Submission instant.",
+          "format": "date-time"
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code.",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-engagement-start__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-engagement-start/schemas/input.schema.json",
+      "title": "Service Engagement Start input",
+      "description": "Start service engagement using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.service.engagement.start"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Service Engagement Start parameters.",
+          "additionalProperties": false,
+          "required": [
+            "serviceEngagement"
+          ],
+          "properties": {
+            "serviceEngagement": {
+              "type": "object",
+              "description": "Typed ServiceEngagement data.",
+              "additionalProperties": false,
+              "required": [
+                "applicantId",
+                "authorityId",
+                "serviceCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "applicantId": {
+                  "type": "string",
+                  "description": "Applicant or customer URI.",
+                  "format": "uri-reference"
+                },
+                "authorityId": {
+                  "type": "string",
+                  "description": "Responsible authority or provider URI.",
+                  "format": "uri-reference"
+                },
+                "serviceCode": {
+                  "type": "string",
+                  "description": "Public, regulated, or professional service code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Application reference.",
+                  "maxLength": 160
+                },
+                "submittedAt": {
+                  "type": "string",
+                  "description": "Submission instant.",
+                  "format": "date-time"
+                },
+                "country": {
+                  "type": "string",
+                  "description": "ISO 3166-1 alpha-2 country code.",
+                  "pattern": "^[A-Z]{2}$"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Request summary.",
+                  "maxLength": 2000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-engagement-start__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-engagement-start/schemas/output.schema.json",
+      "title": "Service Engagement Start output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-engagement-start/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-engagement-start__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-engagement-start/schemas/resource.schema.json",
+      "title": "ServiceEngagement resource for comcom.service.engagement.start",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "ServiceEngagement"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "applicantId": {
+          "type": "string",
+          "description": "Applicant or customer URI.",
+          "format": "uri-reference"
+        },
+        "authorityId": {
+          "type": "string",
+          "description": "Responsible authority or provider URI.",
+          "format": "uri-reference"
+        },
+        "serviceCode": {
+          "type": "string",
+          "description": "Public, regulated, or professional service code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Application reference.",
+          "maxLength": 160
+        },
+        "submittedAt": {
+          "type": "string",
+          "description": "Submission instant.",
+          "format": "date-time"
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code.",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-estimate-request__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-estimate-request/schemas/input.schema.json",
+      "title": "Service Estimate Request input",
+      "description": "Request service estimate using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.service.estimate.request"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Service Estimate Request parameters.",
+          "additionalProperties": false,
+          "required": [
+            "serviceEstimate"
+          ],
+          "properties": {
+            "serviceEstimate": {
+              "type": "object",
+              "description": "Typed ServiceEstimate data.",
+              "additionalProperties": false,
+              "required": [
+                "applicantId",
+                "authorityId",
+                "serviceCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "applicantId": {
+                  "type": "string",
+                  "description": "Applicant or customer URI.",
+                  "format": "uri-reference"
+                },
+                "authorityId": {
+                  "type": "string",
+                  "description": "Responsible authority or provider URI.",
+                  "format": "uri-reference"
+                },
+                "serviceCode": {
+                  "type": "string",
+                  "description": "Public, regulated, or professional service code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Application reference.",
+                  "maxLength": 160
+                },
+                "submittedAt": {
+                  "type": "string",
+                  "description": "Submission instant.",
+                  "format": "date-time"
+                },
+                "country": {
+                  "type": "string",
+                  "description": "ISO 3166-1 alpha-2 country code.",
+                  "pattern": "^[A-Z]{2}$"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Request summary.",
+                  "maxLength": 2000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-estimate-request__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-estimate-request/schemas/output.schema.json",
+      "title": "Service Estimate Request output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-estimate-request/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-estimate-request__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-estimate-request/schemas/resource.schema.json",
+      "title": "ServiceEstimate resource for comcom.service.estimate.request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "ServiceEstimate"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "applicantId": {
+          "type": "string",
+          "description": "Applicant or customer URI.",
+          "format": "uri-reference"
+        },
+        "authorityId": {
+          "type": "string",
+          "description": "Responsible authority or provider URI.",
+          "format": "uri-reference"
+        },
+        "serviceCode": {
+          "type": "string",
+          "description": "Public, regulated, or professional service code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Application reference.",
+          "maxLength": 160
+        },
+        "submittedAt": {
+          "type": "string",
+          "description": "Submission instant.",
+          "format": "date-time"
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code.",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-get/schemas/input.schema.json",
+      "title": "Service Get input",
+      "description": "Retrieve service using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.service.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the Service to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "serviceId"
+          ],
+          "properties": {
+            "serviceId": {
+              "type": "string",
+              "description": "Service URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-get/schemas/output.schema.json",
+      "title": "Service Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-get/schemas/resource.schema.json",
+      "title": "Service resource for comcom.service.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Service"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name.",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "description": {
+          "type": "string",
+          "description": "Description.",
+          "maxLength": 5000
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Standard or provider category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "sku": {
+          "type": "string",
+          "description": "Seller stock-keeping unit.",
+          "maxLength": 100
+        },
+        "gtin": {
+          "type": "string",
+          "description": "GS1 Global Trade Item Number.",
+          "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Price amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "available": {
+          "type": "boolean"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-list__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-list/schemas/input.schema.json",
+      "title": "Service List input",
+      "description": "List service using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.service.list"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Typed Service discovery parameters.",
+          "additionalProperties": false,
+          "required": [],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+              "maxLength": 500
+            },
+            "filters": {
+              "type": "object",
+              "description": "Typed Service filters.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Display name.",
+                  "minLength": 1,
+                  "maxLength": 300
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description.",
+                  "maxLength": 5000
+                },
+                "categoryCode": {
+                  "type": "string",
+                  "description": "Standard or provider category code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "sku": {
+                  "type": "string",
+                  "description": "Seller stock-keeping unit.",
+                  "maxLength": 100
+                },
+                "gtin": {
+                  "type": "string",
+                  "description": "GS1 Global Trade Item Number.",
+                  "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Price amount.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                }
+              }
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "cursor": {
+              "type": "string",
+              "description": "Opaque continuation cursor.",
+              "maxLength": 500
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-list__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-list/schemas/output.schema.json",
+      "title": "Service List output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "items"
+      ],
+      "properties": {
+        "status": {
+          "const": "completed"
+        },
+        "items": {
+          "type": "array",
+          "description": "Matching Service resources.",
+          "items": {
+            "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-list/schemas/resource.schema.json"
+          },
+          "maxItems": 100
+        },
+        "nextCursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-list__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-list/schemas/resource.schema.json",
+      "title": "Service resource for comcom.service.list",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Service"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name.",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "description": {
+          "type": "string",
+          "description": "Description.",
+          "maxLength": 5000
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Standard or provider category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "sku": {
+          "type": "string",
+          "description": "Seller stock-keeping unit.",
+          "maxLength": 100
+        },
+        "gtin": {
+          "type": "string",
+          "description": "GS1 Global Trade Item Number.",
+          "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Price amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "available": {
+          "type": "boolean"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-progress-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-progress-get/schemas/input.schema.json",
+      "title": "Service Progress Get input",
+      "description": "Retrieve service progress using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.service.progress.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the ServiceProgress to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "serviceProgressId"
+          ],
+          "properties": {
+            "serviceProgressId": {
+              "type": "string",
+              "description": "ServiceProgress URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-progress-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-progress-get/schemas/output.schema.json",
+      "title": "Service Progress Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-progress-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-progress-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-progress-get/schemas/resource.schema.json",
+      "title": "ServiceProgress resource for comcom.service.progress.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "ServiceProgress"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "applicantId": {
+          "type": "string",
+          "description": "Applicant or customer URI.",
+          "format": "uri-reference"
+        },
+        "authorityId": {
+          "type": "string",
+          "description": "Responsible authority or provider URI.",
+          "format": "uri-reference"
+        },
+        "serviceCode": {
+          "type": "string",
+          "description": "Public, regulated, or professional service code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Application reference.",
+          "maxLength": 160
+        },
+        "submittedAt": {
+          "type": "string",
+          "description": "Submission instant.",
+          "format": "date-time"
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code.",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-requirements-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-requirements-get/schemas/input.schema.json",
+      "title": "Service Requirements Get input",
+      "description": "Retrieve service requirements using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.service.requirements.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the ServiceRequirements to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "serviceRequirementsId"
+          ],
+          "properties": {
+            "serviceRequirementsId": {
+              "type": "string",
+              "description": "ServiceRequirements URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-requirements-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-requirements-get/schemas/output.schema.json",
+      "title": "Service Requirements Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-requirements-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-requirements-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-requirements-get/schemas/resource.schema.json",
+      "title": "ServiceRequirements resource for comcom.service.requirements.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "ServiceRequirements"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "applicantId": {
+          "type": "string",
+          "description": "Applicant or customer URI.",
+          "format": "uri-reference"
+        },
+        "authorityId": {
+          "type": "string",
+          "description": "Responsible authority or provider URI.",
+          "format": "uri-reference"
+        },
+        "serviceCode": {
+          "type": "string",
+          "description": "Public, regulated, or professional service code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Application reference.",
+          "maxLength": 160
+        },
+        "submittedAt": {
+          "type": "string",
+          "description": "Submission instant.",
+          "format": "date-time"
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code.",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-search__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-search/schemas/input.schema.json",
+      "title": "Service Search input",
+      "description": "Search for service using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.service.search"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Typed Service discovery parameters.",
+          "additionalProperties": false,
+          "required": [
+            "filters"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+              "maxLength": 500
+            },
+            "filters": {
+              "type": "object",
+              "description": "Typed Service filters.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Display name.",
+                  "minLength": 1,
+                  "maxLength": 300
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description.",
+                  "maxLength": 5000
+                },
+                "categoryCode": {
+                  "type": "string",
+                  "description": "Standard or provider category code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "sku": {
+                  "type": "string",
+                  "description": "Seller stock-keeping unit.",
+                  "maxLength": 100
+                },
+                "gtin": {
+                  "type": "string",
+                  "description": "GS1 Global Trade Item Number.",
+                  "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Price amount.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                }
+              }
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "cursor": {
+              "type": "string",
+              "description": "Opaque continuation cursor.",
+              "maxLength": 500
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-search__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-search/schemas/output.schema.json",
+      "title": "Service Search output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "items"
+      ],
+      "properties": {
+        "status": {
+          "const": "completed"
+        },
+        "items": {
+          "type": "array",
+          "description": "Matching Service resources.",
+          "items": {
+            "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-search/schemas/resource.schema.json"
+          },
+          "maxItems": 100
+        },
+        "nextCursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    },
+    "profiles__v0.2__transactions.services__comcom-service-search__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-search/schemas/resource.schema.json",
+      "title": "Service resource for comcom.service.search",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Service"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name.",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "description": {
+          "type": "string",
+          "description": "Description.",
+          "maxLength": 5000
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Standard or provider category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "sku": {
+          "type": "string",
+          "description": "Seller stock-keeping unit.",
+          "maxLength": 100
+        },
+        "gtin": {
+          "type": "string",
+          "description": "GS1 Global Trade Item Number.",
+          "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Price amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "available": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

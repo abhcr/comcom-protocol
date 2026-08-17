@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.order.reject",
+  "parameters": {
+    "orderId": "https://business.example/order/example"
+  }
+}

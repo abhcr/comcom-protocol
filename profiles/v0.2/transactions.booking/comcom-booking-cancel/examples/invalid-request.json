@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "bookingId": "https://business.example/booking/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

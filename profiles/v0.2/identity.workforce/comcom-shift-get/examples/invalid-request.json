@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "shiftId": "https://business.example/shift/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

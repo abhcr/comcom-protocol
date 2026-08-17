@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.product.recommendations.get",
+  "parameters": {
+    "productRecommendationsId": "https://business.example/productRecommendations/example"
+  }
+}

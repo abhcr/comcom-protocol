@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-journey-itinerary-get/schemas/input.schema.json",
+  "title": "Journey Itinerary Get input",
+  "description": "Retrieve journey itinerary using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.journey.itinerary.get"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the JourneyItinerary to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "journeyItineraryId"
+      ],
+      "properties": {
+        "journeyItineraryId": {
+          "type": "string",
+          "description": "JourneyItinerary URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.catalog.get",
+  "parameters": {
+    "catalogId": "https://business.example/catalog/example"
+  }
+}

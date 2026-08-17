@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "orderFulfillmentId": "https://business.example/orderFulfillment/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

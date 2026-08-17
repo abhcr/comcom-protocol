@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.offer.receive",
+  "parameters": {
+    "offer": {
+      "name": "example",
+      "categoryCode": "example",
+      "sku": "example"
+    }
+  }
+}

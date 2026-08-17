@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.data.access.request",
+  "parameters": {
+    "dataAccess": {
+      "subjectId": "https://business.example/subjectId/example",
+      "issuerId": "https://business.example/issuerId/example",
+      "referenceNumber": "example"
+    }
+  }
+}

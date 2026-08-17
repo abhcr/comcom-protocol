@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.privacy/comcom-permission-revoke/schemas/output.schema.json",
+  "title": "Permission Revoke output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "resource"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "accepted",
+        "inProgress",
+        "completed",
+        "rejected",
+        "cancelled",
+        "failed"
+      ]
+    },
+    "resource": {
+      "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.privacy/comcom-permission-revoke/schemas/resource.schema.json"
+    },
+    "nextActions": {
+      "type": "array",
+      "description": "Exact capability IDs permitted next.",
+      "items": {
+        "type": "string",
+        "description": "Capability ID.",
+        "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+      },
+      "uniqueItems": true,
+      "maxItems": 50
+    }
+  }
+}

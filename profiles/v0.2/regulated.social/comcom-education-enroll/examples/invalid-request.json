@@ -1,0 +1,15 @@
+{
+  "instance": {
+    "parameters": {
+      "education": {
+        "learnerId": "https://business.example/learnerId/example",
+        "providerId": "https://business.example/providerId/example",
+        "courseId": "https://business.example/courseId/example"
+      }
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

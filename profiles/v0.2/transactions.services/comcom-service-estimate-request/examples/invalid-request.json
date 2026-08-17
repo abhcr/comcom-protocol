@@ -1,0 +1,15 @@
+{
+  "instance": {
+    "parameters": {
+      "serviceEstimate": {
+        "applicantId": "https://business.example/applicantId/example",
+        "authorityId": "https://business.example/authorityId/example",
+        "serviceCode": "example"
+      }
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

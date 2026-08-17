@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.slot.release-allowed-1",
+      "from": "active",
+      "to": "released",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.slot.release-forbidden-1",
+      "from": "released",
+      "to": "active",
+      "expected": "forbidden"
+    }
+  ]
+}

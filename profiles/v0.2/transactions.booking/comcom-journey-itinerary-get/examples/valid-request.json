@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.journey.itinerary.get",
+  "parameters": {
+    "journeyItineraryId": "https://business.example/journeyItinerary/example"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "consentId": "https://business.example/consent/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

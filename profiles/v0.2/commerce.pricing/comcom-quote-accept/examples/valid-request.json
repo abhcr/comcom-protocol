@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.quote.accept",
+  "parameters": {
+    "quoteId": "https://business.example/quote/example"
+  }
+}

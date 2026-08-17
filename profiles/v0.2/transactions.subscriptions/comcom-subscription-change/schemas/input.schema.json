@@ -1,0 +1,81 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-change/schemas/input.schema.json",
+  "title": "Subscription Change input",
+  "description": "Change subscription using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.subscription.change"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Subscription Change parameters.",
+      "additionalProperties": false,
+      "required": [
+        "subscriptionId",
+        "expectedRevision",
+        "changes"
+      ],
+      "properties": {
+        "subscriptionId": {
+          "type": "string",
+          "description": "Subscription URI.",
+          "format": "uri-reference"
+        },
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "changes": {
+          "type": "object",
+          "description": "Permitted Subscription changes.",
+          "additionalProperties": false,
+          "required": [],
+          "properties": {
+            "statusCode": {
+              "type": "string",
+              "description": "Profile-defined business state.",
+              "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+            },
+            "subscriberId": {
+              "type": "string",
+              "description": "Subscriber URI.",
+              "format": "uri-reference"
+            },
+            "planId": {
+              "type": "string",
+              "description": "Plan URI.",
+              "format": "uri-reference"
+            },
+            "start": {
+              "type": "string",
+              "description": "Service start.",
+              "format": "date-time"
+            },
+            "end": {
+              "type": "string",
+              "description": "Service end.",
+              "format": "date-time"
+            },
+            "quantity": {
+              "type": "string",
+              "description": "Subscribed quantity.",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            },
+            "unitCode": {
+              "type": "string",
+              "description": "Subscription unit code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

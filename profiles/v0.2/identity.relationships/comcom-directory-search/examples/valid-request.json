@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.directory.search",
+  "parameters": {
+    "filters": {}
+  }
+}

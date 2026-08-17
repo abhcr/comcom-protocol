@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.product.customize.request",
+  "parameters": {
+    "productCustomize": {
+      "name": "example",
+      "categoryCode": "example",
+      "sku": "example"
+    }
+  }
+}

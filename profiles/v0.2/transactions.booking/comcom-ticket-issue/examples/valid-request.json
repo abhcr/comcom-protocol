@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.ticket.issue",
+  "parameters": {
+    "ticket": {
+      "offeringId": "https://business.example/offeringId/example",
+      "customerId": "https://business.example/customerId/example",
+      "providerId": "https://business.example/providerId/example"
+    }
+  }
+}

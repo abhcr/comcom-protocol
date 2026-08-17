@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "relationshipId": "https://business.example/relationship/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

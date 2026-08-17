@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.order.cancel",
+  "parameters": {
+    "orderId": "https://business.example/order/example"
+  }
+}

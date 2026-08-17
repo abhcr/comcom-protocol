@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "disputeResolveId": "https://business.example/disputeResolve/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

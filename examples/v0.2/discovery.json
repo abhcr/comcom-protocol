@@ -1,0 +1,15 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://vendor.example/.well-known/api-catalog",
+      "item": [
+        {
+          "href": "https://vendor.example/comcom/v0.2/manifest",
+          "type": "application/vnd.comcom.manifest+json",
+          "profile": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/manifest",
+          "title": "Vendor Comcom manifest"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "capability": "comcom.account.statement.get",
+  "version": "0.2.0",
+  "domainReview": {
+    "completed": false,
+    "references": []
+  },
+  "primaryStandards": [
+    "https://www.iso20022.org/",
+    "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+  ],
+  "securityReview": {
+    "completed": false,
+    "references": []
+  },
+  "implementations": [],
+  "interoperabilityJourneys": [],
+  "conformanceDigests": []
+}

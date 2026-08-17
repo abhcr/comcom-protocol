@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "filters": {}
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

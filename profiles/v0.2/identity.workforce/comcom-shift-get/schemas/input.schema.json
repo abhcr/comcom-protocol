@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-shift-get/schemas/input.schema.json",
+  "title": "Shift Get input",
+  "description": "Retrieve shift using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.shift.get"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the Shift to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "shiftId"
+      ],
+      "properties": {
+        "shiftId": {
+          "type": "string",
+          "description": "Shift URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

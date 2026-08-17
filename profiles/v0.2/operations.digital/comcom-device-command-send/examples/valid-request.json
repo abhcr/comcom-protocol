@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.device.command.send",
+  "parameters": {
+    "deviceCommand": {
+      "assetId": "https://business.example/assetId/example",
+      "locationId": "https://business.example/locationId/example",
+      "metricCode": "example"
+    }
+  }
+}

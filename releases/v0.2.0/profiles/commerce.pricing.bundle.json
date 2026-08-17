@@ -1,0 +1,3357 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/commerce.pricing.bundle.json",
+  "profile": "commerce.pricing",
+  "version": "0.2.0",
+  "capabilityIds": [
+    "comcom.discount.eligibility.check",
+    "comcom.offer.publish",
+    "comcom.offer.receive",
+    "comcom.offer.withdraw",
+    "comcom.price.get",
+    "comcom.quote.accept",
+    "comcom.quote.get",
+    "comcom.quote.reject",
+    "comcom.quote.request",
+    "comcom.rate.list"
+  ],
+  "capabilities": [
+    {
+      "definition": {
+        "id": "comcom.discount.eligibility.check",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.pricing",
+        "batch": 2,
+        "title": "Discount Eligibility Check",
+        "purpose": "Check discount eligibility using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "DiscountEligibility",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-discount-eligibility-check/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-discount-eligibility-check/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-discount-eligibility-check/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.discount.eligibility.check",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.discount.eligibility.check",
+          "parameters": {
+            "discountEligibilityId": "https://business.example/discountEligibility/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "discountEligibilityId": "https://business.example/discountEligibility/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/discountEligibility/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.offer.publish",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.pricing",
+        "batch": 2,
+        "title": "Offer Publish",
+        "purpose": "Publish offer using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "Offer",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-publish/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-publish/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-publish/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.offer.publish",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.offer.publish",
+          "parameters": {
+            "offer": {
+              "name": "example",
+              "categoryCode": "example",
+              "sku": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "offer": {
+                "name": "example",
+                "categoryCode": "example",
+                "sku": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/offer/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.offer.receive",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.pricing",
+        "batch": 2,
+        "title": "Offer Receive",
+        "purpose": "Receive offer using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "Offer",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-receive/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-receive/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-receive/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.offer.receive",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.offer.receive",
+          "parameters": {
+            "offer": {
+              "name": "example",
+              "categoryCode": "example",
+              "sku": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "offer": {
+                "name": "example",
+                "categoryCode": "example",
+                "sku": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/offer/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.offer.withdraw",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.pricing",
+        "batch": 2,
+        "title": "Offer Withdraw",
+        "purpose": "Withdraw offer using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Offer",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-withdraw/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-withdraw/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-withdraw/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active",
+            "withdrawn"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "withdrawn"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.offer.withdraw",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.offer.withdraw",
+          "parameters": {
+            "offerId": "https://business.example/offer/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "offerId": "https://business.example/offer/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.offer.withdraw-allowed-1",
+              "from": "active",
+              "to": "withdrawn",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.offer.withdraw-forbidden-1",
+              "from": "withdrawn",
+              "to": "active",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/offer/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.price.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.pricing",
+        "batch": 2,
+        "title": "Price Get",
+        "purpose": "Retrieve price using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Price",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-price-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-price-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-price-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.price.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.price.get",
+          "parameters": {
+            "priceId": "https://business.example/price/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "priceId": "https://business.example/price/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/price/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.quote.accept",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.pricing",
+        "batch": 2,
+        "title": "Quote Accept",
+        "purpose": "Accept quote using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Quote",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-accept/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-accept/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-accept/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "requested",
+            "proposed",
+            "accepted"
+          ],
+          "transitions": [
+            {
+              "from": "proposed",
+              "to": "accepted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.quote.accept",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.quote.accept",
+          "parameters": {
+            "quoteId": "https://business.example/quote/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "quoteId": "https://business.example/quote/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.quote.accept-allowed-1",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.quote.accept-forbidden-1",
+              "from": "accepted",
+              "to": "requested",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/quote/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.quote.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.pricing",
+        "batch": 2,
+        "title": "Quote Get",
+        "purpose": "Retrieve quote using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Quote",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.quote.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.quote.get",
+          "parameters": {
+            "quoteId": "https://business.example/quote/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "quoteId": "https://business.example/quote/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/quote/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.quote.reject",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.pricing",
+        "batch": 2,
+        "title": "Quote Reject",
+        "purpose": "Reject quote using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Quote",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-reject/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-reject/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-reject/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "requested",
+            "proposed",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "requested",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.quote.reject",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.quote.reject",
+          "parameters": {
+            "quoteId": "https://business.example/quote/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "quoteId": "https://business.example/quote/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.quote.reject-allowed-1",
+              "from": "requested",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.quote.reject-forbidden-1",
+              "from": "rejected",
+              "to": "requested",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/quote/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.quote.request",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.pricing",
+        "batch": 2,
+        "title": "Quote Request",
+        "purpose": "Request quote using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Quote",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-request/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-request/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-request/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.quote.request",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.quote.request",
+          "parameters": {
+            "quote": {
+              "accountId": "https://business.example/accountId/example",
+              "payerId": "https://business.example/payerId/example",
+              "payeeId": "https://business.example/payeeId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "quote": {
+                "accountId": "https://business.example/accountId/example",
+                "payerId": "https://business.example/payerId/example",
+                "payeeId": "https://business.example/payeeId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.quote.request-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.quote.request-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/quote/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.rate.list",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.pricing",
+        "batch": 2,
+        "title": "Rate List",
+        "purpose": "List rate using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Rate",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-rate-list/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-rate-list/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-rate-list/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.rate.list",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/Offer",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.rate.list",
+          "parameters": {}
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {}
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/rate/example"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "profiles__v0.2__commerce.pricing__comcom-discount-eligibility-check__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-discount-eligibility-check/schemas/input.schema.json",
+      "title": "Discount Eligibility Check input",
+      "description": "Check discount eligibility using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.discount.eligibility.check"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the DiscountEligibility to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "discountEligibilityId"
+          ],
+          "properties": {
+            "discountEligibilityId": {
+              "type": "string",
+              "description": "DiscountEligibility URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-discount-eligibility-check__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-discount-eligibility-check/schemas/output.schema.json",
+      "title": "Discount Eligibility Check output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-discount-eligibility-check/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-discount-eligibility-check__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-discount-eligibility-check/schemas/resource.schema.json",
+      "title": "DiscountEligibility resource for comcom.discount.eligibility.check",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "DiscountEligibility"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "Account URI.",
+          "format": "uri-reference"
+        },
+        "payerId": {
+          "type": "string",
+          "description": "Payer URI.",
+          "format": "uri-reference"
+        },
+        "payeeId": {
+          "type": "string",
+          "description": "Payee URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Monetary amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "dueAt": {
+          "type": "string",
+          "description": "Payment or document due instant.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed monetary lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-offer-publish__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-publish/schemas/input.schema.json",
+      "title": "Offer Publish input",
+      "description": "Publish offer using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.offer.publish"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Offer Publish parameters.",
+          "additionalProperties": false,
+          "required": [
+            "offer"
+          ],
+          "properties": {
+            "offer": {
+              "type": "object",
+              "description": "Typed Offer data.",
+              "additionalProperties": false,
+              "required": [
+                "name",
+                "categoryCode",
+                "sku"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Display name.",
+                  "minLength": 1,
+                  "maxLength": 300
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description.",
+                  "maxLength": 5000
+                },
+                "categoryCode": {
+                  "type": "string",
+                  "description": "Standard or provider category code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "sku": {
+                  "type": "string",
+                  "description": "Seller stock-keeping unit.",
+                  "maxLength": 100
+                },
+                "gtin": {
+                  "type": "string",
+                  "description": "GS1 Global Trade Item Number.",
+                  "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Price amount.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "available": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-offer-publish__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-publish/schemas/output.schema.json",
+      "title": "Offer Publish output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-offer-publish__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-publish/schemas/resource.schema.json",
+      "title": "Offer resource for comcom.offer.publish",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Offer"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name.",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "description": {
+          "type": "string",
+          "description": "Description.",
+          "maxLength": 5000
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Standard or provider category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "sku": {
+          "type": "string",
+          "description": "Seller stock-keeping unit.",
+          "maxLength": 100
+        },
+        "gtin": {
+          "type": "string",
+          "description": "GS1 Global Trade Item Number.",
+          "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Price amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "available": {
+          "type": "boolean"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-offer-receive__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-receive/schemas/input.schema.json",
+      "title": "Offer Receive input",
+      "description": "Receive offer using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.offer.receive"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Offer Receive parameters.",
+          "additionalProperties": false,
+          "required": [
+            "offer"
+          ],
+          "properties": {
+            "offer": {
+              "type": "object",
+              "description": "Typed Offer data.",
+              "additionalProperties": false,
+              "required": [
+                "name",
+                "categoryCode",
+                "sku"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Display name.",
+                  "minLength": 1,
+                  "maxLength": 300
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description.",
+                  "maxLength": 5000
+                },
+                "categoryCode": {
+                  "type": "string",
+                  "description": "Standard or provider category code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "sku": {
+                  "type": "string",
+                  "description": "Seller stock-keeping unit.",
+                  "maxLength": 100
+                },
+                "gtin": {
+                  "type": "string",
+                  "description": "GS1 Global Trade Item Number.",
+                  "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Price amount.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "available": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-offer-receive__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-receive/schemas/output.schema.json",
+      "title": "Offer Receive output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-offer-receive__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-receive/schemas/resource.schema.json",
+      "title": "Offer resource for comcom.offer.receive",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Offer"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name.",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "description": {
+          "type": "string",
+          "description": "Description.",
+          "maxLength": 5000
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Standard or provider category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "sku": {
+          "type": "string",
+          "description": "Seller stock-keeping unit.",
+          "maxLength": 100
+        },
+        "gtin": {
+          "type": "string",
+          "description": "GS1 Global Trade Item Number.",
+          "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Price amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "available": {
+          "type": "boolean"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-offer-withdraw__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-withdraw/schemas/input.schema.json",
+      "title": "Offer Withdraw input",
+      "description": "Withdraw offer using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.offer.withdraw"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Offer Withdraw parameters.",
+          "additionalProperties": false,
+          "required": [
+            "offerId"
+          ],
+          "properties": {
+            "offerId": {
+              "type": "string",
+              "description": "Offer URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-offer-withdraw__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-withdraw/schemas/output.schema.json",
+      "title": "Offer Withdraw output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-withdraw/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-offer-withdraw__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-withdraw/schemas/resource.schema.json",
+      "title": "Offer resource for comcom.offer.withdraw",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Offer"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "withdrawn"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name.",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "description": {
+          "type": "string",
+          "description": "Description.",
+          "maxLength": 5000
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Standard or provider category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "sku": {
+          "type": "string",
+          "description": "Seller stock-keeping unit.",
+          "maxLength": 100
+        },
+        "gtin": {
+          "type": "string",
+          "description": "GS1 Global Trade Item Number.",
+          "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Price amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "available": {
+          "type": "boolean"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-price-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-price-get/schemas/input.schema.json",
+      "title": "Price Get input",
+      "description": "Retrieve price using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.price.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the Price to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "priceId"
+          ],
+          "properties": {
+            "priceId": {
+              "type": "string",
+              "description": "Price URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-price-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-price-get/schemas/output.schema.json",
+      "title": "Price Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-price-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-price-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-price-get/schemas/resource.schema.json",
+      "title": "Price resource for comcom.price.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Price"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "Account URI.",
+          "format": "uri-reference"
+        },
+        "payerId": {
+          "type": "string",
+          "description": "Payer URI.",
+          "format": "uri-reference"
+        },
+        "payeeId": {
+          "type": "string",
+          "description": "Payee URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Monetary amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "dueAt": {
+          "type": "string",
+          "description": "Payment or document due instant.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed monetary lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-quote-accept__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-accept/schemas/input.schema.json",
+      "title": "Quote Accept input",
+      "description": "Accept quote using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.quote.accept"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Quote Accept parameters.",
+          "additionalProperties": false,
+          "required": [
+            "quoteId"
+          ],
+          "properties": {
+            "quoteId": {
+              "type": "string",
+              "description": "Quote URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-quote-accept__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-accept/schemas/output.schema.json",
+      "title": "Quote Accept output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-accept/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-quote-accept__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-accept/schemas/resource.schema.json",
+      "title": "Quote resource for comcom.quote.accept",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Quote"
+        },
+        "state": {
+          "enum": [
+            "requested",
+            "proposed",
+            "accepted"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "Account URI.",
+          "format": "uri-reference"
+        },
+        "payerId": {
+          "type": "string",
+          "description": "Payer URI.",
+          "format": "uri-reference"
+        },
+        "payeeId": {
+          "type": "string",
+          "description": "Payee URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Monetary amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "dueAt": {
+          "type": "string",
+          "description": "Payment or document due instant.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed monetary lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-quote-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-get/schemas/input.schema.json",
+      "title": "Quote Get input",
+      "description": "Retrieve quote using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.quote.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the Quote to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "quoteId"
+          ],
+          "properties": {
+            "quoteId": {
+              "type": "string",
+              "description": "Quote URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-quote-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-get/schemas/output.schema.json",
+      "title": "Quote Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-quote-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-get/schemas/resource.schema.json",
+      "title": "Quote resource for comcom.quote.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Quote"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "Account URI.",
+          "format": "uri-reference"
+        },
+        "payerId": {
+          "type": "string",
+          "description": "Payer URI.",
+          "format": "uri-reference"
+        },
+        "payeeId": {
+          "type": "string",
+          "description": "Payee URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Monetary amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "dueAt": {
+          "type": "string",
+          "description": "Payment or document due instant.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed monetary lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-quote-reject__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-reject/schemas/input.schema.json",
+      "title": "Quote Reject input",
+      "description": "Reject quote using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.quote.reject"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Quote Reject parameters.",
+          "additionalProperties": false,
+          "required": [
+            "quoteId"
+          ],
+          "properties": {
+            "quoteId": {
+              "type": "string",
+              "description": "Quote URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-quote-reject__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-reject/schemas/output.schema.json",
+      "title": "Quote Reject output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-reject/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-quote-reject__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-reject/schemas/resource.schema.json",
+      "title": "Quote resource for comcom.quote.reject",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Quote"
+        },
+        "state": {
+          "enum": [
+            "requested",
+            "proposed",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "Account URI.",
+          "format": "uri-reference"
+        },
+        "payerId": {
+          "type": "string",
+          "description": "Payer URI.",
+          "format": "uri-reference"
+        },
+        "payeeId": {
+          "type": "string",
+          "description": "Payee URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Monetary amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "dueAt": {
+          "type": "string",
+          "description": "Payment or document due instant.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed monetary lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-quote-request__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-request/schemas/input.schema.json",
+      "title": "Quote Request input",
+      "description": "Request quote using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.quote.request"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Quote Request parameters.",
+          "additionalProperties": false,
+          "required": [
+            "quote"
+          ],
+          "properties": {
+            "quote": {
+              "type": "object",
+              "description": "Typed Quote data.",
+              "additionalProperties": false,
+              "required": [
+                "accountId",
+                "payerId",
+                "payeeId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "accountId": {
+                  "type": "string",
+                  "description": "Account URI.",
+                  "format": "uri-reference"
+                },
+                "payerId": {
+                  "type": "string",
+                  "description": "Payer URI.",
+                  "format": "uri-reference"
+                },
+                "payeeId": {
+                  "type": "string",
+                  "description": "Payee URI.",
+                  "format": "uri-reference"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Monetary amount.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "dueAt": {
+                  "type": "string",
+                  "description": "Payment or document due instant.",
+                  "format": "date-time"
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity expiry.",
+                  "format": "date-time"
+                },
+                "lines": {
+                  "type": "array",
+                  "description": "Typed monetary lines.",
+                  "items": {
+                    "type": "object",
+                    "description": "A priced line.",
+                    "additionalProperties": false,
+                    "required": [
+                      "itemId",
+                      "quantity",
+                      "unitCode"
+                    ],
+                    "properties": {
+                      "itemId": {
+                        "type": "string",
+                        "description": "Item URI.",
+                        "format": "uri-reference"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Line description.",
+                        "maxLength": 500
+                      },
+                      "quantity": {
+                        "type": "string",
+                        "description": "Requested quantity.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "unitCode": {
+                        "type": "string",
+                        "description": "UNECE or profile-declared unit code.",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                      },
+                      "unitPrice": {
+                        "type": "string",
+                        "description": "Unit price.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "currency": {
+                        "type": "string",
+                        "description": "ISO 4217 currency code.",
+                        "pattern": "^[A-Z]{3}$"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "maxItems": 1000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-quote-request__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-request/schemas/output.schema.json",
+      "title": "Quote Request output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-request/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-quote-request__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-request/schemas/resource.schema.json",
+      "title": "Quote resource for comcom.quote.request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Quote"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "Account URI.",
+          "format": "uri-reference"
+        },
+        "payerId": {
+          "type": "string",
+          "description": "Payer URI.",
+          "format": "uri-reference"
+        },
+        "payeeId": {
+          "type": "string",
+          "description": "Payee URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Monetary amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "dueAt": {
+          "type": "string",
+          "description": "Payment or document due instant.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed monetary lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-rate-list__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-rate-list/schemas/input.schema.json",
+      "title": "Rate List input",
+      "description": "List rate using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.rate.list"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Typed Rate discovery parameters.",
+          "additionalProperties": false,
+          "required": [],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+              "maxLength": 500
+            },
+            "filters": {
+              "type": "object",
+              "description": "Typed Rate filters.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "accountId": {
+                  "type": "string",
+                  "description": "Account URI.",
+                  "format": "uri-reference"
+                },
+                "payerId": {
+                  "type": "string",
+                  "description": "Payer URI.",
+                  "format": "uri-reference"
+                },
+                "payeeId": {
+                  "type": "string",
+                  "description": "Payee URI.",
+                  "format": "uri-reference"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Monetary amount.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "dueAt": {
+                  "type": "string",
+                  "description": "Payment or document due instant.",
+                  "format": "date-time"
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity expiry.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "cursor": {
+              "type": "string",
+              "description": "Opaque continuation cursor.",
+              "maxLength": 500
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-rate-list__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-rate-list/schemas/output.schema.json",
+      "title": "Rate List output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "items"
+      ],
+      "properties": {
+        "status": {
+          "const": "completed"
+        },
+        "items": {
+          "type": "array",
+          "description": "Matching Rate resources.",
+          "items": {
+            "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-rate-list/schemas/resource.schema.json"
+          },
+          "maxItems": 100
+        },
+        "nextCursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    },
+    "profiles__v0.2__commerce.pricing__comcom-rate-list__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-rate-list/schemas/resource.schema.json",
+      "title": "Rate resource for comcom.rate.list",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Rate"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "Account URI.",
+          "format": "uri-reference"
+        },
+        "payerId": {
+          "type": "string",
+          "description": "Payer URI.",
+          "format": "uri-reference"
+        },
+        "payeeId": {
+          "type": "string",
+          "description": "Payee URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Monetary amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "dueAt": {
+          "type": "string",
+          "description": "Payment or document due instant.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed monetary lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        }
+      }
+    }
+  }
+}

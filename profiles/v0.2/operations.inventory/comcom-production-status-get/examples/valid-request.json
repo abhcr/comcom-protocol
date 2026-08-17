@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.production.status.get",
+  "parameters": {
+    "productionStatusId": "https://business.example/productionStatus/example"
+  }
+}

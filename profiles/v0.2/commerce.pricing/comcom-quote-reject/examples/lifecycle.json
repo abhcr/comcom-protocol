@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.quote.reject-allowed-1",
+      "from": "requested",
+      "to": "rejected",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.quote.reject-forbidden-1",
+      "from": "rejected",
+      "to": "requested",
+      "expected": "forbidden"
+    }
+  ]
+}

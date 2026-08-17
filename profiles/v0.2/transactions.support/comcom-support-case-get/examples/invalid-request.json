@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "supportCaseId": "https://business.example/supportCase/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

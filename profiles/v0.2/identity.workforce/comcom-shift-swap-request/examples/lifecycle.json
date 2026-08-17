@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.shift.swap.request-allowed-1",
+      "from": "none",
+      "to": "submitted",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.shift.swap.request-forbidden-1",
+      "from": "rejected",
+      "to": "submitted",
+      "expected": "forbidden"
+    }
+  ]
+}

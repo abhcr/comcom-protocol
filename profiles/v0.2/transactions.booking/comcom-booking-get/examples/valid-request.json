@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.booking.get",
+  "parameters": {
+    "bookingId": "https://business.example/booking/example"
+  }
+}

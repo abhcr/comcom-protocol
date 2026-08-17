@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.insurance.claim.submit",
+  "parameters": {
+    "insuranceClaim": {
+      "applicantId": "https://business.example/applicantId/example",
+      "authorityId": "https://business.example/authorityId/example",
+      "serviceCode": "example"
+    }
+  }
+}

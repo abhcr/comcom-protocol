@@ -1,0 +1,30 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.property.viewing.book-allowed-1",
+      "from": "none",
+      "to": "proposed",
+      "expected": "allowed"
+    },
+    {
+      "case": "comcom.property.viewing.book-allowed-2",
+      "from": "proposed",
+      "to": "accepted",
+      "expected": "allowed"
+    },
+    {
+      "case": "comcom.property.viewing.book-allowed-3",
+      "from": "proposed",
+      "to": "rejected",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.property.viewing.book-forbidden-1",
+      "from": "cancelled",
+      "to": "proposed",
+      "expected": "forbidden"
+    }
+  ]
+}

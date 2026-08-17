@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-notification-preferences-get/schemas/input.schema.json",
+  "title": "Notification Preferences Get input",
+  "description": "Retrieve notification preferences using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.notification.preferences.get"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the NotificationPreferences to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "notificationPreferencesId"
+      ],
+      "properties": {
+        "notificationPreferencesId": {
+          "type": "string",
+          "description": "NotificationPreferences URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

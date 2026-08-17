@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.automation.rule.trigger",
+  "parameters": {
+    "automationRule": {
+      "assetId": "https://business.example/assetId/example",
+      "locationId": "https://business.example/locationId/example",
+      "metricCode": "example"
+    }
+  }
+}

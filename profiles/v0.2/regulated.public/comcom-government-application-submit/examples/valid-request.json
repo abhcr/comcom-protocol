@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.government.application.submit",
+  "parameters": {
+    "governmentApplication": {
+      "applicantId": "https://business.example/applicantId/example",
+      "authorityId": "https://business.example/authorityId/example",
+      "serviceCode": "example"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.education.course.search",
+  "parameters": {
+    "filters": {}
+  }
+}

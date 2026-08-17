@@ -1,0 +1,3337 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/operations.inventory.bundle.json",
+  "profile": "operations.inventory",
+  "version": "0.2.0",
+  "capabilityIds": [
+    "comcom.asset.assign",
+    "comcom.asset.maintenance.request",
+    "comcom.asset.register",
+    "comcom.inventory.adjust",
+    "comcom.inventory.check",
+    "comcom.inventory.release",
+    "comcom.inventory.reserve",
+    "comcom.production.order.create",
+    "comcom.production.status.get",
+    "comcom.replenishment.request"
+  ],
+  "capabilities": [
+    {
+      "definition": {
+        "id": "comcom.asset.assign",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.inventory",
+        "batch": 4,
+        "title": "Asset Assign",
+        "purpose": "Assign asset using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Asset",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-assign/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-assign/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-assign/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "active",
+              "revisionRequired": true
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.asset.assign",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.asset.assign",
+          "parameters": {
+            "assetId": "https://business.example/asset/example",
+            "expectedRevision": 0,
+            "changes": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "assetId": "https://business.example/asset/example",
+              "expectedRevision": 0,
+              "changes": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.asset.assign-allowed-1",
+              "from": "active",
+              "to": "active",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/asset/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.asset.maintenance.request",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.inventory",
+        "batch": 4,
+        "title": "Asset Maintenance Request",
+        "purpose": "Request asset maintenance using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "AssetMaintenance",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-maintenance-request/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-maintenance-request/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-maintenance-request/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.asset.maintenance.request",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.asset.maintenance.request",
+          "parameters": {
+            "assetMaintenance": {
+              "assetId": "https://business.example/assetId/example",
+              "locationId": "https://business.example/locationId/example",
+              "metricCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "assetMaintenance": {
+                "assetId": "https://business.example/assetId/example",
+                "locationId": "https://business.example/locationId/example",
+                "metricCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.asset.maintenance.request-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.asset.maintenance.request-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/assetMaintenance/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.asset.register",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.inventory",
+        "batch": 4,
+        "title": "Asset Register",
+        "purpose": "Register asset using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Asset",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-register/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-register/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-register/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.asset.register",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.asset.register",
+          "parameters": {
+            "asset": {
+              "assetId": "https://business.example/assetId/example",
+              "locationId": "https://business.example/locationId/example",
+              "metricCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "asset": {
+                "assetId": "https://business.example/assetId/example",
+                "locationId": "https://business.example/locationId/example",
+                "metricCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.asset.register-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.asset.register-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.asset.register-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.asset.register-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/asset/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.inventory.adjust",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.inventory",
+        "batch": 4,
+        "title": "Inventory Adjust",
+        "purpose": "Adjust inventory using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Inventory",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-adjust/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-adjust/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-adjust/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "active",
+              "revisionRequired": true
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.inventory.adjust",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.inventory.adjust",
+          "parameters": {
+            "inventoryId": "https://business.example/inventory/example",
+            "expectedRevision": 0,
+            "changes": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "inventoryId": "https://business.example/inventory/example",
+              "expectedRevision": 0,
+              "changes": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.inventory.adjust-allowed-1",
+              "from": "active",
+              "to": "active",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/inventory/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.inventory.check",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.inventory",
+        "batch": 4,
+        "title": "Inventory Check",
+        "purpose": "Check inventory using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Inventory",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-check/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-check/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-check/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.inventory.check",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.inventory.check",
+          "parameters": {
+            "inventoryId": "https://business.example/inventory/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "inventoryId": "https://business.example/inventory/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/inventory/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.inventory.release",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.inventory",
+        "batch": 4,
+        "title": "Inventory Release",
+        "purpose": "Release inventory using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Inventory",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-release/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-release/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-release/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active",
+            "released"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "released"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.inventory.release",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.inventory.release",
+          "parameters": {
+            "inventoryId": "https://business.example/inventory/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "inventoryId": "https://business.example/inventory/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.inventory.release-allowed-1",
+              "from": "active",
+              "to": "released",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.inventory.release-forbidden-1",
+              "from": "released",
+              "to": "active",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/inventory/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.inventory.reserve",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.inventory",
+        "batch": 4,
+        "title": "Inventory Reserve",
+        "purpose": "Reserve inventory using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Inventory",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-reserve/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-reserve/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-reserve/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "available",
+            "reserved"
+          ],
+          "transitions": [
+            {
+              "from": "available",
+              "to": "reserved"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.inventory.reserve",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.inventory.reserve",
+          "parameters": {
+            "inventory": {
+              "assetId": "https://business.example/assetId/example",
+              "locationId": "https://business.example/locationId/example",
+              "metricCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "inventory": {
+                "assetId": "https://business.example/assetId/example",
+                "locationId": "https://business.example/locationId/example",
+                "metricCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.inventory.reserve-allowed-1",
+              "from": "available",
+              "to": "reserved",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.inventory.reserve-forbidden-1",
+              "from": "reserved",
+              "to": "available",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/inventory/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.production.order.create",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.inventory",
+        "batch": 4,
+        "title": "Production Order Create",
+        "purpose": "Create production order using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "ProductionOrder",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-production-order-create/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-production-order-create/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-production-order-create/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.production.order.create",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.production.order.create",
+          "parameters": {
+            "productionOrder": {
+              "buyerId": "https://business.example/buyerId/example",
+              "sellerId": "https://business.example/sellerId/example",
+              "supplierId": "https://business.example/supplierId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "productionOrder": {
+                "buyerId": "https://business.example/buyerId/example",
+                "sellerId": "https://business.example/sellerId/example",
+                "supplierId": "https://business.example/supplierId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.production.order.create-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.production.order.create-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.production.order.create-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.production.order.create-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/productionOrder/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.production.status.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.inventory",
+        "batch": 4,
+        "title": "Production Status Get",
+        "purpose": "Retrieve production status using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "ProductionStatus",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-production-status-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-production-status-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-production-status-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.production.status.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.production.status.get",
+          "parameters": {
+            "productionStatusId": "https://business.example/productionStatus/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "productionStatusId": "https://business.example/productionStatus/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/productionStatus/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.replenishment.request",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.inventory",
+        "batch": 4,
+        "title": "Replenishment Request",
+        "purpose": "Request replenishment using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Replenishment",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-replenishment-request/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-replenishment-request/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-replenishment-request/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.replenishment.request",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.replenishment.request",
+          "parameters": {
+            "replenishment": {
+              "assetId": "https://business.example/assetId/example",
+              "locationId": "https://business.example/locationId/example",
+              "metricCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "replenishment": {
+                "assetId": "https://business.example/assetId/example",
+                "locationId": "https://business.example/locationId/example",
+                "metricCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.replenishment.request-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.replenishment.request-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/replenishment/example"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "profiles__v0.2__operations.inventory__comcom-asset-assign__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-assign/schemas/input.schema.json",
+      "title": "Asset Assign input",
+      "description": "Assign asset using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.asset.assign"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Asset Assign parameters.",
+          "additionalProperties": false,
+          "required": [
+            "assetId",
+            "expectedRevision",
+            "changes"
+          ],
+          "properties": {
+            "assetId": {
+              "type": "string",
+              "description": "Asset URI.",
+              "format": "uri-reference"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "changes": {
+              "type": "object",
+              "description": "Permitted Asset changes.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "assetId": {
+                  "type": "string",
+                  "description": "Asset or device URI.",
+                  "format": "uri-reference"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "metricCode": {
+                  "type": "string",
+                  "description": "Metric or operation code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Measured or requested numeric value.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "UNECE or profile-declared unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "observedAt": {
+                  "type": "string",
+                  "description": "Observation instant.",
+                  "format": "date-time"
+                },
+                "commandCode": {
+                  "type": "string",
+                  "description": "Command or rule code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-asset-assign__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-assign/schemas/output.schema.json",
+      "title": "Asset Assign output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-assign/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-asset-assign__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-assign/schemas/resource.schema.json",
+      "title": "Asset resource for comcom.asset.assign",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Asset"
+        },
+        "state": {
+          "enum": [
+            "active"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-asset-maintenance-request__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-maintenance-request/schemas/input.schema.json",
+      "title": "Asset Maintenance Request input",
+      "description": "Request asset maintenance using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.asset.maintenance.request"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Asset Maintenance Request parameters.",
+          "additionalProperties": false,
+          "required": [
+            "assetMaintenance"
+          ],
+          "properties": {
+            "assetMaintenance": {
+              "type": "object",
+              "description": "Typed AssetMaintenance data.",
+              "additionalProperties": false,
+              "required": [
+                "assetId",
+                "locationId",
+                "metricCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "assetId": {
+                  "type": "string",
+                  "description": "Asset or device URI.",
+                  "format": "uri-reference"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "metricCode": {
+                  "type": "string",
+                  "description": "Metric or operation code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Measured or requested numeric value.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "UNECE or profile-declared unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "observedAt": {
+                  "type": "string",
+                  "description": "Observation instant.",
+                  "format": "date-time"
+                },
+                "commandCode": {
+                  "type": "string",
+                  "description": "Command or rule code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-asset-maintenance-request__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-maintenance-request/schemas/output.schema.json",
+      "title": "Asset Maintenance Request output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-maintenance-request/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-asset-maintenance-request__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-maintenance-request/schemas/resource.schema.json",
+      "title": "AssetMaintenance resource for comcom.asset.maintenance.request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "AssetMaintenance"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-asset-register__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-register/schemas/input.schema.json",
+      "title": "Asset Register input",
+      "description": "Register asset using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.asset.register"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Asset Register parameters.",
+          "additionalProperties": false,
+          "required": [
+            "asset"
+          ],
+          "properties": {
+            "asset": {
+              "type": "object",
+              "description": "Typed Asset data.",
+              "additionalProperties": false,
+              "required": [
+                "assetId",
+                "locationId",
+                "metricCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "assetId": {
+                  "type": "string",
+                  "description": "Asset or device URI.",
+                  "format": "uri-reference"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "metricCode": {
+                  "type": "string",
+                  "description": "Metric or operation code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Measured or requested numeric value.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "UNECE or profile-declared unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "observedAt": {
+                  "type": "string",
+                  "description": "Observation instant.",
+                  "format": "date-time"
+                },
+                "commandCode": {
+                  "type": "string",
+                  "description": "Command or rule code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-asset-register__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-register/schemas/output.schema.json",
+      "title": "Asset Register output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-register/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-asset-register__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-asset-register/schemas/resource.schema.json",
+      "title": "Asset resource for comcom.asset.register",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Asset"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-inventory-adjust__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-adjust/schemas/input.schema.json",
+      "title": "Inventory Adjust input",
+      "description": "Adjust inventory using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.inventory.adjust"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Inventory Adjust parameters.",
+          "additionalProperties": false,
+          "required": [
+            "inventoryId",
+            "expectedRevision",
+            "changes"
+          ],
+          "properties": {
+            "inventoryId": {
+              "type": "string",
+              "description": "Inventory URI.",
+              "format": "uri-reference"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "changes": {
+              "type": "object",
+              "description": "Permitted Inventory changes.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "assetId": {
+                  "type": "string",
+                  "description": "Asset or device URI.",
+                  "format": "uri-reference"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "metricCode": {
+                  "type": "string",
+                  "description": "Metric or operation code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Measured or requested numeric value.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "UNECE or profile-declared unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "observedAt": {
+                  "type": "string",
+                  "description": "Observation instant.",
+                  "format": "date-time"
+                },
+                "commandCode": {
+                  "type": "string",
+                  "description": "Command or rule code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-inventory-adjust__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-adjust/schemas/output.schema.json",
+      "title": "Inventory Adjust output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-adjust/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-inventory-adjust__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-adjust/schemas/resource.schema.json",
+      "title": "Inventory resource for comcom.inventory.adjust",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Inventory"
+        },
+        "state": {
+          "enum": [
+            "active"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-inventory-check__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-check/schemas/input.schema.json",
+      "title": "Inventory Check input",
+      "description": "Check inventory using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.inventory.check"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the Inventory to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "inventoryId"
+          ],
+          "properties": {
+            "inventoryId": {
+              "type": "string",
+              "description": "Inventory URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-inventory-check__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-check/schemas/output.schema.json",
+      "title": "Inventory Check output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-check/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-inventory-check__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-check/schemas/resource.schema.json",
+      "title": "Inventory resource for comcom.inventory.check",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Inventory"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-inventory-release__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-release/schemas/input.schema.json",
+      "title": "Inventory Release input",
+      "description": "Release inventory using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.inventory.release"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Inventory Release parameters.",
+          "additionalProperties": false,
+          "required": [
+            "inventoryId"
+          ],
+          "properties": {
+            "inventoryId": {
+              "type": "string",
+              "description": "Inventory URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-inventory-release__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-release/schemas/output.schema.json",
+      "title": "Inventory Release output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-release/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-inventory-release__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-release/schemas/resource.schema.json",
+      "title": "Inventory resource for comcom.inventory.release",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Inventory"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "released"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-inventory-reserve__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-reserve/schemas/input.schema.json",
+      "title": "Inventory Reserve input",
+      "description": "Reserve inventory using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.inventory.reserve"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Inventory Reserve parameters.",
+          "additionalProperties": false,
+          "required": [
+            "inventory"
+          ],
+          "properties": {
+            "inventory": {
+              "type": "object",
+              "description": "Typed Inventory data.",
+              "additionalProperties": false,
+              "required": [
+                "assetId",
+                "locationId",
+                "metricCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "assetId": {
+                  "type": "string",
+                  "description": "Asset or device URI.",
+                  "format": "uri-reference"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "metricCode": {
+                  "type": "string",
+                  "description": "Metric or operation code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Measured or requested numeric value.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "UNECE or profile-declared unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "observedAt": {
+                  "type": "string",
+                  "description": "Observation instant.",
+                  "format": "date-time"
+                },
+                "commandCode": {
+                  "type": "string",
+                  "description": "Command or rule code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-inventory-reserve__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-reserve/schemas/output.schema.json",
+      "title": "Inventory Reserve output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-reserve/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-inventory-reserve__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-reserve/schemas/resource.schema.json",
+      "title": "Inventory resource for comcom.inventory.reserve",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Inventory"
+        },
+        "state": {
+          "enum": [
+            "available",
+            "reserved"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-production-order-create__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-production-order-create/schemas/input.schema.json",
+      "title": "Production Order Create input",
+      "description": "Create production order using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.production.order.create"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Production Order Create parameters.",
+          "additionalProperties": false,
+          "required": [
+            "productionOrder"
+          ],
+          "properties": {
+            "productionOrder": {
+              "type": "object",
+              "description": "Typed ProductionOrder data.",
+              "additionalProperties": false,
+              "required": [
+                "buyerId",
+                "sellerId",
+                "supplierId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "buyerId": {
+                  "type": "string",
+                  "description": "Buyer URI.",
+                  "format": "uri-reference"
+                },
+                "sellerId": {
+                  "type": "string",
+                  "description": "Seller URI.",
+                  "format": "uri-reference"
+                },
+                "supplierId": {
+                  "type": "string",
+                  "description": "Supplier URI.",
+                  "format": "uri-reference"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Business document reference.",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "total": {
+                  "type": "string",
+                  "description": "Document total.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "lines": {
+                  "type": "array",
+                  "description": "Typed trade lines.",
+                  "items": {
+                    "type": "object",
+                    "description": "A priced line.",
+                    "additionalProperties": false,
+                    "required": [
+                      "itemId",
+                      "quantity",
+                      "unitCode"
+                    ],
+                    "properties": {
+                      "itemId": {
+                        "type": "string",
+                        "description": "Item URI.",
+                        "format": "uri-reference"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Line description.",
+                        "maxLength": 500
+                      },
+                      "quantity": {
+                        "type": "string",
+                        "description": "Requested quantity.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "unitCode": {
+                        "type": "string",
+                        "description": "UNECE or profile-declared unit code.",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                      },
+                      "unitPrice": {
+                        "type": "string",
+                        "description": "Unit price.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "currency": {
+                        "type": "string",
+                        "description": "ISO 4217 currency code.",
+                        "pattern": "^[A-Z]{3}$"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "maxItems": 1000
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity expiry.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-production-order-create__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-production-order-create/schemas/output.schema.json",
+      "title": "Production Order Create output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-production-order-create/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-production-order-create__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-production-order-create/schemas/resource.schema.json",
+      "title": "ProductionOrder resource for comcom.production.order.create",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "ProductionOrder"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "buyerId": {
+          "type": "string",
+          "description": "Buyer URI.",
+          "format": "uri-reference"
+        },
+        "sellerId": {
+          "type": "string",
+          "description": "Seller URI.",
+          "format": "uri-reference"
+        },
+        "supplierId": {
+          "type": "string",
+          "description": "Supplier URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Business document reference.",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "total": {
+          "type": "string",
+          "description": "Document total.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed trade lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-production-status-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-production-status-get/schemas/input.schema.json",
+      "title": "Production Status Get input",
+      "description": "Retrieve production status using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.production.status.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the ProductionStatus to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "productionStatusId"
+          ],
+          "properties": {
+            "productionStatusId": {
+              "type": "string",
+              "description": "ProductionStatus URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-production-status-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-production-status-get/schemas/output.schema.json",
+      "title": "Production Status Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-production-status-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-production-status-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-production-status-get/schemas/resource.schema.json",
+      "title": "ProductionStatus resource for comcom.production.status.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "ProductionStatus"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name.",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "description": {
+          "type": "string",
+          "description": "Description.",
+          "maxLength": 5000
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Standard or provider category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "sku": {
+          "type": "string",
+          "description": "Seller stock-keeping unit.",
+          "maxLength": 100
+        },
+        "gtin": {
+          "type": "string",
+          "description": "GS1 Global Trade Item Number.",
+          "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Price amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "available": {
+          "type": "boolean"
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-replenishment-request__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-replenishment-request/schemas/input.schema.json",
+      "title": "Replenishment Request input",
+      "description": "Request replenishment using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.replenishment.request"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Replenishment Request parameters.",
+          "additionalProperties": false,
+          "required": [
+            "replenishment"
+          ],
+          "properties": {
+            "replenishment": {
+              "type": "object",
+              "description": "Typed Replenishment data.",
+              "additionalProperties": false,
+              "required": [
+                "assetId",
+                "locationId",
+                "metricCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "assetId": {
+                  "type": "string",
+                  "description": "Asset or device URI.",
+                  "format": "uri-reference"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "metricCode": {
+                  "type": "string",
+                  "description": "Metric or operation code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Measured or requested numeric value.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "UNECE or profile-declared unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "observedAt": {
+                  "type": "string",
+                  "description": "Observation instant.",
+                  "format": "date-time"
+                },
+                "commandCode": {
+                  "type": "string",
+                  "description": "Command or rule code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-replenishment-request__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-replenishment-request/schemas/output.schema.json",
+      "title": "Replenishment Request output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-replenishment-request/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.inventory__comcom-replenishment-request__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-replenishment-request/schemas/resource.schema.json",
+      "title": "Replenishment resource for comcom.replenishment.request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Replenishment"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "assetId": {
+          "type": "string",
+          "description": "Asset or device URI.",
+          "format": "uri-reference"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "metricCode": {
+          "type": "string",
+          "description": "Metric or operation code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Measured or requested numeric value.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "UNECE or profile-declared unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "observedAt": {
+          "type": "string",
+          "description": "Observation instant.",
+          "format": "date-time"
+        },
+        "commandCode": {
+          "type": "string",
+          "description": "Command or rule code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    }
+  }
+}

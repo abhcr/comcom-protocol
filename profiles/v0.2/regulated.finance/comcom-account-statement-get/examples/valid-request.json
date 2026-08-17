@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.account.statement.get",
+  "parameters": {
+    "accountStatementId": "https://business.example/accountStatement/example"
+  }
+}

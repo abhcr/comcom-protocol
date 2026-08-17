@@ -1,0 +1,75 @@
+{
+  "id": "comcom.service.engagement.start",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "transactions.services",
+  "batch": 3,
+  "title": "Service Engagement Start",
+  "purpose": "Start service engagement using the typed Comcom v0.2 profile.",
+  "requestKind": "command",
+  "resourceType": "ServiceEngagement",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "authenticated",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-engagement-start/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-engagement-start/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-engagement-start/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "authenticated-sender",
+    "authorized-principal",
+    "valid-resource-state"
+  ],
+  "lifecycle": {
+    "states": [
+      "proposed",
+      "accepted",
+      "rejected",
+      "active",
+      "completed",
+      "cancelled"
+    ],
+    "transitions": [
+      {
+        "from": "none",
+        "to": "proposed"
+      },
+      {
+        "from": "proposed",
+        "to": "accepted"
+      },
+      {
+        "from": "proposed",
+        "to": "rejected"
+      }
+    ]
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": true,
+    "equality": "RFC8785-semantic-projection"
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient",
+    "invalid-state-transition",
+    "idempotency-conflict"
+  ],
+  "standards": [
+    "https://schema.org/Service"
+  ]
+}

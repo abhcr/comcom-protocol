@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.service.progress.get",
+  "parameters": {
+    "serviceProgressId": "https://business.example/serviceProgress/example"
+  }
+}

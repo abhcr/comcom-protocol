@@ -1,0 +1,13 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/entity.schema.json",
+  "title": "Comcom entity reference",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "type"],
+  "properties": {
+    "id": { "type": "string", "format": "uri" },
+    "type": { "enum": ["person", "organization", "government", "nonprofit", "system", "device"] },
+    "name": { "type": "string", "minLength": 1, "maxLength": 300 }
+  }
+}

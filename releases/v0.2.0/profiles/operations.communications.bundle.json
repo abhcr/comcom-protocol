@@ -1,0 +1,3211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/operations.communications.bundle.json",
+  "profile": "operations.communications",
+  "version": "0.2.0",
+  "capabilityIds": [
+    "comcom.alert.receive",
+    "comcom.announcement.publish",
+    "comcom.announcement.receive",
+    "comcom.message.acknowledge",
+    "comcom.message.send",
+    "comcom.notification.preferences.get",
+    "comcom.notification.preferences.update",
+    "comcom.reminder.receive",
+    "comcom.review.publish",
+    "comcom.survey.submit"
+  ],
+  "capabilities": [
+    {
+      "definition": {
+        "id": "comcom.alert.receive",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.communications",
+        "batch": 4,
+        "title": "Alert Receive",
+        "purpose": "Receive alert using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "Alert",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-alert-receive/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-alert-receive/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-alert-receive/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.alert.receive",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.alert.receive",
+          "parameters": {
+            "alert": {
+              "senderId": "https://business.example/senderId/example",
+              "recipientIds": [
+                "https://business.example/recipientIds/example"
+              ],
+              "topic": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "alert": {
+                "senderId": "https://business.example/senderId/example",
+                "recipientIds": [
+                  "https://business.example/recipientIds/example"
+                ],
+                "topic": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/alert/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.announcement.publish",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.communications",
+        "batch": 4,
+        "title": "Announcement Publish",
+        "purpose": "Publish announcement using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "Announcement",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-announcement-publish/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-announcement-publish/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-announcement-publish/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.announcement.publish",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.announcement.publish",
+          "parameters": {
+            "announcement": {
+              "senderId": "https://business.example/senderId/example",
+              "recipientIds": [
+                "https://business.example/recipientIds/example"
+              ],
+              "topic": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "announcement": {
+                "senderId": "https://business.example/senderId/example",
+                "recipientIds": [
+                  "https://business.example/recipientIds/example"
+                ],
+                "topic": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/announcement/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.announcement.receive",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.communications",
+        "batch": 4,
+        "title": "Announcement Receive",
+        "purpose": "Receive announcement using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "Announcement",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-announcement-receive/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-announcement-receive/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-announcement-receive/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.announcement.receive",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.announcement.receive",
+          "parameters": {
+            "announcement": {
+              "senderId": "https://business.example/senderId/example",
+              "recipientIds": [
+                "https://business.example/recipientIds/example"
+              ],
+              "topic": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "announcement": {
+                "senderId": "https://business.example/senderId/example",
+                "recipientIds": [
+                  "https://business.example/recipientIds/example"
+                ],
+                "topic": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/announcement/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.message.acknowledge",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.communications",
+        "batch": 4,
+        "title": "Message Acknowledge",
+        "purpose": "Acknowledge message using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Message",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-acknowledge/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-acknowledge/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-acknowledge/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "requested",
+            "proposed",
+            "accepted"
+          ],
+          "transitions": [
+            {
+              "from": "requested",
+              "to": "accepted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.message.acknowledge",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.message.acknowledge",
+          "parameters": {
+            "messageId": "https://business.example/message/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "messageId": "https://business.example/message/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.message.acknowledge-allowed-1",
+              "from": "requested",
+              "to": "accepted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.message.acknowledge-forbidden-1",
+              "from": "accepted",
+              "to": "requested",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/message/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.message.send",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.communications",
+        "batch": 4,
+        "title": "Message Send",
+        "purpose": "Send message using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "Message",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-send/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-send/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-send/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.message.send",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.message.send",
+          "parameters": {
+            "message": {
+              "senderId": "https://business.example/senderId/example",
+              "recipientIds": [
+                "https://business.example/recipientIds/example"
+              ],
+              "topic": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "message": {
+                "senderId": "https://business.example/senderId/example",
+                "recipientIds": [
+                  "https://business.example/recipientIds/example"
+                ],
+                "topic": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/message/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.notification.preferences.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.communications",
+        "batch": 4,
+        "title": "Notification Preferences Get",
+        "purpose": "Retrieve notification preferences using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "NotificationPreferences",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-notification-preferences-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-notification-preferences-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-notification-preferences-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.notification.preferences.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.notification.preferences.get",
+          "parameters": {
+            "notificationPreferencesId": "https://business.example/notificationPreferences/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "notificationPreferencesId": "https://business.example/notificationPreferences/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/notificationPreferences/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.notification.preferences.update",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.communications",
+        "batch": 4,
+        "title": "Notification Preferences Update",
+        "purpose": "Update notification preferences using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "NotificationPreferences",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-notification-preferences-update/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-notification-preferences-update/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-notification-preferences-update/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "active",
+              "revisionRequired": true
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.notification.preferences.update",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.notification.preferences.update",
+          "parameters": {
+            "notificationPreferencesId": "https://business.example/notificationPreferences/example",
+            "expectedRevision": 0,
+            "changes": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "notificationPreferencesId": "https://business.example/notificationPreferences/example",
+              "expectedRevision": 0,
+              "changes": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.notification.preferences.update-allowed-1",
+              "from": "active",
+              "to": "active",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/notificationPreferences/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.reminder.receive",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.communications",
+        "batch": 4,
+        "title": "Reminder Receive",
+        "purpose": "Receive reminder using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "Reminder",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-reminder-receive/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-reminder-receive/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-reminder-receive/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.reminder.receive",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.reminder.receive",
+          "parameters": {
+            "reminder": {
+              "senderId": "https://business.example/senderId/example",
+              "recipientIds": [
+                "https://business.example/recipientIds/example"
+              ],
+              "topic": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "reminder": {
+                "senderId": "https://business.example/senderId/example",
+                "recipientIds": [
+                  "https://business.example/recipientIds/example"
+                ],
+                "topic": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/reminder/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.review.publish",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.communications",
+        "batch": 4,
+        "title": "Review Publish",
+        "purpose": "Publish review using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "Review",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-review-publish/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-review-publish/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-review-publish/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.review.publish",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.review.publish",
+          "parameters": {
+            "review": {
+              "senderId": "https://business.example/senderId/example",
+              "recipientIds": [
+                "https://business.example/recipientIds/example"
+              ],
+              "topic": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "review": {
+                "senderId": "https://business.example/senderId/example",
+                "recipientIds": [
+                  "https://business.example/recipientIds/example"
+                ],
+                "topic": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/review/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.survey.submit",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.communications",
+        "batch": 4,
+        "title": "Survey Submit",
+        "purpose": "Submit survey using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Survey",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-survey-submit/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-survey-submit/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-survey-submit/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.survey.submit",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.w3.org/TR/activitystreams-vocabulary/"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.survey.submit",
+          "parameters": {
+            "survey": {
+              "senderId": "https://business.example/senderId/example",
+              "recipientIds": [
+                "https://business.example/recipientIds/example"
+              ],
+              "topic": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "survey": {
+                "senderId": "https://business.example/senderId/example",
+                "recipientIds": [
+                  "https://business.example/recipientIds/example"
+                ],
+                "topic": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.survey.submit-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.survey.submit-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/survey/example"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "profiles__v0.2__operations.communications__comcom-alert-receive__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-alert-receive/schemas/input.schema.json",
+      "title": "Alert Receive input",
+      "description": "Receive alert using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.alert.receive"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Alert Receive parameters.",
+          "additionalProperties": false,
+          "required": [
+            "alert"
+          ],
+          "properties": {
+            "alert": {
+              "type": "object",
+              "description": "Typed Alert data.",
+              "additionalProperties": false,
+              "required": [
+                "senderId",
+                "recipientIds",
+                "topic"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "senderId": {
+                  "type": "string",
+                  "description": "Originating entity URI.",
+                  "format": "uri-reference"
+                },
+                "recipientIds": {
+                  "type": "array",
+                  "description": "Recipient URIs.",
+                  "items": {
+                    "type": "string",
+                    "description": "Recipient URI.",
+                    "format": "uri-reference"
+                  },
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "maxItems": 1000
+                },
+                "topic": {
+                  "type": "string",
+                  "description": "Receiver-declared topic.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "subject": {
+                  "type": "string",
+                  "description": "Short subject.",
+                  "maxLength": 200
+                },
+                "body": {
+                  "type": "string",
+                  "description": "Plain-text content.",
+                  "maxLength": 10000
+                },
+                "language": {
+                  "type": "string",
+                  "description": "BCP 47 language tag.",
+                  "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+                },
+                "occurredAt": {
+                  "type": "string",
+                  "description": "Communication instant.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-alert-receive__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-alert-receive/schemas/output.schema.json",
+      "title": "Alert Receive output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-alert-receive__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-alert-receive/schemas/resource.schema.json",
+      "title": "Alert resource for comcom.alert.receive",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Alert"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "senderId": {
+          "type": "string",
+          "description": "Originating entity URI.",
+          "format": "uri-reference"
+        },
+        "recipientIds": {
+          "type": "array",
+          "description": "Recipient URIs.",
+          "items": {
+            "type": "string",
+            "description": "Recipient URI.",
+            "format": "uri-reference"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "maxItems": 1000
+        },
+        "topic": {
+          "type": "string",
+          "description": "Receiver-declared topic.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Short subject.",
+          "maxLength": 200
+        },
+        "body": {
+          "type": "string",
+          "description": "Plain-text content.",
+          "maxLength": 10000
+        },
+        "language": {
+          "type": "string",
+          "description": "BCP 47 language tag.",
+          "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Communication instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-announcement-publish__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-announcement-publish/schemas/input.schema.json",
+      "title": "Announcement Publish input",
+      "description": "Publish announcement using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.announcement.publish"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Announcement Publish parameters.",
+          "additionalProperties": false,
+          "required": [
+            "announcement"
+          ],
+          "properties": {
+            "announcement": {
+              "type": "object",
+              "description": "Typed Announcement data.",
+              "additionalProperties": false,
+              "required": [
+                "senderId",
+                "recipientIds",
+                "topic"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "senderId": {
+                  "type": "string",
+                  "description": "Originating entity URI.",
+                  "format": "uri-reference"
+                },
+                "recipientIds": {
+                  "type": "array",
+                  "description": "Recipient URIs.",
+                  "items": {
+                    "type": "string",
+                    "description": "Recipient URI.",
+                    "format": "uri-reference"
+                  },
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "maxItems": 1000
+                },
+                "topic": {
+                  "type": "string",
+                  "description": "Receiver-declared topic.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "subject": {
+                  "type": "string",
+                  "description": "Short subject.",
+                  "maxLength": 200
+                },
+                "body": {
+                  "type": "string",
+                  "description": "Plain-text content.",
+                  "maxLength": 10000
+                },
+                "language": {
+                  "type": "string",
+                  "description": "BCP 47 language tag.",
+                  "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+                },
+                "occurredAt": {
+                  "type": "string",
+                  "description": "Communication instant.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-announcement-publish__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-announcement-publish/schemas/output.schema.json",
+      "title": "Announcement Publish output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-announcement-publish__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-announcement-publish/schemas/resource.schema.json",
+      "title": "Announcement resource for comcom.announcement.publish",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Announcement"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "senderId": {
+          "type": "string",
+          "description": "Originating entity URI.",
+          "format": "uri-reference"
+        },
+        "recipientIds": {
+          "type": "array",
+          "description": "Recipient URIs.",
+          "items": {
+            "type": "string",
+            "description": "Recipient URI.",
+            "format": "uri-reference"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "maxItems": 1000
+        },
+        "topic": {
+          "type": "string",
+          "description": "Receiver-declared topic.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Short subject.",
+          "maxLength": 200
+        },
+        "body": {
+          "type": "string",
+          "description": "Plain-text content.",
+          "maxLength": 10000
+        },
+        "language": {
+          "type": "string",
+          "description": "BCP 47 language tag.",
+          "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Communication instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-announcement-receive__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-announcement-receive/schemas/input.schema.json",
+      "title": "Announcement Receive input",
+      "description": "Receive announcement using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.announcement.receive"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Announcement Receive parameters.",
+          "additionalProperties": false,
+          "required": [
+            "announcement"
+          ],
+          "properties": {
+            "announcement": {
+              "type": "object",
+              "description": "Typed Announcement data.",
+              "additionalProperties": false,
+              "required": [
+                "senderId",
+                "recipientIds",
+                "topic"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "senderId": {
+                  "type": "string",
+                  "description": "Originating entity URI.",
+                  "format": "uri-reference"
+                },
+                "recipientIds": {
+                  "type": "array",
+                  "description": "Recipient URIs.",
+                  "items": {
+                    "type": "string",
+                    "description": "Recipient URI.",
+                    "format": "uri-reference"
+                  },
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "maxItems": 1000
+                },
+                "topic": {
+                  "type": "string",
+                  "description": "Receiver-declared topic.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "subject": {
+                  "type": "string",
+                  "description": "Short subject.",
+                  "maxLength": 200
+                },
+                "body": {
+                  "type": "string",
+                  "description": "Plain-text content.",
+                  "maxLength": 10000
+                },
+                "language": {
+                  "type": "string",
+                  "description": "BCP 47 language tag.",
+                  "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+                },
+                "occurredAt": {
+                  "type": "string",
+                  "description": "Communication instant.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-announcement-receive__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-announcement-receive/schemas/output.schema.json",
+      "title": "Announcement Receive output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-announcement-receive__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-announcement-receive/schemas/resource.schema.json",
+      "title": "Announcement resource for comcom.announcement.receive",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Announcement"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "senderId": {
+          "type": "string",
+          "description": "Originating entity URI.",
+          "format": "uri-reference"
+        },
+        "recipientIds": {
+          "type": "array",
+          "description": "Recipient URIs.",
+          "items": {
+            "type": "string",
+            "description": "Recipient URI.",
+            "format": "uri-reference"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "maxItems": 1000
+        },
+        "topic": {
+          "type": "string",
+          "description": "Receiver-declared topic.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Short subject.",
+          "maxLength": 200
+        },
+        "body": {
+          "type": "string",
+          "description": "Plain-text content.",
+          "maxLength": 10000
+        },
+        "language": {
+          "type": "string",
+          "description": "BCP 47 language tag.",
+          "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Communication instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-message-acknowledge__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-acknowledge/schemas/input.schema.json",
+      "title": "Message Acknowledge input",
+      "description": "Acknowledge message using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.message.acknowledge"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Message Acknowledge parameters.",
+          "additionalProperties": false,
+          "required": [
+            "messageId"
+          ],
+          "properties": {
+            "messageId": {
+              "type": "string",
+              "description": "Message URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-message-acknowledge__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-acknowledge/schemas/output.schema.json",
+      "title": "Message Acknowledge output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-acknowledge/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-message-acknowledge__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-acknowledge/schemas/resource.schema.json",
+      "title": "Message resource for comcom.message.acknowledge",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Message"
+        },
+        "state": {
+          "enum": [
+            "requested",
+            "proposed",
+            "accepted"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "senderId": {
+          "type": "string",
+          "description": "Originating entity URI.",
+          "format": "uri-reference"
+        },
+        "recipientIds": {
+          "type": "array",
+          "description": "Recipient URIs.",
+          "items": {
+            "type": "string",
+            "description": "Recipient URI.",
+            "format": "uri-reference"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "maxItems": 1000
+        },
+        "topic": {
+          "type": "string",
+          "description": "Receiver-declared topic.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Short subject.",
+          "maxLength": 200
+        },
+        "body": {
+          "type": "string",
+          "description": "Plain-text content.",
+          "maxLength": 10000
+        },
+        "language": {
+          "type": "string",
+          "description": "BCP 47 language tag.",
+          "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Communication instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-message-send__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-send/schemas/input.schema.json",
+      "title": "Message Send input",
+      "description": "Send message using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.message.send"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Message Send parameters.",
+          "additionalProperties": false,
+          "required": [
+            "message"
+          ],
+          "properties": {
+            "message": {
+              "type": "object",
+              "description": "Typed Message data.",
+              "additionalProperties": false,
+              "required": [
+                "senderId",
+                "recipientIds",
+                "topic"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "senderId": {
+                  "type": "string",
+                  "description": "Originating entity URI.",
+                  "format": "uri-reference"
+                },
+                "recipientIds": {
+                  "type": "array",
+                  "description": "Recipient URIs.",
+                  "items": {
+                    "type": "string",
+                    "description": "Recipient URI.",
+                    "format": "uri-reference"
+                  },
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "maxItems": 1000
+                },
+                "topic": {
+                  "type": "string",
+                  "description": "Receiver-declared topic.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "subject": {
+                  "type": "string",
+                  "description": "Short subject.",
+                  "maxLength": 200
+                },
+                "body": {
+                  "type": "string",
+                  "description": "Plain-text content.",
+                  "maxLength": 10000
+                },
+                "language": {
+                  "type": "string",
+                  "description": "BCP 47 language tag.",
+                  "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+                },
+                "occurredAt": {
+                  "type": "string",
+                  "description": "Communication instant.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-message-send__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-send/schemas/output.schema.json",
+      "title": "Message Send output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-message-send__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-send/schemas/resource.schema.json",
+      "title": "Message resource for comcom.message.send",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Message"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "senderId": {
+          "type": "string",
+          "description": "Originating entity URI.",
+          "format": "uri-reference"
+        },
+        "recipientIds": {
+          "type": "array",
+          "description": "Recipient URIs.",
+          "items": {
+            "type": "string",
+            "description": "Recipient URI.",
+            "format": "uri-reference"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "maxItems": 1000
+        },
+        "topic": {
+          "type": "string",
+          "description": "Receiver-declared topic.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Short subject.",
+          "maxLength": 200
+        },
+        "body": {
+          "type": "string",
+          "description": "Plain-text content.",
+          "maxLength": 10000
+        },
+        "language": {
+          "type": "string",
+          "description": "BCP 47 language tag.",
+          "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Communication instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-notification-preferences-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-notification-preferences-get/schemas/input.schema.json",
+      "title": "Notification Preferences Get input",
+      "description": "Retrieve notification preferences using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.notification.preferences.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the NotificationPreferences to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "notificationPreferencesId"
+          ],
+          "properties": {
+            "notificationPreferencesId": {
+              "type": "string",
+              "description": "NotificationPreferences URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-notification-preferences-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-notification-preferences-get/schemas/output.schema.json",
+      "title": "Notification Preferences Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-notification-preferences-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-notification-preferences-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-notification-preferences-get/schemas/resource.schema.json",
+      "title": "NotificationPreferences resource for comcom.notification.preferences.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "NotificationPreferences"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "senderId": {
+          "type": "string",
+          "description": "Originating entity URI.",
+          "format": "uri-reference"
+        },
+        "recipientIds": {
+          "type": "array",
+          "description": "Recipient URIs.",
+          "items": {
+            "type": "string",
+            "description": "Recipient URI.",
+            "format": "uri-reference"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "maxItems": 1000
+        },
+        "topic": {
+          "type": "string",
+          "description": "Receiver-declared topic.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Short subject.",
+          "maxLength": 200
+        },
+        "body": {
+          "type": "string",
+          "description": "Plain-text content.",
+          "maxLength": 10000
+        },
+        "language": {
+          "type": "string",
+          "description": "BCP 47 language tag.",
+          "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Communication instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-notification-preferences-update__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-notification-preferences-update/schemas/input.schema.json",
+      "title": "Notification Preferences Update input",
+      "description": "Update notification preferences using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.notification.preferences.update"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Notification Preferences Update parameters.",
+          "additionalProperties": false,
+          "required": [
+            "notificationPreferencesId",
+            "expectedRevision",
+            "changes"
+          ],
+          "properties": {
+            "notificationPreferencesId": {
+              "type": "string",
+              "description": "NotificationPreferences URI.",
+              "format": "uri-reference"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "changes": {
+              "type": "object",
+              "description": "Permitted NotificationPreferences changes.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "senderId": {
+                  "type": "string",
+                  "description": "Originating entity URI.",
+                  "format": "uri-reference"
+                },
+                "recipientIds": {
+                  "type": "array",
+                  "description": "Recipient URIs.",
+                  "items": {
+                    "type": "string",
+                    "description": "Recipient URI.",
+                    "format": "uri-reference"
+                  },
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "maxItems": 1000
+                },
+                "topic": {
+                  "type": "string",
+                  "description": "Receiver-declared topic.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "subject": {
+                  "type": "string",
+                  "description": "Short subject.",
+                  "maxLength": 200
+                },
+                "body": {
+                  "type": "string",
+                  "description": "Plain-text content.",
+                  "maxLength": 10000
+                },
+                "language": {
+                  "type": "string",
+                  "description": "BCP 47 language tag.",
+                  "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+                },
+                "occurredAt": {
+                  "type": "string",
+                  "description": "Communication instant.",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-notification-preferences-update__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-notification-preferences-update/schemas/output.schema.json",
+      "title": "Notification Preferences Update output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-notification-preferences-update/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-notification-preferences-update__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-notification-preferences-update/schemas/resource.schema.json",
+      "title": "NotificationPreferences resource for comcom.notification.preferences.update",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "NotificationPreferences"
+        },
+        "state": {
+          "enum": [
+            "active"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "senderId": {
+          "type": "string",
+          "description": "Originating entity URI.",
+          "format": "uri-reference"
+        },
+        "recipientIds": {
+          "type": "array",
+          "description": "Recipient URIs.",
+          "items": {
+            "type": "string",
+            "description": "Recipient URI.",
+            "format": "uri-reference"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "maxItems": 1000
+        },
+        "topic": {
+          "type": "string",
+          "description": "Receiver-declared topic.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Short subject.",
+          "maxLength": 200
+        },
+        "body": {
+          "type": "string",
+          "description": "Plain-text content.",
+          "maxLength": 10000
+        },
+        "language": {
+          "type": "string",
+          "description": "BCP 47 language tag.",
+          "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Communication instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-reminder-receive__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-reminder-receive/schemas/input.schema.json",
+      "title": "Reminder Receive input",
+      "description": "Receive reminder using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.reminder.receive"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Reminder Receive parameters.",
+          "additionalProperties": false,
+          "required": [
+            "reminder"
+          ],
+          "properties": {
+            "reminder": {
+              "type": "object",
+              "description": "Typed Reminder data.",
+              "additionalProperties": false,
+              "required": [
+                "senderId",
+                "recipientIds",
+                "topic"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "senderId": {
+                  "type": "string",
+                  "description": "Originating entity URI.",
+                  "format": "uri-reference"
+                },
+                "recipientIds": {
+                  "type": "array",
+                  "description": "Recipient URIs.",
+                  "items": {
+                    "type": "string",
+                    "description": "Recipient URI.",
+                    "format": "uri-reference"
+                  },
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "maxItems": 1000
+                },
+                "topic": {
+                  "type": "string",
+                  "description": "Receiver-declared topic.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "subject": {
+                  "type": "string",
+                  "description": "Short subject.",
+                  "maxLength": 200
+                },
+                "body": {
+                  "type": "string",
+                  "description": "Plain-text content.",
+                  "maxLength": 10000
+                },
+                "language": {
+                  "type": "string",
+                  "description": "BCP 47 language tag.",
+                  "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+                },
+                "occurredAt": {
+                  "type": "string",
+                  "description": "Communication instant.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-reminder-receive__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-reminder-receive/schemas/output.schema.json",
+      "title": "Reminder Receive output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-reminder-receive__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-reminder-receive/schemas/resource.schema.json",
+      "title": "Reminder resource for comcom.reminder.receive",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Reminder"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "senderId": {
+          "type": "string",
+          "description": "Originating entity URI.",
+          "format": "uri-reference"
+        },
+        "recipientIds": {
+          "type": "array",
+          "description": "Recipient URIs.",
+          "items": {
+            "type": "string",
+            "description": "Recipient URI.",
+            "format": "uri-reference"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "maxItems": 1000
+        },
+        "topic": {
+          "type": "string",
+          "description": "Receiver-declared topic.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Short subject.",
+          "maxLength": 200
+        },
+        "body": {
+          "type": "string",
+          "description": "Plain-text content.",
+          "maxLength": 10000
+        },
+        "language": {
+          "type": "string",
+          "description": "BCP 47 language tag.",
+          "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Communication instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-review-publish__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-review-publish/schemas/input.schema.json",
+      "title": "Review Publish input",
+      "description": "Publish review using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.review.publish"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Review Publish parameters.",
+          "additionalProperties": false,
+          "required": [
+            "review"
+          ],
+          "properties": {
+            "review": {
+              "type": "object",
+              "description": "Typed Review data.",
+              "additionalProperties": false,
+              "required": [
+                "senderId",
+                "recipientIds",
+                "topic"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "senderId": {
+                  "type": "string",
+                  "description": "Originating entity URI.",
+                  "format": "uri-reference"
+                },
+                "recipientIds": {
+                  "type": "array",
+                  "description": "Recipient URIs.",
+                  "items": {
+                    "type": "string",
+                    "description": "Recipient URI.",
+                    "format": "uri-reference"
+                  },
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "maxItems": 1000
+                },
+                "topic": {
+                  "type": "string",
+                  "description": "Receiver-declared topic.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "subject": {
+                  "type": "string",
+                  "description": "Short subject.",
+                  "maxLength": 200
+                },
+                "body": {
+                  "type": "string",
+                  "description": "Plain-text content.",
+                  "maxLength": 10000
+                },
+                "language": {
+                  "type": "string",
+                  "description": "BCP 47 language tag.",
+                  "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+                },
+                "occurredAt": {
+                  "type": "string",
+                  "description": "Communication instant.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-review-publish__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-review-publish/schemas/output.schema.json",
+      "title": "Review Publish output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-review-publish__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-review-publish/schemas/resource.schema.json",
+      "title": "Review resource for comcom.review.publish",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Review"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "senderId": {
+          "type": "string",
+          "description": "Originating entity URI.",
+          "format": "uri-reference"
+        },
+        "recipientIds": {
+          "type": "array",
+          "description": "Recipient URIs.",
+          "items": {
+            "type": "string",
+            "description": "Recipient URI.",
+            "format": "uri-reference"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "maxItems": 1000
+        },
+        "topic": {
+          "type": "string",
+          "description": "Receiver-declared topic.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Short subject.",
+          "maxLength": 200
+        },
+        "body": {
+          "type": "string",
+          "description": "Plain-text content.",
+          "maxLength": 10000
+        },
+        "language": {
+          "type": "string",
+          "description": "BCP 47 language tag.",
+          "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Communication instant.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-survey-submit__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-survey-submit/schemas/input.schema.json",
+      "title": "Survey Submit input",
+      "description": "Submit survey using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.survey.submit"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Survey Submit parameters.",
+          "additionalProperties": false,
+          "required": [
+            "survey"
+          ],
+          "properties": {
+            "survey": {
+              "type": "object",
+              "description": "Typed Survey data.",
+              "additionalProperties": false,
+              "required": [
+                "senderId",
+                "recipientIds",
+                "topic"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "senderId": {
+                  "type": "string",
+                  "description": "Originating entity URI.",
+                  "format": "uri-reference"
+                },
+                "recipientIds": {
+                  "type": "array",
+                  "description": "Recipient URIs.",
+                  "items": {
+                    "type": "string",
+                    "description": "Recipient URI.",
+                    "format": "uri-reference"
+                  },
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "maxItems": 1000
+                },
+                "topic": {
+                  "type": "string",
+                  "description": "Receiver-declared topic.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "subject": {
+                  "type": "string",
+                  "description": "Short subject.",
+                  "maxLength": 200
+                },
+                "body": {
+                  "type": "string",
+                  "description": "Plain-text content.",
+                  "maxLength": 10000
+                },
+                "language": {
+                  "type": "string",
+                  "description": "BCP 47 language tag.",
+                  "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+                },
+                "occurredAt": {
+                  "type": "string",
+                  "description": "Communication instant.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-survey-submit__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-survey-submit/schemas/output.schema.json",
+      "title": "Survey Submit output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-survey-submit/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.communications__comcom-survey-submit__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-survey-submit/schemas/resource.schema.json",
+      "title": "Survey resource for comcom.survey.submit",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Survey"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "senderId": {
+          "type": "string",
+          "description": "Originating entity URI.",
+          "format": "uri-reference"
+        },
+        "recipientIds": {
+          "type": "array",
+          "description": "Recipient URIs.",
+          "items": {
+            "type": "string",
+            "description": "Recipient URI.",
+            "format": "uri-reference"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "maxItems": 1000
+        },
+        "topic": {
+          "type": "string",
+          "description": "Receiver-declared topic.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Short subject.",
+          "maxLength": 200
+        },
+        "body": {
+          "type": "string",
+          "description": "Plain-text content.",
+          "maxLength": 10000
+        },
+        "language": {
+          "type": "string",
+          "description": "BCP 47 language tag.",
+          "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Communication instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

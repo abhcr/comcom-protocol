@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.receipt.acknowledge",
+  "parameters": {
+    "receiptId": "https://business.example/receipt/example"
+  }
+}

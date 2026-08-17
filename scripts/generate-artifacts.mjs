@@ -609,4 +609,4 @@ for (const [relative, value] of files) {
 }
 
 if (changed) process.exitCode = 1;
-else console.log(`${process.argv.includes("--check") ? "Verified" : "Generated"} ${files.size} artifacts for ${capabilities.length} normative capabilities.`);
+else console.log(`${process.argv.includes("--check") ? "Verified" : "Generated"} ${files.size} frozen v0.1 prototype artifacts for ${capabilities.length} capability IDs.`);

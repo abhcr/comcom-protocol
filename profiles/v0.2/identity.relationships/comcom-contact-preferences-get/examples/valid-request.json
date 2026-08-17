@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.contact.preferences.get",
+  "parameters": {
+    "contactPreferencesId": "https://business.example/contactPreferences/example"
+  }
+}

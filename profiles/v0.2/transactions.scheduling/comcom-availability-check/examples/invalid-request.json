@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "availabilityId": "https://business.example/availability/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

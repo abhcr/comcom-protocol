@@ -1,0 +1,90 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-certificate-verify/schemas/resource.schema.json",
+  "title": "Certificate resource for comcom.certificate.verify",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "type",
+    "state",
+    "revision",
+    "createdAt",
+    "updatedAt"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Globally unique resource URI.",
+      "format": "uri-reference"
+    },
+    "type": {
+      "const": "Certificate"
+    },
+    "state": {
+      "type": "string",
+      "description": "Profile-defined state.",
+      "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Creation instant.",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Last update instant.",
+      "format": "date-time"
+    },
+    "statusCode": {
+      "type": "string",
+      "description": "Profile-defined business state.",
+      "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+    },
+    "subjectId": {
+      "type": "string",
+      "description": "Subject URI.",
+      "format": "uri-reference"
+    },
+    "issuerId": {
+      "type": "string",
+      "description": "Issuing or controlling entity URI.",
+      "format": "uri-reference"
+    },
+    "referenceNumber": {
+      "type": "string",
+      "description": "Authority or document reference.",
+      "maxLength": 160
+    },
+    "purposeCode": {
+      "type": "string",
+      "description": "Declared purpose code.",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "claimCodes": {
+      "type": "array",
+      "description": "Declared claim codes.",
+      "items": {
+        "type": "string",
+        "description": "Claim code.",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+      },
+      "uniqueItems": true,
+      "maxItems": 100
+    },
+    "validFrom": {
+      "type": "string",
+      "description": "Validity start.",
+      "format": "date-time"
+    },
+    "validUntil": {
+      "type": "string",
+      "description": "Validity end.",
+      "format": "date-time"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.employee.offboard",
+  "parameters": {
+    "employeeId": "https://business.example/employee/example"
+  }
+}

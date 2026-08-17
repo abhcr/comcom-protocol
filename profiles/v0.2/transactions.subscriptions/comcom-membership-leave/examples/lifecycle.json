@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.membership.leave-allowed-1",
+      "from": "active",
+      "to": "left",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.membership.leave-forbidden-1",
+      "from": "left",
+      "to": "active",
+      "expected": "forbidden"
+    }
+  ]
+}

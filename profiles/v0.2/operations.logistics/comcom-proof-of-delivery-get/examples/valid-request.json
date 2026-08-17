@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.proof.of.delivery.get",
+  "parameters": {
+    "proofOfDeliveryId": "https://business.example/proofOfDelivery/example"
+  }
+}

@@ -1,0 +1,2543 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/transactions.subscriptions.bundle.json",
+  "profile": "transactions.subscriptions",
+  "version": "0.2.0",
+  "capabilityIds": [
+    "comcom.membership.join",
+    "comcom.membership.leave",
+    "comcom.subscription.cancel",
+    "comcom.subscription.change",
+    "comcom.subscription.create",
+    "comcom.subscription.get",
+    "comcom.subscription.pause",
+    "comcom.subscription.resume"
+  ],
+  "capabilities": [
+    {
+      "definition": {
+        "id": "comcom.membership.join",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.subscriptions",
+        "batch": 3,
+        "title": "Membership Join",
+        "purpose": "Join membership using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Membership",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-membership-join/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-membership-join/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-membership-join/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/JoinAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.membership.join",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JoinAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.membership.join",
+          "parameters": {
+            "membership": {
+              "subscriberId": "https://business.example/subscriberId/example",
+              "planId": "https://business.example/planId/example",
+              "start": "2026-09-01T09:00:00Z"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "membership": {
+                "subscriberId": "https://business.example/subscriberId/example",
+                "planId": "https://business.example/planId/example",
+                "start": "2026-09-01T09:00:00Z"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.membership.join-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.membership.join-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.membership.join-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.membership.join-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/membership/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.membership.leave",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.subscriptions",
+        "batch": 3,
+        "title": "Membership Leave",
+        "purpose": "Leave membership using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Membership",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-membership-leave/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-membership-leave/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-membership-leave/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active",
+            "left"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "left"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/JoinAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.membership.leave",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JoinAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.membership.leave",
+          "parameters": {
+            "membershipId": "https://business.example/membership/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "membershipId": "https://business.example/membership/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.membership.leave-allowed-1",
+              "from": "active",
+              "to": "left",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.membership.leave-forbidden-1",
+              "from": "left",
+              "to": "active",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/membership/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.subscription.cancel",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.subscriptions",
+        "batch": 3,
+        "title": "Subscription Cancel",
+        "purpose": "Cancel subscription using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Subscription",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-cancel/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-cancel/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-cancel/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "accepted",
+            "active",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "accepted",
+              "to": "cancelled"
+            },
+            {
+              "from": "active",
+              "to": "cancelled"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/JoinAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.subscription.cancel",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JoinAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.subscription.cancel",
+          "parameters": {
+            "subscriptionId": "https://business.example/subscription/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "subscriptionId": "https://business.example/subscription/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.subscription.cancel-allowed-1",
+              "from": "accepted",
+              "to": "cancelled",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.subscription.cancel-allowed-2",
+              "from": "active",
+              "to": "cancelled",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.subscription.cancel-forbidden-1",
+              "from": "cancelled",
+              "to": "accepted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/subscription/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.subscription.change",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.subscriptions",
+        "batch": 3,
+        "title": "Subscription Change",
+        "purpose": "Change subscription using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Subscription",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-change/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-change/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-change/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "active",
+              "revisionRequired": true
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.subscription.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/JoinAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.subscription.change",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JoinAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.subscription.change",
+          "parameters": {
+            "subscriptionId": "https://business.example/subscription/example",
+            "expectedRevision": 0,
+            "changes": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "subscriptionId": "https://business.example/subscription/example",
+              "expectedRevision": 0,
+              "changes": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.subscription.change-allowed-1",
+              "from": "active",
+              "to": "active",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": []
+        },
+        "reversal": {
+          "capability": "comcom.subscription.cancel",
+          "originalResource": "https://business.example/subscription/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.subscription.create",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.subscriptions",
+        "batch": 3,
+        "title": "Subscription Create",
+        "purpose": "Create subscription using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Subscription",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-create/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-create/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-create/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.subscription.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/JoinAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.subscription.create",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JoinAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.subscription.create",
+          "parameters": {
+            "subscription": {
+              "subscriberId": "https://business.example/subscriberId/example",
+              "planId": "https://business.example/planId/example",
+              "start": "2026-09-01T09:00:00Z"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "subscription": {
+                "subscriberId": "https://business.example/subscriberId/example",
+                "planId": "https://business.example/planId/example",
+                "start": "2026-09-01T09:00:00Z"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.subscription.create-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.subscription.create-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.subscription.create-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.subscription.create-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "capability": "comcom.subscription.cancel",
+          "originalResource": "https://business.example/subscription/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.subscription.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.subscriptions",
+        "batch": 3,
+        "title": "Subscription Get",
+        "purpose": "Retrieve subscription using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Subscription",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.subscription.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/JoinAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.subscription.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JoinAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.subscription.get",
+          "parameters": {
+            "subscriptionId": "https://business.example/subscription/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "subscriptionId": "https://business.example/subscription/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "capability": "comcom.subscription.cancel",
+          "originalResource": "https://business.example/subscription/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.subscription.pause",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.subscriptions",
+        "batch": 3,
+        "title": "Subscription Pause",
+        "purpose": "Pause subscription using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Subscription",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-pause/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-pause/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-pause/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active",
+            "paused"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "paused"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.subscription.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/JoinAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.subscription.pause",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JoinAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.subscription.pause",
+          "parameters": {
+            "subscriptionId": "https://business.example/subscription/example",
+            "expectedRevision": 0,
+            "changes": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "subscriptionId": "https://business.example/subscription/example",
+              "expectedRevision": 0,
+              "changes": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.subscription.pause-allowed-1",
+              "from": "active",
+              "to": "paused",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.subscription.pause-forbidden-1",
+              "from": "paused",
+              "to": "active",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "capability": "comcom.subscription.cancel",
+          "originalResource": "https://business.example/subscription/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.subscription.resume",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.subscriptions",
+        "batch": 3,
+        "title": "Subscription Resume",
+        "purpose": "Resume subscription using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Subscription",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-resume/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-resume/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-resume/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "paused",
+            "active"
+          ],
+          "transitions": [
+            {
+              "from": "paused",
+              "to": "active"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.subscription.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/JoinAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.subscription.resume",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JoinAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.subscription.resume",
+          "parameters": {
+            "subscriptionId": "https://business.example/subscription/example",
+            "expectedRevision": 0,
+            "changes": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "subscriptionId": "https://business.example/subscription/example",
+              "expectedRevision": 0,
+              "changes": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.subscription.resume-allowed-1",
+              "from": "paused",
+              "to": "active",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.subscription.resume-forbidden-1",
+              "from": "active",
+              "to": "paused",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "capability": "comcom.subscription.cancel",
+          "originalResource": "https://business.example/subscription/example"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "profiles__v0.2__transactions.subscriptions__comcom-membership-join__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-membership-join/schemas/input.schema.json",
+      "title": "Membership Join input",
+      "description": "Join membership using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.membership.join"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Membership Join parameters.",
+          "additionalProperties": false,
+          "required": [
+            "membership"
+          ],
+          "properties": {
+            "membership": {
+              "type": "object",
+              "description": "Typed Membership data.",
+              "additionalProperties": false,
+              "required": [
+                "subscriberId",
+                "planId",
+                "start"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "subscriberId": {
+                  "type": "string",
+                  "description": "Subscriber URI.",
+                  "format": "uri-reference"
+                },
+                "planId": {
+                  "type": "string",
+                  "description": "Plan URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Service start.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Service end.",
+                  "format": "date-time"
+                },
+                "quantity": {
+                  "type": "string",
+                  "description": "Subscribed quantity.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "Subscription unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-membership-join__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-membership-join/schemas/output.schema.json",
+      "title": "Membership Join output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-membership-join/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-membership-join__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-membership-join/schemas/resource.schema.json",
+      "title": "Membership resource for comcom.membership.join",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Membership"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subscriberId": {
+          "type": "string",
+          "description": "Subscriber URI.",
+          "format": "uri-reference"
+        },
+        "planId": {
+          "type": "string",
+          "description": "Plan URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Service start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Service end.",
+          "format": "date-time"
+        },
+        "quantity": {
+          "type": "string",
+          "description": "Subscribed quantity.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "Subscription unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-membership-leave__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-membership-leave/schemas/input.schema.json",
+      "title": "Membership Leave input",
+      "description": "Leave membership using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.membership.leave"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Membership Leave parameters.",
+          "additionalProperties": false,
+          "required": [
+            "membershipId"
+          ],
+          "properties": {
+            "membershipId": {
+              "type": "string",
+              "description": "Membership URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-membership-leave__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-membership-leave/schemas/output.schema.json",
+      "title": "Membership Leave output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-membership-leave/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-membership-leave__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-membership-leave/schemas/resource.schema.json",
+      "title": "Membership resource for comcom.membership.leave",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Membership"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "left"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subscriberId": {
+          "type": "string",
+          "description": "Subscriber URI.",
+          "format": "uri-reference"
+        },
+        "planId": {
+          "type": "string",
+          "description": "Plan URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Service start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Service end.",
+          "format": "date-time"
+        },
+        "quantity": {
+          "type": "string",
+          "description": "Subscribed quantity.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "Subscription unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-cancel__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-cancel/schemas/input.schema.json",
+      "title": "Subscription Cancel input",
+      "description": "Cancel subscription using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.subscription.cancel"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Subscription Cancel parameters.",
+          "additionalProperties": false,
+          "required": [
+            "subscriptionId"
+          ],
+          "properties": {
+            "subscriptionId": {
+              "type": "string",
+              "description": "Subscription URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-cancel__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-cancel/schemas/output.schema.json",
+      "title": "Subscription Cancel output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-cancel/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-cancel__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-cancel/schemas/resource.schema.json",
+      "title": "Subscription resource for comcom.subscription.cancel",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Subscription"
+        },
+        "state": {
+          "enum": [
+            "accepted",
+            "active",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subscriberId": {
+          "type": "string",
+          "description": "Subscriber URI.",
+          "format": "uri-reference"
+        },
+        "planId": {
+          "type": "string",
+          "description": "Plan URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Service start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Service end.",
+          "format": "date-time"
+        },
+        "quantity": {
+          "type": "string",
+          "description": "Subscribed quantity.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "Subscription unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-change__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-change/schemas/input.schema.json",
+      "title": "Subscription Change input",
+      "description": "Change subscription using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.subscription.change"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Subscription Change parameters.",
+          "additionalProperties": false,
+          "required": [
+            "subscriptionId",
+            "expectedRevision",
+            "changes"
+          ],
+          "properties": {
+            "subscriptionId": {
+              "type": "string",
+              "description": "Subscription URI.",
+              "format": "uri-reference"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "changes": {
+              "type": "object",
+              "description": "Permitted Subscription changes.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "subscriberId": {
+                  "type": "string",
+                  "description": "Subscriber URI.",
+                  "format": "uri-reference"
+                },
+                "planId": {
+                  "type": "string",
+                  "description": "Plan URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Service start.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Service end.",
+                  "format": "date-time"
+                },
+                "quantity": {
+                  "type": "string",
+                  "description": "Subscribed quantity.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "Subscription unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-change__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-change/schemas/output.schema.json",
+      "title": "Subscription Change output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-change/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-change__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-change/schemas/resource.schema.json",
+      "title": "Subscription resource for comcom.subscription.change",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Subscription"
+        },
+        "state": {
+          "enum": [
+            "active"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subscriberId": {
+          "type": "string",
+          "description": "Subscriber URI.",
+          "format": "uri-reference"
+        },
+        "planId": {
+          "type": "string",
+          "description": "Plan URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Service start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Service end.",
+          "format": "date-time"
+        },
+        "quantity": {
+          "type": "string",
+          "description": "Subscribed quantity.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "Subscription unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-create__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-create/schemas/input.schema.json",
+      "title": "Subscription Create input",
+      "description": "Create subscription using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.subscription.create"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Subscription Create parameters.",
+          "additionalProperties": false,
+          "required": [
+            "subscription"
+          ],
+          "properties": {
+            "subscription": {
+              "type": "object",
+              "description": "Typed Subscription data.",
+              "additionalProperties": false,
+              "required": [
+                "subscriberId",
+                "planId",
+                "start"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "subscriberId": {
+                  "type": "string",
+                  "description": "Subscriber URI.",
+                  "format": "uri-reference"
+                },
+                "planId": {
+                  "type": "string",
+                  "description": "Plan URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Service start.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Service end.",
+                  "format": "date-time"
+                },
+                "quantity": {
+                  "type": "string",
+                  "description": "Subscribed quantity.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "Subscription unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-create__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-create/schemas/output.schema.json",
+      "title": "Subscription Create output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-create/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-create__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-create/schemas/resource.schema.json",
+      "title": "Subscription resource for comcom.subscription.create",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Subscription"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subscriberId": {
+          "type": "string",
+          "description": "Subscriber URI.",
+          "format": "uri-reference"
+        },
+        "planId": {
+          "type": "string",
+          "description": "Plan URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Service start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Service end.",
+          "format": "date-time"
+        },
+        "quantity": {
+          "type": "string",
+          "description": "Subscribed quantity.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "Subscription unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-get/schemas/input.schema.json",
+      "title": "Subscription Get input",
+      "description": "Retrieve subscription using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.subscription.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the Subscription to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "subscriptionId"
+          ],
+          "properties": {
+            "subscriptionId": {
+              "type": "string",
+              "description": "Subscription URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-get/schemas/output.schema.json",
+      "title": "Subscription Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-get/schemas/resource.schema.json",
+      "title": "Subscription resource for comcom.subscription.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Subscription"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subscriberId": {
+          "type": "string",
+          "description": "Subscriber URI.",
+          "format": "uri-reference"
+        },
+        "planId": {
+          "type": "string",
+          "description": "Plan URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Service start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Service end.",
+          "format": "date-time"
+        },
+        "quantity": {
+          "type": "string",
+          "description": "Subscribed quantity.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "Subscription unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-pause__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-pause/schemas/input.schema.json",
+      "title": "Subscription Pause input",
+      "description": "Pause subscription using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.subscription.pause"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Subscription Pause parameters.",
+          "additionalProperties": false,
+          "required": [
+            "subscriptionId",
+            "expectedRevision",
+            "changes"
+          ],
+          "properties": {
+            "subscriptionId": {
+              "type": "string",
+              "description": "Subscription URI.",
+              "format": "uri-reference"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "changes": {
+              "type": "object",
+              "description": "Permitted Subscription changes.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "subscriberId": {
+                  "type": "string",
+                  "description": "Subscriber URI.",
+                  "format": "uri-reference"
+                },
+                "planId": {
+                  "type": "string",
+                  "description": "Plan URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Service start.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Service end.",
+                  "format": "date-time"
+                },
+                "quantity": {
+                  "type": "string",
+                  "description": "Subscribed quantity.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "Subscription unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-pause__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-pause/schemas/output.schema.json",
+      "title": "Subscription Pause output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-pause/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-pause__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-pause/schemas/resource.schema.json",
+      "title": "Subscription resource for comcom.subscription.pause",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Subscription"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "paused"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subscriberId": {
+          "type": "string",
+          "description": "Subscriber URI.",
+          "format": "uri-reference"
+        },
+        "planId": {
+          "type": "string",
+          "description": "Plan URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Service start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Service end.",
+          "format": "date-time"
+        },
+        "quantity": {
+          "type": "string",
+          "description": "Subscribed quantity.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "Subscription unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-resume__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-resume/schemas/input.schema.json",
+      "title": "Subscription Resume input",
+      "description": "Resume subscription using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.subscription.resume"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Subscription Resume parameters.",
+          "additionalProperties": false,
+          "required": [
+            "subscriptionId",
+            "expectedRevision",
+            "changes"
+          ],
+          "properties": {
+            "subscriptionId": {
+              "type": "string",
+              "description": "Subscription URI.",
+              "format": "uri-reference"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "changes": {
+              "type": "object",
+              "description": "Permitted Subscription changes.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "subscriberId": {
+                  "type": "string",
+                  "description": "Subscriber URI.",
+                  "format": "uri-reference"
+                },
+                "planId": {
+                  "type": "string",
+                  "description": "Plan URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Service start.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Service end.",
+                  "format": "date-time"
+                },
+                "quantity": {
+                  "type": "string",
+                  "description": "Subscribed quantity.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "unitCode": {
+                  "type": "string",
+                  "description": "Subscription unit code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-resume__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-resume/schemas/output.schema.json",
+      "title": "Subscription Resume output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-resume/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.subscriptions__comcom-subscription-resume__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-resume/schemas/resource.schema.json",
+      "title": "Subscription resource for comcom.subscription.resume",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Subscription"
+        },
+        "state": {
+          "enum": [
+            "paused",
+            "active"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "subscriberId": {
+          "type": "string",
+          "description": "Subscriber URI.",
+          "format": "uri-reference"
+        },
+        "planId": {
+          "type": "string",
+          "description": "Plan URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Service start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Service end.",
+          "format": "date-time"
+        },
+        "quantity": {
+          "type": "string",
+          "description": "Subscribed quantity.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unitCode": {
+          "type": "string",
+          "description": "Subscription unit code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    }
+  }
+}

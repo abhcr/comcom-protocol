@@ -1,0 +1,24 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.order.cancel-allowed-1",
+      "from": "accepted",
+      "to": "cancelled",
+      "expected": "allowed"
+    },
+    {
+      "case": "comcom.order.cancel-allowed-2",
+      "from": "active",
+      "to": "cancelled",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.order.cancel-forbidden-1",
+      "from": "cancelled",
+      "to": "accepted",
+      "expected": "forbidden"
+    }
+  ]
+}

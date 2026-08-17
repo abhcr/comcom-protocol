@@ -1,0 +1,91 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-review-publish/schemas/input.schema.json",
+  "title": "Review Publish input",
+  "description": "Publish review using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.review.publish"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Review Publish parameters.",
+      "additionalProperties": false,
+      "required": [
+        "review"
+      ],
+      "properties": {
+        "review": {
+          "type": "object",
+          "description": "Typed Review data.",
+          "additionalProperties": false,
+          "required": [
+            "senderId",
+            "recipientIds",
+            "topic"
+          ],
+          "properties": {
+            "statusCode": {
+              "type": "string",
+              "description": "Profile-defined business state.",
+              "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+            },
+            "senderId": {
+              "type": "string",
+              "description": "Originating entity URI.",
+              "format": "uri-reference"
+            },
+            "recipientIds": {
+              "type": "array",
+              "description": "Recipient URIs.",
+              "items": {
+                "type": "string",
+                "description": "Recipient URI.",
+                "format": "uri-reference"
+              },
+              "minItems": 1,
+              "uniqueItems": true,
+              "maxItems": 1000
+            },
+            "topic": {
+              "type": "string",
+              "description": "Receiver-declared topic.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "subject": {
+              "type": "string",
+              "description": "Short subject.",
+              "maxLength": 200
+            },
+            "body": {
+              "type": "string",
+              "description": "Plain-text content.",
+              "maxLength": 10000
+            },
+            "language": {
+              "type": "string",
+              "description": "BCP 47 language tag.",
+              "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+            },
+            "occurredAt": {
+              "type": "string",
+              "description": "Communication instant.",
+              "format": "date-time"
+            }
+          }
+        },
+        "requestedAt": {
+          "type": "string",
+          "description": "Requested effective instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

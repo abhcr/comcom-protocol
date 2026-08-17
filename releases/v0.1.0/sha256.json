@@ -1,0 +1,2067 @@
+{
+  "sourceCommit": "733a344",
+  "status": "experimental-prototype",
+  "treeSha256": "c6d815a3c2d8f1201ef0ce584a2cc346f345fa8af8f2064b9dcdda60cd12d855",
+  "files": [
+    {
+      "path": "fixtures/v0.1/invalid.json",
+      "bytes": 64494,
+      "sha256": "5172d54b42daab65e88cc912c8ca4c9b46008091f0b33fd0e0c5648d2e38a8a7"
+    },
+    {
+      "path": "fixtures/v0.1/valid.json",
+      "bytes": 67544,
+      "sha256": "af2c7f87325ceebd3088fc840fbd8c6ec3f527976d358da8e9177ed6e651c80b"
+    },
+    {
+      "path": "registry/v0.1/capabilities.json",
+      "bytes": 269708,
+      "sha256": "d0878e3ff429b8be510944aea4fee6b11290c7707f6dfc849ec5dff6b60c9be0"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-account-statement-get.input.schema.json",
+      "bytes": 983,
+      "sha256": "0779aee3ff4e05b2011141183718b9ed2d253b3827886f8936320306deedf798"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-account-statement-get.output.schema.json",
+      "bytes": 932,
+      "sha256": "07c7c261fde6d70320f31cbda0e719bc36266157cc9fcea6e67457070fd6244f"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-alert-receive.input.schema.json",
+      "bytes": 955,
+      "sha256": "1ef0a45358f270e8cbc2844179200f7d926cff92045879b54d00a0b44926ee76"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-alert-receive.output.schema.json",
+      "bytes": 647,
+      "sha256": "72df9e45ac90cc257a4b7e26b47a21a5c4b41d154617d3438a1de02c1a16b19d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-announcement-publish.input.schema.json",
+      "bytes": 990,
+      "sha256": "9434db468dc3e55872ce2449796301d4982d82bbd2702cf97c6b751af3d67a84"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-announcement-publish.output.schema.json",
+      "bytes": 668,
+      "sha256": "253ad9e60343071ae20503356ab192571a3fb3c2e4bd49f8ded966402309b28f"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-announcement-receive.input.schema.json",
+      "bytes": 1392,
+      "sha256": "38968b7fa6922e9060b1456ec7c8782a776befa58dec9ee24d118d3678cefab6"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-announcement-receive.output.schema.json",
+      "bytes": 668,
+      "sha256": "e175b4b5a50a9248c751f0710fc4f2359764416fc009e8de249463b9af29b4ed"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-appointment-cancel.input.schema.json",
+      "bytes": 951,
+      "sha256": "2ebb261f3ff346ef62a71ea10b7332f808973f0665421a5054584c958e7a99fe"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-appointment-cancel.output.schema.json",
+      "bytes": 1006,
+      "sha256": "f706065e3e5a37bed8f4630c712d52cb16f21891425b66c4bb573ae0e07444d7"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-appointment-checkin.input.schema.json",
+      "bytes": 1505,
+      "sha256": "f1b643242326306142b5de11deb1b69edfd66604184aa37c0245c2c799e45985"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-appointment-checkin.output.schema.json",
+      "bytes": 1009,
+      "sha256": "a7cffa5a55ae98f748a4af5ce9cfb208e55e545917c28352e2d760d198ae0899"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-appointment-complete.input.schema.json",
+      "bytes": 975,
+      "sha256": "004abe9fc4addad2c9acd7e9d780315bea49cf41aab2370554ac53256d10692c"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-appointment-complete.output.schema.json",
+      "bytes": 1012,
+      "sha256": "3c7837cb4e71f0ae2a74d0d4eb8ecc449bbecc431464b24770febd88aac35be0"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-appointment-create.input.schema.json",
+      "bytes": 1288,
+      "sha256": "8f4b34476cfaea88f60354850d4843a2d1ca57078b907a6efaf2b63afe14fb6f"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-appointment-create.output.schema.json",
+      "bytes": 1006,
+      "sha256": "6168cc1783fccd71d4d3a69d9dc1ee306ee65833f4186c0242f36d3e5f5118e4"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-appointment-get.input.schema.json",
+      "bytes": 954,
+      "sha256": "a939f092d1ad0543190c626fd4a3cf83c8feb5e4229f4b4be82ab9e0aad08412"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-appointment-get.output.schema.json",
+      "bytes": 914,
+      "sha256": "03c6d5a1fb3a391351cd8fdb7245fbc004c97a79bd90635693e930a3396672ac"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-appointment-reschedule.input.schema.json",
+      "bytes": 1513,
+      "sha256": "337553ae33249a29285d6205fdf389aaef40f9dfab777dee60eb0ede435aec33"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-appointment-reschedule.output.schema.json",
+      "bytes": 1018,
+      "sha256": "3eff2cc8f65e46589eb62297556b6a01a9908b4cdec1b44fdc17b380ac149b0e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-assessment-submit.input.schema.json",
+      "bytes": 976,
+      "sha256": "9b98f60b452b029f9c7a511d96ebbf1911218822ca72111a01cafb078c57d754"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-assessment-submit.output.schema.json",
+      "bytes": 1003,
+      "sha256": "2c5dc36dc8669a5e413f5f39d7975a2371e47cc0ebd06ed565e402aebc40bc5d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-asset-assign.input.schema.json",
+      "bytes": 1461,
+      "sha256": "4930d7ebcaaedad9e8fe7f5452a78f388faeaf2b24ea375672a24cbb6d457b1e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-asset-assign.output.schema.json",
+      "bytes": 988,
+      "sha256": "1adc65332353d1730dbda8957b8778f7f89ea91b791c464910c8a778d720e08a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-asset-maintenance-request.input.schema.json",
+      "bytes": 1535,
+      "sha256": "d9b9b2ae516c9e32f704f3cfdc1e7ea568eeff91a4284665dd9750218225741e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-asset-maintenance-request.output.schema.json",
+      "bytes": 1027,
+      "sha256": "32ff46c2d79346eb8034f2b68a2b080281596ef171179608a6872a2a8619fcee"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-asset-register.input.schema.json",
+      "bytes": 1469,
+      "sha256": "f129460e8182581cdfe3e6181488d22be7be1f0403c1583297ba7aa68faebb5b"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-asset-register.output.schema.json",
+      "bytes": 994,
+      "sha256": "e20341dc2e99ccb2c19521feae122305ba774a4a1ebe903876dc7909c8f23135"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-automation-rule-trigger.input.schema.json",
+      "bytes": 1523,
+      "sha256": "c3092295ee985c07837d72fc5a0e597f30093b04391b23f68070935f26787df1"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-automation-rule-trigger.output.schema.json",
+      "bytes": 1021,
+      "sha256": "542015d5fad566d4abebbcfeb2dd0d340b5a0d689611f3f06ff53486ebe04a38"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-availability-calendar-get.input.schema.json",
+      "bytes": 1003,
+      "sha256": "792f158dcc7ed7a1217da9b64c393898ad4c0ec7b9003a51317ed632724d1bd7"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-availability-calendar-get.output.schema.json",
+      "bytes": 944,
+      "sha256": "22c663caf6c70db380e9449118fef29cc63399940f1829f2c41243c06d78ba30"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-availability-check.input.schema.json",
+      "bytes": 1303,
+      "sha256": "0f3d486b8b1c91756613643aca5687a3dcfdd9645648f6c3b288d9d6f453461f"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-availability-check.output.schema.json",
+      "bytes": 923,
+      "sha256": "a5cd8ed1db77f2280eb1433afeaffbac6636c6d693b4e77112529b328b9edf73"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-benefit-apply.input.schema.json",
+      "bytes": 1473,
+      "sha256": "124e81d3586ebfa40c0e536facb22f760611b028f986cfba35161165e86fa35b"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-benefit-apply.output.schema.json",
+      "bytes": 991,
+      "sha256": "999fdae11479d8f1925a44e15c745cab2977346b6cfcd3a4d9f00b93b38bcc07"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-booking-cancel.input.schema.json",
+      "bytes": 931,
+      "sha256": "017d0e332d4396c3d63d298681c28081a9a2bf2575c92767cfa35bfbaa897b7b"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-booking-cancel.output.schema.json",
+      "bytes": 994,
+      "sha256": "109f610902c38d68fc7725083978b2199bd1a14c9f7d14e290b64f89ead8d572"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-booking-create.input.schema.json",
+      "bytes": 1276,
+      "sha256": "4010328759a6f7f27b41a9a2c426bbe6a56a36325d03c4fbcd281511f885a895"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-booking-create.output.schema.json",
+      "bytes": 994,
+      "sha256": "b8d10d0e0ecfbdd8bb7514449b48f023c2e83a1b4665bc0d84d5b1d938d8ca9f"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-booking-get.input.schema.json",
+      "bytes": 934,
+      "sha256": "cea0c04d9d3c56c52a0ed19ecc9cfca4054e88241a04f087c385c6b1b80d0f59"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-booking-get.output.schema.json",
+      "bytes": 902,
+      "sha256": "4cc33aa7870747f422ac187a26265e4f3041dc54986b4892108a34e19755d378"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-booking-modify.input.schema.json",
+      "bytes": 1473,
+      "sha256": "77a2346420742024032bb940654aaa46b9a4f3e787e3c6a4801696eefff93fc2"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-booking-modify.output.schema.json",
+      "bytes": 994,
+      "sha256": "6626a03e2434d89d547f85fb997be9ef6879cf188c8528bbf90db3531d5c6e4f"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-candidate-status-get.input.schema.json",
+      "bytes": 978,
+      "sha256": "8b7949ba02fb26ee31988cca1eaecea1dfec2e4200f4bd81c31a080f1e7b5d87"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-candidate-status-get.output.schema.json",
+      "bytes": 929,
+      "sha256": "4f34471aa7702c3d4664df3d422f66bb455a2716e436af0ee2631cd385122208"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-catalog-get.input.schema.json",
+      "bytes": 934,
+      "sha256": "74d7e757b8bf3da840b61a30e0e9105ea51f6e23ef1ab013bfd1f4a9c7592854"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-catalog-get.output.schema.json",
+      "bytes": 902,
+      "sha256": "99ec35e3b5122c50666ecd3cf45bb46c3962a341bfa9ee5ce1bc0d0c2dc05354"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-catalog-list.input.schema.json",
+      "bytes": 1068,
+      "sha256": "cce954fb74b4856ab536d82f728b6c0706a4b0c19ac4520592c8fae10b1a0fda"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-catalog-list.output.schema.json",
+      "bytes": 768,
+      "sha256": "753ed0c4be495e27592d5434d646878ff1a129bc205bca4433daefb976206c16"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-catalog-search.input.schema.json",
+      "bytes": 1120,
+      "sha256": "8545ac1529c67619b44c275d4fd20f453853e61ead6f10ae8b6cd0a61175267e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-catalog-search.output.schema.json",
+      "bytes": 774,
+      "sha256": "a1dd5667a39667e2a786ad9899cd6c4739c4fbdddce3873100c23d4235067037"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-catalog-subscribe.input.schema.json",
+      "bytes": 1488,
+      "sha256": "f34ac3b559578b467f7684fd57dc73b30a403d78240ff0de8d9e2ea157392626"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-catalog-subscribe.output.schema.json",
+      "bytes": 1003,
+      "sha256": "0aeb59699291fae0721e1b72260c5e4faa88ca7082714e901d1a7f1a5f9079f0"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-certificate-issue.input.schema.json",
+      "bytes": 977,
+      "sha256": "afc9e950cc0ff7d23edfb4ddf70548a7e9338a2e725dbf43542c6e3c3d296d71"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-certificate-issue.output.schema.json",
+      "bytes": 1003,
+      "sha256": "369afdcc4b9fa1d1adbf64827225eef0e83e08efce5d866fe992e4590406ab47"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-certificate-verify.input.schema.json",
+      "bytes": 961,
+      "sha256": "d8a4723fb619cb82f861336d90f77bdae87a25cf1b089e340cddee9a9972ce33"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-certificate-verify.output.schema.json",
+      "bytes": 923,
+      "sha256": "1614ecba8c758ece828888a5cb98a68e126955d9f3a56cd5c9b04a00dda38bf9"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-complaint-submit.input.schema.json",
+      "bytes": 971,
+      "sha256": "adefd37bdd19f5c8bfe93dd98c3bd2343c6c23368cc772c128a70d3711f29e64"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-complaint-submit.output.schema.json",
+      "bytes": 1000,
+      "sha256": "343f0736a0919fbee2d5b03f6ac51226c5a89864fb7b2ac0505c3860c36f2acd"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-compliance-report-submit.input.schema.json",
+      "bytes": 1010,
+      "sha256": "4f68eae34ff0f277935ab7ac024f5c65e36945cb1a3fe5e886ec029e6918dfc4"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-compliance-report-submit.output.schema.json",
+      "bytes": 1024,
+      "sha256": "ed48b5952776c2b41bd4b86c5f1c894abb38b4653a8be14abe1611222668dab9"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-consent-grant.input.schema.json",
+      "bytes": 943,
+      "sha256": "4aa502e09431f223d2a77896a0430206ea7dc972d2a02f87895bc303728e62da"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-consent-grant.output.schema.json",
+      "bytes": 991,
+      "sha256": "13ba67f587f6a04f18b78b6f359989f54b9fd185e143622148107cdfb6bdefab"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-consent-request.input.schema.json",
+      "bytes": 1477,
+      "sha256": "3c1a451fe0939f59227e39536cc52f88e40f863e74de633a17825fc1f85dd4d2"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-consent-request.output.schema.json",
+      "bytes": 997,
+      "sha256": "38d287d8bfcf69c5f009a45ca1ab919aa70de01e00d0d84ab4182ef224d858a6"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-consent-revoke.input.schema.json",
+      "bytes": 931,
+      "sha256": "d1d9143b0a04da5b951c976e2626cacfbcab745f8d5f3a58a1363334eb344c1c"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-consent-revoke.output.schema.json",
+      "bytes": 994,
+      "sha256": "145a04e23d97d1ec08b0a3f483d1837193068e72d628144eeaea07955b069ae5"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-contact-preferences-get.input.schema.json",
+      "bytes": 993,
+      "sha256": "47c76eac36f77a9bc8b2bffe473dfddc759a3e47864c63a60cece819593d489c"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-contact-preferences-get.output.schema.json",
+      "bytes": 938,
+      "sha256": "ba632e50b6d612ac35aa9c506bad80f8d8d1011ee8bcd143533a0e83a196722a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-content-license-request.input.schema.json",
+      "bytes": 1523,
+      "sha256": "54790b827917194f93969b8ba04123de6c45c7494a5144f60776a867ef481bce"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-content-license-request.output.schema.json",
+      "bytes": 1021,
+      "sha256": "5ad726fe24c50e5cfe6bc6f949f8e7b6afd84b0641e9353b7e404363c55d6e2e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-content-search.input.schema.json",
+      "bytes": 1080,
+      "sha256": "dee81e794a96eae500fa8968eacac8e7bdeaa2143d73c70ec15fe47f7b0f2dbd"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-content-search.output.schema.json",
+      "bytes": 774,
+      "sha256": "d3dc1a561f67d3414e8d2d65915844fd5caffc0216cc55c7a2c06df228c9dcce"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-contract-accept.input.schema.json",
+      "bytes": 952,
+      "sha256": "1391e550d6b6fe0c7ff00bfecbc4350ee8604e2bb344b61039590bb9362ad64b"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-contract-accept.output.schema.json",
+      "bytes": 997,
+      "sha256": "a562055503cbe84124a5183da71d89a10232ea75b1e93ce1ac6c32206bd4ec10"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-contract-propose.input.schema.json",
+      "bytes": 1483,
+      "sha256": "c80e1297660ddbd66122a561f19c2727ad703c34ba88bd1a5ea01e7f29a6fa8a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-contract-propose.output.schema.json",
+      "bytes": 1000,
+      "sha256": "73e8f783224a4f07634518a0761583a03f8182d5bb0871b2ecc78244e9410c9d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-contract-terminate.input.schema.json",
+      "bytes": 948,
+      "sha256": "f826961675dc274ffec9187fa6364999734415b6279d5c2de8330153c4144f58"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-contract-terminate.output.schema.json",
+      "bytes": 1006,
+      "sha256": "2235f73cb420c41bdea78f0f16401f8d13a7961ac14f66bd416b7844166be310"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-credential-issue.input.schema.json",
+      "bytes": 972,
+      "sha256": "d6f29ed81bb8de336cf8385c6c5315561f14b6ea2c75077920cf9ea75594b442"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-credential-issue.output.schema.json",
+      "bytes": 1000,
+      "sha256": "8390fcabd6dd864607e7d2ffd28b3b33aa61c20fd8d58841951376ec0d362159"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-credential-present.input.schema.json",
+      "bytes": 980,
+      "sha256": "b947bbf8371dd13a0d05b0ec40657f7efc1b0103e8cb01e8a15882bc5b538292"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-credential-present.output.schema.json",
+      "bytes": 662,
+      "sha256": "7b94f3186ca1762d50b3d5f786863f58e09740948b647a93a61dd37a53a862cd"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-credential-verify.input.schema.json",
+      "bytes": 956,
+      "sha256": "bcb6ed079324069dd6f1ae8597770e313935c147fc5f1f2b108d2f3ddc79cea1"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-credential-verify.output.schema.json",
+      "bytes": 920,
+      "sha256": "40d57980084ae43732c635ba4fdd1d88e47341fa12dc1de1a81104838c72a29b"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-credit-note-issue.input.schema.json",
+      "bytes": 976,
+      "sha256": "4cbcf59c80c0cb45c0540c447234be21b95e231c01ed0ad500eb1c6a1f9dd208"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-credit-note-issue.output.schema.json",
+      "bytes": 1003,
+      "sha256": "031b135ce49e67e49ae3e8168aca274efda0c778a83b8b882f3a7745540cd882"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-data-access-request.input.schema.json",
+      "bytes": 1499,
+      "sha256": "7017dfc30b28252f5440f72d06aced516abae9da194727ff2e556be2bccf2f16"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-data-access-request.output.schema.json",
+      "bytes": 1009,
+      "sha256": "15706cca79ff7b950f36f6989af195f40a8b6388cfb8e224ffeed30f8dd3fbd4"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-data-correction-request.input.schema.json",
+      "bytes": 1523,
+      "sha256": "374e5c8e33f4b04bea4fb56ee8429bcbe0dbdc21113e37a4407baa230c56a94c"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-data-correction-request.output.schema.json",
+      "bytes": 1021,
+      "sha256": "ef1ae3df09c6ba076d65be3eacf346584fc21518eaa66bbf54583f557bebaf2c"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-data-deletion-request.input.schema.json",
+      "bytes": 1511,
+      "sha256": "d22732e8455ec3a4d49fb4c1e28141b58364d33a85f330e235b8435a4c32af53"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-data-deletion-request.output.schema.json",
+      "bytes": 1015,
+      "sha256": "f04b84f8a9414024c08a7df9565b45f2529ca8d57d451e96eb751448bdb13988"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-data-export-request.input.schema.json",
+      "bytes": 1499,
+      "sha256": "8941beb5dc468ef86d20664d7db5c037693878f0fa3c8307da0185977774ceaf"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-data-export-request.output.schema.json",
+      "bytes": 1009,
+      "sha256": "28d7a183ba0223301c0830db688e8e17c7ee92dd71634648728c647387f2fb44"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-delivery-confirm.input.schema.json",
+      "bytes": 956,
+      "sha256": "592b731f488614fcaf38fb30c8004894e702de620361370996268420d85c518b"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-delivery-confirm.output.schema.json",
+      "bytes": 1000,
+      "sha256": "af62741233cf184a88834df7eb34476dbff5b0dcfd5339d22d9290da0f13babd"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-delivery-estimate-get.input.schema.json",
+      "bytes": 983,
+      "sha256": "5db69d295ce92c0a4d53204d42c3a09a5f2cec11737e83ff14e70662c7b1f7f7"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-delivery-estimate-get.output.schema.json",
+      "bytes": 932,
+      "sha256": "887e31954aa7374f0f7f777c51a45201377234bd2ca4bd3b47d6b4384a263f01"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-device-command-send.input.schema.json",
+      "bytes": 987,
+      "sha256": "4cc7ee340c0088302c20a90c9804c7502fa7703427a5cd10951900405260345c"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-device-command-send.output.schema.json",
+      "bytes": 665,
+      "sha256": "26284be8a4f08035ee89471121260557a17678cb829bf88248680091ed70eb5d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-device-register.input.schema.json",
+      "bytes": 1475,
+      "sha256": "c9312f18002d2f2c3a05093de7fec6a2101d849f3ad777cf5cc64913aa1a3dea"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-device-register.output.schema.json",
+      "bytes": 997,
+      "sha256": "a93797e091a66b362beefd8cfbf73725e80b979aff503c82e8b0cd20aae39d08"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-device-status-get.input.schema.json",
+      "bytes": 963,
+      "sha256": "6799a1f13d6825b4d39f0fa7fb06032e10695db2172c3094f941f53466b3a058"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-device-status-get.output.schema.json",
+      "bytes": 920,
+      "sha256": "657a63cc44778bd48bdd263e79d1cc6c8ff9f50957c1a1a276faf4bbde17d0dd"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-digital-resource-provision.input.schema.json",
+      "bytes": 1537,
+      "sha256": "6022b8b5e1d93fcec4e59261b8ba1b4b21eb5267f90a68b5cc25a260be4c40c0"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-digital-resource-provision.output.schema.json",
+      "bytes": 1030,
+      "sha256": "fe8b298ca023a1cac0ab3da9162a7501423f0fc27fee40e10fcf7660a981d0e7"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-directory-search.input.schema.json",
+      "bytes": 1090,
+      "sha256": "2092c257a71ac68c819f4c0e87dab29822855bd7ba644595ddaee42f9112a374"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-directory-search.output.schema.json",
+      "bytes": 780,
+      "sha256": "699f27c23db86be96ba47295999b943d34629a6579135a92ab95b3098e373685"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-discount-eligibility-check.input.schema.json",
+      "bytes": 1001,
+      "sha256": "026d06df1565ef4f94c16e79242bcad35f614de294c9cd06674cf2d5761ec319"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-discount-eligibility-check.output.schema.json",
+      "bytes": 947,
+      "sha256": "504b79842d8cc7d9df0dc419a0496e001fe277954397c6c0342d5ed127682d9e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-dispatch-notify.input.schema.json",
+      "bytes": 972,
+      "sha256": "2ae9646f1ba48c7974a017aa460a606ba251ead0b1d1896411b18cca93167535"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-dispatch-notify.output.schema.json",
+      "bytes": 653,
+      "sha256": "15463996468350aa482cad998ab7f7c65dee5e385dfa609407be49ca544cdc79"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-dispute-resolve.input.schema.json",
+      "bytes": 1499,
+      "sha256": "f60cf783034daed35a57b219579a0a1741dbbf576add9f433ef34faaa9fb0adf"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-dispute-resolve.output.schema.json",
+      "bytes": 997,
+      "sha256": "d06bae5bfe37f345953b5b534617a579d767c2696e8cb9fb12551e8952c4abe9"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-education-course-search.input.schema.json",
+      "bytes": 1124,
+      "sha256": "ab048b73c532ea1c9a1db8892f7367303b7502697a7e64ee595dec8f3a0fbc26"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-education-course-search.output.schema.json",
+      "bytes": 801,
+      "sha256": "b395cefb860b664cd06d1a969c92e5f4d9134a5ba3b6217e87e570b1b4d87519"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-education-enroll.input.schema.json",
+      "bytes": 1488,
+      "sha256": "d7bce18c721afecc0744f55e459904302450d8c106b64c2f8a7bc3d401a45265"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-education-enroll.output.schema.json",
+      "bytes": 1000,
+      "sha256": "aa29c25df8942bfab68cc4d42c056ba1c4c3e8f720717a177ddfd02dd294302d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-education-progress-get.input.schema.json",
+      "bytes": 988,
+      "sha256": "8d9627497c874fe4fb38321e3d5d5733ee6f77e1706e5ea8dfcf8e4e15f56cc7"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-education-progress-get.output.schema.json",
+      "bytes": 935,
+      "sha256": "87eda36bf4190f7a8d698e278f4297fda3b7c1c4a4c468895dc0aeaa1c9b3011"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-employee-offboard.input.schema.json",
+      "bytes": 944,
+      "sha256": "dbacc1998570dae8ba7c16d7308750e7ba4cc0c932f50123e3eaff5fb0a2bdc6"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-employee-offboard.output.schema.json",
+      "bytes": 1003,
+      "sha256": "715cdf1fb97e27404ac4dd8ba7fc7fd8b5b7bb2ca179c89e6ac66a9f8e3af313"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-employee-onboard.input.schema.json",
+      "bytes": 1483,
+      "sha256": "de405b26e0c45588bc911f1f03e0ae7dc5357fae61b5fc905b0a0b257de879cc"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-employee-onboard.output.schema.json",
+      "bytes": 1000,
+      "sha256": "a1b5a303c825e6f9b9ee3c3a953003eacf60f56d3284293668f7ff0df98c2af8"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-employment-offer.input.schema.json",
+      "bytes": 1505,
+      "sha256": "8a1efd906fb859bbc99734438673ffa397a2923378d81d9510af8a7202e4f44a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-employment-offer.output.schema.json",
+      "bytes": 1000,
+      "sha256": "95d06b00c7aed3e9cb3212990755406b57110e9ab4537bd1bd685c167d56f170"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-entity-profile-get.input.schema.json",
+      "bytes": 968,
+      "sha256": "3387d703d6112a8a62cf490d116f2684e829f15080d8e3209b3ea9d4716fbffc"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-entity-profile-get.output.schema.json",
+      "bytes": 923,
+      "sha256": "f8fb9451f4b17887e5f6b289c7ed96ef8d19f8b178f39a29e8b2b600211e1fd2"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-entity-profile-publish.input.schema.json",
+      "bytes": 999,
+      "sha256": "83cd542646e077c9be1e7571a431167b9df6fd2a4e416d7fb48c103fed4371ad"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-entity-profile-publish.output.schema.json",
+      "bytes": 674,
+      "sha256": "a2c6d364a8b637c192c55c3f03e430bcb167a475f518ab53890433c5dc12a6dd"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-event-register.input.schema.json",
+      "bytes": 1469,
+      "sha256": "2773c00b74572824ffe29bbdd3c16978de901de41c4842586675a956c8e4d1a1"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-event-register.output.schema.json",
+      "bytes": 994,
+      "sha256": "44734864d15634672a0d6a8b902f7ca79177a196c1aba1f1cd774b0989923222"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-event-search.input.schema.json",
+      "bytes": 1070,
+      "sha256": "b78837af0447bf7579fe1560c714212f6f183be766abd2796edde7f68ab3e90a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-event-search.output.schema.json",
+      "bytes": 768,
+      "sha256": "e854e3fcebf326f0195db714d7ec11470d7e6300db75d427c1d6943f27dd213a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-exchange-request.input.schema.json",
+      "bytes": 1483,
+      "sha256": "f7cca40d8d8ef5ad6d84d89c5abadc110229e128c7c7e104581d9e2128609d5b"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-exchange-request.output.schema.json",
+      "bytes": 1000,
+      "sha256": "124b5056870500df5eff9d7b88faf8ad06df27db207f9e25ef3755560ebf8b0c"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-finance-account-balance-get.input.schema.json",
+      "bytes": 1012,
+      "sha256": "fee024b3d47f5737dbade9fc39e49fdd07b3301f9013c97378aef7d82f8582f5"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-finance-account-balance-get.output.schema.json",
+      "bytes": 950,
+      "sha256": "b72f4b4c6a5a1a64e0a6e6b5534db5aa134bf2ca0696e72d9deaa41fd7baf66d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-flight-book.input.schema.json",
+      "bytes": 1459,
+      "sha256": "2a2b1d177eb5824a0fee1e70f5c4311a1deb7462a839ea5e667f820ef19d85ce"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-flight-book.output.schema.json",
+      "bytes": 985,
+      "sha256": "e855a3b898f400ec797a7d8bc73f7a77e2e12b4e84b032e47452cfabf1865588"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-flight-search.input.schema.json",
+      "bytes": 1075,
+      "sha256": "e6c69e058b3c2ac315b7adc94891c8b57192ace10430a08ec02c1132b654c929"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-flight-search.output.schema.json",
+      "bytes": 771,
+      "sha256": "cba06ad6ee5620bdb6a1f0670ae7e925ef738159f59597db54199c424f70e278"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-government-application-status.input.schema.json",
+      "bytes": 1028,
+      "sha256": "27aa5633db793c0ec071fd0cef6db76e6be990d42ddfb65bf154f868098bb8e3"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-government-application-status.output.schema.json",
+      "bytes": 956,
+      "sha256": "2dfca00df9896ada508f98f238004824f3b51ead924bdebf6cc47c742add8ad5"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-government-application-submit.input.schema.json",
+      "bytes": 1035,
+      "sha256": "78d2944322f4fe9e9f58d32b47bd9163566e0cd333f8cf737e53c0c23575c49c"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-government-application-submit.output.schema.json",
+      "bytes": 1039,
+      "sha256": "a16addf929dd50f8b3aa89be1dc294791881154fb29197f26028ace8fc75387f"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-government-service-search.input.schema.json",
+      "bytes": 1134,
+      "sha256": "a850431d9b4ddfee3e5891e35ef92f8709700dde882e8737a0ce4e38bea602a1"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-government-service-search.output.schema.json",
+      "bytes": 807,
+      "sha256": "17d1b189e233f3e484d2e4bfd9bf2bb1318d1ab396cbe0a91a4754f6a641bc1a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-healthcare-provider-search.input.schema.json",
+      "bytes": 1139,
+      "sha256": "d4a75960b36c383941733816baef1ec7cc6072ccf14819f6bb555a67d0f5a85b"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-healthcare-provider-search.output.schema.json",
+      "bytes": 810,
+      "sha256": "2cca9a9ba6fafdfbadd768dc619c85c7857cf57f1fabaa4696f28199b01e3495"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-healthcare-referral-submit.input.schema.json",
+      "bytes": 1020,
+      "sha256": "6a59b7b35a7d4f54ddd49a7f9a08f0edb481b4b73687b0532520a653f7396d51"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-healthcare-referral-submit.output.schema.json",
+      "bytes": 1030,
+      "sha256": "fe565b8f23fd3cf8afd8f93f5c53f7d437ed9bf16b4256c22164b6cf09259f06"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-healthcare-service-request.input.schema.json",
+      "bytes": 1541,
+      "sha256": "182e1797fa1a2c6efeab3fbb52ec390ca708f4adcb1f0664694bffa2acb4d96d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-healthcare-service-request.output.schema.json",
+      "bytes": 1030,
+      "sha256": "fdb86c337fafab7d3d32153bdce5042f3464c2332b6d584e6378b78670009715"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-identity-verify.input.schema.json",
+      "bytes": 946,
+      "sha256": "7a52534a78636b770bb930b729ac81641d21d67a99812404215d55d8157f657e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-identity-verify.output.schema.json",
+      "bytes": 914,
+      "sha256": "a93abab2649384fbe0d446277bb3d5a57305008bbb0d9234c279ad97f2755d0a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-insurance-claim-submit.input.schema.json",
+      "bytes": 1000,
+      "sha256": "69bf5d441cb2187fefc6ebc57e3d64b8aa572976bdede1bf79852ff331e5a384"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-insurance-claim-submit.output.schema.json",
+      "bytes": 1018,
+      "sha256": "5f1c6d5bda1c79f6c2c50478094d7d9ad07926d20b2506f3ff1246c07abfe5bc"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-insurance-quote-request.input.schema.json",
+      "bytes": 1523,
+      "sha256": "f825f187cf3b8ebbfbe1ede8dd3e161ef7425b717e342797c03820571b209592"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-insurance-quote-request.output.schema.json",
+      "bytes": 1021,
+      "sha256": "92b23c476a0d4414af12dcfa508d811611a6ab2718e4174bccdf39ed781ad802"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-interview-schedule.input.schema.json",
+      "bytes": 1493,
+      "sha256": "250933473e1533b4ef4c9b3b4f64bee2d5372417450e02fc0b0f4495cf4b95f9"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-interview-schedule.output.schema.json",
+      "bytes": 1006,
+      "sha256": "c7c9a788e4d44bbef922e19733e4f45f03e58661baaf4744cc8d8c70be3117a9"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-inventory-adjust.input.schema.json",
+      "bytes": 1485,
+      "sha256": "7dc86d62a6fd87424c13f68f1c73cd323caedea1dd3e946b69340143b2b25f4e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-inventory-adjust.output.schema.json",
+      "bytes": 1000,
+      "sha256": "30d7326c0bddde0dd024a47e24202a4cb9b18873fd95516d7a40a6a5f96fe44b"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-inventory-check.input.schema.json",
+      "bytes": 947,
+      "sha256": "21bf708e584bb8eda21272490c3fff28ef4c512bfe2bc14968bcfd40222efc4d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-inventory-check.output.schema.json",
+      "bytes": 914,
+      "sha256": "ad5883fcdf32059ea3ce2897ff89a84d7eb297303ca0b6b12df52ca55ec47f79"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-inventory-release.input.schema.json",
+      "bytes": 945,
+      "sha256": "d363bef7726e3574883184a1f97af5379f8fe97746d3cdb30cfb270aa4a702cd"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-inventory-release.output.schema.json",
+      "bytes": 1003,
+      "sha256": "19f4207938632277a4b12690166d51ae25441063c832f6d00bb4ac9508d59e2a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-inventory-reserve.input.schema.json",
+      "bytes": 1489,
+      "sha256": "6d3d46331836a66a1745b1eb33cc69727e56f279cdf2c9a705463c989360f5f7"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-inventory-reserve.output.schema.json",
+      "bytes": 1003,
+      "sha256": "21ffb9c6be8b162acac902808a99394ffe4519e7e1e5c0356faca5db8bee222a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-invoice-dispute.input.schema.json",
+      "bytes": 1477,
+      "sha256": "787f9a5f18d2be285534d9d04dcce76d8d8adff74e5f85a91b9f94dd305b99b2"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-invoice-dispute.output.schema.json",
+      "bytes": 997,
+      "sha256": "c10174637fe7b0ccf716dbf4343bfaed15beb50ddff268c79b7db314937865d3"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-invoice-get.input.schema.json",
+      "bytes": 934,
+      "sha256": "59059e82b837987fe27015ac105f2268288284d68a08036f268b135f66cdf7c2"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-invoice-get.output.schema.json",
+      "bytes": 902,
+      "sha256": "0fce4fed42f3dbf73a3ee5c6f77c7dc9f9be59a27a19b7666d6c44c0535611f4"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-invoice-issue.input.schema.json",
+      "bytes": 957,
+      "sha256": "9347f2a473b95a8f4eafc722aa3f6ab1f27b53c3d5f1edbfe4631395eadbcc34"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-invoice-issue.output.schema.json",
+      "bytes": 991,
+      "sha256": "ba443adf813c67b8a5eb542b53086b8f978137310ec845cb83c7e792602617ed"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-invoice-receive.input.schema.json",
+      "bytes": 965,
+      "sha256": "e2f3bd088d0308877260c083a1be1e95c06934e38bff7132d6fd0e5ae97a4921"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-invoice-receive.output.schema.json",
+      "bytes": 653,
+      "sha256": "bfa407c9adeff8e23f5196fc4fb2e98cef573da4306365ceb1b297597a2381cc"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-job-apply.input.schema.json",
+      "bytes": 1449,
+      "sha256": "b082a4b5adc18bea63337429bc06f2817619d1599456ffadbb276730f3395d68"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-job-apply.output.schema.json",
+      "bytes": 979,
+      "sha256": "dfa45cd347624fc6a5f67e9b86b5fcff0bd79d6901367fdac9d408748436beb1"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-job-publish.input.schema.json",
+      "bytes": 945,
+      "sha256": "df5518dc78d3db53858ec7b941c547c279148c1f9b40a04437c10454431c666f"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-job-publish.output.schema.json",
+      "bytes": 641,
+      "sha256": "690623245282bb1c877125668552f2c3a3690235506ef0ccaca7d816a6c28fa7"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-journey-itinerary-get.input.schema.json",
+      "bytes": 983,
+      "sha256": "4c112e41d322e94feab2ce83abc6be880d0a8d13f609a7eddf3a51ef0cd9ca5a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-journey-itinerary-get.output.schema.json",
+      "bytes": 932,
+      "sha256": "f750fe76338f7d19b76bb7dcaa24b7e2a3d299ee40361d0febc9fba6a3585547"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-leave-request.input.schema.json",
+      "bytes": 1465,
+      "sha256": "bf0f31e39979cd9e47fd2cad729ecc56cf2b70ff83235f0d7a136a30b4211847"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-leave-request.output.schema.json",
+      "bytes": 991,
+      "sha256": "8aff027c7e4cd1c233e1a1ff255443b67fc8c3e2a8bfe36bb25789aa93cf4c32"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-license-issue.input.schema.json",
+      "bytes": 957,
+      "sha256": "2c288146874f4f64da08e63dd3d098658f69e3ca2d64b940fb04c6e8c5b7e344"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-license-issue.output.schema.json",
+      "bytes": 991,
+      "sha256": "5a522175344bb9cfa9f01f6115218bd0ec37ace0a13a9c634918cdd2bf083161"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-media-stream-authorize.input.schema.json",
+      "bytes": 983,
+      "sha256": "9ab2f1bca06490a0827962eb7f5b3b2d54804a904273801c07d47db17c9daad9"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-media-stream-authorize.output.schema.json",
+      "bytes": 1018,
+      "sha256": "0957b9414141939de1e984e1899bfcf9c5a3afade07611404006c1d050f6b918"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-membership-join.input.schema.json",
+      "bytes": 1483,
+      "sha256": "9c3819e34e4761c5540f6b40011e0fd0f98c24301e9abd22398082361ed9cce7"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-membership-join.output.schema.json",
+      "bytes": 997,
+      "sha256": "c801a62b524ea30849acac3c820bae49d285421337327b26bfb60bf3b29109a7"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-membership-leave.input.schema.json",
+      "bytes": 942,
+      "sha256": "a66f7d582066a4be0f3bf03e468e5747d803f95e4c05490d89069419222464eb"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-membership-leave.output.schema.json",
+      "bytes": 1000,
+      "sha256": "ae8bcd371f451f6823d24863a59612ca5c73946481aa7de13970f65d66f2b37c"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-message-acknowledge.input.schema.json",
+      "bytes": 967,
+      "sha256": "1d0cb3e35051af29db2e19518c4b38803c643b166d24b6d8df5eb831884fb452"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-message-acknowledge.output.schema.json",
+      "bytes": 1009,
+      "sha256": "f99d97093acb415084c3575cd7742723eaddd40b5eec5a28c3a79be0edf2aa11"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-message-send.input.schema.json",
+      "bytes": 953,
+      "sha256": "b68362de24a5aa3e41fde7f477a2a9bf44254931c711c720d2576c8a624caa47"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-message-send.output.schema.json",
+      "bytes": 644,
+      "sha256": "38ecefb9eefac2b69d3331d98dbe72a14b94be683da3841a64ff417a62d81e50"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-notification-preferences-get.input.schema.json",
+      "bytes": 1018,
+      "sha256": "1c5e849bdb78628ab743dfa8fb02851a61b2a23cf7eb473fcaf0b39ae56302a4"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-notification-preferences-get.output.schema.json",
+      "bytes": 953,
+      "sha256": "17974f81a5dbc68612962b4b734bc0dbb9dc77d38fcde8bb7ea7938e085a46e8"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-notification-preferences-update.input.schema.json",
+      "bytes": 1573,
+      "sha256": "bb6e200be7676d983bf1a06889c4ed13ccf806ff7793d954de8974727efd14fb"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-notification-preferences-update.output.schema.json",
+      "bytes": 1045,
+      "sha256": "58a9278fd6aa8fb44d06925886fc73f8e73854907efd036890c4461edde55527"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-offer-publish.input.schema.json",
+      "bytes": 955,
+      "sha256": "b4c4f392bee1e5efa45ccc25d1f2ef660cbabf1aa7bd39bc3ffe3083f5fc7a06"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-offer-publish.output.schema.json",
+      "bytes": 647,
+      "sha256": "f85fd395ebfada7143ee3b7e8b919d8f200bdeaa050372e272b5d5823e04b0bc"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-offer-receive.input.schema.json",
+      "bytes": 1128,
+      "sha256": "83c2e87631da3b0b48169d9fa078fa7317311ea71cc11df4a80c8fb32c6d47bf"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-offer-receive.output.schema.json",
+      "bytes": 647,
+      "sha256": "f85f932bd45ab729093c878e1f1ba2547d979cb16c38621370d2b33f2f3bf007"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-offer-withdraw.input.schema.json",
+      "bytes": 929,
+      "sha256": "7294c2a2023637d74297a6a1a4b6e8110350730c75fac6ac3fdc6c921b96cea0"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-offer-withdraw.output.schema.json",
+      "bytes": 994,
+      "sha256": "42709c757c01e37ef0b5e8f20538b07a7ea23f32a52bd1e7b41b13deb0022f93"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-acknowledge.input.schema.json",
+      "bytes": 957,
+      "sha256": "596531f7953fcadd1f40753d9a9cfebd66f3d33c15081abec28e40e28da76a50"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-acknowledge.output.schema.json",
+      "bytes": 1003,
+      "sha256": "d6639b48ac5a6e2fbfb8287377fd280553e9d4fb649c45ba558dd9a3750a983a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-approve.input.schema.json",
+      "bytes": 941,
+      "sha256": "89430ca4dd0eca0d9c27aa88af7a112005d380e21aa8a85fe2de326fe6ff96ce"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-approve.output.schema.json",
+      "bytes": 991,
+      "sha256": "6824a9279963b3953e14b603f6dedc80f96acee55088abc431fb7a081ddeed42"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-cancel.input.schema.json",
+      "bytes": 921,
+      "sha256": "2b055d62cef22fc013efc0c8fdbdf6912691a5e917c174ffae6896c3b7156f39"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-cancel.output.schema.json",
+      "bytes": 988,
+      "sha256": "60720f01e7f16528483c6f42b8bf1974449dc4ae02d7376d472502661b9d00f9"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-change.input.schema.json",
+      "bytes": 1461,
+      "sha256": "18844f6b36e0ef3495f0aa468333b2164d71bcea4c368c347006e5e2edd4c4b3"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-change.output.schema.json",
+      "bytes": 988,
+      "sha256": "10ad48417f6643cae7358a3fa3f9a0a1047d0444c18ee14eec7d36f4aae5ef06"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-complete.input.schema.json",
+      "bytes": 945,
+      "sha256": "405465add10c236e65ba68518a5cd91e7ba00bc5c751874a3a46ee483289e46a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-complete.output.schema.json",
+      "bytes": 994,
+      "sha256": "61dee4462a894f4c8988293a8020cf4f080049bd74c5bd79b40c1b21399ef4b6"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-create.input.schema.json",
+      "bytes": 1793,
+      "sha256": "5c39a3818323f6335099b47edb62a305f004d3394ef1a6232bd750a031e5e8d9"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-create.output.schema.json",
+      "bytes": 988,
+      "sha256": "8e1d3a3a703a3c65a1a0830ec58ebcdc0d74a5bfc7fddb59b2735f6f7b18a3e7"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-fulfillment-get.input.schema.json",
+      "bytes": 983,
+      "sha256": "db3b30f371c260e8ffebd2836675c79f75998a2e5bdb80684e50fa9e64fd8ca2"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-fulfillment-get.output.schema.json",
+      "bytes": 932,
+      "sha256": "cc70510c3400c670bb742eda4a7f987ea9175bb452efb37e51519be80dfa5f0e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-get.input.schema.json",
+      "bytes": 924,
+      "sha256": "2e02be81a2b8c49a31fdfbc7a63091129530f583bdc5bf3e409887a62ea95354"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-get.output.schema.json",
+      "bytes": 896,
+      "sha256": "95207ffe52ad3ef4c4c506fffabed59179650ca8035690d92734a680a6062db9"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-list.input.schema.json",
+      "bytes": 1058,
+      "sha256": "d9fde859518aeef04384545fc28873bf3ab24bf595c5d7ab93081d0a59c0fa8d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-list.output.schema.json",
+      "bytes": 762,
+      "sha256": "0b82ec705416a91e4ee960be097cd461f94c827e9721a9a323d680d3cb609047"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-reject.input.schema.json",
+      "bytes": 921,
+      "sha256": "7af7ed39225e5a68b5b1485770af48367bb3e31bdfe56f6d541a8a3c3c0005ae"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-order-reject.output.schema.json",
+      "bytes": 988,
+      "sha256": "ac061d8fa4a5146488788e06b4063143d207351f030f8184dbf7194237731959"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-payment-confirm.input.schema.json",
+      "bytes": 951,
+      "sha256": "c30e7360a9932a51f7f7a298bba3173d1d466b57ce0e4bce5ef3cb0da0c70ea5"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-payment-confirm.output.schema.json",
+      "bytes": 997,
+      "sha256": "b75412fc6023cf5bfca4fdfd56b82973c05af329ff5758c5386c219d6fc10e5e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-payment-request.input.schema.json",
+      "bytes": 1477,
+      "sha256": "fe5f53bc120d93dc8dd3e1292cc3fa032894d47791df211077495b3fe56bd9ad"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-payment-request.output.schema.json",
+      "bytes": 997,
+      "sha256": "d888201618087aed6c26c05a7337c57d7fddedf4c812f838e6870b95c1a9b4d9"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-payment-status-get.input.schema.json",
+      "bytes": 968,
+      "sha256": "26060ea7ad82da5815de333ef52e98d01fb06cffd7ed2bc21296249daac1d194"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-payment-status-get.output.schema.json",
+      "bytes": 923,
+      "sha256": "d9c11d67b93c9d519ca420666124e2208fd5ceb116580c19a58ff5c363b397b2"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-permission-grant.input.schema.json",
+      "bytes": 958,
+      "sha256": "5cc249c20eb5ab196f856c8e3aec25c90ddd91fb9b4f5238ad77294eb810bc52"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-permission-grant.output.schema.json",
+      "bytes": 1000,
+      "sha256": "eda69b98790a4a1f8c848d5fb1dc5fe23676e479d29cb6a26041a6a1a70dfbf4"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-permission-revoke.input.schema.json",
+      "bytes": 946,
+      "sha256": "28c659ca921a0808792c060cc25c963be73c6013abe29b53859a021f660c8d12"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-permission-revoke.output.schema.json",
+      "bytes": 1003,
+      "sha256": "ef68f2a7cc1d5785d52f375db7d688dc249cad83a1bcb70304cefaccdd541a56"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-permit-apply.input.schema.json",
+      "bytes": 1467,
+      "sha256": "9cecfe746bf5f4b2aec12d95c3d89aaaab04e1b433d06a246a4fdf5c652d6c4f"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-permit-apply.output.schema.json",
+      "bytes": 988,
+      "sha256": "57b03c3b2defb7a1791a22fe16940d5a5361ebe9a5362eff2aa554b1b4ffc4a2"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-permit-status-get.input.schema.json",
+      "bytes": 963,
+      "sha256": "e4af294f8f78cbb2ed4b369f8265649c6ec4cdfdd3953a89c223dc71a1da57c5"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-permit-status-get.output.schema.json",
+      "bytes": 920,
+      "sha256": "74f9143d5e4fd46cfd9f4e42895db57d656bf03f68eb7850d111ccc394766432"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-pickup-confirm.input.schema.json",
+      "bytes": 946,
+      "sha256": "3c67c40ff00b6b36172437d318a920f9347257afa34ac7191eb421101c84add0"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-pickup-confirm.output.schema.json",
+      "bytes": 994,
+      "sha256": "3c57a134a93f5602bc22ead4c604472d24480f88bc5aa30c91884edffd3d28a7"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-pickup-schedule.input.schema.json",
+      "bytes": 1475,
+      "sha256": "3443848cce50d0313854379df8a7696938da9f19045d82085c4af24d469e4653"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-pickup-schedule.output.schema.json",
+      "bytes": 997,
+      "sha256": "b9d476ab102ce320e2614a662ad079d2f098b86392cbdedf0433ac15b22ab0f8"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-prescription-fulfillment-get.input.schema.json",
+      "bytes": 1018,
+      "sha256": "96a26c173c003790641a976ca14f1905a0297a8af5baca0bfeff109bf1210b71"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-prescription-fulfillment-get.output.schema.json",
+      "bytes": 953,
+      "sha256": "d28057580c7e02c23a7cadd239ace5a65884485b30b4b48e59de64ed18e1a675"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-price-get.input.schema.json",
+      "bytes": 924,
+      "sha256": "10421065ebcccaf3fc3879a86f4b8b1af21f1df3c20d3084f06f0d63c37aa8f1"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-price-get.output.schema.json",
+      "bytes": 896,
+      "sha256": "fdc8ee182999958dde20269ba36ee5cd9e659d3bc873f4a1f394e86be0a590ae"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-product-compare.input.schema.json",
+      "bytes": 1080,
+      "sha256": "baa79774fad20f80f2b336b03fe9ff1e438cd2de7a7f61a14bca95e827f686ad"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-product-compare.output.schema.json",
+      "bytes": 777,
+      "sha256": "52989cf989aeab7ca643c807602bac9c4f8f809d3cc374368130fb3555d35e2a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-product-customize-request.input.schema.json",
+      "bytes": 1535,
+      "sha256": "26395ef7573ad3813245be87e7f8f63b0c2f96c569c78dc93b92d2a87ec651c3"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-product-customize-request.output.schema.json",
+      "bytes": 1027,
+      "sha256": "459b31ef7d8a499483777cec66ebeddc3f79ed9fca1213ecda7d969862bdec96"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-product-get.input.schema.json",
+      "bytes": 934,
+      "sha256": "65422327529a4fdf6881624e64461b62b762dd520fc717f26f577de0027f999a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-product-get.output.schema.json",
+      "bytes": 902,
+      "sha256": "efe51d9e2aa0579ec2bafcd3249b4de84f0bf67f2aa82e07225f16eae65f0972"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-product-recommendations-get.input.schema.json",
+      "bytes": 1013,
+      "sha256": "eb77130ccd236bca4e9bde8d03ba2d687233da36e52b36a3edefe4476a5fd120"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-product-recommendations-get.output.schema.json",
+      "bytes": 950,
+      "sha256": "ad7a2e581aaad6ab8170ddc59d99399b8e150f0a4b4870d88426d0f7532bf149"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-product-sample-request.input.schema.json",
+      "bytes": 1517,
+      "sha256": "2c45465b5cbac7e320cd93ec820a6c7c0b53f489140c3a34502c6171eb81284b"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-product-sample-request.output.schema.json",
+      "bytes": 1018,
+      "sha256": "0343015e30aca969a79b786ae2d56dbf922e8d716f84113f442688082900f08a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-product-search.input.schema.json",
+      "bytes": 1234,
+      "sha256": "8baf762ae892d6b44d1bac7380d5f1d89c400569a45ca1f1ccb2793429704799"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-product-search.output.schema.json",
+      "bytes": 774,
+      "sha256": "12db653e5c82e5c725d24bb6eea36378ea7cf5cc1d02ce75cb9b7970a5ab60e4"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-production-order-create.input.schema.json",
+      "bytes": 1525,
+      "sha256": "447b528e8c76493d92eb703be2e1417d1459020daf7c9b877926da33646fed85"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-production-order-create.output.schema.json",
+      "bytes": 1021,
+      "sha256": "95f04b3a143f09075c5c9aaa8f16b68cf19871e990dffbe4a9cf0ca99646c3f5"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-production-status-get.input.schema.json",
+      "bytes": 983,
+      "sha256": "df1bf58be250ea08bfb6bec1b7ac7cd873b3877fbe1024c0e6d49ce23642229b"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-production-status-get.output.schema.json",
+      "bytes": 932,
+      "sha256": "ec11a66ae01c12098d486b15b5b809524dcc5eb02b686663c7054e71cc7f2c64"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-proof-of-delivery-get.input.schema.json",
+      "bytes": 982,
+      "sha256": "80bb18c235be28add70c9f71ae7c7535ffee37d03ff2044c31d30102b9ab248e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-proof-of-delivery-get.output.schema.json",
+      "bytes": 932,
+      "sha256": "86e93fd3ed52d8be95c4f949be0a79f96dbe55f4e2346bd91ccddf7c19d2e9f0"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-property-search.input.schema.json",
+      "bytes": 1085,
+      "sha256": "b6b19de06b65ce0f8c898d3a9f3b2564e26da0d38191246029dde092aad6a93e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-property-search.output.schema.json",
+      "bytes": 777,
+      "sha256": "3fba129a3abfc48ee8e5ebf62179a934ec0710dc4fb5cbd4279a73a1a42fd667"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-property-viewing-book.input.schema.json",
+      "bytes": 1517,
+      "sha256": "c70ee307337a25c484eee29faf4bd00a1a6330d60b93c0fe433abdf50b0de870"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-property-viewing-book.output.schema.json",
+      "bytes": 1015,
+      "sha256": "fa4375377a2812a1eed2ecfb41c1a370f837ad4101c4ff95720e1b58389e6480"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-purchase-requisition-submit.input.schema.json",
+      "bytes": 1025,
+      "sha256": "d47a18a2c84f4ef767a99536ea9bab2b14c7da526238ea6eefff4ca631b3d27a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-purchase-requisition-submit.output.schema.json",
+      "bytes": 1033,
+      "sha256": "47c0202f4dd7ab638dfcc6a5905d3b752543f7504277a04ce0aaa4a76cf58f1a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-quote-accept.input.schema.json",
+      "bytes": 937,
+      "sha256": "156acfd8a9ddfb380486e78e5e4da40f3166888aa1c4e0c9b27145be354b8719"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-quote-accept.output.schema.json",
+      "bytes": 988,
+      "sha256": "2d1b1b2cfe2d3dde55edae6b6ae5f2d753b29f6e4526d6a85111de30e96d9dce"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-quote-get.input.schema.json",
+      "bytes": 924,
+      "sha256": "9b862b2b12be5a4642543d295985b2b784e4d3f0f9761c27cc3dbea3e7ab6dd2"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-quote-get.output.schema.json",
+      "bytes": 896,
+      "sha256": "0bd1e19384fda2cd01dcc4024a8e7837284ef6f225d89c7eb09f81e4255ae40c"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-quote-reject.input.schema.json",
+      "bytes": 921,
+      "sha256": "843375dbe3d7db56141637411755f182d3fe9e117557086f7d7453bd1506dc21"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-quote-reject.output.schema.json",
+      "bytes": 988,
+      "sha256": "7f122d2fbbe8034b9ad595c38ccd7d64d0df26375b60baaa258db83bc6984037"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-quote-request.input.schema.json",
+      "bytes": 1528,
+      "sha256": "865fadb6f8bde7351c9d007c8dcb58ca3f2a18a1e9ca80b6f7f879dfd3f67ea4"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-quote-request.output.schema.json",
+      "bytes": 991,
+      "sha256": "ece91ac6c7b46b922134dd040e3575c71f09f37165f1d6e70600ceb1318564c5"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-rate-list.input.schema.json",
+      "bytes": 1053,
+      "sha256": "c9745d7fc3bc9daaedc519a8d7786e5f95ba2d7403b4e52032e489208b8d00b4"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-rate-list.output.schema.json",
+      "bytes": 759,
+      "sha256": "f1c6f655c00429f50694196cbe3ab7f6d50f2c97ebfcc5889a40d0b74030c5c1"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-receipt-acknowledge.input.schema.json",
+      "bytes": 967,
+      "sha256": "0a0121580637f99d1187467910f109cb85d853d9657f4e8d11e0645dcfac1fbb"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-receipt-acknowledge.output.schema.json",
+      "bytes": 1009,
+      "sha256": "ddeaaae3e5a0760c3e0de7ae55ebabb8b33b8825e791e3218b2e083b9c32df29"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-reconciliation-submit.input.schema.json",
+      "bytes": 996,
+      "sha256": "2172dbe2444824fbbaec0b27900b7b87feacd832978f587fb38f0c5bc16475f8"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-reconciliation-submit.output.schema.json",
+      "bytes": 1015,
+      "sha256": "031aaac829a61bb18ce98e8133944a0d571656e89f7aa18270bff4f3daea0409"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-refund-request.input.schema.json",
+      "bytes": 1471,
+      "sha256": "f4ff9fd901de9aef92df592296b0115de7a3f754ef12569f7c23519474586c7d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-refund-request.output.schema.json",
+      "bytes": 994,
+      "sha256": "52db5992ef150468e8ceede53dc6eac6700fd6faa0410eff601e155f045d20ce"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-refund-status-get.input.schema.json",
+      "bytes": 963,
+      "sha256": "83977eb712662af982d61d42c30a637390001e7422b4ed32e82c0d0b5edcf804"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-refund-status-get.output.schema.json",
+      "bytes": 920,
+      "sha256": "b9358e1e70a095761d897509f89ee48db2efcd57df2324417ff813c433feb302"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-relationship-accept.input.schema.json",
+      "bytes": 972,
+      "sha256": "cfb40cff873365b2d6fc574afa796e554638472eb73dad69387a56c693db1112"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-relationship-accept.output.schema.json",
+      "bytes": 1009,
+      "sha256": "22575d057b48b0379d7cde4d8ae7c19b5ecae2c0f7084abbe042e1a061ec1c3d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-relationship-end.input.schema.json",
+      "bytes": 944,
+      "sha256": "5e2e65c79183dc3a80fd28c15141571b06ba7a564aefc5ca4b55135dcae4f241"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-relationship-end.output.schema.json",
+      "bytes": 1000,
+      "sha256": "ffe00e373b1a5619e963976368fb1660d029609dd851aa81b2d0fd7bcbe520ac"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-relationship-request.input.schema.json",
+      "bytes": 1507,
+      "sha256": "c983dfa640d76ed1b3d338d57775c7a819e219fe6a13b251cd84699f3cdb870a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-relationship-request.output.schema.json",
+      "bytes": 1012,
+      "sha256": "a0dd27d036dff0f9f12e5a3e8ca46ca993964d4c92e3b533647f029b3c6ef439"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-reminder-receive.input.schema.json",
+      "bytes": 970,
+      "sha256": "f66d6301a2c07c1588a7d20863a8c2a38429664fe1d65e9888b2206c77284a38"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-reminder-receive.output.schema.json",
+      "bytes": 656,
+      "sha256": "f329c30e33619635a0e666b3f06ecc547a3ebcc3882c274ad06184b7913db556"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-replenishment-request.input.schema.json",
+      "bytes": 1513,
+      "sha256": "66ce9908c0c31efe1f84fb8a45da38b9f84ce433f8666e32461c832b649ead52"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-replenishment-request.output.schema.json",
+      "bytes": 1015,
+      "sha256": "195124b20f6eb93998575a18e2abdf799a4df8655e806561082055bfe799d1e3"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-research-data-request.input.schema.json",
+      "bytes": 1511,
+      "sha256": "38a0130a80f329d8b8014ec2b48f945ad4fbc601ac8e05bccc6b48e19f00f0aa"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-research-data-request.output.schema.json",
+      "bytes": 1015,
+      "sha256": "4e8943d2323f8915193c71508067e7a216ac9f89eb5b40658099ffda3cd32d95"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-return-authorize.input.schema.json",
+      "bytes": 954,
+      "sha256": "d613330c491aa39c7be493d2a11a0d361ec5ccd94b20ebe72465c722606a5b5a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-return-authorize.output.schema.json",
+      "bytes": 1000,
+      "sha256": "c0d28c0e2801bced076d4cf3a0879a987634ccaa9e4351fc514d7adbc62ff61d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-return-request.input.schema.json",
+      "bytes": 1471,
+      "sha256": "141aecb504bd94d1cd2bfffb4f2045812bda766df7b99b0162450ddbfb849e82"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-return-request.output.schema.json",
+      "bytes": 994,
+      "sha256": "46acd092e0d1a8421bc07db9f37e0de3263499aba7acc5830ab24a1b9ca6c35e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-return-status-get.input.schema.json",
+      "bytes": 963,
+      "sha256": "6b7a3d6ba66c4f15e505c2cde63af0fb078be4963a1a59a9ae9641bdb752dc87"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-return-status-get.output.schema.json",
+      "bytes": 920,
+      "sha256": "06479a20191cbf1bc885eff29fdcad84cbfbdb1a3eb959b81d3f56049485b42b"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-review-publish.input.schema.json",
+      "bytes": 960,
+      "sha256": "c5faa5276b0bbb7d41df7d76005920a05a60e4cc938635528b1b8f9881b36420"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-review-publish.output.schema.json",
+      "bytes": 650,
+      "sha256": "a787eea24b7a51d869ef63ceec2cd59262ba7b509701101184c2d17925ce4027"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-rfq-publish.input.schema.json",
+      "bytes": 945,
+      "sha256": "25449d544406f64af5ee74c9c06c3b34a9ab42b1a9d1baa70830d1f7ce8bada7"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-rfq-publish.output.schema.json",
+      "bytes": 641,
+      "sha256": "ed5b92b81232de18dbbe70caa2cae412f0214439458edb4decf58e9faacf68b0"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-rfq-respond.input.schema.json",
+      "bytes": 1456,
+      "sha256": "53f002e0ef59bc5b03ad7d8b1757576bbd88e8a050f6c63f39b6be86f5e61e80"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-rfq-respond.output.schema.json",
+      "bytes": 985,
+      "sha256": "41def33e38420248c01fb194966d1a399bb43b49bc7a23eeff38380f73f9e19d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-room-book.input.schema.json",
+      "bytes": 1447,
+      "sha256": "4f3a219dfe3922d587dda23a161c1058e1709c31c57e3d9b647756ac110779b0"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-room-book.output.schema.json",
+      "bytes": 979,
+      "sha256": "aeb86b5c7a0032fe2bce22061a9475a0daf8c5597af3d3e3bc8ad1797eff70c0"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-room-search.input.schema.json",
+      "bytes": 1065,
+      "sha256": "51673ad03cb715490f62cd3828154107003f54a79a57ef7452ab7f43df25ccd1"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-room-search.output.schema.json",
+      "bytes": 765,
+      "sha256": "91b7f024b4cd2fd2f895637bf2b23d1ed2371a4ba7d75ae877e48e337574e1f2"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-sensor-reading-get.input.schema.json",
+      "bytes": 968,
+      "sha256": "dcb88b16f02f8c6d85ab774c8d0e8ae3c1d1ab3bb030a88a32ddf39fbb6a87f7"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-sensor-reading-get.output.schema.json",
+      "bytes": 923,
+      "sha256": "44b97f1e869403ef25fe63e85caf7aed8c8a41928b5aa86877d4ffb1591cd908"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-completion-accept.input.schema.json",
+      "bytes": 1001,
+      "sha256": "3c6191ac0c6c783e9c29bae6c4b2d2e6c56e8fcaff654fc13f4aaa66bcdfd79f"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-completion-accept.output.schema.json",
+      "bytes": 1027,
+      "sha256": "4bb50f98286fc89c897e6c0049c6898a9f06ba99412ae7316edf80178c6e9181"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-engagement-start.input.schema.json",
+      "bytes": 1533,
+      "sha256": "439feee51cda02e2d4e65ca84452293cb50207d2203c39260a130cd743d4fadb"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-engagement-start.output.schema.json",
+      "bytes": 1024,
+      "sha256": "f751f611acf815544818bf9e3e61e8607a3dca810c41a2274710734389871d5c"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-estimate-request.input.schema.json",
+      "bytes": 1529,
+      "sha256": "e92ce491f35f709f4535084943dcec53507ae9677f2b50ca56634db95a1ee495"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-estimate-request.output.schema.json",
+      "bytes": 1024,
+      "sha256": "ca6465beaf7174160146763d95af269720675b123485b442ff42a3271c267c4a"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-get.input.schema.json",
+      "bytes": 934,
+      "sha256": "8dd4f9e650e912cd734d7d8cf2d4ffc55436c1bccf13211ea3cc4f8a4c1f1ff8"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-get.output.schema.json",
+      "bytes": 902,
+      "sha256": "7feae6bee14de3a82bd7bc2708257051fadd286d153252a1c0df8dd0587db08f"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-list.input.schema.json",
+      "bytes": 1068,
+      "sha256": "ee7d16c6c5ccc1bef9693c3b82818be5c6321042959b80a8e0793ce527e327c9"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-list.output.schema.json",
+      "bytes": 768,
+      "sha256": "52e7a509b3f03ee895e93479b84ffc231c9982421305a17943fecc02017bd205"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-progress-get.input.schema.json",
+      "bytes": 978,
+      "sha256": "4e153b4b5af25b9e57fae5b06b7ba966efd4d341b923bfe63e2dfd4300bdc47f"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-progress-get.output.schema.json",
+      "bytes": 929,
+      "sha256": "15115ee0212a9c4b62b538862d86a64fccf607c74d067c46b5db1e55383eb247"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-requirements-get.input.schema.json",
+      "bytes": 998,
+      "sha256": "70fb10776c395ed004e1ce4df51997431d7e018c7c07a192b8ec01a715da2133"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-requirements-get.output.schema.json",
+      "bytes": 941,
+      "sha256": "b611b2e095bd7879583ed8bd4b07ad764772813c75500c02f21bb745804dfcee"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-search.input.schema.json",
+      "bytes": 1080,
+      "sha256": "d3f73c292ffa9f4b374e3e659a740b70d961d124fbd617bb4f6ca1ad7f846ef5"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-service-search.output.schema.json",
+      "bytes": 774,
+      "sha256": "fe112647c295a2e21fa8701119121de27f85db1e067929972d9adf2bd2058fd7"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-shift-get.input.schema.json",
+      "bytes": 924,
+      "sha256": "7c18cc9825b1401265f30101a1c173996218ca3bc144b8f29494309634950b13"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-shift-get.output.schema.json",
+      "bytes": 896,
+      "sha256": "2629d2f409b6a931438afc522f81e3efc3af12477e5fc92d076a6d9b740a3273"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-shift-swap-request.input.schema.json",
+      "bytes": 1493,
+      "sha256": "bdf678d7e1fb5559c31d3d53600516816bda1125c4d71862a925aaef780111d6"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-shift-swap-request.output.schema.json",
+      "bytes": 1006,
+      "sha256": "7ca2b526730bf06643b601e952a9caa9eb32f2e9fed73d03d539b7669e015121"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-shipment-cancel.input.schema.json",
+      "bytes": 936,
+      "sha256": "24879915da30c87685f8c1f90f7c0f0e650481908606b275d2a74124f7ffe8ca"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-shipment-cancel.output.schema.json",
+      "bytes": 997,
+      "sha256": "d3202ca80595125ccbc38555d573adf5fbaed6b1d58dbd26eb45c17f3ddaf1f1"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-shipment-create.input.schema.json",
+      "bytes": 1479,
+      "sha256": "1bd45ba9c20d849d50e9e9eee317423bab999964d5800af27286c9f2e9c884cb"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-shipment-create.output.schema.json",
+      "bytes": 997,
+      "sha256": "bc8fc3f806407da76d17635d7ffb2e0d9bed162137ae6af6c051a9193999d12e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-shipment-get.input.schema.json",
+      "bytes": 939,
+      "sha256": "fdf85aa2fabe5343e49aadefa89a91d41eb1ea3a9c9329e3537ea488c9d2d9f2"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-shipment-get.output.schema.json",
+      "bytes": 905,
+      "sha256": "416f6637bdd89de694557aecd75ed8ab5e2160036f6c7dc17a0268769b072c35"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-shipment-quote-request.input.schema.json",
+      "bytes": 1517,
+      "sha256": "848fe254471a02f92a8294547ef7008e10274effbfea666955f2bcbc65fcacab"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-shipment-quote-request.output.schema.json",
+      "bytes": 1018,
+      "sha256": "0842e3e4fa5e826e45307a697f6c52f8d51ff13a19c01797de4e7f5cf4283fab"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-shipment-track.input.schema.json",
+      "bytes": 942,
+      "sha256": "98bd7c04e6343c59642789b5e9018c1cbb7bca655a3fd23e9d2381d8f5d5fc22"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-shipment-track.output.schema.json",
+      "bytes": 911,
+      "sha256": "88f8a588804ec5940bc969726f1eac590f0b261e8c7d933561fb8deb1bb576f5"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-slot-hold.input.schema.json",
+      "bytes": 1458,
+      "sha256": "66474b7821bef4cbfbc4492597cd33f0b3e1a620f4721364d0a75dbcf605acc3"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-slot-hold.output.schema.json",
+      "bytes": 979,
+      "sha256": "07e90a256e742d90459391c456571cfc9cd0058c2bfb6ff551957a6bc0eaa011"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-slot-release.input.schema.json",
+      "bytes": 920,
+      "sha256": "3b20f392557c79f417e8dbe4e726ab4aa849f55ad3c3b4152b647ad1098b17a9"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-slot-release.output.schema.json",
+      "bytes": 988,
+      "sha256": "d037390a1d3823b0eb9c7644719ee6062fd94cb5473bfddbf83c8b05d6591e7f"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-subscription-cancel.input.schema.json",
+      "bytes": 956,
+      "sha256": "229548022a9341f87109b79864d4267499dd777bc606cd32ccba4cdca29dc62e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-subscription-cancel.output.schema.json",
+      "bytes": 1009,
+      "sha256": "5c031663f368b59f3054b4ec104392826f824c72b602cbf8ff2f97e6fe107a4b"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-subscription-change.input.schema.json",
+      "bytes": 1503,
+      "sha256": "66a3fc2ec8e2c90cdfb91684766d0c7d61843232dc45890f53ba0ff5bc3cb9e3"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-subscription-change.output.schema.json",
+      "bytes": 1009,
+      "sha256": "8265e334433985e429d03d54f422676e8f346eb19ab2300b3b9f69dc569aad31"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-subscription-create.input.schema.json",
+      "bytes": 1503,
+      "sha256": "31be709729f1be5ff4eb5fcf9248bfaadda56eab10c75ba35b3cfc94db7746a8"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-subscription-create.output.schema.json",
+      "bytes": 1009,
+      "sha256": "a368d4550abbce0bce76a9b53f52a57604e11b78a17a33b07bfefedf6aa3c3f6"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-subscription-get.input.schema.json",
+      "bytes": 959,
+      "sha256": "7fe65915f340390a40bec502d00d3b3475160ae94d18e413ba511acb26e88571"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-subscription-get.output.schema.json",
+      "bytes": 917,
+      "sha256": "93732b1f6208b2dfa467d12d0318b4b1f5e11125dff554a8f192a749c1f5adc4"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-subscription-pause.input.schema.json",
+      "bytes": 1499,
+      "sha256": "10cfe3a24ab1b51e068d00cf393c3f1990e2d08aea1f74ab4e08c1d42cf9f49c"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-subscription-pause.output.schema.json",
+      "bytes": 1006,
+      "sha256": "cf698acacd5d36ffa5a7b707c6c41a0ee6c02ecf81ecbfc555f3661ca53e9475"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-subscription-resume.input.schema.json",
+      "bytes": 1503,
+      "sha256": "c7330664aa482b3e0f294b5b6a10f44697a0cf55cdc9b82bef209b095d935466"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-subscription-resume.output.schema.json",
+      "bytes": 1009,
+      "sha256": "9a62eb172289135580a433518961f868c53b6a112527878d687a3cc78251493e"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-supplier-qualify.input.schema.json",
+      "bytes": 1483,
+      "sha256": "f9a7820b80a3f34784fe978820ca127566f879762a63857705c5ed106f8fb13f"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-supplier-qualify.output.schema.json",
+      "bytes": 1000,
+      "sha256": "8af215af71b56c4fcc1ac589dbe129c20304261188e0da7b574db253b62d6ab8"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-support-case-create.input.schema.json",
+      "bytes": 1501,
+      "sha256": "1faa1d5273fea30ddc06986de524002f75b50c48e7ffc78b44454091358bdbf8"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-support-case-create.output.schema.json",
+      "bytes": 1009,
+      "sha256": "eafb802598a682706c3830a8a213f534157ce454de0164f3e2dbf943e2dfb71d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-support-case-get.input.schema.json",
+      "bytes": 958,
+      "sha256": "15ff89be9e918ff3b00d42954f069f8fec8df4cb9e9b9e42d011813a7193675c"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-support-case-get.output.schema.json",
+      "bytes": 917,
+      "sha256": "7360a7a3d7d02ece06e942ac1563b558f26e351cdf4989cb34eeba579840c7ea"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-survey-submit.input.schema.json",
+      "bytes": 956,
+      "sha256": "3a8e3f3e6be7de1af3c9b4bfc92a10cc10aa70fa948b7f82c2e93890503a6deb"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-survey-submit.output.schema.json",
+      "bytes": 991,
+      "sha256": "e34c9b70815a773977e752765f8a12eb966a4ea63f296025c91c42fee472eea6"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-tax-filing-submit.input.schema.json",
+      "bytes": 975,
+      "sha256": "9bcf5395df02103bc58f746054485dc0c654d2be7469739fc466c63c81c06783"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-tax-filing-submit.output.schema.json",
+      "bytes": 1003,
+      "sha256": "e4e38166dfee808d656d3e937cd1dd7ee08b9dc3f377b941c3b63cb808b23675"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-telemetry-publish.input.schema.json",
+      "bytes": 975,
+      "sha256": "449d9400f0a700ef1bd07ff4d710c409de393f8e85aab7fc656461574009e9fd"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-telemetry-publish.output.schema.json",
+      "bytes": 659,
+      "sha256": "b30e42f8b57626a3046482f871c8597262afbba86e5291638fcdb838affb5111"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-tender-award-publish.input.schema.json",
+      "bytes": 989,
+      "sha256": "7a717cbfaeabe36bea7610305adcbe3fe91af58b38a8915bf8a3c38ba11ca678"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-tender-award-publish.output.schema.json",
+      "bytes": 668,
+      "sha256": "d93ad0487771299cc265cb0800e1536491534180428c251e17f40bdc44d01519"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-tender-bid-submit.input.schema.json",
+      "bytes": 975,
+      "sha256": "ed3df6e29d36157c297aefe2930ebdf4cf1e439fab594fb92d756a30ace9df96"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-tender-bid-submit.output.schema.json",
+      "bytes": 1003,
+      "sha256": "2d21788d3e4b5be78763db6df065ab2c23282715e1dcdb17db048b808a82d157"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-tender-bid-withdraw.input.schema.json",
+      "bytes": 953,
+      "sha256": "5655352e9d1fd1d56c5247a67aa6c44a386c9052c6a8682ce96e089f6abdb62d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-tender-bid-withdraw.output.schema.json",
+      "bytes": 1009,
+      "sha256": "04e561e2d6bf2d33fd2cbffeab0bbccafb7cf99b908cc11e60764eee90f42e60"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-tender-publish.input.schema.json",
+      "bytes": 960,
+      "sha256": "410f3c86e8799e03c97a74381d71685bb9c3a38f7457f11fa8fbb4624286ae81"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-tender-publish.output.schema.json",
+      "bytes": 650,
+      "sha256": "2e3a6403bd76563784b790b7019c196573682961c6bac0fa4ff017416ece504d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-tender-question-submit.input.schema.json",
+      "bytes": 1000,
+      "sha256": "a46ffad62062041e20fcf273f224e1d6a4f9eb3c8c649edbdb067f05e999e2c4"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-tender-question-submit.output.schema.json",
+      "bytes": 1018,
+      "sha256": "fcf075c26cc95e32b6de3675dae71724a6a118b9214e87714f89c3a6fafe115b"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-ticket-issue.input.schema.json",
+      "bytes": 952,
+      "sha256": "7500feb351f3470b608e0e80b15c8f6b804e4d7ca5bcb627e9d91724b0c1665c"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-ticket-issue.output.schema.json",
+      "bytes": 988,
+      "sha256": "a33329d42c4294cc052474fd8aef9b3e80223b7f1820606cf63ffb456fe1bc8d"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-utility-meter-reading-submit.input.schema.json",
+      "bytes": 1029,
+      "sha256": "c8b52b058a32fcac9f0db3e738460bcf3ee71b95fec2a4a102d0744a721614bd"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-utility-meter-reading-submit.output.schema.json",
+      "bytes": 1036,
+      "sha256": "7c26144fec3d066b2ecdbe2b970c7ee1648ed5548d958b9b43305a9e88f0b629"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-utility-service-start.input.schema.json",
+      "bytes": 1515,
+      "sha256": "fc39ebc688ef028a44b0f5286e654f394241c9aa0fb980ae83f213cfc87c339f"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-utility-service-start.output.schema.json",
+      "bytes": 1015,
+      "sha256": "6a0b7fa27a4c085ee6a4017e3d53436ba53fc34385d6bcdfcb0a0978912faa47"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-warranty-check.input.schema.json",
+      "bytes": 942,
+      "sha256": "708ffe5e9438cfa1284294de107faba16d4a84455b5005d61a016f5ea65a7cb4"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-warranty-check.output.schema.json",
+      "bytes": 911,
+      "sha256": "813c6259abad46a692f2ae9abef79cc58fceaf9edcfb07e07f992f80e2fe1661"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-warranty-claim.input.schema.json",
+      "bytes": 1493,
+      "sha256": "045687e4611220eb12ab33643b050d03249045bef324d61601434ab3228f8745"
+    },
+    {
+      "path": "schemas/v0.1/capabilities/comcom-warranty-claim.output.schema.json",
+      "bytes": 994,
+      "sha256": "a69ecfa663e2d6b77e266ddfb5eac2efae05ef26af12be9b2c20587b054cd414"
+    },
+    {
+      "path": "schemas/v0.1/discovery.schema.json",
+      "bytes": 733,
+      "sha256": "36a264ca640d8a5ade0d79cecffd54d2a907a136b425f2952aa88b0c78437101"
+    },
+    {
+      "path": "schemas/v0.1/envelope.schema.json",
+      "bytes": 5949,
+      "sha256": "2a3afcfd5f1f5ac0ef06f29e2e58eea030aebbe60b32b94ef1e0cd9e6d0ace80"
+    },
+    {
+      "path": "schemas/v0.1/manifest.schema.json",
+      "bytes": 5518,
+      "sha256": "5b7f7f39de00ccec278dcd2acbae5f9215b35373335ce668fb63e5c794673cc0"
+    },
+    {
+      "path": "schemas/v0.1/problem.schema.json",
+      "bytes": 1166,
+      "sha256": "03ccff0db810dbc7e06746d1f025d6e0a5bdcfca21943f1ea8508ee6ab9046b0"
+    },
+    {
+      "path": "schemas/v0.1/registry.schema.json",
+      "bytes": 3920,
+      "sha256": "d2b82fb35c74cb5872212f654f09fe27038c034ea31702f38d3d4e9c2a2e0621"
+    },
+    {
+      "path": "schemas/v0.1/resource.schema.json",
+      "bytes": 787,
+      "sha256": "101ef5fa91ff0b5bab401157a029ad8cb817c7263e430e4554a131e5fec2f7ad"
+    },
+    {
+      "path": "spec/v0.1/specification.md",
+      "bytes": 15869,
+      "sha256": "ed9982f3b0c11bf9d3249cd309632404681df8d7f19020f3edd5d254c74d947d"
+    }
+  ]
+}

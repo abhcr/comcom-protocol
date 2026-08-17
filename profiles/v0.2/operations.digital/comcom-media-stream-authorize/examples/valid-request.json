@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.media.stream.authorize",
+  "parameters": {
+    "mediaStreamId": "https://business.example/mediaStream/example"
+  }
+}

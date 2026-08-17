@@ -18,21 +18,33 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 24
           cache: npm
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.13"
+          cache: pip
       - run: npm ci
+      - run: python -m pip install -r requirements.txt
       - run: npm run check:generated
-      - run: npm run validate
+      - run: npm run check:v0.2
+      - run: npm run check:site
+      - run: npm run verify:release
+      - run: npm run verify:site
       - run: npm test
-      - run: |
-          mkdir -p _site
+      - run: npm run conformance:v0.2
+      - name: Assemble GitHub Pages artifact
+        run: |
+          mkdir -p _site/releases/v0.2.0/profiles _site/releases/v0.2.0/schemas
           cp -R docs/. _site/
-          cp -R schemas registry spec examples _site/
+          cp -R schemas registry spec examples releases profiles _site/
+          cp -R profiles/v0.2 _site/releases/v0.2.0/profiles/v0.2
+          cp -R schemas/v0.2/. _site/releases/v0.2.0/schemas/
           touch _site/.nojekyll
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
           path: _site
   deploy:
@@ -44,4 +56,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

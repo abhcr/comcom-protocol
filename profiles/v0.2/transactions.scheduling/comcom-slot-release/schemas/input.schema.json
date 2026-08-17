@@ -1,0 +1,46 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-slot-release/schemas/input.schema.json",
+  "title": "Slot Release input",
+  "description": "Release slot using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.slot.release"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Slot Release parameters.",
+      "additionalProperties": false,
+      "required": [
+        "slotId"
+      ],
+      "properties": {
+        "slotId": {
+          "type": "string",
+          "description": "Slot URI.",
+          "format": "uri-reference"
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Profile-defined reason code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "effectiveAt": {
+          "type": "string",
+          "description": "Requested effective instant.",
+          "format": "date-time"
+        },
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

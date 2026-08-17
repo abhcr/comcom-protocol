@@ -1,0 +1,64 @@
+{
+  "id": "comcom.message.acknowledge",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "operations.communications",
+  "batch": 4,
+  "title": "Message Acknowledge",
+  "purpose": "Acknowledge message using the typed Comcom v0.2 profile.",
+  "requestKind": "command",
+  "resourceType": "Message",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "authenticated",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-acknowledge/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-acknowledge/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-message-acknowledge/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "authenticated-sender",
+    "authorized-principal",
+    "valid-resource-state"
+  ],
+  "lifecycle": {
+    "states": [
+      "requested",
+      "proposed",
+      "accepted"
+    ],
+    "transitions": [
+      {
+        "from": "requested",
+        "to": "accepted"
+      }
+    ]
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": true,
+    "equality": "RFC8785-semantic-projection"
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient",
+    "invalid-state-transition",
+    "idempotency-conflict"
+  ],
+  "standards": [
+    "https://www.w3.org/TR/activitystreams-vocabulary/"
+  ]
+}

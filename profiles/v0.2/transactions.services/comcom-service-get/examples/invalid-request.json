@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "serviceId": "https://business.example/service/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

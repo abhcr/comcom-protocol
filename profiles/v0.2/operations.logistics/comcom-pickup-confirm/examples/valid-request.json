@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.pickup.confirm",
+  "parameters": {
+    "pickupId": "https://business.example/pickup/example"
+  }
+}

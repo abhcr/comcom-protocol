@@ -1,0 +1,18 @@
+{
+  "capability": "comcom.education.progress.get",
+  "version": "0.2.0",
+  "domainReview": {
+    "completed": false,
+    "references": []
+  },
+  "primaryStandards": [
+    "https://hl7.org/fhir/"
+  ],
+  "securityReview": {
+    "completed": false,
+    "references": []
+  },
+  "implementations": [],
+  "interoperabilityJourneys": [],
+  "conformanceDigests": []
+}

@@ -1,0 +1,30 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.utility.service.start-allowed-1",
+      "from": "none",
+      "to": "proposed",
+      "expected": "allowed"
+    },
+    {
+      "case": "comcom.utility.service.start-allowed-2",
+      "from": "proposed",
+      "to": "accepted",
+      "expected": "allowed"
+    },
+    {
+      "case": "comcom.utility.service.start-allowed-3",
+      "from": "proposed",
+      "to": "rejected",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.utility.service.start-forbidden-1",
+      "from": "cancelled",
+      "to": "proposed",
+      "expected": "forbidden"
+    }
+  ]
+}

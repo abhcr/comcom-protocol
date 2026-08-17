@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.relationship.end-allowed-1",
+      "from": "active",
+      "to": "ended",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.relationship.end-forbidden-1",
+      "from": "ended",
+      "to": "active",
+      "expected": "forbidden"
+    }
+  ]
+}

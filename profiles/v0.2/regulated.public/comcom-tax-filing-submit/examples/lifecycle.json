@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.tax.filing.submit-allowed-1",
+      "from": "none",
+      "to": "submitted",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.tax.filing.submit-forbidden-1",
+      "from": "rejected",
+      "to": "submitted",
+      "expected": "forbidden"
+    }
+  ]
+}

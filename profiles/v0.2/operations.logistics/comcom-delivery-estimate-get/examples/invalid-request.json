@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "deliveryEstimateId": "https://business.example/deliveryEstimate/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

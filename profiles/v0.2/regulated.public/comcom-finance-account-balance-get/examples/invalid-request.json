@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "financeAccountBalanceId": "https://business.example/financeAccountBalance/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

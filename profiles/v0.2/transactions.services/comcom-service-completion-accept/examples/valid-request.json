@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.service.completion.accept",
+  "parameters": {
+    "serviceCompletionId": "https://business.example/serviceCompletion/example"
+  }
+}

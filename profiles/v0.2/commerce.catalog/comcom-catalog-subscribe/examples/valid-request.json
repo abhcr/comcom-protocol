@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.catalog.subscribe",
+  "parameters": {
+    "catalog": {
+      "name": "example",
+      "categoryCode": "example",
+      "sku": "example"
+    }
+  }
+}

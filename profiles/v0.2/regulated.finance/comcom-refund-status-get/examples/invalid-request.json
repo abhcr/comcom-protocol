@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "refundStatusId": "https://business.example/refundStatus/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

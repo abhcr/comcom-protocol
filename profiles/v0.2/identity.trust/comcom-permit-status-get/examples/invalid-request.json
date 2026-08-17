@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "permitStatusId": "https://business.example/permitStatus/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

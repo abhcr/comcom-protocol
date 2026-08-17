@@ -1,0 +1,51 @@
+{
+  "id": "comcom.invoice.get",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "regulated.finance",
+  "batch": 6,
+  "title": "Invoice Get",
+  "purpose": "Retrieve invoice using the typed Comcom v0.2 profile.",
+  "requestKind": "query",
+  "resourceType": "Invoice",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "anonymousAllowed",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.finance/comcom-invoice-get/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.finance/comcom-invoice-get/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.finance/comcom-invoice-get/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "admission-policy-satisfied"
+  ],
+  "lifecycle": {
+    "states": [],
+    "transitions": []
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": false
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient"
+  ],
+  "standards": [
+    "https://www.iso20022.org/",
+    "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+  ]
+}

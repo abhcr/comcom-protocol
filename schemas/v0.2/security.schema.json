@@ -1,0 +1,115 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/security.schema.json",
+  "title": "OpenAPI 3.1.1 security subset used by Comcom",
+  "$defs": {
+    "scopes": {
+      "type": "object",
+      "propertyNames": { "type": "string" },
+      "additionalProperties": { "type": "string" }
+    },
+    "oauthFlow": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "authorizationUrl": { "type": "string", "format": "uri" },
+        "tokenUrl": { "type": "string", "format": "uri" },
+        "refreshUrl": { "type": "string", "format": "uri" },
+        "scopes": { "$ref": "#/$defs/scopes" }
+      }
+    },
+    "scheme": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "name", "in"],
+          "properties": {
+            "type": { "const": "apiKey" },
+            "description": { "type": "string" },
+            "name": { "type": "string", "minLength": 1 },
+            "in": { "enum": ["query", "header", "cookie"] }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "scheme"],
+          "properties": {
+            "type": { "const": "http" },
+            "description": { "type": "string" },
+            "scheme": { "type": "string", "minLength": 1 },
+            "bearerFormat": { "type": "string" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type"],
+          "properties": {
+            "type": { "const": "mutualTLS" },
+            "description": { "type": "string" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "flows"],
+          "properties": {
+            "type": { "const": "oauth2" },
+            "description": { "type": "string" },
+            "flows": {
+              "type": "object",
+              "additionalProperties": false,
+              "minProperties": 1,
+              "properties": {
+                "implicit": {
+                  "allOf": [
+                    { "$ref": "#/$defs/oauthFlow" },
+                    { "required": ["authorizationUrl", "scopes"], "not": { "required": ["tokenUrl"] } }
+                  ]
+                },
+                "password": { "allOf": [{ "$ref": "#/$defs/oauthFlow" }, { "required": ["tokenUrl", "scopes"] }] },
+                "clientCredentials": { "allOf": [{ "$ref": "#/$defs/oauthFlow" }, { "required": ["tokenUrl", "scopes"] }] },
+                "authorizationCode": {
+                  "allOf": [
+                    { "$ref": "#/$defs/oauthFlow" },
+                    { "required": ["authorizationUrl", "tokenUrl", "scopes"] }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "openIdConnectUrl"],
+          "properties": {
+            "type": { "const": "openIdConnect" },
+            "description": { "type": "string" },
+            "openIdConnectUrl": { "type": "string", "format": "uri" }
+          }
+        }
+      ]
+    },
+    "requirement": {
+      "type": "object",
+      "propertyNames": { "type": "string", "minLength": 1 },
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" },
+        "uniqueItems": true
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/requirement" }
+    }
+  },
+  "oneOf": [
+    { "$ref": "#/$defs/scheme" },
+    { "$ref": "#/$defs/requirements" }
+  ]
+}

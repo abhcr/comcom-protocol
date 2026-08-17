@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "accountStatementId": "https://business.example/accountStatement/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

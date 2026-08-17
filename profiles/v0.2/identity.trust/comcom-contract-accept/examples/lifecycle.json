@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.contract.accept-allowed-1",
+      "from": "proposed",
+      "to": "accepted",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.contract.accept-forbidden-1",
+      "from": "accepted",
+      "to": "requested",
+      "expected": "forbidden"
+    }
+  ]
+}

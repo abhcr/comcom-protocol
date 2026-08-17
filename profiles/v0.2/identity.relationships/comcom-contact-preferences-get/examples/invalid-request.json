@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "contactPreferencesId": "https://business.example/contactPreferences/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

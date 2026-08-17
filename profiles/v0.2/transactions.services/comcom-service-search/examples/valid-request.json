@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.service.search",
+  "parameters": {
+    "filters": {}
+  }
+}

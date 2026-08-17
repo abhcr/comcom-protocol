@@ -1,0 +1,50 @@
+{
+  "id": "comcom.content.search",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "operations.digital",
+  "batch": 4,
+  "title": "Content Search",
+  "purpose": "Search for content using the typed Comcom v0.2 profile.",
+  "requestKind": "query",
+  "resourceType": "Content",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "anonymousAllowed",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-search/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-search/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-content-search/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "admission-policy-satisfied"
+  ],
+  "lifecycle": {
+    "states": [],
+    "transitions": []
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": false
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient"
+  ],
+  "standards": [
+    "https://www.w3.org/TR/wot-thing-description11/"
+  ]
+}

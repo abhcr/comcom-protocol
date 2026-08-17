@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.entity.profile.get",
+  "parameters": {
+    "entityProfileId": "https://business.example/entityProfile/example"
+  }
+}

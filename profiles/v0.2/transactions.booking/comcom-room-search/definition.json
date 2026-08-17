@@ -1,0 +1,51 @@
+{
+  "id": "comcom.room.search",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "transactions.booking",
+  "batch": 3,
+  "title": "Room Search",
+  "purpose": "Search for room using the typed Comcom v0.2 profile.",
+  "requestKind": "query",
+  "resourceType": "Room",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "anonymousAllowed",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-search/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-search/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-room-search/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "admission-policy-satisfied"
+  ],
+  "lifecycle": {
+    "states": [],
+    "transitions": []
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": false
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient"
+  ],
+  "standards": [
+    "https://schema.org/Reservation",
+    "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+  ]
+}

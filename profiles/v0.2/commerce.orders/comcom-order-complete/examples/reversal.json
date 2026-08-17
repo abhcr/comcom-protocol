@@ -1,0 +1,4 @@
+{
+  "capability": "comcom.order.cancel",
+  "originalResource": "https://business.example/order/example"
+}

@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.employee.onboard",
+  "parameters": {
+    "employee": {
+      "personId": "https://business.example/personId/example",
+      "organizationId": "https://business.example/organizationId/example",
+      "roleCode": "example"
+    }
+  }
+}

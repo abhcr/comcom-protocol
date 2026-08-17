@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-track/schemas/input.schema.json",
+  "title": "Shipment Track input",
+  "description": "Track shipment using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.shipment.track"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the Shipment to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "shipmentId"
+      ],
+      "properties": {
+        "shipmentId": {
+          "type": "string",
+          "description": "Shipment URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

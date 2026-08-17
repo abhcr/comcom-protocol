@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "employeeId": "https://business.example/employee/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

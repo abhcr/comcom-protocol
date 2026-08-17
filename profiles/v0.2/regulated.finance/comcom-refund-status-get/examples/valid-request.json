@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.refund.status.get",
+  "parameters": {
+    "refundStatusId": "https://business.example/refundStatus/example"
+  }
+}

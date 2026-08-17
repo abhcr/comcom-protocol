@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.utility.service.start",
+  "parameters": {
+    "utilityService": {
+      "applicantId": "https://business.example/applicantId/example",
+      "authorityId": "https://business.example/authorityId/example",
+      "serviceCode": "example"
+    }
+  }
+}

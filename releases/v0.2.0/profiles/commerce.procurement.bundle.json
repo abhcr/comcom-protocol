@@ -1,0 +1,3678 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/commerce.procurement.bundle.json",
+  "profile": "commerce.procurement",
+  "version": "0.2.0",
+  "capabilityIds": [
+    "comcom.purchase.requisition.submit",
+    "comcom.rfq.publish",
+    "comcom.rfq.respond",
+    "comcom.supplier.qualify",
+    "comcom.tender.award.publish",
+    "comcom.tender.bid.submit",
+    "comcom.tender.bid.withdraw",
+    "comcom.tender.publish",
+    "comcom.tender.question.submit"
+  ],
+  "capabilities": [
+    {
+      "definition": {
+        "id": "comcom.purchase.requisition.submit",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.procurement",
+        "batch": 2,
+        "title": "Purchase Requisition Submit",
+        "purpose": "Submit purchase requisition using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "PurchaseRequisition",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-purchase-requisition-submit/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-purchase-requisition-submit/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-purchase-requisition-submit/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.purchase.requisition.submit",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.purchase.requisition.submit",
+          "parameters": {
+            "purchaseRequisition": {
+              "buyerId": "https://business.example/buyerId/example",
+              "sellerId": "https://business.example/sellerId/example",
+              "supplierId": "https://business.example/supplierId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "purchaseRequisition": {
+                "buyerId": "https://business.example/buyerId/example",
+                "sellerId": "https://business.example/sellerId/example",
+                "supplierId": "https://business.example/supplierId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.purchase.requisition.submit-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.purchase.requisition.submit-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/purchaseRequisition/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.rfq.publish",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.procurement",
+        "batch": 2,
+        "title": "Rfq Publish",
+        "purpose": "Publish rfq using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "Rfq",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-rfq-publish/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-rfq-publish/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-rfq-publish/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.rfq.publish",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.rfq.publish",
+          "parameters": {
+            "rfq": {
+              "buyerId": "https://business.example/buyerId/example",
+              "sellerId": "https://business.example/sellerId/example",
+              "supplierId": "https://business.example/supplierId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "rfq": {
+                "buyerId": "https://business.example/buyerId/example",
+                "sellerId": "https://business.example/sellerId/example",
+                "supplierId": "https://business.example/supplierId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/rfq/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.rfq.respond",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.procurement",
+        "batch": 2,
+        "title": "Rfq Respond",
+        "purpose": "Respond to rfq using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Rfq",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-rfq-respond/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-rfq-respond/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-rfq-respond/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.rfq.respond",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.rfq.respond",
+          "parameters": {
+            "rfq": {
+              "buyerId": "https://business.example/buyerId/example",
+              "sellerId": "https://business.example/sellerId/example",
+              "supplierId": "https://business.example/supplierId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "rfq": {
+                "buyerId": "https://business.example/buyerId/example",
+                "sellerId": "https://business.example/sellerId/example",
+                "supplierId": "https://business.example/supplierId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.rfq.respond-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.rfq.respond-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/rfq/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.supplier.qualify",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.procurement",
+        "batch": 2,
+        "title": "Supplier Qualify",
+        "purpose": "Qualify supplier using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Supplier",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-supplier-qualify/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-supplier-qualify/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-supplier-qualify/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "requested",
+            "proposed",
+            "accepted"
+          ],
+          "transitions": [
+            {
+              "from": "requested",
+              "to": "accepted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.supplier.qualify",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.supplier.qualify",
+          "parameters": {
+            "supplierId": "https://business.example/supplier/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "supplierId": "https://business.example/supplier/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.supplier.qualify-allowed-1",
+              "from": "requested",
+              "to": "accepted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.supplier.qualify-forbidden-1",
+              "from": "accepted",
+              "to": "requested",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/supplier/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.tender.award.publish",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.procurement",
+        "batch": 2,
+        "title": "Tender Award Publish",
+        "purpose": "Publish tender award using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "TenderAward",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-award-publish/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-award-publish/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-award-publish/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.tender.award.publish",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.tender.award.publish",
+          "parameters": {
+            "tenderAward": {
+              "buyerId": "https://business.example/buyerId/example",
+              "sellerId": "https://business.example/sellerId/example",
+              "supplierId": "https://business.example/supplierId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "tenderAward": {
+                "buyerId": "https://business.example/buyerId/example",
+                "sellerId": "https://business.example/sellerId/example",
+                "supplierId": "https://business.example/supplierId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/tenderAward/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.tender.bid.submit",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.procurement",
+        "batch": 2,
+        "title": "Tender Bid Submit",
+        "purpose": "Submit tender bid using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "TenderBid",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-bid-submit/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-bid-submit/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-bid-submit/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.tender.bid.submit",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.tender.bid.submit",
+          "parameters": {
+            "tenderBid": {
+              "buyerId": "https://business.example/buyerId/example",
+              "sellerId": "https://business.example/sellerId/example",
+              "supplierId": "https://business.example/supplierId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "tenderBid": {
+                "buyerId": "https://business.example/buyerId/example",
+                "sellerId": "https://business.example/sellerId/example",
+                "supplierId": "https://business.example/supplierId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.tender.bid.submit-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.tender.bid.submit-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/tenderBid/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.tender.bid.withdraw",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.procurement",
+        "batch": 2,
+        "title": "Tender Bid Withdraw",
+        "purpose": "Withdraw tender bid using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "TenderBid",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-bid-withdraw/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-bid-withdraw/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-bid-withdraw/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active",
+            "withdrawn"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "withdrawn"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.tender.bid.withdraw",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.tender.bid.withdraw",
+          "parameters": {
+            "tenderBidId": "https://business.example/tenderBid/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "tenderBidId": "https://business.example/tenderBid/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.tender.bid.withdraw-allowed-1",
+              "from": "active",
+              "to": "withdrawn",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.tender.bid.withdraw-forbidden-1",
+              "from": "withdrawn",
+              "to": "active",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/tenderBid/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.tender.publish",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.procurement",
+        "batch": 2,
+        "title": "Tender Publish",
+        "purpose": "Publish tender using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "Tender",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-publish/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-publish/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-publish/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.tender.publish",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.tender.publish",
+          "parameters": {
+            "tender": {
+              "buyerId": "https://business.example/buyerId/example",
+              "sellerId": "https://business.example/sellerId/example",
+              "supplierId": "https://business.example/supplierId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "tender": {
+                "buyerId": "https://business.example/buyerId/example",
+                "sellerId": "https://business.example/sellerId/example",
+                "supplierId": "https://business.example/supplierId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/tender/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.tender.question.submit",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "commerce.procurement",
+        "batch": 2,
+        "title": "Tender Question Submit",
+        "purpose": "Submit tender question using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "TenderQuestion",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-question-submit/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-question-submit/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-question-submit/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.tender.question.submit",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+          "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.tender.question.submit",
+          "parameters": {
+            "tenderQuestion": {
+              "buyerId": "https://business.example/buyerId/example",
+              "sellerId": "https://business.example/sellerId/example",
+              "supplierId": "https://business.example/supplierId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "tenderQuestion": {
+                "buyerId": "https://business.example/buyerId/example",
+                "sellerId": "https://business.example/sellerId/example",
+                "supplierId": "https://business.example/supplierId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.tender.question.submit-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.tender.question.submit-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/tenderQuestion/example"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "profiles__v0.2__commerce.procurement__comcom-purchase-requisition-submit__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-purchase-requisition-submit/schemas/input.schema.json",
+      "title": "Purchase Requisition Submit input",
+      "description": "Submit purchase requisition using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.purchase.requisition.submit"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Purchase Requisition Submit parameters.",
+          "additionalProperties": false,
+          "required": [
+            "purchaseRequisition"
+          ],
+          "properties": {
+            "purchaseRequisition": {
+              "type": "object",
+              "description": "Typed PurchaseRequisition data.",
+              "additionalProperties": false,
+              "required": [
+                "buyerId",
+                "sellerId",
+                "supplierId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "buyerId": {
+                  "type": "string",
+                  "description": "Buyer URI.",
+                  "format": "uri-reference"
+                },
+                "sellerId": {
+                  "type": "string",
+                  "description": "Seller URI.",
+                  "format": "uri-reference"
+                },
+                "supplierId": {
+                  "type": "string",
+                  "description": "Supplier URI.",
+                  "format": "uri-reference"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Business document reference.",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "total": {
+                  "type": "string",
+                  "description": "Document total.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "lines": {
+                  "type": "array",
+                  "description": "Typed trade lines.",
+                  "items": {
+                    "type": "object",
+                    "description": "A priced line.",
+                    "additionalProperties": false,
+                    "required": [
+                      "itemId",
+                      "quantity",
+                      "unitCode"
+                    ],
+                    "properties": {
+                      "itemId": {
+                        "type": "string",
+                        "description": "Item URI.",
+                        "format": "uri-reference"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Line description.",
+                        "maxLength": 500
+                      },
+                      "quantity": {
+                        "type": "string",
+                        "description": "Requested quantity.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "unitCode": {
+                        "type": "string",
+                        "description": "UNECE or profile-declared unit code.",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                      },
+                      "unitPrice": {
+                        "type": "string",
+                        "description": "Unit price.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "currency": {
+                        "type": "string",
+                        "description": "ISO 4217 currency code.",
+                        "pattern": "^[A-Z]{3}$"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "maxItems": 1000
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity expiry.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-purchase-requisition-submit__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-purchase-requisition-submit/schemas/output.schema.json",
+      "title": "Purchase Requisition Submit output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-purchase-requisition-submit/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-purchase-requisition-submit__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-purchase-requisition-submit/schemas/resource.schema.json",
+      "title": "PurchaseRequisition resource for comcom.purchase.requisition.submit",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "PurchaseRequisition"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "buyerId": {
+          "type": "string",
+          "description": "Buyer URI.",
+          "format": "uri-reference"
+        },
+        "sellerId": {
+          "type": "string",
+          "description": "Seller URI.",
+          "format": "uri-reference"
+        },
+        "supplierId": {
+          "type": "string",
+          "description": "Supplier URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Business document reference.",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "total": {
+          "type": "string",
+          "description": "Document total.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed trade lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-rfq-publish__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-rfq-publish/schemas/input.schema.json",
+      "title": "Rfq Publish input",
+      "description": "Publish rfq using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.rfq.publish"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Rfq Publish parameters.",
+          "additionalProperties": false,
+          "required": [
+            "rfq"
+          ],
+          "properties": {
+            "rfq": {
+              "type": "object",
+              "description": "Typed Rfq data.",
+              "additionalProperties": false,
+              "required": [
+                "buyerId",
+                "sellerId",
+                "supplierId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "buyerId": {
+                  "type": "string",
+                  "description": "Buyer URI.",
+                  "format": "uri-reference"
+                },
+                "sellerId": {
+                  "type": "string",
+                  "description": "Seller URI.",
+                  "format": "uri-reference"
+                },
+                "supplierId": {
+                  "type": "string",
+                  "description": "Supplier URI.",
+                  "format": "uri-reference"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Business document reference.",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "total": {
+                  "type": "string",
+                  "description": "Document total.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "lines": {
+                  "type": "array",
+                  "description": "Typed trade lines.",
+                  "items": {
+                    "type": "object",
+                    "description": "A priced line.",
+                    "additionalProperties": false,
+                    "required": [
+                      "itemId",
+                      "quantity",
+                      "unitCode"
+                    ],
+                    "properties": {
+                      "itemId": {
+                        "type": "string",
+                        "description": "Item URI.",
+                        "format": "uri-reference"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Line description.",
+                        "maxLength": 500
+                      },
+                      "quantity": {
+                        "type": "string",
+                        "description": "Requested quantity.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "unitCode": {
+                        "type": "string",
+                        "description": "UNECE or profile-declared unit code.",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                      },
+                      "unitPrice": {
+                        "type": "string",
+                        "description": "Unit price.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "currency": {
+                        "type": "string",
+                        "description": "ISO 4217 currency code.",
+                        "pattern": "^[A-Z]{3}$"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "maxItems": 1000
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity expiry.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-rfq-publish__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-rfq-publish/schemas/output.schema.json",
+      "title": "Rfq Publish output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-rfq-publish__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-rfq-publish/schemas/resource.schema.json",
+      "title": "Rfq resource for comcom.rfq.publish",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Rfq"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "buyerId": {
+          "type": "string",
+          "description": "Buyer URI.",
+          "format": "uri-reference"
+        },
+        "sellerId": {
+          "type": "string",
+          "description": "Seller URI.",
+          "format": "uri-reference"
+        },
+        "supplierId": {
+          "type": "string",
+          "description": "Supplier URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Business document reference.",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "total": {
+          "type": "string",
+          "description": "Document total.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed trade lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-rfq-respond__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-rfq-respond/schemas/input.schema.json",
+      "title": "Rfq Respond input",
+      "description": "Respond to rfq using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.rfq.respond"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Rfq Respond parameters.",
+          "additionalProperties": false,
+          "required": [
+            "rfq"
+          ],
+          "properties": {
+            "rfq": {
+              "type": "object",
+              "description": "Typed Rfq data.",
+              "additionalProperties": false,
+              "required": [
+                "buyerId",
+                "sellerId",
+                "supplierId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "buyerId": {
+                  "type": "string",
+                  "description": "Buyer URI.",
+                  "format": "uri-reference"
+                },
+                "sellerId": {
+                  "type": "string",
+                  "description": "Seller URI.",
+                  "format": "uri-reference"
+                },
+                "supplierId": {
+                  "type": "string",
+                  "description": "Supplier URI.",
+                  "format": "uri-reference"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Business document reference.",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "total": {
+                  "type": "string",
+                  "description": "Document total.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "lines": {
+                  "type": "array",
+                  "description": "Typed trade lines.",
+                  "items": {
+                    "type": "object",
+                    "description": "A priced line.",
+                    "additionalProperties": false,
+                    "required": [
+                      "itemId",
+                      "quantity",
+                      "unitCode"
+                    ],
+                    "properties": {
+                      "itemId": {
+                        "type": "string",
+                        "description": "Item URI.",
+                        "format": "uri-reference"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Line description.",
+                        "maxLength": 500
+                      },
+                      "quantity": {
+                        "type": "string",
+                        "description": "Requested quantity.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "unitCode": {
+                        "type": "string",
+                        "description": "UNECE or profile-declared unit code.",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                      },
+                      "unitPrice": {
+                        "type": "string",
+                        "description": "Unit price.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "currency": {
+                        "type": "string",
+                        "description": "ISO 4217 currency code.",
+                        "pattern": "^[A-Z]{3}$"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "maxItems": 1000
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity expiry.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-rfq-respond__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-rfq-respond/schemas/output.schema.json",
+      "title": "Rfq Respond output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-rfq-respond/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-rfq-respond__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-rfq-respond/schemas/resource.schema.json",
+      "title": "Rfq resource for comcom.rfq.respond",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Rfq"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "buyerId": {
+          "type": "string",
+          "description": "Buyer URI.",
+          "format": "uri-reference"
+        },
+        "sellerId": {
+          "type": "string",
+          "description": "Seller URI.",
+          "format": "uri-reference"
+        },
+        "supplierId": {
+          "type": "string",
+          "description": "Supplier URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Business document reference.",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "total": {
+          "type": "string",
+          "description": "Document total.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed trade lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-supplier-qualify__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-supplier-qualify/schemas/input.schema.json",
+      "title": "Supplier Qualify input",
+      "description": "Qualify supplier using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.supplier.qualify"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Supplier Qualify parameters.",
+          "additionalProperties": false,
+          "required": [
+            "supplierId"
+          ],
+          "properties": {
+            "supplierId": {
+              "type": "string",
+              "description": "Supplier URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-supplier-qualify__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-supplier-qualify/schemas/output.schema.json",
+      "title": "Supplier Qualify output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-supplier-qualify/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-supplier-qualify__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-supplier-qualify/schemas/resource.schema.json",
+      "title": "Supplier resource for comcom.supplier.qualify",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Supplier"
+        },
+        "state": {
+          "enum": [
+            "requested",
+            "proposed",
+            "accepted"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "buyerId": {
+          "type": "string",
+          "description": "Buyer URI.",
+          "format": "uri-reference"
+        },
+        "sellerId": {
+          "type": "string",
+          "description": "Seller URI.",
+          "format": "uri-reference"
+        },
+        "supplierId": {
+          "type": "string",
+          "description": "Supplier URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Business document reference.",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "total": {
+          "type": "string",
+          "description": "Document total.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed trade lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-tender-award-publish__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-award-publish/schemas/input.schema.json",
+      "title": "Tender Award Publish input",
+      "description": "Publish tender award using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.tender.award.publish"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Tender Award Publish parameters.",
+          "additionalProperties": false,
+          "required": [
+            "tenderAward"
+          ],
+          "properties": {
+            "tenderAward": {
+              "type": "object",
+              "description": "Typed TenderAward data.",
+              "additionalProperties": false,
+              "required": [
+                "buyerId",
+                "sellerId",
+                "supplierId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "buyerId": {
+                  "type": "string",
+                  "description": "Buyer URI.",
+                  "format": "uri-reference"
+                },
+                "sellerId": {
+                  "type": "string",
+                  "description": "Seller URI.",
+                  "format": "uri-reference"
+                },
+                "supplierId": {
+                  "type": "string",
+                  "description": "Supplier URI.",
+                  "format": "uri-reference"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Business document reference.",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "total": {
+                  "type": "string",
+                  "description": "Document total.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "lines": {
+                  "type": "array",
+                  "description": "Typed trade lines.",
+                  "items": {
+                    "type": "object",
+                    "description": "A priced line.",
+                    "additionalProperties": false,
+                    "required": [
+                      "itemId",
+                      "quantity",
+                      "unitCode"
+                    ],
+                    "properties": {
+                      "itemId": {
+                        "type": "string",
+                        "description": "Item URI.",
+                        "format": "uri-reference"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Line description.",
+                        "maxLength": 500
+                      },
+                      "quantity": {
+                        "type": "string",
+                        "description": "Requested quantity.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "unitCode": {
+                        "type": "string",
+                        "description": "UNECE or profile-declared unit code.",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                      },
+                      "unitPrice": {
+                        "type": "string",
+                        "description": "Unit price.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "currency": {
+                        "type": "string",
+                        "description": "ISO 4217 currency code.",
+                        "pattern": "^[A-Z]{3}$"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "maxItems": 1000
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity expiry.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-tender-award-publish__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-award-publish/schemas/output.schema.json",
+      "title": "Tender Award Publish output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-tender-award-publish__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-award-publish/schemas/resource.schema.json",
+      "title": "TenderAward resource for comcom.tender.award.publish",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "TenderAward"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "buyerId": {
+          "type": "string",
+          "description": "Buyer URI.",
+          "format": "uri-reference"
+        },
+        "sellerId": {
+          "type": "string",
+          "description": "Seller URI.",
+          "format": "uri-reference"
+        },
+        "supplierId": {
+          "type": "string",
+          "description": "Supplier URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Business document reference.",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "total": {
+          "type": "string",
+          "description": "Document total.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed trade lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-tender-bid-submit__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-bid-submit/schemas/input.schema.json",
+      "title": "Tender Bid Submit input",
+      "description": "Submit tender bid using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.tender.bid.submit"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Tender Bid Submit parameters.",
+          "additionalProperties": false,
+          "required": [
+            "tenderBid"
+          ],
+          "properties": {
+            "tenderBid": {
+              "type": "object",
+              "description": "Typed TenderBid data.",
+              "additionalProperties": false,
+              "required": [
+                "buyerId",
+                "sellerId",
+                "supplierId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "buyerId": {
+                  "type": "string",
+                  "description": "Buyer URI.",
+                  "format": "uri-reference"
+                },
+                "sellerId": {
+                  "type": "string",
+                  "description": "Seller URI.",
+                  "format": "uri-reference"
+                },
+                "supplierId": {
+                  "type": "string",
+                  "description": "Supplier URI.",
+                  "format": "uri-reference"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Business document reference.",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "total": {
+                  "type": "string",
+                  "description": "Document total.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "lines": {
+                  "type": "array",
+                  "description": "Typed trade lines.",
+                  "items": {
+                    "type": "object",
+                    "description": "A priced line.",
+                    "additionalProperties": false,
+                    "required": [
+                      "itemId",
+                      "quantity",
+                      "unitCode"
+                    ],
+                    "properties": {
+                      "itemId": {
+                        "type": "string",
+                        "description": "Item URI.",
+                        "format": "uri-reference"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Line description.",
+                        "maxLength": 500
+                      },
+                      "quantity": {
+                        "type": "string",
+                        "description": "Requested quantity.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "unitCode": {
+                        "type": "string",
+                        "description": "UNECE or profile-declared unit code.",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                      },
+                      "unitPrice": {
+                        "type": "string",
+                        "description": "Unit price.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "currency": {
+                        "type": "string",
+                        "description": "ISO 4217 currency code.",
+                        "pattern": "^[A-Z]{3}$"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "maxItems": 1000
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity expiry.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-tender-bid-submit__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-bid-submit/schemas/output.schema.json",
+      "title": "Tender Bid Submit output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-bid-submit/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-tender-bid-submit__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-bid-submit/schemas/resource.schema.json",
+      "title": "TenderBid resource for comcom.tender.bid.submit",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "TenderBid"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "buyerId": {
+          "type": "string",
+          "description": "Buyer URI.",
+          "format": "uri-reference"
+        },
+        "sellerId": {
+          "type": "string",
+          "description": "Seller URI.",
+          "format": "uri-reference"
+        },
+        "supplierId": {
+          "type": "string",
+          "description": "Supplier URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Business document reference.",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "total": {
+          "type": "string",
+          "description": "Document total.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed trade lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-tender-bid-withdraw__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-bid-withdraw/schemas/input.schema.json",
+      "title": "Tender Bid Withdraw input",
+      "description": "Withdraw tender bid using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.tender.bid.withdraw"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Tender Bid Withdraw parameters.",
+          "additionalProperties": false,
+          "required": [
+            "tenderBidId"
+          ],
+          "properties": {
+            "tenderBidId": {
+              "type": "string",
+              "description": "TenderBid URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-tender-bid-withdraw__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-bid-withdraw/schemas/output.schema.json",
+      "title": "Tender Bid Withdraw output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-bid-withdraw/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-tender-bid-withdraw__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-bid-withdraw/schemas/resource.schema.json",
+      "title": "TenderBid resource for comcom.tender.bid.withdraw",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "TenderBid"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "withdrawn"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "buyerId": {
+          "type": "string",
+          "description": "Buyer URI.",
+          "format": "uri-reference"
+        },
+        "sellerId": {
+          "type": "string",
+          "description": "Seller URI.",
+          "format": "uri-reference"
+        },
+        "supplierId": {
+          "type": "string",
+          "description": "Supplier URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Business document reference.",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "total": {
+          "type": "string",
+          "description": "Document total.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed trade lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-tender-publish__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-publish/schemas/input.schema.json",
+      "title": "Tender Publish input",
+      "description": "Publish tender using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.tender.publish"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Tender Publish parameters.",
+          "additionalProperties": false,
+          "required": [
+            "tender"
+          ],
+          "properties": {
+            "tender": {
+              "type": "object",
+              "description": "Typed Tender data.",
+              "additionalProperties": false,
+              "required": [
+                "buyerId",
+                "sellerId",
+                "supplierId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "buyerId": {
+                  "type": "string",
+                  "description": "Buyer URI.",
+                  "format": "uri-reference"
+                },
+                "sellerId": {
+                  "type": "string",
+                  "description": "Seller URI.",
+                  "format": "uri-reference"
+                },
+                "supplierId": {
+                  "type": "string",
+                  "description": "Supplier URI.",
+                  "format": "uri-reference"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Business document reference.",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "total": {
+                  "type": "string",
+                  "description": "Document total.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "lines": {
+                  "type": "array",
+                  "description": "Typed trade lines.",
+                  "items": {
+                    "type": "object",
+                    "description": "A priced line.",
+                    "additionalProperties": false,
+                    "required": [
+                      "itemId",
+                      "quantity",
+                      "unitCode"
+                    ],
+                    "properties": {
+                      "itemId": {
+                        "type": "string",
+                        "description": "Item URI.",
+                        "format": "uri-reference"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Line description.",
+                        "maxLength": 500
+                      },
+                      "quantity": {
+                        "type": "string",
+                        "description": "Requested quantity.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "unitCode": {
+                        "type": "string",
+                        "description": "UNECE or profile-declared unit code.",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                      },
+                      "unitPrice": {
+                        "type": "string",
+                        "description": "Unit price.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "currency": {
+                        "type": "string",
+                        "description": "ISO 4217 currency code.",
+                        "pattern": "^[A-Z]{3}$"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "maxItems": 1000
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity expiry.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-tender-publish__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-publish/schemas/output.schema.json",
+      "title": "Tender Publish output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-tender-publish__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-publish/schemas/resource.schema.json",
+      "title": "Tender resource for comcom.tender.publish",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Tender"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "buyerId": {
+          "type": "string",
+          "description": "Buyer URI.",
+          "format": "uri-reference"
+        },
+        "sellerId": {
+          "type": "string",
+          "description": "Seller URI.",
+          "format": "uri-reference"
+        },
+        "supplierId": {
+          "type": "string",
+          "description": "Supplier URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Business document reference.",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "total": {
+          "type": "string",
+          "description": "Document total.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed trade lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-tender-question-submit__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-question-submit/schemas/input.schema.json",
+      "title": "Tender Question Submit input",
+      "description": "Submit tender question using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.tender.question.submit"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Tender Question Submit parameters.",
+          "additionalProperties": false,
+          "required": [
+            "tenderQuestion"
+          ],
+          "properties": {
+            "tenderQuestion": {
+              "type": "object",
+              "description": "Typed TenderQuestion data.",
+              "additionalProperties": false,
+              "required": [
+                "buyerId",
+                "sellerId",
+                "supplierId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "buyerId": {
+                  "type": "string",
+                  "description": "Buyer URI.",
+                  "format": "uri-reference"
+                },
+                "sellerId": {
+                  "type": "string",
+                  "description": "Seller URI.",
+                  "format": "uri-reference"
+                },
+                "supplierId": {
+                  "type": "string",
+                  "description": "Supplier URI.",
+                  "format": "uri-reference"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Business document reference.",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "total": {
+                  "type": "string",
+                  "description": "Document total.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "lines": {
+                  "type": "array",
+                  "description": "Typed trade lines.",
+                  "items": {
+                    "type": "object",
+                    "description": "A priced line.",
+                    "additionalProperties": false,
+                    "required": [
+                      "itemId",
+                      "quantity",
+                      "unitCode"
+                    ],
+                    "properties": {
+                      "itemId": {
+                        "type": "string",
+                        "description": "Item URI.",
+                        "format": "uri-reference"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Line description.",
+                        "maxLength": 500
+                      },
+                      "quantity": {
+                        "type": "string",
+                        "description": "Requested quantity.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "unitCode": {
+                        "type": "string",
+                        "description": "UNECE or profile-declared unit code.",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                      },
+                      "unitPrice": {
+                        "type": "string",
+                        "description": "Unit price.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "currency": {
+                        "type": "string",
+                        "description": "ISO 4217 currency code.",
+                        "pattern": "^[A-Z]{3}$"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "maxItems": 1000
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity expiry.",
+                  "format": "date-time"
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-tender-question-submit__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-question-submit/schemas/output.schema.json",
+      "title": "Tender Question Submit output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-question-submit/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__commerce.procurement__comcom-tender-question-submit__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-question-submit/schemas/resource.schema.json",
+      "title": "TenderQuestion resource for comcom.tender.question.submit",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "TenderQuestion"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "buyerId": {
+          "type": "string",
+          "description": "Buyer URI.",
+          "format": "uri-reference"
+        },
+        "sellerId": {
+          "type": "string",
+          "description": "Seller URI.",
+          "format": "uri-reference"
+        },
+        "supplierId": {
+          "type": "string",
+          "description": "Supplier URI.",
+          "format": "uri-reference"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Business document reference.",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "total": {
+          "type": "string",
+          "description": "Document total.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed trade lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

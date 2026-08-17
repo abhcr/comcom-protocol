@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.price.get",
+  "parameters": {
+    "priceId": "https://business.example/price/example"
+  }
+}

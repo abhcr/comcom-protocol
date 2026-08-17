@@ -1,0 +1,46 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.trust/comcom-contract-accept/schemas/input.schema.json",
+  "title": "Contract Accept input",
+  "description": "Accept contract using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.contract.accept"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Contract Accept parameters.",
+      "additionalProperties": false,
+      "required": [
+        "contractId"
+      ],
+      "properties": {
+        "contractId": {
+          "type": "string",
+          "description": "Contract URI.",
+          "format": "uri-reference"
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Profile-defined reason code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "effectiveAt": {
+          "type": "string",
+          "description": "Requested effective instant.",
+          "format": "date-time"
+        },
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

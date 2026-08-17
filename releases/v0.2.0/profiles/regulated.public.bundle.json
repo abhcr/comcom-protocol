@@ -1,0 +1,4178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/regulated.public.bundle.json",
+  "profile": "regulated.public",
+  "version": "0.2.0",
+  "capabilityIds": [
+    "comcom.benefit.apply",
+    "comcom.finance.account.balance.get",
+    "comcom.government.application.status",
+    "comcom.government.application.submit",
+    "comcom.government.service.search",
+    "comcom.insurance.claim.submit",
+    "comcom.insurance.quote.request",
+    "comcom.property.search",
+    "comcom.property.viewing.book",
+    "comcom.tax.filing.submit",
+    "comcom.utility.meter.reading.submit",
+    "comcom.utility.service.start"
+  ],
+  "capabilities": [
+    {
+      "definition": {
+        "id": "comcom.benefit.apply",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.public",
+        "batch": 6,
+        "title": "Benefit Apply",
+        "purpose": "Apply for benefit using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Benefit",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-benefit-apply/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-benefit-apply/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-benefit-apply/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/GovernmentService"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.benefit.apply",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/GovernmentService"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.benefit.apply",
+          "parameters": {
+            "benefit": {
+              "applicantId": "https://business.example/applicantId/example",
+              "authorityId": "https://business.example/authorityId/example",
+              "serviceCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "benefit": {
+                "applicantId": "https://business.example/applicantId/example",
+                "authorityId": "https://business.example/authorityId/example",
+                "serviceCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.benefit.apply-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.benefit.apply-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/benefit/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.finance.account.balance.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.public",
+        "batch": 6,
+        "title": "Finance Account Balance Get",
+        "purpose": "Retrieve finance account balance using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "FinanceAccountBalance",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-finance-account-balance-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-finance-account-balance-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-finance-account-balance-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/GovernmentService"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.finance.account.balance.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/GovernmentService"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.finance.account.balance.get",
+          "parameters": {
+            "financeAccountBalanceId": "https://business.example/financeAccountBalance/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "financeAccountBalanceId": "https://business.example/financeAccountBalance/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/financeAccountBalance/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.government.application.status",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.public",
+        "batch": 6,
+        "title": "Government Application Status",
+        "purpose": "Retrieve status for government application using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "GovernmentApplication",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-status/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-status/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-status/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/GovernmentService"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.government.application.status",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/GovernmentService"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.government.application.status",
+          "parameters": {
+            "governmentApplicationId": "https://business.example/governmentApplication/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "governmentApplicationId": "https://business.example/governmentApplication/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/governmentApplication/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.government.application.submit",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.public",
+        "batch": 6,
+        "title": "Government Application Submit",
+        "purpose": "Submit government application using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "GovernmentApplication",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-submit/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-submit/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-submit/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/GovernmentService"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.government.application.submit",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/GovernmentService"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.government.application.submit",
+          "parameters": {
+            "governmentApplication": {
+              "applicantId": "https://business.example/applicantId/example",
+              "authorityId": "https://business.example/authorityId/example",
+              "serviceCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "governmentApplication": {
+                "applicantId": "https://business.example/applicantId/example",
+                "authorityId": "https://business.example/authorityId/example",
+                "serviceCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.government.application.submit-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.government.application.submit-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/governmentApplication/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.government.service.search",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.public",
+        "batch": 6,
+        "title": "Government Service Search",
+        "purpose": "Search for government service using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "GovernmentService",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-service-search/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-service-search/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-service-search/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/GovernmentService"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.government.service.search",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/GovernmentService"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.government.service.search",
+          "parameters": {
+            "filters": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "filters": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/governmentService/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.insurance.claim.submit",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.public",
+        "batch": 6,
+        "title": "Insurance Claim Submit",
+        "purpose": "Submit insurance claim using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "InsuranceClaim",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-insurance-claim-submit/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-insurance-claim-submit/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-insurance-claim-submit/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/GovernmentService"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.insurance.claim.submit",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/GovernmentService"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.insurance.claim.submit",
+          "parameters": {
+            "insuranceClaim": {
+              "applicantId": "https://business.example/applicantId/example",
+              "authorityId": "https://business.example/authorityId/example",
+              "serviceCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "insuranceClaim": {
+                "applicantId": "https://business.example/applicantId/example",
+                "authorityId": "https://business.example/authorityId/example",
+                "serviceCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.insurance.claim.submit-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.insurance.claim.submit-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/insuranceClaim/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.insurance.quote.request",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.public",
+        "batch": 6,
+        "title": "Insurance Quote Request",
+        "purpose": "Request insurance quote using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "InsuranceQuote",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-insurance-quote-request/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-insurance-quote-request/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-insurance-quote-request/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/GovernmentService"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.insurance.quote.request",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/GovernmentService"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.insurance.quote.request",
+          "parameters": {
+            "insuranceQuote": {
+              "accountId": "https://business.example/accountId/example",
+              "payerId": "https://business.example/payerId/example",
+              "payeeId": "https://business.example/payeeId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "insuranceQuote": {
+                "accountId": "https://business.example/accountId/example",
+                "payerId": "https://business.example/payerId/example",
+                "payeeId": "https://business.example/payeeId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.insurance.quote.request-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.insurance.quote.request-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/insuranceQuote/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.property.search",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.public",
+        "batch": 6,
+        "title": "Property Search",
+        "purpose": "Search for property using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Property",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-property-search/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-property-search/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-property-search/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/GovernmentService"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.property.search",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/GovernmentService"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.property.search",
+          "parameters": {
+            "filters": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "filters": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/property/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.property.viewing.book",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.public",
+        "batch": 6,
+        "title": "Property Viewing Book",
+        "purpose": "Book property viewing using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "PropertyViewing",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-property-viewing-book/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-property-viewing-book/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-property-viewing-book/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/GovernmentService"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.property.viewing.book",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/GovernmentService"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.property.viewing.book",
+          "parameters": {
+            "propertyViewing": {
+              "offeringId": "https://business.example/offeringId/example",
+              "customerId": "https://business.example/customerId/example",
+              "providerId": "https://business.example/providerId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "propertyViewing": {
+                "offeringId": "https://business.example/offeringId/example",
+                "customerId": "https://business.example/customerId/example",
+                "providerId": "https://business.example/providerId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.property.viewing.book-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.property.viewing.book-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.property.viewing.book-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.property.viewing.book-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/propertyViewing/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.tax.filing.submit",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.public",
+        "batch": 6,
+        "title": "Tax Filing Submit",
+        "purpose": "Submit tax filing using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "TaxFiling",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-tax-filing-submit/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-tax-filing-submit/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-tax-filing-submit/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/GovernmentService"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.tax.filing.submit",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/GovernmentService"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.tax.filing.submit",
+          "parameters": {
+            "taxFiling": {
+              "accountId": "https://business.example/accountId/example",
+              "payerId": "https://business.example/payerId/example",
+              "payeeId": "https://business.example/payeeId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "taxFiling": {
+                "accountId": "https://business.example/accountId/example",
+                "payerId": "https://business.example/payerId/example",
+                "payeeId": "https://business.example/payeeId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.tax.filing.submit-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.tax.filing.submit-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/taxFiling/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.utility.meter.reading.submit",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.public",
+        "batch": 6,
+        "title": "Utility Meter Reading Submit",
+        "purpose": "Submit utility meter reading using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "UtilityMeterReading",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-utility-meter-reading-submit/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-utility-meter-reading-submit/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-utility-meter-reading-submit/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/GovernmentService"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.utility.meter.reading.submit",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/GovernmentService"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.utility.meter.reading.submit",
+          "parameters": {
+            "utilityMeterReading": {
+              "applicantId": "https://business.example/applicantId/example",
+              "authorityId": "https://business.example/authorityId/example",
+              "serviceCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "utilityMeterReading": {
+                "applicantId": "https://business.example/applicantId/example",
+                "authorityId": "https://business.example/authorityId/example",
+                "serviceCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.utility.meter.reading.submit-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.utility.meter.reading.submit-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/utilityMeterReading/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.utility.service.start",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "regulated.public",
+        "batch": 6,
+        "title": "Utility Service Start",
+        "purpose": "Start utility service using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "UtilityService",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-utility-service-start/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-utility-service-start/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-utility-service-start/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/GovernmentService"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.utility.service.start",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/GovernmentService"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.utility.service.start",
+          "parameters": {
+            "utilityService": {
+              "applicantId": "https://business.example/applicantId/example",
+              "authorityId": "https://business.example/authorityId/example",
+              "serviceCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "utilityService": {
+                "applicantId": "https://business.example/applicantId/example",
+                "authorityId": "https://business.example/authorityId/example",
+                "serviceCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.utility.service.start-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.utility.service.start-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.utility.service.start-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.utility.service.start-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/utilityService/example"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "profiles__v0.2__regulated.public__comcom-benefit-apply__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-benefit-apply/schemas/input.schema.json",
+      "title": "Benefit Apply input",
+      "description": "Apply for benefit using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.benefit.apply"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Benefit Apply parameters.",
+          "additionalProperties": false,
+          "required": [
+            "benefit"
+          ],
+          "properties": {
+            "benefit": {
+              "type": "object",
+              "description": "Typed Benefit data.",
+              "additionalProperties": false,
+              "required": [
+                "applicantId",
+                "authorityId",
+                "serviceCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "applicantId": {
+                  "type": "string",
+                  "description": "Applicant or customer URI.",
+                  "format": "uri-reference"
+                },
+                "authorityId": {
+                  "type": "string",
+                  "description": "Responsible authority or provider URI.",
+                  "format": "uri-reference"
+                },
+                "serviceCode": {
+                  "type": "string",
+                  "description": "Public, regulated, or professional service code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Application reference.",
+                  "maxLength": 160
+                },
+                "submittedAt": {
+                  "type": "string",
+                  "description": "Submission instant.",
+                  "format": "date-time"
+                },
+                "country": {
+                  "type": "string",
+                  "description": "ISO 3166-1 alpha-2 country code.",
+                  "pattern": "^[A-Z]{2}$"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Request summary.",
+                  "maxLength": 2000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-benefit-apply__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-benefit-apply/schemas/output.schema.json",
+      "title": "Benefit Apply output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-benefit-apply/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-benefit-apply__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-benefit-apply/schemas/resource.schema.json",
+      "title": "Benefit resource for comcom.benefit.apply",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Benefit"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "applicantId": {
+          "type": "string",
+          "description": "Applicant or customer URI.",
+          "format": "uri-reference"
+        },
+        "authorityId": {
+          "type": "string",
+          "description": "Responsible authority or provider URI.",
+          "format": "uri-reference"
+        },
+        "serviceCode": {
+          "type": "string",
+          "description": "Public, regulated, or professional service code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Application reference.",
+          "maxLength": 160
+        },
+        "submittedAt": {
+          "type": "string",
+          "description": "Submission instant.",
+          "format": "date-time"
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code.",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-finance-account-balance-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-finance-account-balance-get/schemas/input.schema.json",
+      "title": "Finance Account Balance Get input",
+      "description": "Retrieve finance account balance using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.finance.account.balance.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the FinanceAccountBalance to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "financeAccountBalanceId"
+          ],
+          "properties": {
+            "financeAccountBalanceId": {
+              "type": "string",
+              "description": "FinanceAccountBalance URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-finance-account-balance-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-finance-account-balance-get/schemas/output.schema.json",
+      "title": "Finance Account Balance Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-finance-account-balance-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-finance-account-balance-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-finance-account-balance-get/schemas/resource.schema.json",
+      "title": "FinanceAccountBalance resource for comcom.finance.account.balance.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "FinanceAccountBalance"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "Account URI.",
+          "format": "uri-reference"
+        },
+        "payerId": {
+          "type": "string",
+          "description": "Payer URI.",
+          "format": "uri-reference"
+        },
+        "payeeId": {
+          "type": "string",
+          "description": "Payee URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Monetary amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "dueAt": {
+          "type": "string",
+          "description": "Payment or document due instant.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed monetary lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-government-application-status__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-status/schemas/input.schema.json",
+      "title": "Government Application Status input",
+      "description": "Retrieve status for government application using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.government.application.status"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the GovernmentApplication to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "governmentApplicationId"
+          ],
+          "properties": {
+            "governmentApplicationId": {
+              "type": "string",
+              "description": "GovernmentApplication URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-government-application-status__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-status/schemas/output.schema.json",
+      "title": "Government Application Status output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-status/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-government-application-status__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-status/schemas/resource.schema.json",
+      "title": "GovernmentApplication resource for comcom.government.application.status",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "GovernmentApplication"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "applicantId": {
+          "type": "string",
+          "description": "Applicant or customer URI.",
+          "format": "uri-reference"
+        },
+        "authorityId": {
+          "type": "string",
+          "description": "Responsible authority or provider URI.",
+          "format": "uri-reference"
+        },
+        "serviceCode": {
+          "type": "string",
+          "description": "Public, regulated, or professional service code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Application reference.",
+          "maxLength": 160
+        },
+        "submittedAt": {
+          "type": "string",
+          "description": "Submission instant.",
+          "format": "date-time"
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code.",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-government-application-submit__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-submit/schemas/input.schema.json",
+      "title": "Government Application Submit input",
+      "description": "Submit government application using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.government.application.submit"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Government Application Submit parameters.",
+          "additionalProperties": false,
+          "required": [
+            "governmentApplication"
+          ],
+          "properties": {
+            "governmentApplication": {
+              "type": "object",
+              "description": "Typed GovernmentApplication data.",
+              "additionalProperties": false,
+              "required": [
+                "applicantId",
+                "authorityId",
+                "serviceCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "applicantId": {
+                  "type": "string",
+                  "description": "Applicant or customer URI.",
+                  "format": "uri-reference"
+                },
+                "authorityId": {
+                  "type": "string",
+                  "description": "Responsible authority or provider URI.",
+                  "format": "uri-reference"
+                },
+                "serviceCode": {
+                  "type": "string",
+                  "description": "Public, regulated, or professional service code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Application reference.",
+                  "maxLength": 160
+                },
+                "submittedAt": {
+                  "type": "string",
+                  "description": "Submission instant.",
+                  "format": "date-time"
+                },
+                "country": {
+                  "type": "string",
+                  "description": "ISO 3166-1 alpha-2 country code.",
+                  "pattern": "^[A-Z]{2}$"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Request summary.",
+                  "maxLength": 2000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-government-application-submit__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-submit/schemas/output.schema.json",
+      "title": "Government Application Submit output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-submit/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-government-application-submit__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-submit/schemas/resource.schema.json",
+      "title": "GovernmentApplication resource for comcom.government.application.submit",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "GovernmentApplication"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "applicantId": {
+          "type": "string",
+          "description": "Applicant or customer URI.",
+          "format": "uri-reference"
+        },
+        "authorityId": {
+          "type": "string",
+          "description": "Responsible authority or provider URI.",
+          "format": "uri-reference"
+        },
+        "serviceCode": {
+          "type": "string",
+          "description": "Public, regulated, or professional service code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Application reference.",
+          "maxLength": 160
+        },
+        "submittedAt": {
+          "type": "string",
+          "description": "Submission instant.",
+          "format": "date-time"
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code.",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-government-service-search__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-service-search/schemas/input.schema.json",
+      "title": "Government Service Search input",
+      "description": "Search for government service using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.government.service.search"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Typed GovernmentService discovery parameters.",
+          "additionalProperties": false,
+          "required": [
+            "filters"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+              "maxLength": 500
+            },
+            "filters": {
+              "type": "object",
+              "description": "Typed GovernmentService filters.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Display name.",
+                  "minLength": 1,
+                  "maxLength": 300
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description.",
+                  "maxLength": 5000
+                },
+                "categoryCode": {
+                  "type": "string",
+                  "description": "Standard or provider category code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "sku": {
+                  "type": "string",
+                  "description": "Seller stock-keeping unit.",
+                  "maxLength": 100
+                },
+                "gtin": {
+                  "type": "string",
+                  "description": "GS1 Global Trade Item Number.",
+                  "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Price amount.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                }
+              }
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "cursor": {
+              "type": "string",
+              "description": "Opaque continuation cursor.",
+              "maxLength": 500
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-government-service-search__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-service-search/schemas/output.schema.json",
+      "title": "Government Service Search output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "items"
+      ],
+      "properties": {
+        "status": {
+          "const": "completed"
+        },
+        "items": {
+          "type": "array",
+          "description": "Matching GovernmentService resources.",
+          "items": {
+            "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-service-search/schemas/resource.schema.json"
+          },
+          "maxItems": 100
+        },
+        "nextCursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-government-service-search__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-service-search/schemas/resource.schema.json",
+      "title": "GovernmentService resource for comcom.government.service.search",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "GovernmentService"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name.",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "description": {
+          "type": "string",
+          "description": "Description.",
+          "maxLength": 5000
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Standard or provider category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "sku": {
+          "type": "string",
+          "description": "Seller stock-keeping unit.",
+          "maxLength": 100
+        },
+        "gtin": {
+          "type": "string",
+          "description": "GS1 Global Trade Item Number.",
+          "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Price amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "available": {
+          "type": "boolean"
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-insurance-claim-submit__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-insurance-claim-submit/schemas/input.schema.json",
+      "title": "Insurance Claim Submit input",
+      "description": "Submit insurance claim using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.insurance.claim.submit"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Insurance Claim Submit parameters.",
+          "additionalProperties": false,
+          "required": [
+            "insuranceClaim"
+          ],
+          "properties": {
+            "insuranceClaim": {
+              "type": "object",
+              "description": "Typed InsuranceClaim data.",
+              "additionalProperties": false,
+              "required": [
+                "applicantId",
+                "authorityId",
+                "serviceCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "applicantId": {
+                  "type": "string",
+                  "description": "Applicant or customer URI.",
+                  "format": "uri-reference"
+                },
+                "authorityId": {
+                  "type": "string",
+                  "description": "Responsible authority or provider URI.",
+                  "format": "uri-reference"
+                },
+                "serviceCode": {
+                  "type": "string",
+                  "description": "Public, regulated, or professional service code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Application reference.",
+                  "maxLength": 160
+                },
+                "submittedAt": {
+                  "type": "string",
+                  "description": "Submission instant.",
+                  "format": "date-time"
+                },
+                "country": {
+                  "type": "string",
+                  "description": "ISO 3166-1 alpha-2 country code.",
+                  "pattern": "^[A-Z]{2}$"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Request summary.",
+                  "maxLength": 2000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-insurance-claim-submit__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-insurance-claim-submit/schemas/output.schema.json",
+      "title": "Insurance Claim Submit output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-insurance-claim-submit/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-insurance-claim-submit__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-insurance-claim-submit/schemas/resource.schema.json",
+      "title": "InsuranceClaim resource for comcom.insurance.claim.submit",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "InsuranceClaim"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "applicantId": {
+          "type": "string",
+          "description": "Applicant or customer URI.",
+          "format": "uri-reference"
+        },
+        "authorityId": {
+          "type": "string",
+          "description": "Responsible authority or provider URI.",
+          "format": "uri-reference"
+        },
+        "serviceCode": {
+          "type": "string",
+          "description": "Public, regulated, or professional service code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Application reference.",
+          "maxLength": 160
+        },
+        "submittedAt": {
+          "type": "string",
+          "description": "Submission instant.",
+          "format": "date-time"
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code.",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-insurance-quote-request__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-insurance-quote-request/schemas/input.schema.json",
+      "title": "Insurance Quote Request input",
+      "description": "Request insurance quote using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.insurance.quote.request"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Insurance Quote Request parameters.",
+          "additionalProperties": false,
+          "required": [
+            "insuranceQuote"
+          ],
+          "properties": {
+            "insuranceQuote": {
+              "type": "object",
+              "description": "Typed InsuranceQuote data.",
+              "additionalProperties": false,
+              "required": [
+                "accountId",
+                "payerId",
+                "payeeId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "accountId": {
+                  "type": "string",
+                  "description": "Account URI.",
+                  "format": "uri-reference"
+                },
+                "payerId": {
+                  "type": "string",
+                  "description": "Payer URI.",
+                  "format": "uri-reference"
+                },
+                "payeeId": {
+                  "type": "string",
+                  "description": "Payee URI.",
+                  "format": "uri-reference"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Monetary amount.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "dueAt": {
+                  "type": "string",
+                  "description": "Payment or document due instant.",
+                  "format": "date-time"
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity expiry.",
+                  "format": "date-time"
+                },
+                "lines": {
+                  "type": "array",
+                  "description": "Typed monetary lines.",
+                  "items": {
+                    "type": "object",
+                    "description": "A priced line.",
+                    "additionalProperties": false,
+                    "required": [
+                      "itemId",
+                      "quantity",
+                      "unitCode"
+                    ],
+                    "properties": {
+                      "itemId": {
+                        "type": "string",
+                        "description": "Item URI.",
+                        "format": "uri-reference"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Line description.",
+                        "maxLength": 500
+                      },
+                      "quantity": {
+                        "type": "string",
+                        "description": "Requested quantity.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "unitCode": {
+                        "type": "string",
+                        "description": "UNECE or profile-declared unit code.",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                      },
+                      "unitPrice": {
+                        "type": "string",
+                        "description": "Unit price.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "currency": {
+                        "type": "string",
+                        "description": "ISO 4217 currency code.",
+                        "pattern": "^[A-Z]{3}$"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "maxItems": 1000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-insurance-quote-request__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-insurance-quote-request/schemas/output.schema.json",
+      "title": "Insurance Quote Request output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-insurance-quote-request/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-insurance-quote-request__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-insurance-quote-request/schemas/resource.schema.json",
+      "title": "InsuranceQuote resource for comcom.insurance.quote.request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "InsuranceQuote"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "Account URI.",
+          "format": "uri-reference"
+        },
+        "payerId": {
+          "type": "string",
+          "description": "Payer URI.",
+          "format": "uri-reference"
+        },
+        "payeeId": {
+          "type": "string",
+          "description": "Payee URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Monetary amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "dueAt": {
+          "type": "string",
+          "description": "Payment or document due instant.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed monetary lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-property-search__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-property-search/schemas/input.schema.json",
+      "title": "Property Search input",
+      "description": "Search for property using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.property.search"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Typed Property discovery parameters.",
+          "additionalProperties": false,
+          "required": [
+            "filters"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+              "maxLength": 500
+            },
+            "filters": {
+              "type": "object",
+              "description": "Typed Property filters.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Display name.",
+                  "minLength": 1,
+                  "maxLength": 300
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description.",
+                  "maxLength": 5000
+                },
+                "categoryCode": {
+                  "type": "string",
+                  "description": "Standard or provider category code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "sku": {
+                  "type": "string",
+                  "description": "Seller stock-keeping unit.",
+                  "maxLength": 100
+                },
+                "gtin": {
+                  "type": "string",
+                  "description": "GS1 Global Trade Item Number.",
+                  "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Price amount.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                }
+              }
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "cursor": {
+              "type": "string",
+              "description": "Opaque continuation cursor.",
+              "maxLength": 500
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-property-search__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-property-search/schemas/output.schema.json",
+      "title": "Property Search output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "items"
+      ],
+      "properties": {
+        "status": {
+          "const": "completed"
+        },
+        "items": {
+          "type": "array",
+          "description": "Matching Property resources.",
+          "items": {
+            "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-property-search/schemas/resource.schema.json"
+          },
+          "maxItems": 100
+        },
+        "nextCursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-property-search__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-property-search/schemas/resource.schema.json",
+      "title": "Property resource for comcom.property.search",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Property"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name.",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "description": {
+          "type": "string",
+          "description": "Description.",
+          "maxLength": 5000
+        },
+        "categoryCode": {
+          "type": "string",
+          "description": "Standard or provider category code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "sku": {
+          "type": "string",
+          "description": "Seller stock-keeping unit.",
+          "maxLength": 100
+        },
+        "gtin": {
+          "type": "string",
+          "description": "GS1 Global Trade Item Number.",
+          "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Price amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "available": {
+          "type": "boolean"
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-property-viewing-book__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-property-viewing-book/schemas/input.schema.json",
+      "title": "Property Viewing Book input",
+      "description": "Book property viewing using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.property.viewing.book"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Property Viewing Book parameters.",
+          "additionalProperties": false,
+          "required": [
+            "propertyViewing"
+          ],
+          "properties": {
+            "propertyViewing": {
+              "type": "object",
+              "description": "Typed PropertyViewing data.",
+              "additionalProperties": false,
+              "required": [
+                "offeringId",
+                "customerId",
+                "providerId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "partySize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-property-viewing-book__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-property-viewing-book/schemas/output.schema.json",
+      "title": "Property Viewing Book output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-property-viewing-book/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-property-viewing-book__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-property-viewing-book/schemas/resource.schema.json",
+      "title": "PropertyViewing resource for comcom.property.viewing.book",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "PropertyViewing"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-tax-filing-submit__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-tax-filing-submit/schemas/input.schema.json",
+      "title": "Tax Filing Submit input",
+      "description": "Submit tax filing using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.tax.filing.submit"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Tax Filing Submit parameters.",
+          "additionalProperties": false,
+          "required": [
+            "taxFiling"
+          ],
+          "properties": {
+            "taxFiling": {
+              "type": "object",
+              "description": "Typed TaxFiling data.",
+              "additionalProperties": false,
+              "required": [
+                "accountId",
+                "payerId",
+                "payeeId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "accountId": {
+                  "type": "string",
+                  "description": "Account URI.",
+                  "format": "uri-reference"
+                },
+                "payerId": {
+                  "type": "string",
+                  "description": "Payer URI.",
+                  "format": "uri-reference"
+                },
+                "payeeId": {
+                  "type": "string",
+                  "description": "Payee URI.",
+                  "format": "uri-reference"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Monetary amount.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "dueAt": {
+                  "type": "string",
+                  "description": "Payment or document due instant.",
+                  "format": "date-time"
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity expiry.",
+                  "format": "date-time"
+                },
+                "lines": {
+                  "type": "array",
+                  "description": "Typed monetary lines.",
+                  "items": {
+                    "type": "object",
+                    "description": "A priced line.",
+                    "additionalProperties": false,
+                    "required": [
+                      "itemId",
+                      "quantity",
+                      "unitCode"
+                    ],
+                    "properties": {
+                      "itemId": {
+                        "type": "string",
+                        "description": "Item URI.",
+                        "format": "uri-reference"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Line description.",
+                        "maxLength": 500
+                      },
+                      "quantity": {
+                        "type": "string",
+                        "description": "Requested quantity.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "unitCode": {
+                        "type": "string",
+                        "description": "UNECE or profile-declared unit code.",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                      },
+                      "unitPrice": {
+                        "type": "string",
+                        "description": "Unit price.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "currency": {
+                        "type": "string",
+                        "description": "ISO 4217 currency code.",
+                        "pattern": "^[A-Z]{3}$"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "maxItems": 1000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-tax-filing-submit__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-tax-filing-submit/schemas/output.schema.json",
+      "title": "Tax Filing Submit output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-tax-filing-submit/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-tax-filing-submit__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-tax-filing-submit/schemas/resource.schema.json",
+      "title": "TaxFiling resource for comcom.tax.filing.submit",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "TaxFiling"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "Account URI.",
+          "format": "uri-reference"
+        },
+        "payerId": {
+          "type": "string",
+          "description": "Payer URI.",
+          "format": "uri-reference"
+        },
+        "payeeId": {
+          "type": "string",
+          "description": "Payee URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Monetary amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "dueAt": {
+          "type": "string",
+          "description": "Payment or document due instant.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed monetary lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-utility-meter-reading-submit__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-utility-meter-reading-submit/schemas/input.schema.json",
+      "title": "Utility Meter Reading Submit input",
+      "description": "Submit utility meter reading using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.utility.meter.reading.submit"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Utility Meter Reading Submit parameters.",
+          "additionalProperties": false,
+          "required": [
+            "utilityMeterReading"
+          ],
+          "properties": {
+            "utilityMeterReading": {
+              "type": "object",
+              "description": "Typed UtilityMeterReading data.",
+              "additionalProperties": false,
+              "required": [
+                "applicantId",
+                "authorityId",
+                "serviceCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "applicantId": {
+                  "type": "string",
+                  "description": "Applicant or customer URI.",
+                  "format": "uri-reference"
+                },
+                "authorityId": {
+                  "type": "string",
+                  "description": "Responsible authority or provider URI.",
+                  "format": "uri-reference"
+                },
+                "serviceCode": {
+                  "type": "string",
+                  "description": "Public, regulated, or professional service code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Application reference.",
+                  "maxLength": 160
+                },
+                "submittedAt": {
+                  "type": "string",
+                  "description": "Submission instant.",
+                  "format": "date-time"
+                },
+                "country": {
+                  "type": "string",
+                  "description": "ISO 3166-1 alpha-2 country code.",
+                  "pattern": "^[A-Z]{2}$"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Request summary.",
+                  "maxLength": 2000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-utility-meter-reading-submit__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-utility-meter-reading-submit/schemas/output.schema.json",
+      "title": "Utility Meter Reading Submit output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-utility-meter-reading-submit/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-utility-meter-reading-submit__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-utility-meter-reading-submit/schemas/resource.schema.json",
+      "title": "UtilityMeterReading resource for comcom.utility.meter.reading.submit",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "UtilityMeterReading"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "applicantId": {
+          "type": "string",
+          "description": "Applicant or customer URI.",
+          "format": "uri-reference"
+        },
+        "authorityId": {
+          "type": "string",
+          "description": "Responsible authority or provider URI.",
+          "format": "uri-reference"
+        },
+        "serviceCode": {
+          "type": "string",
+          "description": "Public, regulated, or professional service code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Application reference.",
+          "maxLength": 160
+        },
+        "submittedAt": {
+          "type": "string",
+          "description": "Submission instant.",
+          "format": "date-time"
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code.",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-utility-service-start__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-utility-service-start/schemas/input.schema.json",
+      "title": "Utility Service Start input",
+      "description": "Start utility service using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.utility.service.start"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Utility Service Start parameters.",
+          "additionalProperties": false,
+          "required": [
+            "utilityService"
+          ],
+          "properties": {
+            "utilityService": {
+              "type": "object",
+              "description": "Typed UtilityService data.",
+              "additionalProperties": false,
+              "required": [
+                "applicantId",
+                "authorityId",
+                "serviceCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "applicantId": {
+                  "type": "string",
+                  "description": "Applicant or customer URI.",
+                  "format": "uri-reference"
+                },
+                "authorityId": {
+                  "type": "string",
+                  "description": "Responsible authority or provider URI.",
+                  "format": "uri-reference"
+                },
+                "serviceCode": {
+                  "type": "string",
+                  "description": "Public, regulated, or professional service code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "referenceNumber": {
+                  "type": "string",
+                  "description": "Application reference.",
+                  "maxLength": 160
+                },
+                "submittedAt": {
+                  "type": "string",
+                  "description": "Submission instant.",
+                  "format": "date-time"
+                },
+                "country": {
+                  "type": "string",
+                  "description": "ISO 3166-1 alpha-2 country code.",
+                  "pattern": "^[A-Z]{2}$"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Request summary.",
+                  "maxLength": 2000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-utility-service-start__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-utility-service-start/schemas/output.schema.json",
+      "title": "Utility Service Start output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-utility-service-start/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__regulated.public__comcom-utility-service-start__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-utility-service-start/schemas/resource.schema.json",
+      "title": "UtilityService resource for comcom.utility.service.start",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "UtilityService"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "applicantId": {
+          "type": "string",
+          "description": "Applicant or customer URI.",
+          "format": "uri-reference"
+        },
+        "authorityId": {
+          "type": "string",
+          "description": "Responsible authority or provider URI.",
+          "format": "uri-reference"
+        },
+        "serviceCode": {
+          "type": "string",
+          "description": "Public, regulated, or professional service code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Application reference.",
+          "maxLength": 160
+        },
+        "submittedAt": {
+          "type": "string",
+          "description": "Submission instant.",
+          "format": "date-time"
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code.",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Request summary.",
+          "maxLength": 2000
+        }
+      }
+    }
+  }
+}

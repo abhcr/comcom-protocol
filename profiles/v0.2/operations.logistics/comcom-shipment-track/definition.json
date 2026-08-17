@@ -1,0 +1,52 @@
+{
+  "id": "comcom.shipment.track",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "operations.logistics",
+  "batch": 4,
+  "title": "Shipment Track",
+  "purpose": "Track shipment using the typed Comcom v0.2 profile.",
+  "requestKind": "query",
+  "resourceType": "Shipment",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "anonymousAllowed",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-track/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-track/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-track/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "admission-policy-satisfied"
+  ],
+  "lifecycle": {
+    "states": [],
+    "transitions": []
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": false
+  },
+  "reversal": {
+    "mode": "explicitCapability",
+    "capability": "comcom.shipment.cancel"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient"
+  ],
+  "standards": [
+    "https://ref.gs1.org/standards/epcis/2.0.1/",
+    "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "comcom.government.service.search",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "regulated.public",
+  "batch": 6,
+  "title": "Government Service Search",
+  "purpose": "Search for government service using the typed Comcom v0.2 profile.",
+  "requestKind": "query",
+  "resourceType": "GovernmentService",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "anonymousAllowed",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-service-search/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-service-search/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-service-search/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "admission-policy-satisfied"
+  ],
+  "lifecycle": {
+    "states": [],
+    "transitions": []
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": false
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient"
+  ],
+  "standards": [
+    "https://schema.org/GovernmentService"
+  ]
+}

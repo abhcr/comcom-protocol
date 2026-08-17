@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.certificate.verify",
+  "parameters": {
+    "certificateId": "https://business.example/certificate/example"
+  }
+}

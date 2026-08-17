@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.contract.terminate-allowed-1",
+      "from": "active",
+      "to": "terminated",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.contract.terminate-forbidden-1",
+      "from": "terminated",
+      "to": "active",
+      "expected": "forbidden"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.order.approve",
+  "parameters": {
+    "orderId": "https://business.example/order/example"
+  }
+}

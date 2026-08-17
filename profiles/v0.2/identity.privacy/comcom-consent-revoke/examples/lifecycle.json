@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.consent.revoke-allowed-1",
+      "from": "active",
+      "to": "revoked",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.consent.revoke-forbidden-1",
+      "from": "revoked",
+      "to": "active",
+      "expected": "forbidden"
+    }
+  ]
+}

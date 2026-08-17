@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.order.acknowledge-allowed-1",
+      "from": "requested",
+      "to": "accepted",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.order.acknowledge-forbidden-1",
+      "from": "accepted",
+      "to": "requested",
+      "expected": "forbidden"
+    }
+  ]
+}

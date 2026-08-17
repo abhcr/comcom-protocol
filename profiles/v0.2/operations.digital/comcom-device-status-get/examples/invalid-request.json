@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "deviceStatusId": "https://business.example/deviceStatus/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

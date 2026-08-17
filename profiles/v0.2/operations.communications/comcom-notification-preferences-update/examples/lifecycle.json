@@ -1,0 +1,11 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.notification.preferences.update-allowed-1",
+      "from": "active",
+      "to": "active",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": []
+}

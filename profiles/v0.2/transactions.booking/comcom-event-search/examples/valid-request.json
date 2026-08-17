@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.event.search",
+  "parameters": {
+    "filters": {}
+  }
+}

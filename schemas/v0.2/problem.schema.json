@@ -1,0 +1,38 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/problem.schema.json",
+  "title": "Comcom RFC 9457 problem detail",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["type", "title", "status", "phase", "code"],
+  "properties": {
+    "type": { "type": "string", "format": "uri" },
+    "title": { "type": "string", "minLength": 1, "maxLength": 300 },
+    "status": { "type": "integer", "minimum": 400, "maximum": 599 },
+    "detail": { "type": "string", "maxLength": 5000 },
+    "instance": { "type": "string", "format": "uri" },
+    "phase": {
+      "enum": ["raw", "envelope", "protocol", "capability", "direction", "role", "recipient", "identity", "endpoint", "security", "extensions", "payload", "response", "correlation", "expiry", "idempotency", "discovery", "manifest", "bundle"]
+    },
+    "code": { "type": "string", "pattern": "^[a-z][a-z0-9-]{0,63}$" },
+    "errors": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "message"],
+        "properties": {
+          "path": { "type": "string" },
+          "keyword": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": { "type": "string", "pattern": "^[a-z0-9-]+(?:\\.[a-z0-9-]+)+$" },
+      "additionalProperties": true
+    }
+  }
+}

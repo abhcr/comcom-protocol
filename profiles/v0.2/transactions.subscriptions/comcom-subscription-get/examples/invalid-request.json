@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "subscriptionId": "https://business.example/subscription/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

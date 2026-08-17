@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.service.estimate.request",
+  "parameters": {
+    "serviceEstimate": {
+      "applicantId": "https://business.example/applicantId/example",
+      "authorityId": "https://business.example/authorityId/example",
+      "serviceCode": "example"
+    }
+  }
+}

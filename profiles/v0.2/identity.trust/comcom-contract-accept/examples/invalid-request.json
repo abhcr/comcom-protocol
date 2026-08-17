@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "contractId": "https://business.example/contract/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

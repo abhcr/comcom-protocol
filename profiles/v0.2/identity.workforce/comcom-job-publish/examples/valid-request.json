@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.job.publish",
+  "parameters": {
+    "job": {
+      "personId": "https://business.example/personId/example",
+      "organizationId": "https://business.example/organizationId/example",
+      "roleCode": "example"
+    }
+  }
+}

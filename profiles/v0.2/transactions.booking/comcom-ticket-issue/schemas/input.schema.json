@@ -1,0 +1,89 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-ticket-issue/schemas/input.schema.json",
+  "title": "Ticket Issue input",
+  "description": "Issue ticket using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.ticket.issue"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Ticket Issue parameters.",
+      "additionalProperties": false,
+      "required": [
+        "ticket"
+      ],
+      "properties": {
+        "ticket": {
+          "type": "object",
+          "description": "Typed Ticket data.",
+          "additionalProperties": false,
+          "required": [
+            "offeringId",
+            "customerId",
+            "providerId"
+          ],
+          "properties": {
+            "statusCode": {
+              "type": "string",
+              "description": "Profile-defined business state.",
+              "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+            },
+            "offeringId": {
+              "type": "string",
+              "description": "Bookable offering or service URI.",
+              "format": "uri-reference"
+            },
+            "customerId": {
+              "type": "string",
+              "description": "Customer URI.",
+              "format": "uri-reference"
+            },
+            "providerId": {
+              "type": "string",
+              "description": "Provider URI.",
+              "format": "uri-reference"
+            },
+            "start": {
+              "type": "string",
+              "description": "Inclusive start instant.",
+              "format": "date-time"
+            },
+            "end": {
+              "type": "string",
+              "description": "Exclusive end instant.",
+              "format": "date-time"
+            },
+            "timeZone": {
+              "type": "string",
+              "description": "IANA time-zone identifier.",
+              "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+            },
+            "locationId": {
+              "type": "string",
+              "description": "Location URI.",
+              "format": "uri-reference"
+            },
+            "partySize": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            }
+          }
+        },
+        "requestedAt": {
+          "type": "string",
+          "description": "Requested effective instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

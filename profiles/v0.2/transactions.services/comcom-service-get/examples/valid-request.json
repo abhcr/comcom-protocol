@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.service.get",
+  "parameters": {
+    "serviceId": "https://business.example/service/example"
+  }
+}

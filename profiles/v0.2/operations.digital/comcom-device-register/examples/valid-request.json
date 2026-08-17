@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.device.register",
+  "parameters": {
+    "device": {
+      "assetId": "https://business.example/assetId/example",
+      "locationId": "https://business.example/locationId/example",
+      "metricCode": "example"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "id": "comcom.price.get",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "commerce.pricing",
+  "batch": 2,
+  "title": "Price Get",
+  "purpose": "Retrieve price using the typed Comcom v0.2 profile.",
+  "requestKind": "query",
+  "resourceType": "Price",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "anonymousAllowed",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-price-get/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-price-get/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-price-get/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "admission-policy-satisfied"
+  ],
+  "lifecycle": {
+    "states": [],
+    "transitions": []
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": false
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient"
+  ],
+  "standards": [
+    "https://schema.org/Offer",
+    "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+  ]
+}

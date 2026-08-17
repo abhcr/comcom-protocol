@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.candidate.status.get",
+  "parameters": {
+    "candidateStatusId": "https://business.example/candidateStatus/example"
+  }
+}

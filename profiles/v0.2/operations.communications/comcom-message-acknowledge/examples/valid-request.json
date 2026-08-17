@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.message.acknowledge",
+  "parameters": {
+    "messageId": "https://business.example/message/example"
+  }
+}

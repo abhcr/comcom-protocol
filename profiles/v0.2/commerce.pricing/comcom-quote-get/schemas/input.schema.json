@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-quote-get/schemas/input.schema.json",
+  "title": "Quote Get input",
+  "description": "Retrieve quote using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.quote.get"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the Quote to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "quoteId"
+      ],
+      "properties": {
+        "quoteId": {
+          "type": "string",
+          "description": "Quote URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

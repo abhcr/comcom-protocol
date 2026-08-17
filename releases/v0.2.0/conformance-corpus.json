@@ -1,0 +1,585 @@
+{
+  "version": "0.2.0",
+  "cases": [
+    {
+      "id": "request-valid",
+      "command": "request",
+      "document": "raw/request-valid.json",
+      "context": "request",
+      "expected": {
+        "valid": true,
+        "phase": "complete",
+        "code": "valid",
+        "httpStatus": 200
+      },
+      "applicableProfile": "transactions.booking"
+    },
+    {
+      "id": "duplicate-key",
+      "command": "request",
+      "document": "raw/request-duplicate-key.json",
+      "context": "request",
+      "expected": {
+        "valid": false,
+        "phase": "raw",
+        "code": "duplicate-key",
+        "httpStatus": 400
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "invalid-utf8",
+      "command": "discovery",
+      "document": "raw/invalid-utf8.base64",
+      "encoding": "base64",
+      "context": "discovery",
+      "expected": {
+        "valid": false,
+        "phase": "raw",
+        "code": "invalid-encoding",
+        "httpStatus": 400
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "non-ijson-number",
+      "command": "request",
+      "document": "raw/request-non-ijson-number.json",
+      "context": "request",
+      "expected": {
+        "valid": false,
+        "phase": "raw",
+        "code": "non-ijson",
+        "httpStatus": 400
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "wrong-request-kind",
+      "command": "request",
+      "document": "raw/request-wrong-kind.json",
+      "context": "request",
+      "expected": {
+        "valid": false,
+        "phase": "capability",
+        "code": "message-kind-mismatch",
+        "httpStatus": 422
+      },
+      "applicableProfile": "transactions.booking"
+    },
+    {
+      "id": "protocol-version",
+      "command": "request",
+      "document": "raw/request-version-mismatch.json",
+      "context": "request",
+      "expected": {
+        "valid": false,
+        "phase": "protocol",
+        "code": "protocol-version-mismatch",
+        "httpStatus": 400
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "direction-receive-required",
+      "command": "request",
+      "document": "raw/request-valid.json",
+      "context": "request",
+      "contextPatch": [
+        {
+          "path": "/manifest/capabilities/0/direction",
+          "value": "send"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "phase": "direction",
+        "code": "direction-mismatch",
+        "httpStatus": 404
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "responder-role-required",
+      "command": "request",
+      "document": "raw/request-valid.json",
+      "context": "request",
+      "contextPatch": [
+        {
+          "path": "/manifest/roles",
+          "value": [
+            "asyncResponder"
+          ]
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "phase": "role",
+        "code": "role-mismatch",
+        "httpStatus": 403
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "recipient-bound",
+      "command": "request",
+      "document": "raw/request-recipient-mismatch.json",
+      "context": "request",
+      "expected": {
+        "valid": false,
+        "phase": "recipient",
+        "code": "recipient-mismatch",
+        "httpStatus": 403
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "sender-bound-to-transport",
+      "command": "request",
+      "document": "raw/request-valid.json",
+      "context": "request",
+      "contextPatch": [
+        {
+          "path": "/transport/senderId",
+          "value": "https://attacker.example"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "phase": "identity",
+        "code": "sender-identity-mismatch",
+        "httpStatus": 403
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "endpoint-bound",
+      "command": "request",
+      "document": "raw/request-valid.json",
+      "context": "request",
+      "contextPatch": [
+        {
+          "path": "/endpoint/url",
+          "value": "https://vendor.example/other"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "phase": "endpoint",
+        "code": "endpoint-mismatch",
+        "httpStatus": 404
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "scope-required",
+      "command": "request",
+      "document": "raw/request-valid.json",
+      "context": "request",
+      "contextPatch": [
+        {
+          "path": "/transport/scopes",
+          "value": []
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "phase": "security",
+        "code": "security-requirement-unsatisfied",
+        "httpStatus": 401
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "critical-extension-supported",
+      "command": "request",
+      "document": "raw/request-unsupported-extension.json",
+      "context": "request",
+      "contextPatch": [
+        {
+          "path": "/supportedExtensions",
+          "value": [
+            "example.com.priority"
+          ]
+        }
+      ],
+      "expected": {
+        "valid": true,
+        "phase": "complete",
+        "code": "valid",
+        "httpStatus": 200
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "critical-extension-unsupported",
+      "command": "request",
+      "document": "raw/request-unsupported-extension.json",
+      "context": "request",
+      "expected": {
+        "valid": false,
+        "phase": "extensions",
+        "code": "unsupported-critical-extension",
+        "httpStatus": 422
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "critical-extension-missing",
+      "command": "request",
+      "document": "raw/request-malformed-extension.json",
+      "context": "request",
+      "expected": {
+        "valid": false,
+        "phase": "extensions",
+        "code": "malformed-critical-extension",
+        "httpStatus": 400
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "payload-closed-schema",
+      "command": "request",
+      "document": "raw/request-schema-invalid.json",
+      "context": "request",
+      "expected": {
+        "valid": false,
+        "phase": "payload",
+        "code": "schema-invalid",
+        "httpStatus": 422
+      },
+      "applicableProfile": "transactions.booking"
+    },
+    {
+      "id": "first-seen-expired",
+      "command": "request",
+      "document": "raw/request-expired.json",
+      "context": "request",
+      "expected": {
+        "valid": false,
+        "phase": "expiry",
+        "code": "message-expired",
+        "httpStatus": 412
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "issued-over-clock-tolerance",
+      "command": "request",
+      "document": "raw/request-future.json",
+      "context": "request",
+      "expected": {
+        "valid": false,
+        "phase": "expiry",
+        "code": "issued-at-in-future",
+        "httpStatus": 412
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "sync-response-valid",
+      "command": "response",
+      "document": "../../examples/v0.2/booking-create.result.json",
+      "context": "response",
+      "expected": {
+        "valid": true,
+        "phase": "complete",
+        "code": "valid",
+        "httpStatus": 200
+      },
+      "applicableProfile": "transactions.booking"
+    },
+    {
+      "id": "async-response-valid",
+      "command": "response",
+      "document": "../../examples/v0.2/booking-create.accepted.json",
+      "context": "response",
+      "expected": {
+        "valid": true,
+        "phase": "complete",
+        "code": "valid",
+        "httpStatus": 202
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "response-kind-bound",
+      "command": "response",
+      "document": "../../examples/v0.2/booking-create.result.json",
+      "context": "response",
+      "documentPatch": [
+        {
+          "path": "/kind",
+          "value": "receipt"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "phase": "response",
+        "code": "response-kind-mismatch",
+        "httpStatus": 422
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "response-correlation-bound",
+      "command": "response",
+      "document": "../../examples/v0.2/booking-create.result.json",
+      "context": "response",
+      "documentPatch": [
+        {
+          "path": "/correlationId",
+          "value": "urn:uuid:bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "phase": "correlation",
+        "code": "correlation-mismatch",
+        "httpStatus": 422
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "rfc9727-discovery-valid",
+      "command": "discovery",
+      "document": "../../examples/v0.2/discovery.json",
+      "context": "discovery",
+      "expected": {
+        "valid": true,
+        "phase": "complete",
+        "code": "valid",
+        "httpStatus": 200
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "discovery-content-type",
+      "command": "discovery",
+      "document": "../../examples/v0.2/discovery.json",
+      "context": "discovery",
+      "contextPatch": [
+        {
+          "path": "/contentType",
+          "value": "application/json"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "phase": "discovery",
+        "code": "content-type-mismatch",
+        "httpStatus": 415
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "discovery-https-only",
+      "command": "discovery",
+      "document": "raw/discovery-unsafe.json",
+      "context": "discovery",
+      "expected": {
+        "valid": false,
+        "phase": "discovery",
+        "code": "unsafe-url",
+        "httpStatus": 400
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "single-capability-manifest",
+      "command": "manifest",
+      "document": "../../examples/v0.2/vendor-manifest.json",
+      "context": "empty",
+      "expected": {
+        "valid": true,
+        "phase": "complete",
+        "code": "valid",
+        "httpStatus": 200
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "initiator-only-manifest",
+      "command": "manifest",
+      "document": "../../examples/v0.2/initiator-manifest.json",
+      "context": "empty",
+      "expected": {
+        "valid": true,
+        "phase": "complete",
+        "code": "valid",
+        "httpStatus": 200
+      },
+      "applicableProfile": "kernel"
+    },
+    {
+      "id": "release-files-required",
+      "command": "release-bundle",
+      "document": "raw/release-manifest.json",
+      "context": "empty",
+      "expected": {
+        "valid": false,
+        "phase": "bundle",
+        "code": "bundle-file-missing",
+        "httpStatus": 400
+      },
+      "applicableProfile": "kernel"
+    }
+  ],
+  "documentEncoding": "base64",
+  "documents": {
+    "raw/request-valid.json": "eyJwcm90b2NvbFZlcnNpb24iOiIwLjIiLCJpZCI6InVybjp1dWlkOmFhYWFhYWFhLWFhYWEtNGFhYS04YWFhLWFhYWFhYWFhYWFhYSIsImtpbmQiOiJjb21tYW5kIiwiY2FwYWJpbGl0eSI6eyJpZCI6ImNvbWNvbS5ib29raW5nLmNyZWF0ZSIsInZlcnNpb24iOiIwLjIuMCJ9LCJwcmluY2lwYWwiOnsiaWQiOiJodHRwczovL2J1eWVyLmV4YW1wbGUvY3VzdG9tZXJzLzEyMyIsInR5cGUiOiJwZXJzb24ifSwic2VuZGVyIjp7ImlkIjoiaHR0cHM6Ly9idXllci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJyZWNpcGllbnQiOnsiaWQiOiJodHRwczovL3ZlbmRvci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJpc3N1ZWRBdCI6IjIwMjYtMDgtMTdUMDk6MDA6MDBaIiwiZXhwaXJlc0F0IjoiMjAyNi0wOC0xN1QwOTowNTowMFoiLCJpZGVtcG90ZW5jeUtleSI6ImJvb2tpbmctYWFhYWFhYWFhYWFhYWFhYSIsInBheWxvYWQiOnsiY2FwYWJpbGl0eSI6ImNvbWNvbS5ib29raW5nLmNyZWF0ZSIsInBhcmFtZXRlcnMiOnsiYm9va2luZyI6eyJvZmZlcmluZ0lkIjoiaHR0cHM6Ly92ZW5kb3IuZXhhbXBsZS9zZXJ2aWNlcy9kZW50aXN0cnkiLCJjdXN0b21lcklkIjoiaHR0cHM6Ly9idXllci5leGFtcGxlL2N1c3RvbWVycy8xMjMiLCJwcm92aWRlcklkIjoiaHR0cHM6Ly92ZW5kb3IuZXhhbXBsZS9wcm92aWRlcnMvNDIifX19fQo=",
+    "raw/request-duplicate-key.json": "eyJwcm90b2NvbFZlcnNpb24iOiIwLjIiLCJpZCI6InVybjp1dWlkOmFhYWFhYWFhLWFhYWEtNGFhYS04YWFhLWFhYWFhYWFhYWFhYSIsImtpbmQiOiJjb21tYW5kIiwia2luZCI6ImV2ZW50IiwiY2FwYWJpbGl0eSI6eyJpZCI6ImNvbWNvbS5ib29raW5nLmNyZWF0ZSIsInZlcnNpb24iOiIwLjIuMCJ9LCJwcmluY2lwYWwiOnsiaWQiOiJodHRwczovL2J1eWVyLmV4YW1wbGUvY3VzdG9tZXJzLzEyMyIsInR5cGUiOiJwZXJzb24ifSwic2VuZGVyIjp7ImlkIjoiaHR0cHM6Ly9idXllci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJyZWNpcGllbnQiOnsiaWQiOiJodHRwczovL3ZlbmRvci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJpc3N1ZWRBdCI6IjIwMjYtMDgtMTdUMDk6MDA6MDBaIiwiaWRlbXBvdGVuY3lLZXkiOiJib29raW5nLWFhYWFhYWFhYWFhYWFhYWEiLCJwYXlsb2FkIjp7ImNhcGFiaWxpdHkiOiJjb21jb20uYm9va2luZy5jcmVhdGUiLCJwYXJhbWV0ZXJzIjp7ImJvb2tpbmciOnsib2ZmZXJpbmdJZCI6Imh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvc2VydmljZXMvZGVudGlzdHJ5IiwiY3VzdG9tZXJJZCI6Imh0dHBzOi8vYnV5ZXIuZXhhbXBsZS9jdXN0b21lcnMvMTIzIiwicHJvdmlkZXJJZCI6Imh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvcHJvdmlkZXJzLzQyIn19fX0K",
+    "raw/invalid-utf8.base64": "ZXlKc2FXNXJjMlYwSWpwYkl2OGlYWDA9Cg==",
+    "raw/request-non-ijson-number.json": "eyJwcm90b2NvbFZlcnNpb24iOiIwLjIiLCJpZCI6InVybjp1dWlkOmFhYWFhYWFhLWFhYWEtNGFhYS04YWFhLWFhYWFhYWFhYWFhYSIsImtpbmQiOiJjb21tYW5kIiwiY2FwYWJpbGl0eSI6eyJpZCI6ImNvbWNvbS5ib29raW5nLmNyZWF0ZSIsInZlcnNpb24iOiIwLjIuMCJ9LCJwcmluY2lwYWwiOnsiaWQiOiJodHRwczovL2J1eWVyLmV4YW1wbGUvY3VzdG9tZXJzLzEyMyIsInR5cGUiOiJwZXJzb24ifSwic2VuZGVyIjp7ImlkIjoiaHR0cHM6Ly9idXllci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJyZWNpcGllbnQiOnsiaWQiOiJodHRwczovL3ZlbmRvci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJyZXNvdXJjZSI6eyJpZCI6Imh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvYm9va2luZ3MveCIsInR5cGUiOiJCb29raW5nIiwicmV2aXNpb24iOjkwMDcxOTkyNTQ3NDA5OTJ9LCJpc3N1ZWRBdCI6IjIwMjYtMDgtMTdUMDk6MDA6MDBaIiwiaWRlbXBvdGVuY3lLZXkiOiJib29raW5nLWFhYWFhYWFhYWFhYWFhYWEiLCJwYXlsb2FkIjp7ImNhcGFiaWxpdHkiOiJjb21jb20uYm9va2luZy5jcmVhdGUiLCJwYXJhbWV0ZXJzIjp7ImJvb2tpbmciOnsib2ZmZXJpbmdJZCI6Imh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvc2VydmljZXMvZGVudGlzdHJ5IiwiY3VzdG9tZXJJZCI6Imh0dHBzOi8vYnV5ZXIuZXhhbXBsZS9jdXN0b21lcnMvMTIzIiwicHJvdmlkZXJJZCI6Imh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvcHJvdmlkZXJzLzQyIn19fX0K",
+    "raw/request-wrong-kind.json": "eyJwcm90b2NvbFZlcnNpb24iOiIwLjIiLCJpZCI6InVybjp1dWlkOmFhYWFhYWFhLWFhYWEtNGFhYS04YWFhLWFhYWFhYWFhYWFhYSIsImtpbmQiOiJldmVudCIsImNhcGFiaWxpdHkiOnsiaWQiOiJjb21jb20uYm9va2luZy5jcmVhdGUiLCJ2ZXJzaW9uIjoiMC4yLjAifSwicHJpbmNpcGFsIjp7ImlkIjoiaHR0cHM6Ly9idXllci5leGFtcGxlL2N1c3RvbWVycy8xMjMiLCJ0eXBlIjoicGVyc29uIn0sInNlbmRlciI6eyJpZCI6Imh0dHBzOi8vYnV5ZXIuZXhhbXBsZSIsInR5cGUiOiJvcmdhbml6YXRpb24ifSwicmVjaXBpZW50Ijp7ImlkIjoiaHR0cHM6Ly92ZW5kb3IuZXhhbXBsZSIsInR5cGUiOiJvcmdhbml6YXRpb24ifSwiaXNzdWVkQXQiOiIyMDI2LTA4LTE3VDA5OjAwOjAwWiIsImlkZW1wb3RlbmN5S2V5IjoiYm9va2luZy1hYWFhYWFhYWFhYWFhYWFhIiwicGF5bG9hZCI6eyJjYXBhYmlsaXR5IjoiY29tY29tLmJvb2tpbmcuY3JlYXRlIiwicGFyYW1ldGVycyI6eyJib29raW5nIjp7Im9mZmVyaW5nSWQiOiJodHRwczovL3ZlbmRvci5leGFtcGxlL3NlcnZpY2VzL2RlbnRpc3RyeSIsImN1c3RvbWVySWQiOiJodHRwczovL2J1eWVyLmV4YW1wbGUvY3VzdG9tZXJzLzEyMyIsInByb3ZpZGVySWQiOiJodHRwczovL3ZlbmRvci5leGFtcGxlL3Byb3ZpZGVycy80MiJ9fX19Cg==",
+    "raw/request-version-mismatch.json": "eyJwcm90b2NvbFZlcnNpb24iOiIwLjEiLCJpZCI6InVybjp1dWlkOmFhYWFhYWFhLWFhYWEtNGFhYS04YWFhLWFhYWFhYWFhYWFhYSIsImtpbmQiOiJjb21tYW5kIiwiY2FwYWJpbGl0eSI6eyJpZCI6ImNvbWNvbS5ib29raW5nLmNyZWF0ZSIsInZlcnNpb24iOiIwLjIuMCJ9LCJwcmluY2lwYWwiOnsiaWQiOiJodHRwczovL2J1eWVyLmV4YW1wbGUvY3VzdG9tZXJzLzEyMyIsInR5cGUiOiJwZXJzb24ifSwic2VuZGVyIjp7ImlkIjoiaHR0cHM6Ly9idXllci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJyZWNpcGllbnQiOnsiaWQiOiJodHRwczovL3ZlbmRvci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJpc3N1ZWRBdCI6IjIwMjYtMDgtMTdUMDk6MDA6MDBaIiwiaWRlbXBvdGVuY3lLZXkiOiJib29raW5nLWFhYWFhYWFhYWFhYWFhYWEiLCJwYXlsb2FkIjp7ImNhcGFiaWxpdHkiOiJjb21jb20uYm9va2luZy5jcmVhdGUiLCJwYXJhbWV0ZXJzIjp7ImJvb2tpbmciOnsib2ZmZXJpbmdJZCI6Imh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvc2VydmljZXMvZGVudGlzdHJ5IiwiY3VzdG9tZXJJZCI6Imh0dHBzOi8vYnV5ZXIuZXhhbXBsZS9jdXN0b21lcnMvMTIzIiwicHJvdmlkZXJJZCI6Imh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvcHJvdmlkZXJzLzQyIn19fX0K",
+    "raw/request-recipient-mismatch.json": "eyJwcm90b2NvbFZlcnNpb24iOiIwLjIiLCJpZCI6InVybjp1dWlkOmFhYWFhYWFhLWFhYWEtNGFhYS04YWFhLWFhYWFhYWFhYWFhYSIsImtpbmQiOiJjb21tYW5kIiwiY2FwYWJpbGl0eSI6eyJpZCI6ImNvbWNvbS5ib29raW5nLmNyZWF0ZSIsInZlcnNpb24iOiIwLjIuMCJ9LCJwcmluY2lwYWwiOnsiaWQiOiJodHRwczovL2J1eWVyLmV4YW1wbGUvY3VzdG9tZXJzLzEyMyIsInR5cGUiOiJwZXJzb24ifSwic2VuZGVyIjp7ImlkIjoiaHR0cHM6Ly9idXllci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJyZWNpcGllbnQiOnsiaWQiOiJodHRwczovL290aGVyLmV4YW1wbGUiLCJ0eXBlIjoib3JnYW5pemF0aW9uIn0sImlzc3VlZEF0IjoiMjAyNi0wOC0xN1QwOTowMDowMFoiLCJpZGVtcG90ZW5jeUtleSI6ImJvb2tpbmctYWFhYWFhYWFhYWFhYWFhYSIsInBheWxvYWQiOnsiY2FwYWJpbGl0eSI6ImNvbWNvbS5ib29raW5nLmNyZWF0ZSIsInBhcmFtZXRlcnMiOnsiYm9va2luZyI6eyJvZmZlcmluZ0lkIjoiaHR0cHM6Ly92ZW5kb3IuZXhhbXBsZS9zZXJ2aWNlcy9kZW50aXN0cnkiLCJjdXN0b21lcklkIjoiaHR0cHM6Ly9idXllci5leGFtcGxlL2N1c3RvbWVycy8xMjMiLCJwcm92aWRlcklkIjoiaHR0cHM6Ly92ZW5kb3IuZXhhbXBsZS9wcm92aWRlcnMvNDIifX19fQo=",
+    "raw/request-unsupported-extension.json": "eyJwcm90b2NvbFZlcnNpb24iOiIwLjIiLCJpZCI6InVybjp1dWlkOmFhYWFhYWFhLWFhYWEtNGFhYS04YWFhLWFhYWFhYWFhYWFhYSIsImtpbmQiOiJjb21tYW5kIiwiY2FwYWJpbGl0eSI6eyJpZCI6ImNvbWNvbS5ib29raW5nLmNyZWF0ZSIsInZlcnNpb24iOiIwLjIuMCJ9LCJwcmluY2lwYWwiOnsiaWQiOiJodHRwczovL2J1eWVyLmV4YW1wbGUvY3VzdG9tZXJzLzEyMyIsInR5cGUiOiJwZXJzb24ifSwic2VuZGVyIjp7ImlkIjoiaHR0cHM6Ly9idXllci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJyZWNpcGllbnQiOnsiaWQiOiJodHRwczovL3ZlbmRvci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJpc3N1ZWRBdCI6IjIwMjYtMDgtMTdUMDk6MDA6MDBaIiwiaWRlbXBvdGVuY3lLZXkiOiJib29raW5nLWFhYWFhYWFhYWFhYWFhYWEiLCJjcml0aWNhbEV4dGVuc2lvbnMiOlsiZXhhbXBsZS5jb20ucHJpb3JpdHkiXSwiZXh0ZW5zaW9ucyI6eyJleGFtcGxlLmNvbS5wcmlvcml0eSI6InVyZ2VudCJ9LCJwYXlsb2FkIjp7ImNhcGFiaWxpdHkiOiJjb21jb20uYm9va2luZy5jcmVhdGUiLCJwYXJhbWV0ZXJzIjp7ImJvb2tpbmciOnsib2ZmZXJpbmdJZCI6Imh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvc2VydmljZXMvZGVudGlzdHJ5IiwiY3VzdG9tZXJJZCI6Imh0dHBzOi8vYnV5ZXIuZXhhbXBsZS9jdXN0b21lcnMvMTIzIiwicHJvdmlkZXJJZCI6Imh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvcHJvdmlkZXJzLzQyIn19fX0K",
+    "raw/request-malformed-extension.json": "eyJwcm90b2NvbFZlcnNpb24iOiIwLjIiLCJpZCI6InVybjp1dWlkOmFhYWFhYWFhLWFhYWEtNGFhYS04YWFhLWFhYWFhYWFhYWFhYSIsImtpbmQiOiJjb21tYW5kIiwiY2FwYWJpbGl0eSI6eyJpZCI6ImNvbWNvbS5ib29raW5nLmNyZWF0ZSIsInZlcnNpb24iOiIwLjIuMCJ9LCJwcmluY2lwYWwiOnsiaWQiOiJodHRwczovL2J1eWVyLmV4YW1wbGUvY3VzdG9tZXJzLzEyMyIsInR5cGUiOiJwZXJzb24ifSwic2VuZGVyIjp7ImlkIjoiaHR0cHM6Ly9idXllci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJyZWNpcGllbnQiOnsiaWQiOiJodHRwczovL3ZlbmRvci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJpc3N1ZWRBdCI6IjIwMjYtMDgtMTdUMDk6MDA6MDBaIiwiaWRlbXBvdGVuY3lLZXkiOiJib29raW5nLWFhYWFhYWFhYWFhYWFhYWEiLCJjcml0aWNhbEV4dGVuc2lvbnMiOlsiZXhhbXBsZS5jb20ucHJpb3JpdHkiXSwicGF5bG9hZCI6eyJjYXBhYmlsaXR5IjoiY29tY29tLmJvb2tpbmcuY3JlYXRlIiwicGFyYW1ldGVycyI6eyJib29raW5nIjp7Im9mZmVyaW5nSWQiOiJodHRwczovL3ZlbmRvci5leGFtcGxlL3NlcnZpY2VzL2RlbnRpc3RyeSIsImN1c3RvbWVySWQiOiJodHRwczovL2J1eWVyLmV4YW1wbGUvY3VzdG9tZXJzLzEyMyIsInByb3ZpZGVySWQiOiJodHRwczovL3ZlbmRvci5leGFtcGxlL3Byb3ZpZGVycy80MiJ9fX19Cg==",
+    "raw/request-schema-invalid.json": "eyJwcm90b2NvbFZlcnNpb24iOiIwLjIiLCJpZCI6InVybjp1dWlkOmFhYWFhYWFhLWFhYWEtNGFhYS04YWFhLWFhYWFhYWFhYWFhYSIsImtpbmQiOiJjb21tYW5kIiwiY2FwYWJpbGl0eSI6eyJpZCI6ImNvbWNvbS5ib29raW5nLmNyZWF0ZSIsInZlcnNpb24iOiIwLjIuMCJ9LCJwcmluY2lwYWwiOnsiaWQiOiJodHRwczovL2J1eWVyLmV4YW1wbGUvY3VzdG9tZXJzLzEyMyIsInR5cGUiOiJwZXJzb24ifSwic2VuZGVyIjp7ImlkIjoiaHR0cHM6Ly9idXllci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJyZWNpcGllbnQiOnsiaWQiOiJodHRwczovL3ZlbmRvci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJpc3N1ZWRBdCI6IjIwMjYtMDgtMTdUMDk6MDA6MDBaIiwiaWRlbXBvdGVuY3lLZXkiOiJib29raW5nLWFhYWFhYWFhYWFhYWFhYWEiLCJwYXlsb2FkIjp7ImNhcGFiaWxpdHkiOiJjb21jb20uYm9va2luZy5jcmVhdGUiLCJwYXJhbWV0ZXJzIjp7ImJvb2tpbmciOnsib2ZmZXJpbmdJZCI6Imh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvc2VydmljZXMvZGVudGlzdHJ5IiwiY3VzdG9tZXJJZCI6Imh0dHBzOi8vYnV5ZXIuZXhhbXBsZS9jdXN0b21lcnMvMTIzIn19fX0K",
+    "raw/request-expired.json": "eyJwcm90b2NvbFZlcnNpb24iOiIwLjIiLCJpZCI6InVybjp1dWlkOmFhYWFhYWFhLWFhYWEtNGFhYS04YWFhLWFhYWFhYWFhYWFhYSIsImtpbmQiOiJjb21tYW5kIiwiY2FwYWJpbGl0eSI6eyJpZCI6ImNvbWNvbS5ib29raW5nLmNyZWF0ZSIsInZlcnNpb24iOiIwLjIuMCJ9LCJwcmluY2lwYWwiOnsiaWQiOiJodHRwczovL2J1eWVyLmV4YW1wbGUvY3VzdG9tZXJzLzEyMyIsInR5cGUiOiJwZXJzb24ifSwic2VuZGVyIjp7ImlkIjoiaHR0cHM6Ly9idXllci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJyZWNpcGllbnQiOnsiaWQiOiJodHRwczovL3ZlbmRvci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJpc3N1ZWRBdCI6IjIwMjYtMDgtMTdUMDg6NTU6MDBaIiwiZXhwaXJlc0F0IjoiMjAyNi0wOC0xN1QwODo1OTo1OVoiLCJpZGVtcG90ZW5jeUtleSI6ImJvb2tpbmctYWFhYWFhYWFhYWFhYWFhYSIsInBheWxvYWQiOnsiY2FwYWJpbGl0eSI6ImNvbWNvbS5ib29raW5nLmNyZWF0ZSIsInBhcmFtZXRlcnMiOnsiYm9va2luZyI6eyJvZmZlcmluZ0lkIjoiaHR0cHM6Ly92ZW5kb3IuZXhhbXBsZS9zZXJ2aWNlcy9kZW50aXN0cnkiLCJjdXN0b21lcklkIjoiaHR0cHM6Ly9idXllci5leGFtcGxlL2N1c3RvbWVycy8xMjMiLCJwcm92aWRlcklkIjoiaHR0cHM6Ly92ZW5kb3IuZXhhbXBsZS9wcm92aWRlcnMvNDIifX19fQo=",
+    "raw/request-future.json": "eyJwcm90b2NvbFZlcnNpb24iOiIwLjIiLCJpZCI6InVybjp1dWlkOmFhYWFhYWFhLWFhYWEtNGFhYS04YWFhLWFhYWFhYWFhYWFhYSIsImtpbmQiOiJjb21tYW5kIiwiY2FwYWJpbGl0eSI6eyJpZCI6ImNvbWNvbS5ib29raW5nLmNyZWF0ZSIsInZlcnNpb24iOiIwLjIuMCJ9LCJwcmluY2lwYWwiOnsiaWQiOiJodHRwczovL2J1eWVyLmV4YW1wbGUvY3VzdG9tZXJzLzEyMyIsInR5cGUiOiJwZXJzb24ifSwic2VuZGVyIjp7ImlkIjoiaHR0cHM6Ly9idXllci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJyZWNpcGllbnQiOnsiaWQiOiJodHRwczovL3ZlbmRvci5leGFtcGxlIiwidHlwZSI6Im9yZ2FuaXphdGlvbiJ9LCJpc3N1ZWRBdCI6IjIwMjYtMDgtMTdUMDk6MDE6MDFaIiwiaWRlbXBvdGVuY3lLZXkiOiJib29raW5nLWFhYWFhYWFhYWFhYWFhYWEiLCJwYXlsb2FkIjp7ImNhcGFiaWxpdHkiOiJjb21jb20uYm9va2luZy5jcmVhdGUiLCJwYXJhbWV0ZXJzIjp7ImJvb2tpbmciOnsib2ZmZXJpbmdJZCI6Imh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvc2VydmljZXMvZGVudGlzdHJ5IiwiY3VzdG9tZXJJZCI6Imh0dHBzOi8vYnV5ZXIuZXhhbXBsZS9jdXN0b21lcnMvMTIzIiwicHJvdmlkZXJJZCI6Imh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvcHJvdmlkZXJzLzQyIn19fX0K",
+    "../../examples/v0.2/booking-create.result.json": "ewogICJwcm90b2NvbFZlcnNpb24iOiAiMC4yIiwKICAiaWQiOiAidXJuOnV1aWQ6MDM2ZjBjNzYtNDFjNy00NDA4LWI2ZmMtNzQyYjVhNDQyODQ2IiwKICAia2luZCI6ICJyZXN1bHQiLAogICJjYXBhYmlsaXR5IjogewogICAgImlkIjogImNvbWNvbS5ib29raW5nLmNyZWF0ZSIsCiAgICAidmVyc2lvbiI6ICIwLjIuMCIKICB9LAogICJwcmluY2lwYWwiOiB7CiAgICAiaWQiOiAiaHR0cHM6Ly9idXllci5leGFtcGxlL2N1c3RvbWVycy8xMjMiLAogICAgInR5cGUiOiAicGVyc29uIgogIH0sCiAgInNlbmRlciI6IHsKICAgICJpZCI6ICJodHRwczovL3ZlbmRvci5leGFtcGxlIiwKICAgICJ0eXBlIjogIm9yZ2FuaXphdGlvbiIKICB9LAogICJyZWNpcGllbnQiOiB7CiAgICAiaWQiOiAiaHR0cHM6Ly9idXllci5leGFtcGxlIiwKICAgICJ0eXBlIjogIm9yZ2FuaXphdGlvbiIKICB9LAogICJpc3N1ZWRBdCI6ICIyMDI2LTA4LTE3VDA5OjAwOjAxWiIsCiAgImNvcnJlbGF0aW9uSWQiOiAidXJuOnV1aWQ6MjhkMWViNDktNTAyNC00ZDk4LWFhMmEtYzc2ZjVjODIyY2E1IiwKICAicGF5bG9hZCI6IHsKICAgICJzdGF0dXMiOiAiY29tcGxldGVkIiwKICAgICJyZXNvdXJjZSI6IHsKICAgICAgImlkIjogImh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvYm9va2luZ3MvNzg5IiwKICAgICAgInR5cGUiOiAiQm9va2luZyIsCiAgICAgICJzdGF0ZSI6ICJhY2NlcHRlZCIsCiAgICAgICJyZXZpc2lvbiI6IDEsCiAgICAgICJjcmVhdGVkQXQiOiAiMjAyNi0wOC0xN1QwOTowMDowMVoiLAogICAgICAidXBkYXRlZEF0IjogIjIwMjYtMDgtMTdUMDk6MDA6MDFaIiwKICAgICAgIm9mZmVyaW5nSWQiOiAiaHR0cHM6Ly92ZW5kb3IuZXhhbXBsZS9zZXJ2aWNlcy9kZW50aXN0cnkiLAogICAgICAiY3VzdG9tZXJJZCI6ICJodHRwczovL2J1eWVyLmV4YW1wbGUvY3VzdG9tZXJzLzEyMyIsCiAgICAgICJwcm92aWRlcklkIjogImh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvcHJvdmlkZXJzLzQyIiwKICAgICAgInN0YXJ0IjogIjIwMjYtMDgtMThUMDk6MDA6MDBaIiwKICAgICAgImVuZCI6ICIyMDI2LTA4LTE4VDA5OjMwOjAwWiIsCiAgICAgICJ0aW1lWm9uZSI6ICJBc2lhL0tvbGthdGEiCiAgICB9LAogICAgIm5leHRBY3Rpb25zIjogWyJjb21jb20uYm9va2luZy5nZXQiLCAiY29tY29tLmJvb2tpbmcuY2FuY2VsIl0KICB9Cn0K",
+    "../../examples/v0.2/booking-create.accepted.json": "ewogICJwcm90b2NvbFZlcnNpb24iOiAiMC4yIiwKICAiaWQiOiAidXJuOnV1aWQ6MGJiMTMzN2YtM2RhNy00OGQyLTg2YTItYjlkNjllNmFlNzgwIiwKICAia2luZCI6ICJyZXN1bHQiLAogICJjYXBhYmlsaXR5IjogewogICAgImlkIjogImNvbWNvbS5ib29raW5nLmNyZWF0ZSIsCiAgICAidmVyc2lvbiI6ICIwLjIuMCIKICB9LAogICJwcmluY2lwYWwiOiB7CiAgICAiaWQiOiAiaHR0cHM6Ly9idXllci5leGFtcGxlL2N1c3RvbWVycy8xMjMiLAogICAgInR5cGUiOiAicGVyc29uIgogIH0sCiAgInNlbmRlciI6IHsKICAgICJpZCI6ICJodHRwczovL3ZlbmRvci5leGFtcGxlIiwKICAgICJ0eXBlIjogIm9yZ2FuaXphdGlvbiIKICB9LAogICJyZWNpcGllbnQiOiB7CiAgICAiaWQiOiAiaHR0cHM6Ly9idXllci5leGFtcGxlIiwKICAgICJ0eXBlIjogIm9yZ2FuaXphdGlvbiIKICB9LAogICJpc3N1ZWRBdCI6ICIyMDI2LTA4LTE3VDA5OjAwOjAxWiIsCiAgImNvcnJlbGF0aW9uSWQiOiAidXJuOnV1aWQ6MjhkMWViNDktNTAyNC00ZDk4LWFhMmEtYzc2ZjVjODIyY2E1IiwKICAicGF5bG9hZCI6IHsKICAgICJpZCI6ICJodHRwczovL3ZlbmRvci5leGFtcGxlL29wZXJhdGlvbnMvYWJjIiwKICAgICJzdGF0dXNVcmwiOiAiaHR0cHM6Ly92ZW5kb3IuZXhhbXBsZS9jb21jb20vaW50ZXJhY3Rpb25zL2FiYyIsCiAgICAic3RhdGUiOiAiYWNjZXB0ZWQiLAogICAgImFjY2VwdGVkQXQiOiAiMjAyNi0wOC0xN1QwOTowMDowMVoiLAogICAgInVwZGF0ZWRBdCI6ICIyMDI2LTA4LTE3VDA5OjAwOjAxWiIsCiAgICAib3JpZ2luYWxDb3JyZWxhdGlvbklkIjogInVybjp1dWlkOjI4ZDFlYjQ5LTUwMjQtNGQ5OC1hYTJhLWM3NmY1YzgyMmNhNSIKICB9Cn0K",
+    "../../examples/v0.2/discovery.json": "ewogICJsaW5rc2V0IjogWwogICAgewogICAgICAiYW5jaG9yIjogImh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvLndlbGwta25vd24vYXBpLWNhdGFsb2ciLAogICAgICAiaXRlbSI6IFsKICAgICAgICB7CiAgICAgICAgICAiaHJlZiI6ICJodHRwczovL3ZlbmRvci5leGFtcGxlL2NvbWNvbS92MC4yL21hbmlmZXN0IiwKICAgICAgICAgICJ0eXBlIjogImFwcGxpY2F0aW9uL3ZuZC5jb21jb20ubWFuaWZlc3QranNvbiIsCiAgICAgICAgICAicHJvZmlsZSI6ICJodHRwczovL2FiaGNyLmdpdGh1Yi5pby9jb21jb20tcHJvdG9jb2wvcmVsZWFzZXMvdjAuMi4wL3Byb2ZpbGVzL21hbmlmZXN0IiwKICAgICAgICAgICJ0aXRsZSI6ICJWZW5kb3IgQ29tY29tIG1hbmlmZXN0IgogICAgICAgIH0KICAgICAgXQogICAgfQogIF0KfQo=",
+    "raw/discovery-unsafe.json": "eyJsaW5rc2V0IjpbeyJhbmNob3IiOiJodHRwczovL3ZlbmRvci5leGFtcGxlLy53ZWxsLWtub3duL2FwaS1jYXRhbG9nIiwiaXRlbSI6W3siaHJlZiI6Imh0dHA6Ly8xMjcuMC4wLjEvbWFuaWZlc3QiLCJ0eXBlIjoiYXBwbGljYXRpb24vdm5kLmNvbWNvbS5tYW5pZmVzdCtqc29uIiwicHJvZmlsZSI6Imh0dHBzOi8vYWJoY3IuZ2l0aHViLmlvL2NvbWNvbS1wcm90b2NvbC9yZWxlYXNlcy92MC4yLjAvcHJvZmlsZXMvbWFuaWZlc3QifV19XX0K",
+    "../../examples/v0.2/vendor-manifest.json": "ewogICJwcm90b2NvbFZlcnNpb25zIjogWyIwLjIiXSwKICAiZW50aXR5IjogewogICAgImlkIjogImh0dHBzOi8vdmVuZG9yLmV4YW1wbGUiLAogICAgInR5cGUiOiAib3JnYW5pemF0aW9uIiwKICAgICJuYW1lIjogIkV4YW1wbGUgVmVuZG9yIgogIH0sCiAgInJvbGVzIjogWyJyZXNwb25kZXIiLCAiYXN5bmNSZXNwb25kZXIiXSwKICAic2VydmljZU9yaWdpbnMiOiBbImh0dHBzOi8vdmVuZG9yLmV4YW1wbGUiXSwKICAicHJvZmlsZXMiOiBbCiAgICB7CiAgICAgICJpZCI6ICJ0cmFuc2FjdGlvbnMuYm9va2luZyIsCiAgICAgICJ2ZXJzaW9uIjogIjAuMi4wIiwKICAgICAgInJlbGVhc2UiOiAiaHR0cHM6Ly9hYmhjci5naXRodWIuaW8vY29tY29tLXByb3RvY29sL3JlbGVhc2VzL3YwLjIuMC9wcm9maWxlcy90cmFuc2FjdGlvbnMuYm9va2luZy5idW5kbGUuanNvbiIsCiAgICAgICJzaGEyNTYiOiAiMTY3NTU0MWYwMzhmZTNkNDE1NWIxZWFiZjA5YWE1NmEyOGFkM2M3ZDBmOGIyODgxYjhmYWJkZWNiZWUzZjYzOCIKICAgIH0KICBdLAogICJzZWN1cml0eVNjaGVtZXMiOiB7CiAgICAiYnVzaW5lc3NPQXV0aCI6IHsKICAgICAgInR5cGUiOiAib2F1dGgyIiwKICAgICAgImZsb3dzIjogewogICAgICAgICJjbGllbnRDcmVkZW50aWFscyI6IHsKICAgICAgICAgICJ0b2tlblVybCI6ICJodHRwczovL3ZlbmRvci5leGFtcGxlL29hdXRoL3Rva2VuIiwKICAgICAgICAgICJzY29wZXMiOiB7CiAgICAgICAgICAgICJib29raW5nOmNyZWF0ZSI6ICJDcmVhdGUgYm9va2luZ3MiCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICB9CiAgfSwKICAiY2FwYWJpbGl0aWVzIjogWwogICAgewogICAgICAiaWQiOiAiY29tY29tLmJvb2tpbmcuY3JlYXRlIiwKICAgICAgInZlcnNpb24iOiAiMC4yLjAiLAogICAgICAicHJvZmlsZSI6ICJ0cmFuc2FjdGlvbnMuYm9va2luZyIsCiAgICAgICJkaXJlY3Rpb24iOiAicmVjZWl2ZSIsCiAgICAgICJraW5kcyI6IFsiY29tbWFuZCJdLAogICAgICAiaW5wdXRTY2hlbWEiOiAiaHR0cHM6Ly9hYmhjci5naXRodWIuaW8vY29tY29tLXByb3RvY29sL3JlbGVhc2VzL3YwLjIuMC9wcm9maWxlcy92MC4yL3RyYW5zYWN0aW9ucy5ib29raW5nL2NvbWNvbS1ib29raW5nLWNyZWF0ZS9zY2hlbWFzL2lucHV0LnNjaGVtYS5qc29uIiwKICAgICAgIm91dHB1dFNjaGVtYSI6ICJodHRwczovL2FiaGNyLmdpdGh1Yi5pby9jb21jb20tcHJvdG9jb2wvcmVsZWFzZXMvdjAuMi4wL3Byb2ZpbGVzL3YwLjIvdHJhbnNhY3Rpb25zLmJvb2tpbmcvY29tY29tLWJvb2tpbmctY3JlYXRlL3NjaGVtYXMvb3V0cHV0LnNjaGVtYS5qc29uIiwKICAgICAgImV4ZWN1dGlvbk1vZGVzIjogWyJzeW5jaHJvbm91cyIsICJhc3luY2hyb25vdXMiXSwKICAgICAgImZvcm1zIjogWwogICAgICAgIHsKICAgICAgICAgICJocmVmIjogImh0dHBzOi8vdmVuZG9yLmV4YW1wbGUvY29tY29tL2ludGVyYWN0aW9ucyIsCiAgICAgICAgICAibWV0aG9kIjogIlBPU1QiLAogICAgICAgICAgImNvbnRlbnRUeXBlIjogImFwcGxpY2F0aW9uL2NvbWNvbStqc29uIiwKICAgICAgICAgICJleGVjdXRpb25Nb2RlIjogInN5bmNocm9ub3VzIiwKICAgICAgICAgICJzZWN1cml0eSI6IFt7ImJ1c2luZXNzT0F1dGgiOiBbImJvb2tpbmc6Y3JlYXRlIl19XQogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImhyZWYiOiAiaHR0cHM6Ly92ZW5kb3IuZXhhbXBsZS9jb21jb20vaW50ZXJhY3Rpb25zIiwKICAgICAgICAgICJtZXRob2QiOiAiUE9TVCIsCiAgICAgICAgICAiY29udGVudFR5cGUiOiAiYXBwbGljYXRpb24vY29tY29tK2pzb24iLAogICAgICAgICAgImV4ZWN1dGlvbk1vZGUiOiAiYXN5bmNocm9ub3VzIiwKICAgICAgICAgICJzZWN1cml0eSI6IFt7ImJ1c2luZXNzT0F1dGgiOiBbImJvb2tpbmc6Y3JlYXRlIl19XSwKICAgICAgICAgICJzdGF0dXNUZW1wbGF0ZSI6ICJodHRwczovL3ZlbmRvci5leGFtcGxlL2NvbWNvbS9pbnRlcmFjdGlvbnMve2lkfSIKICAgICAgICB9CiAgICAgIF0KICAgIH0KICBdLAogICJsaW1pdHMiOiB7CiAgICAibWVzc2FnZUJ5dGVzIjogMTA0ODU3NiwKICAgICJzY2hlbWFCeXRlcyI6IDEwNDg1NzYsCiAgICAiaWRlbXBvdGVuY3lSZXRlbnRpb25TZWNvbmRzIjogODY0MDAsCiAgICAicmVxdWVzdHNQZXJNaW51dGUiOiAxMjAKICB9Cn0K",
+    "../../examples/v0.2/initiator-manifest.json": "ewogICJwcm90b2NvbFZlcnNpb25zIjogWyIwLjIiXSwKICAiZW50aXR5IjogewogICAgImlkIjogImh0dHBzOi8vYnV5ZXIuZXhhbXBsZSIsCiAgICAidHlwZSI6ICJvcmdhbml6YXRpb24iLAogICAgIm5hbWUiOiAiRXhhbXBsZSBCdXllciIKICB9LAogICJyb2xlcyI6IFsiaW5pdGlhdG9yIl0sCiAgInNlcnZpY2VPcmlnaW5zIjogWyJodHRwczovL2J1eWVyLmV4YW1wbGUiXSwKICAicHJvZmlsZXMiOiBbXSwKICAiY2FwYWJpbGl0aWVzIjogW10sCiAgImxpbWl0cyI6IHsKICAgICJtZXNzYWdlQnl0ZXMiOiAxMDQ4NTc2LAogICAgInNjaGVtYUJ5dGVzIjogMTA0ODU3NiwKICAgICJpZGVtcG90ZW5jeVJldGVudGlvblNlY29uZHMiOiA4NjQwMAogIH0KfQo=",
+    "raw/release-manifest.json": "eyJyZWxlYXNlIjoidjAuMi4wIiwicHJvdG9jb2xWZXJzaW9uIjoiMC4yIiwibWF0dXJpdHkiOiJleHBlcmltZW50YWwiLCJjcmVhdGVkQXQiOiIyMDI2LTA4LTE3VDAwOjAwOjAwWiIsImZpbGVzIjpbeyJwYXRoIjoicmVnaXN0cnkuanNvbiIsIm1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL2pzb24iLCJieXRlcyI6Miwic2hhMjU2IjoiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCJ9XSwidHJlZVNoYTI1NiI6IjExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTEifQo="
+  },
+  "contextSources": {
+    "manifest": {
+      "protocolVersions": [
+        "0.2"
+      ],
+      "entity": {
+        "id": "https://vendor.example",
+        "type": "organization",
+        "name": "Example Vendor"
+      },
+      "roles": [
+        "responder",
+        "asyncResponder"
+      ],
+      "serviceOrigins": [
+        "https://vendor.example"
+      ],
+      "profiles": [
+        {
+          "id": "transactions.booking",
+          "version": "0.2.0",
+          "release": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/transactions.booking.bundle.json",
+          "sha256": "1675541f038fe3d4155b1eabf09aa56a28ad3c7d0f8b2881b8fabdecbee3f638"
+        }
+      ],
+      "securitySchemes": {
+        "businessOAuth": {
+          "type": "oauth2",
+          "flows": {
+            "clientCredentials": {
+              "tokenUrl": "https://vendor.example/oauth/token",
+              "scopes": {
+                "booking:create": "Create bookings"
+              }
+            }
+          }
+        }
+      },
+      "capabilities": [
+        {
+          "id": "comcom.booking.create",
+          "version": "0.2.0",
+          "profile": "transactions.booking",
+          "direction": "receive",
+          "kinds": [
+            "command"
+          ],
+          "inputSchema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/input.schema.json",
+          "outputSchema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/output.schema.json",
+          "executionModes": [
+            "synchronous",
+            "asynchronous"
+          ],
+          "forms": [
+            {
+              "href": "https://vendor.example/comcom/interactions",
+              "method": "POST",
+              "contentType": "application/comcom+json",
+              "executionMode": "synchronous",
+              "security": [
+                {
+                  "businessOAuth": [
+                    "booking:create"
+                  ]
+                }
+              ]
+            },
+            {
+              "href": "https://vendor.example/comcom/interactions",
+              "method": "POST",
+              "contentType": "application/comcom+json",
+              "executionMode": "asynchronous",
+              "security": [
+                {
+                  "businessOAuth": [
+                    "booking:create"
+                  ]
+                }
+              ],
+              "statusTemplate": "https://vendor.example/comcom/interactions/{id}"
+            }
+          ]
+        }
+      ],
+      "limits": {
+        "messageBytes": 1048576,
+        "schemaBytes": 1048576,
+        "idempotencyRetentionSeconds": 86400,
+        "requestsPerMinute": 120
+      }
+    },
+    "request": {
+      "protocolVersion": "0.2",
+      "id": "urn:uuid:28d1eb49-5024-4d98-aa2a-c76f5c822ca5",
+      "kind": "command",
+      "capability": {
+        "id": "comcom.booking.create",
+        "version": "0.2.0"
+      },
+      "principal": {
+        "id": "https://buyer.example/customers/123",
+        "type": "person"
+      },
+      "sender": {
+        "id": "https://buyer.example",
+        "type": "organization"
+      },
+      "recipient": {
+        "id": "https://vendor.example",
+        "type": "organization"
+      },
+      "agent": {
+        "id": "https://buyer.example/software/booking-ui",
+        "type": "ui",
+        "name": "Booking form"
+      },
+      "authorization": "https://buyer.example/authorizations/456",
+      "issuedAt": "2026-08-17T09:00:00Z",
+      "expiresAt": "2026-08-17T09:05:00Z",
+      "idempotencyKey": "booking-28d1eb49-5024-4d98-aa2a",
+      "payload": {
+        "capability": "comcom.booking.create",
+        "parameters": {
+          "booking": {
+            "offeringId": "https://vendor.example/services/dentistry",
+            "customerId": "https://buyer.example/customers/123",
+            "providerId": "https://vendor.example/providers/42",
+            "start": "2026-08-18T09:00:00Z",
+            "end": "2026-08-18T09:30:00Z",
+            "timeZone": "Asia/Kolkata"
+          }
+        }
+      }
+    }
+  }
+}

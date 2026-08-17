@@ -1,0 +1,94 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-event-register/schemas/resource.schema.json",
+  "title": "Event resource for comcom.event.register",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "type",
+    "state",
+    "revision",
+    "createdAt",
+    "updatedAt"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Globally unique resource URI.",
+      "format": "uri-reference"
+    },
+    "type": {
+      "const": "Event"
+    },
+    "state": {
+      "enum": [
+        "proposed",
+        "accepted",
+        "rejected",
+        "active",
+        "completed",
+        "cancelled"
+      ]
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Creation instant.",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Last update instant.",
+      "format": "date-time"
+    },
+    "statusCode": {
+      "type": "string",
+      "description": "Profile-defined business state.",
+      "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+    },
+    "offeringId": {
+      "type": "string",
+      "description": "Bookable offering or service URI.",
+      "format": "uri-reference"
+    },
+    "customerId": {
+      "type": "string",
+      "description": "Customer URI.",
+      "format": "uri-reference"
+    },
+    "providerId": {
+      "type": "string",
+      "description": "Provider URI.",
+      "format": "uri-reference"
+    },
+    "start": {
+      "type": "string",
+      "description": "Inclusive start instant.",
+      "format": "date-time"
+    },
+    "end": {
+      "type": "string",
+      "description": "Exclusive end instant.",
+      "format": "date-time"
+    },
+    "timeZone": {
+      "type": "string",
+      "description": "IANA time-zone identifier.",
+      "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+    },
+    "locationId": {
+      "type": "string",
+      "description": "Location URI.",
+      "format": "uri-reference"
+    },
+    "partySize": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000
+    }
+  }
+}

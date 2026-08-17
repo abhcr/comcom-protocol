@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.availability.calendar.get",
+  "parameters": {
+    "availabilityCalendarId": "https://business.example/availabilityCalendar/example"
+  }
+}

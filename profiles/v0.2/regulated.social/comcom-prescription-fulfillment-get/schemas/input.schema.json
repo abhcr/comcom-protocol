@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-prescription-fulfillment-get/schemas/input.schema.json",
+  "title": "Prescription Fulfillment Get input",
+  "description": "Retrieve prescription fulfillment using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.prescription.fulfillment.get"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the PrescriptionFulfillment to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "prescriptionFulfillmentId"
+      ],
+      "properties": {
+        "prescriptionFulfillmentId": {
+          "type": "string",
+          "description": "PrescriptionFulfillment URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

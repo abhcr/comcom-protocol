@@ -1,0 +1,30 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.booking.create-allowed-1",
+      "from": "none",
+      "to": "proposed",
+      "expected": "allowed"
+    },
+    {
+      "case": "comcom.booking.create-allowed-2",
+      "from": "proposed",
+      "to": "accepted",
+      "expected": "allowed"
+    },
+    {
+      "case": "comcom.booking.create-allowed-3",
+      "from": "proposed",
+      "to": "rejected",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.booking.create-forbidden-1",
+      "from": "cancelled",
+      "to": "proposed",
+      "expected": "forbidden"
+    }
+  ]
+}

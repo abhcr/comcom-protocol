@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.product.search",
+  "parameters": {
+    "filters": {}
+  }
+}

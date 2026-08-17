@@ -1,0 +1,75 @@
+{
+  "id": "comcom.employment.offer",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "identity.workforce",
+  "batch": 5,
+  "title": "Employment Offer",
+  "purpose": "Execute employment offer using the typed Comcom v0.2 profile.",
+  "requestKind": "command",
+  "resourceType": "EmploymentOffer",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "authenticated",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employment-offer/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employment-offer/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employment-offer/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "authenticated-sender",
+    "authorized-principal",
+    "valid-resource-state"
+  ],
+  "lifecycle": {
+    "states": [
+      "proposed",
+      "accepted",
+      "rejected",
+      "active",
+      "completed",
+      "cancelled"
+    ],
+    "transitions": [
+      {
+        "from": "none",
+        "to": "proposed"
+      },
+      {
+        "from": "proposed",
+        "to": "accepted"
+      },
+      {
+        "from": "proposed",
+        "to": "rejected"
+      }
+    ]
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": true,
+    "equality": "RFC8785-semantic-projection"
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient",
+    "invalid-state-transition",
+    "idempotency-conflict"
+  ],
+  "standards": [
+    "https://schema.org/JobPosting"
+  ]
+}

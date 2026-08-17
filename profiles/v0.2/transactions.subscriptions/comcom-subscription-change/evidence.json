@@ -1,0 +1,18 @@
+{
+  "capability": "comcom.subscription.change",
+  "version": "0.2.0",
+  "domainReview": {
+    "completed": false,
+    "references": []
+  },
+  "primaryStandards": [
+    "https://schema.org/JoinAction"
+  ],
+  "securityReview": {
+    "completed": false,
+    "references": []
+  },
+  "implementations": [],
+  "interoperabilityJourneys": [],
+  "conformanceDigests": []
+}

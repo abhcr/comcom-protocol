@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.inventory.reserve-allowed-1",
+      "from": "available",
+      "to": "reserved",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.inventory.reserve-forbidden-1",
+      "from": "reserved",
+      "to": "available",
+      "expected": "forbidden"
+    }
+  ]
+}

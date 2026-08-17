@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.shipment.create",
+  "parameters": {
+    "shipment": {
+      "shipmentId": "https://business.example/shipmentId/example",
+      "carrierId": "https://business.example/carrierId/example",
+      "trackingCode": "example"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.assessment.submit",
+  "parameters": {
+    "assessment": {
+      "learnerId": "https://business.example/learnerId/example",
+      "providerId": "https://business.example/providerId/example",
+      "courseId": "https://business.example/courseId/example"
+    }
+  }
+}

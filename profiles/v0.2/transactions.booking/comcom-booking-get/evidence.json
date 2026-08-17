@@ -1,0 +1,19 @@
+{
+  "capability": "comcom.booking.get",
+  "version": "0.2.0",
+  "domainReview": {
+    "completed": false,
+    "references": []
+  },
+  "primaryStandards": [
+    "https://schema.org/Reservation",
+    "https://www.iata.org/en/programs/airline-distribution/retailing/ndc/"
+  ],
+  "securityReview": {
+    "completed": false,
+    "references": []
+  },
+  "implementations": [],
+  "interoperabilityJourneys": [],
+  "conformanceDigests": []
+}

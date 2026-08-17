@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.contract.accept",
+  "parameters": {
+    "contractId": "https://business.example/contract/example"
+  }
+}

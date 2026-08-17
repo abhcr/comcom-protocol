@@ -1,0 +1,9 @@
+{
+  "instance": {
+    "parameters": {}
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

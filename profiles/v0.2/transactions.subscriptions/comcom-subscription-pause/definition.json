@@ -1,0 +1,64 @@
+{
+  "id": "comcom.subscription.pause",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "transactions.subscriptions",
+  "batch": 3,
+  "title": "Subscription Pause",
+  "purpose": "Pause subscription using the typed Comcom v0.2 profile.",
+  "requestKind": "command",
+  "resourceType": "Subscription",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "authenticated",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-pause/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-pause/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.subscriptions/comcom-subscription-pause/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "authenticated-sender",
+    "authorized-principal",
+    "valid-resource-state"
+  ],
+  "lifecycle": {
+    "states": [
+      "active",
+      "paused"
+    ],
+    "transitions": [
+      {
+        "from": "active",
+        "to": "paused"
+      }
+    ]
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": true,
+    "equality": "RFC8785-semantic-projection"
+  },
+  "reversal": {
+    "mode": "explicitCapability",
+    "capability": "comcom.subscription.cancel"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient",
+    "invalid-state-transition",
+    "idempotency-conflict"
+  ],
+  "standards": [
+    "https://schema.org/JoinAction"
+  ]
+}

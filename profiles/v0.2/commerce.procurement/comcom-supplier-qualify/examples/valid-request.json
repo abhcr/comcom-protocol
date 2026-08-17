@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.supplier.qualify",
+  "parameters": {
+    "supplierId": "https://business.example/supplier/example"
+  }
+}

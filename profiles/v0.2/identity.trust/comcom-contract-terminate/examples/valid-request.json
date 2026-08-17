@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.contract.terminate",
+  "parameters": {
+    "contractId": "https://business.example/contract/example"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.support.case.create",
+  "parameters": {
+    "supportCase": {
+      "customerId": "https://business.example/customerId/example",
+      "itemId": "https://business.example/itemId/example",
+      "categoryCode": "example"
+    }
+  }
+}

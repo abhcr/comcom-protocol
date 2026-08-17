@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.dispute.resolve-allowed-1",
+      "from": "requested",
+      "to": "resolved",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.dispute.resolve-forbidden-1",
+      "from": "resolved",
+      "to": "requested",
+      "expected": "forbidden"
+    }
+  ]
+}

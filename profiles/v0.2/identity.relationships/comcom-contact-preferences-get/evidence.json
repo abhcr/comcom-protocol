@@ -1,0 +1,19 @@
+{
+  "capability": "comcom.contact.preferences.get",
+  "version": "0.2.0",
+  "domainReview": {
+    "completed": false,
+    "references": []
+  },
+  "primaryStandards": [
+    "https://schema.org/Organization",
+    "https://www.w3.org/TR/vc-data-model-2.0/"
+  ],
+  "securityReview": {
+    "completed": false,
+    "references": []
+  },
+  "implementations": [],
+  "interoperabilityJourneys": [],
+  "conformanceDigests": []
+}

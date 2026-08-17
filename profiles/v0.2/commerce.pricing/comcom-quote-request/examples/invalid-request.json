@@ -1,0 +1,15 @@
+{
+  "instance": {
+    "parameters": {
+      "quote": {
+        "accountId": "https://business.example/accountId/example",
+        "payerId": "https://business.example/payerId/example",
+        "payeeId": "https://business.example/payeeId/example"
+      }
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

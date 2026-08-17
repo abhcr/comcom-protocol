@@ -1,0 +1,50 @@
+{
+  "id": "comcom.education.course.search",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "regulated.social",
+  "batch": 6,
+  "title": "Education Course Search",
+  "purpose": "Search for education course using the typed Comcom v0.2 profile.",
+  "requestKind": "query",
+  "resourceType": "EducationCourse",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "anonymousAllowed",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-course-search/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-course-search/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-course-search/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "admission-policy-satisfied"
+  ],
+  "lifecycle": {
+    "states": [],
+    "transitions": []
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": false
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient"
+  ],
+  "standards": [
+    "https://hl7.org/fhir/"
+  ]
+}

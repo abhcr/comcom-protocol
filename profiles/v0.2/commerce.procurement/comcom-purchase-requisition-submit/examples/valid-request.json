@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.purchase.requisition.submit",
+  "parameters": {
+    "purchaseRequisition": {
+      "buyerId": "https://business.example/buyerId/example",
+      "sellerId": "https://business.example/sellerId/example",
+      "supplierId": "https://business.example/supplierId/example"
+    }
+  }
+}

@@ -1,0 +1,3760 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/operations.logistics.bundle.json",
+  "profile": "operations.logistics",
+  "version": "0.2.0",
+  "capabilityIds": [
+    "comcom.delivery.confirm",
+    "comcom.delivery.estimate.get",
+    "comcom.dispatch.notify",
+    "comcom.pickup.confirm",
+    "comcom.pickup.schedule",
+    "comcom.proof.of.delivery.get",
+    "comcom.receipt.acknowledge",
+    "comcom.shipment.cancel",
+    "comcom.shipment.create",
+    "comcom.shipment.get",
+    "comcom.shipment.quote.request",
+    "comcom.shipment.track"
+  ],
+  "capabilities": [
+    {
+      "definition": {
+        "id": "comcom.delivery.confirm",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.logistics",
+        "batch": 4,
+        "title": "Delivery Confirm",
+        "purpose": "Confirm delivery using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Delivery",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-delivery-confirm/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-delivery-confirm/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-delivery-confirm/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "requested",
+            "proposed",
+            "accepted"
+          ],
+          "transitions": [
+            {
+              "from": "requested",
+              "to": "accepted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.delivery.confirm",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.delivery.confirm",
+          "parameters": {
+            "deliveryId": "https://business.example/delivery/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "deliveryId": "https://business.example/delivery/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.delivery.confirm-allowed-1",
+              "from": "requested",
+              "to": "accepted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.delivery.confirm-forbidden-1",
+              "from": "accepted",
+              "to": "requested",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/delivery/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.delivery.estimate.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.logistics",
+        "batch": 4,
+        "title": "Delivery Estimate Get",
+        "purpose": "Retrieve delivery estimate using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "DeliveryEstimate",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-delivery-estimate-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-delivery-estimate-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-delivery-estimate-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.delivery.estimate.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.delivery.estimate.get",
+          "parameters": {
+            "deliveryEstimateId": "https://business.example/deliveryEstimate/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "deliveryEstimateId": "https://business.example/deliveryEstimate/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/deliveryEstimate/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.dispatch.notify",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.logistics",
+        "batch": 4,
+        "title": "Dispatch Notify",
+        "purpose": "Notify about dispatch using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "Dispatch",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-dispatch-notify/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-dispatch-notify/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-dispatch-notify/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.dispatch.notify",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.dispatch.notify",
+          "parameters": {
+            "dispatch": {
+              "shipmentId": "https://business.example/shipmentId/example",
+              "carrierId": "https://business.example/carrierId/example",
+              "trackingCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "dispatch": {
+                "shipmentId": "https://business.example/shipmentId/example",
+                "carrierId": "https://business.example/carrierId/example",
+                "trackingCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/dispatch/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.pickup.confirm",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.logistics",
+        "batch": 4,
+        "title": "Pickup Confirm",
+        "purpose": "Confirm pickup using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Pickup",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-pickup-confirm/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-pickup-confirm/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-pickup-confirm/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "requested",
+            "proposed",
+            "accepted"
+          ],
+          "transitions": [
+            {
+              "from": "requested",
+              "to": "accepted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.pickup.confirm",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.pickup.confirm",
+          "parameters": {
+            "pickupId": "https://business.example/pickup/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "pickupId": "https://business.example/pickup/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.pickup.confirm-allowed-1",
+              "from": "requested",
+              "to": "accepted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.pickup.confirm-forbidden-1",
+              "from": "accepted",
+              "to": "requested",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/pickup/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.pickup.schedule",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.logistics",
+        "batch": 4,
+        "title": "Pickup Schedule",
+        "purpose": "Schedule pickup using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Pickup",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-pickup-schedule/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-pickup-schedule/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-pickup-schedule/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "active",
+              "revisionRequired": true
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.pickup.schedule",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.pickup.schedule",
+          "parameters": {
+            "pickupId": "https://business.example/pickup/example",
+            "expectedRevision": 0,
+            "changes": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "pickupId": "https://business.example/pickup/example",
+              "expectedRevision": 0,
+              "changes": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.pickup.schedule-allowed-1",
+              "from": "active",
+              "to": "active",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/pickup/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.proof.of.delivery.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.logistics",
+        "batch": 4,
+        "title": "Proof Of Delivery Get",
+        "purpose": "Retrieve proof of delivery using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "ProofOfDelivery",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-proof-of-delivery-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-proof-of-delivery-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-proof-of-delivery-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.proof.of.delivery.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.proof.of.delivery.get",
+          "parameters": {
+            "proofOfDeliveryId": "https://business.example/proofOfDelivery/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "proofOfDeliveryId": "https://business.example/proofOfDelivery/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/proofOfDelivery/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.receipt.acknowledge",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.logistics",
+        "batch": 4,
+        "title": "Receipt Acknowledge",
+        "purpose": "Acknowledge receipt using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Receipt",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-receipt-acknowledge/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-receipt-acknowledge/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-receipt-acknowledge/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "requested",
+            "proposed",
+            "accepted"
+          ],
+          "transitions": [
+            {
+              "from": "requested",
+              "to": "accepted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.receipt.acknowledge",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.receipt.acknowledge",
+          "parameters": {
+            "receiptId": "https://business.example/receipt/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "receiptId": "https://business.example/receipt/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.receipt.acknowledge-allowed-1",
+              "from": "requested",
+              "to": "accepted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.receipt.acknowledge-forbidden-1",
+              "from": "accepted",
+              "to": "requested",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/receipt/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.shipment.cancel",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.logistics",
+        "batch": 4,
+        "title": "Shipment Cancel",
+        "purpose": "Cancel shipment using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Shipment",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-cancel/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-cancel/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-cancel/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "accepted",
+            "active",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "accepted",
+              "to": "cancelled"
+            },
+            {
+              "from": "active",
+              "to": "cancelled"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.shipment.cancel",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.shipment.cancel",
+          "parameters": {
+            "shipmentId": "https://business.example/shipment/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "shipmentId": "https://business.example/shipment/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.shipment.cancel-allowed-1",
+              "from": "accepted",
+              "to": "cancelled",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.shipment.cancel-allowed-2",
+              "from": "active",
+              "to": "cancelled",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.shipment.cancel-forbidden-1",
+              "from": "cancelled",
+              "to": "accepted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/shipment/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.shipment.create",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.logistics",
+        "batch": 4,
+        "title": "Shipment Create",
+        "purpose": "Create shipment using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Shipment",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-create/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-create/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-create/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.shipment.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.shipment.create",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.shipment.create",
+          "parameters": {
+            "shipment": {
+              "shipmentId": "https://business.example/shipmentId/example",
+              "carrierId": "https://business.example/carrierId/example",
+              "trackingCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "shipment": {
+                "shipmentId": "https://business.example/shipmentId/example",
+                "carrierId": "https://business.example/carrierId/example",
+                "trackingCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.shipment.create-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.shipment.create-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.shipment.create-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.shipment.create-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "capability": "comcom.shipment.cancel",
+          "originalResource": "https://business.example/shipment/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.shipment.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.logistics",
+        "batch": 4,
+        "title": "Shipment Get",
+        "purpose": "Retrieve shipment using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Shipment",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.shipment.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.shipment.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.shipment.get",
+          "parameters": {
+            "shipmentId": "https://business.example/shipment/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "shipmentId": "https://business.example/shipment/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "capability": "comcom.shipment.cancel",
+          "originalResource": "https://business.example/shipment/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.shipment.quote.request",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.logistics",
+        "batch": 4,
+        "title": "Shipment Quote Request",
+        "purpose": "Request shipment quote using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "ShipmentQuote",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-quote-request/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-quote-request/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-quote-request/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.shipment.quote.request",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.shipment.quote.request",
+          "parameters": {
+            "shipmentQuote": {
+              "accountId": "https://business.example/accountId/example",
+              "payerId": "https://business.example/payerId/example",
+              "payeeId": "https://business.example/payeeId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "shipmentQuote": {
+                "accountId": "https://business.example/accountId/example",
+                "payerId": "https://business.example/payerId/example",
+                "payeeId": "https://business.example/payeeId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.shipment.quote.request-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.shipment.quote.request-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/shipmentQuote/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.shipment.track",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "operations.logistics",
+        "batch": 4,
+        "title": "Shipment Track",
+        "purpose": "Track shipment using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Shipment",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-track/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-track/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-track/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.shipment.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.shipment.track",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://ref.gs1.org/standards/epcis/2.0.1/",
+          "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.shipment.track",
+          "parameters": {
+            "shipmentId": "https://business.example/shipment/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "shipmentId": "https://business.example/shipment/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "capability": "comcom.shipment.cancel",
+          "originalResource": "https://business.example/shipment/example"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "profiles__v0.2__operations.logistics__comcom-delivery-confirm__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-delivery-confirm/schemas/input.schema.json",
+      "title": "Delivery Confirm input",
+      "description": "Confirm delivery using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.delivery.confirm"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Delivery Confirm parameters.",
+          "additionalProperties": false,
+          "required": [
+            "deliveryId"
+          ],
+          "properties": {
+            "deliveryId": {
+              "type": "string",
+              "description": "Delivery URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-delivery-confirm__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-delivery-confirm/schemas/output.schema.json",
+      "title": "Delivery Confirm output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-delivery-confirm/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-delivery-confirm__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-delivery-confirm/schemas/resource.schema.json",
+      "title": "Delivery resource for comcom.delivery.confirm",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Delivery"
+        },
+        "state": {
+          "enum": [
+            "requested",
+            "proposed",
+            "accepted"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "shipmentId": {
+          "type": "string",
+          "description": "Shipment URI.",
+          "format": "uri-reference"
+        },
+        "carrierId": {
+          "type": "string",
+          "description": "Carrier URI.",
+          "format": "uri-reference"
+        },
+        "trackingCode": {
+          "type": "string",
+          "description": "Carrier tracking code.",
+          "maxLength": 100
+        },
+        "originLocationId": {
+          "type": "string",
+          "description": "Origin location URI.",
+          "format": "uri-reference"
+        },
+        "destinationLocationId": {
+          "type": "string",
+          "description": "Destination location URI.",
+          "format": "uri-reference"
+        },
+        "estimatedAt": {
+          "type": "string",
+          "description": "Estimated event instant.",
+          "format": "date-time"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Actual event instant.",
+          "format": "date-time"
+        },
+        "packageCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-delivery-estimate-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-delivery-estimate-get/schemas/input.schema.json",
+      "title": "Delivery Estimate Get input",
+      "description": "Retrieve delivery estimate using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.delivery.estimate.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the DeliveryEstimate to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "deliveryEstimateId"
+          ],
+          "properties": {
+            "deliveryEstimateId": {
+              "type": "string",
+              "description": "DeliveryEstimate URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-delivery-estimate-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-delivery-estimate-get/schemas/output.schema.json",
+      "title": "Delivery Estimate Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-delivery-estimate-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-delivery-estimate-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-delivery-estimate-get/schemas/resource.schema.json",
+      "title": "DeliveryEstimate resource for comcom.delivery.estimate.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "DeliveryEstimate"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "shipmentId": {
+          "type": "string",
+          "description": "Shipment URI.",
+          "format": "uri-reference"
+        },
+        "carrierId": {
+          "type": "string",
+          "description": "Carrier URI.",
+          "format": "uri-reference"
+        },
+        "trackingCode": {
+          "type": "string",
+          "description": "Carrier tracking code.",
+          "maxLength": 100
+        },
+        "originLocationId": {
+          "type": "string",
+          "description": "Origin location URI.",
+          "format": "uri-reference"
+        },
+        "destinationLocationId": {
+          "type": "string",
+          "description": "Destination location URI.",
+          "format": "uri-reference"
+        },
+        "estimatedAt": {
+          "type": "string",
+          "description": "Estimated event instant.",
+          "format": "date-time"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Actual event instant.",
+          "format": "date-time"
+        },
+        "packageCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-dispatch-notify__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-dispatch-notify/schemas/input.schema.json",
+      "title": "Dispatch Notify input",
+      "description": "Notify about dispatch using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.dispatch.notify"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Dispatch Notify parameters.",
+          "additionalProperties": false,
+          "required": [
+            "dispatch"
+          ],
+          "properties": {
+            "dispatch": {
+              "type": "object",
+              "description": "Typed Dispatch data.",
+              "additionalProperties": false,
+              "required": [
+                "shipmentId",
+                "carrierId",
+                "trackingCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "shipmentId": {
+                  "type": "string",
+                  "description": "Shipment URI.",
+                  "format": "uri-reference"
+                },
+                "carrierId": {
+                  "type": "string",
+                  "description": "Carrier URI.",
+                  "format": "uri-reference"
+                },
+                "trackingCode": {
+                  "type": "string",
+                  "description": "Carrier tracking code.",
+                  "maxLength": 100
+                },
+                "originLocationId": {
+                  "type": "string",
+                  "description": "Origin location URI.",
+                  "format": "uri-reference"
+                },
+                "destinationLocationId": {
+                  "type": "string",
+                  "description": "Destination location URI.",
+                  "format": "uri-reference"
+                },
+                "estimatedAt": {
+                  "type": "string",
+                  "description": "Estimated event instant.",
+                  "format": "date-time"
+                },
+                "occurredAt": {
+                  "type": "string",
+                  "description": "Actual event instant.",
+                  "format": "date-time"
+                },
+                "packageCount": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-dispatch-notify__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-dispatch-notify/schemas/output.schema.json",
+      "title": "Dispatch Notify output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-dispatch-notify__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-dispatch-notify/schemas/resource.schema.json",
+      "title": "Dispatch resource for comcom.dispatch.notify",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Dispatch"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "shipmentId": {
+          "type": "string",
+          "description": "Shipment URI.",
+          "format": "uri-reference"
+        },
+        "carrierId": {
+          "type": "string",
+          "description": "Carrier URI.",
+          "format": "uri-reference"
+        },
+        "trackingCode": {
+          "type": "string",
+          "description": "Carrier tracking code.",
+          "maxLength": 100
+        },
+        "originLocationId": {
+          "type": "string",
+          "description": "Origin location URI.",
+          "format": "uri-reference"
+        },
+        "destinationLocationId": {
+          "type": "string",
+          "description": "Destination location URI.",
+          "format": "uri-reference"
+        },
+        "estimatedAt": {
+          "type": "string",
+          "description": "Estimated event instant.",
+          "format": "date-time"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Actual event instant.",
+          "format": "date-time"
+        },
+        "packageCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-pickup-confirm__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-pickup-confirm/schemas/input.schema.json",
+      "title": "Pickup Confirm input",
+      "description": "Confirm pickup using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.pickup.confirm"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Pickup Confirm parameters.",
+          "additionalProperties": false,
+          "required": [
+            "pickupId"
+          ],
+          "properties": {
+            "pickupId": {
+              "type": "string",
+              "description": "Pickup URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-pickup-confirm__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-pickup-confirm/schemas/output.schema.json",
+      "title": "Pickup Confirm output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-pickup-confirm/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-pickup-confirm__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-pickup-confirm/schemas/resource.schema.json",
+      "title": "Pickup resource for comcom.pickup.confirm",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Pickup"
+        },
+        "state": {
+          "enum": [
+            "requested",
+            "proposed",
+            "accepted"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "shipmentId": {
+          "type": "string",
+          "description": "Shipment URI.",
+          "format": "uri-reference"
+        },
+        "carrierId": {
+          "type": "string",
+          "description": "Carrier URI.",
+          "format": "uri-reference"
+        },
+        "trackingCode": {
+          "type": "string",
+          "description": "Carrier tracking code.",
+          "maxLength": 100
+        },
+        "originLocationId": {
+          "type": "string",
+          "description": "Origin location URI.",
+          "format": "uri-reference"
+        },
+        "destinationLocationId": {
+          "type": "string",
+          "description": "Destination location URI.",
+          "format": "uri-reference"
+        },
+        "estimatedAt": {
+          "type": "string",
+          "description": "Estimated event instant.",
+          "format": "date-time"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Actual event instant.",
+          "format": "date-time"
+        },
+        "packageCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-pickup-schedule__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-pickup-schedule/schemas/input.schema.json",
+      "title": "Pickup Schedule input",
+      "description": "Schedule pickup using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.pickup.schedule"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Pickup Schedule parameters.",
+          "additionalProperties": false,
+          "required": [
+            "pickupId",
+            "expectedRevision",
+            "changes"
+          ],
+          "properties": {
+            "pickupId": {
+              "type": "string",
+              "description": "Pickup URI.",
+              "format": "uri-reference"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "changes": {
+              "type": "object",
+              "description": "Permitted Pickup changes.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "partySize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-pickup-schedule__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-pickup-schedule/schemas/output.schema.json",
+      "title": "Pickup Schedule output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-pickup-schedule/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-pickup-schedule__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-pickup-schedule/schemas/resource.schema.json",
+      "title": "Pickup resource for comcom.pickup.schedule",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Pickup"
+        },
+        "state": {
+          "enum": [
+            "active"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-proof-of-delivery-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-proof-of-delivery-get/schemas/input.schema.json",
+      "title": "Proof Of Delivery Get input",
+      "description": "Retrieve proof of delivery using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.proof.of.delivery.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the ProofOfDelivery to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "proofOfDeliveryId"
+          ],
+          "properties": {
+            "proofOfDeliveryId": {
+              "type": "string",
+              "description": "ProofOfDelivery URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-proof-of-delivery-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-proof-of-delivery-get/schemas/output.schema.json",
+      "title": "Proof Of Delivery Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-proof-of-delivery-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-proof-of-delivery-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-proof-of-delivery-get/schemas/resource.schema.json",
+      "title": "ProofOfDelivery resource for comcom.proof.of.delivery.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "ProofOfDelivery"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "shipmentId": {
+          "type": "string",
+          "description": "Shipment URI.",
+          "format": "uri-reference"
+        },
+        "carrierId": {
+          "type": "string",
+          "description": "Carrier URI.",
+          "format": "uri-reference"
+        },
+        "trackingCode": {
+          "type": "string",
+          "description": "Carrier tracking code.",
+          "maxLength": 100
+        },
+        "originLocationId": {
+          "type": "string",
+          "description": "Origin location URI.",
+          "format": "uri-reference"
+        },
+        "destinationLocationId": {
+          "type": "string",
+          "description": "Destination location URI.",
+          "format": "uri-reference"
+        },
+        "estimatedAt": {
+          "type": "string",
+          "description": "Estimated event instant.",
+          "format": "date-time"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Actual event instant.",
+          "format": "date-time"
+        },
+        "packageCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-receipt-acknowledge__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-receipt-acknowledge/schemas/input.schema.json",
+      "title": "Receipt Acknowledge input",
+      "description": "Acknowledge receipt using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.receipt.acknowledge"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Receipt Acknowledge parameters.",
+          "additionalProperties": false,
+          "required": [
+            "receiptId"
+          ],
+          "properties": {
+            "receiptId": {
+              "type": "string",
+              "description": "Receipt URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-receipt-acknowledge__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-receipt-acknowledge/schemas/output.schema.json",
+      "title": "Receipt Acknowledge output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-receipt-acknowledge/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-receipt-acknowledge__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-receipt-acknowledge/schemas/resource.schema.json",
+      "title": "Receipt resource for comcom.receipt.acknowledge",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Receipt"
+        },
+        "state": {
+          "enum": [
+            "requested",
+            "proposed",
+            "accepted"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "shipmentId": {
+          "type": "string",
+          "description": "Shipment URI.",
+          "format": "uri-reference"
+        },
+        "carrierId": {
+          "type": "string",
+          "description": "Carrier URI.",
+          "format": "uri-reference"
+        },
+        "trackingCode": {
+          "type": "string",
+          "description": "Carrier tracking code.",
+          "maxLength": 100
+        },
+        "originLocationId": {
+          "type": "string",
+          "description": "Origin location URI.",
+          "format": "uri-reference"
+        },
+        "destinationLocationId": {
+          "type": "string",
+          "description": "Destination location URI.",
+          "format": "uri-reference"
+        },
+        "estimatedAt": {
+          "type": "string",
+          "description": "Estimated event instant.",
+          "format": "date-time"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Actual event instant.",
+          "format": "date-time"
+        },
+        "packageCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-shipment-cancel__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-cancel/schemas/input.schema.json",
+      "title": "Shipment Cancel input",
+      "description": "Cancel shipment using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.shipment.cancel"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Shipment Cancel parameters.",
+          "additionalProperties": false,
+          "required": [
+            "shipmentId"
+          ],
+          "properties": {
+            "shipmentId": {
+              "type": "string",
+              "description": "Shipment URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-shipment-cancel__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-cancel/schemas/output.schema.json",
+      "title": "Shipment Cancel output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-cancel/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-shipment-cancel__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-cancel/schemas/resource.schema.json",
+      "title": "Shipment resource for comcom.shipment.cancel",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Shipment"
+        },
+        "state": {
+          "enum": [
+            "accepted",
+            "active",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "shipmentId": {
+          "type": "string",
+          "description": "Shipment URI.",
+          "format": "uri-reference"
+        },
+        "carrierId": {
+          "type": "string",
+          "description": "Carrier URI.",
+          "format": "uri-reference"
+        },
+        "trackingCode": {
+          "type": "string",
+          "description": "Carrier tracking code.",
+          "maxLength": 100
+        },
+        "originLocationId": {
+          "type": "string",
+          "description": "Origin location URI.",
+          "format": "uri-reference"
+        },
+        "destinationLocationId": {
+          "type": "string",
+          "description": "Destination location URI.",
+          "format": "uri-reference"
+        },
+        "estimatedAt": {
+          "type": "string",
+          "description": "Estimated event instant.",
+          "format": "date-time"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Actual event instant.",
+          "format": "date-time"
+        },
+        "packageCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-shipment-create__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-create/schemas/input.schema.json",
+      "title": "Shipment Create input",
+      "description": "Create shipment using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.shipment.create"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Shipment Create parameters.",
+          "additionalProperties": false,
+          "required": [
+            "shipment"
+          ],
+          "properties": {
+            "shipment": {
+              "type": "object",
+              "description": "Typed Shipment data.",
+              "additionalProperties": false,
+              "required": [
+                "shipmentId",
+                "carrierId",
+                "trackingCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "shipmentId": {
+                  "type": "string",
+                  "description": "Shipment URI.",
+                  "format": "uri-reference"
+                },
+                "carrierId": {
+                  "type": "string",
+                  "description": "Carrier URI.",
+                  "format": "uri-reference"
+                },
+                "trackingCode": {
+                  "type": "string",
+                  "description": "Carrier tracking code.",
+                  "maxLength": 100
+                },
+                "originLocationId": {
+                  "type": "string",
+                  "description": "Origin location URI.",
+                  "format": "uri-reference"
+                },
+                "destinationLocationId": {
+                  "type": "string",
+                  "description": "Destination location URI.",
+                  "format": "uri-reference"
+                },
+                "estimatedAt": {
+                  "type": "string",
+                  "description": "Estimated event instant.",
+                  "format": "date-time"
+                },
+                "occurredAt": {
+                  "type": "string",
+                  "description": "Actual event instant.",
+                  "format": "date-time"
+                },
+                "packageCount": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-shipment-create__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-create/schemas/output.schema.json",
+      "title": "Shipment Create output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-create/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-shipment-create__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-create/schemas/resource.schema.json",
+      "title": "Shipment resource for comcom.shipment.create",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Shipment"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "shipmentId": {
+          "type": "string",
+          "description": "Shipment URI.",
+          "format": "uri-reference"
+        },
+        "carrierId": {
+          "type": "string",
+          "description": "Carrier URI.",
+          "format": "uri-reference"
+        },
+        "trackingCode": {
+          "type": "string",
+          "description": "Carrier tracking code.",
+          "maxLength": 100
+        },
+        "originLocationId": {
+          "type": "string",
+          "description": "Origin location URI.",
+          "format": "uri-reference"
+        },
+        "destinationLocationId": {
+          "type": "string",
+          "description": "Destination location URI.",
+          "format": "uri-reference"
+        },
+        "estimatedAt": {
+          "type": "string",
+          "description": "Estimated event instant.",
+          "format": "date-time"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Actual event instant.",
+          "format": "date-time"
+        },
+        "packageCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-shipment-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-get/schemas/input.schema.json",
+      "title": "Shipment Get input",
+      "description": "Retrieve shipment using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.shipment.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the Shipment to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "shipmentId"
+          ],
+          "properties": {
+            "shipmentId": {
+              "type": "string",
+              "description": "Shipment URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-shipment-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-get/schemas/output.schema.json",
+      "title": "Shipment Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-shipment-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-get/schemas/resource.schema.json",
+      "title": "Shipment resource for comcom.shipment.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Shipment"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "shipmentId": {
+          "type": "string",
+          "description": "Shipment URI.",
+          "format": "uri-reference"
+        },
+        "carrierId": {
+          "type": "string",
+          "description": "Carrier URI.",
+          "format": "uri-reference"
+        },
+        "trackingCode": {
+          "type": "string",
+          "description": "Carrier tracking code.",
+          "maxLength": 100
+        },
+        "originLocationId": {
+          "type": "string",
+          "description": "Origin location URI.",
+          "format": "uri-reference"
+        },
+        "destinationLocationId": {
+          "type": "string",
+          "description": "Destination location URI.",
+          "format": "uri-reference"
+        },
+        "estimatedAt": {
+          "type": "string",
+          "description": "Estimated event instant.",
+          "format": "date-time"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Actual event instant.",
+          "format": "date-time"
+        },
+        "packageCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-shipment-quote-request__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-quote-request/schemas/input.schema.json",
+      "title": "Shipment Quote Request input",
+      "description": "Request shipment quote using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.shipment.quote.request"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Shipment Quote Request parameters.",
+          "additionalProperties": false,
+          "required": [
+            "shipmentQuote"
+          ],
+          "properties": {
+            "shipmentQuote": {
+              "type": "object",
+              "description": "Typed ShipmentQuote data.",
+              "additionalProperties": false,
+              "required": [
+                "accountId",
+                "payerId",
+                "payeeId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "accountId": {
+                  "type": "string",
+                  "description": "Account URI.",
+                  "format": "uri-reference"
+                },
+                "payerId": {
+                  "type": "string",
+                  "description": "Payer URI.",
+                  "format": "uri-reference"
+                },
+                "payeeId": {
+                  "type": "string",
+                  "description": "Payee URI.",
+                  "format": "uri-reference"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Monetary amount.",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code.",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "dueAt": {
+                  "type": "string",
+                  "description": "Payment or document due instant.",
+                  "format": "date-time"
+                },
+                "validUntil": {
+                  "type": "string",
+                  "description": "Validity expiry.",
+                  "format": "date-time"
+                },
+                "lines": {
+                  "type": "array",
+                  "description": "Typed monetary lines.",
+                  "items": {
+                    "type": "object",
+                    "description": "A priced line.",
+                    "additionalProperties": false,
+                    "required": [
+                      "itemId",
+                      "quantity",
+                      "unitCode"
+                    ],
+                    "properties": {
+                      "itemId": {
+                        "type": "string",
+                        "description": "Item URI.",
+                        "format": "uri-reference"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Line description.",
+                        "maxLength": 500
+                      },
+                      "quantity": {
+                        "type": "string",
+                        "description": "Requested quantity.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "unitCode": {
+                        "type": "string",
+                        "description": "UNECE or profile-declared unit code.",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                      },
+                      "unitPrice": {
+                        "type": "string",
+                        "description": "Unit price.",
+                        "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "currency": {
+                        "type": "string",
+                        "description": "ISO 4217 currency code.",
+                        "pattern": "^[A-Z]{3}$"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "maxItems": 1000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-shipment-quote-request__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-quote-request/schemas/output.schema.json",
+      "title": "Shipment Quote Request output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-quote-request/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-shipment-quote-request__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-quote-request/schemas/resource.schema.json",
+      "title": "ShipmentQuote resource for comcom.shipment.quote.request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "ShipmentQuote"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "Account URI.",
+          "format": "uri-reference"
+        },
+        "payerId": {
+          "type": "string",
+          "description": "Payer URI.",
+          "format": "uri-reference"
+        },
+        "payeeId": {
+          "type": "string",
+          "description": "Payee URI.",
+          "format": "uri-reference"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Monetary amount.",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "dueAt": {
+          "type": "string",
+          "description": "Payment or document due instant.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "Validity expiry.",
+          "format": "date-time"
+        },
+        "lines": {
+          "type": "array",
+          "description": "Typed monetary lines.",
+          "items": {
+            "type": "object",
+            "description": "A priced line.",
+            "additionalProperties": false,
+            "required": [
+              "itemId",
+              "quantity",
+              "unitCode"
+            ],
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "Item URI.",
+                "format": "uri-reference"
+              },
+              "description": {
+                "type": "string",
+                "description": "Line description.",
+                "maxLength": 500
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Requested quantity.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "unitCode": {
+                "type": "string",
+                "description": "UNECE or profile-declared unit code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price.",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+              },
+              "currency": {
+                "type": "string",
+                "description": "ISO 4217 currency code.",
+                "pattern": "^[A-Z]{3}$"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-shipment-track__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-track/schemas/input.schema.json",
+      "title": "Shipment Track input",
+      "description": "Track shipment using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.shipment.track"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the Shipment to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "shipmentId"
+          ],
+          "properties": {
+            "shipmentId": {
+              "type": "string",
+              "description": "Shipment URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-shipment-track__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-track/schemas/output.schema.json",
+      "title": "Shipment Track output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-track/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__operations.logistics__comcom-shipment-track__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.logistics/comcom-shipment-track/schemas/resource.schema.json",
+      "title": "Shipment resource for comcom.shipment.track",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Shipment"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "shipmentId": {
+          "type": "string",
+          "description": "Shipment URI.",
+          "format": "uri-reference"
+        },
+        "carrierId": {
+          "type": "string",
+          "description": "Carrier URI.",
+          "format": "uri-reference"
+        },
+        "trackingCode": {
+          "type": "string",
+          "description": "Carrier tracking code.",
+          "maxLength": 100
+        },
+        "originLocationId": {
+          "type": "string",
+          "description": "Origin location URI.",
+          "format": "uri-reference"
+        },
+        "destinationLocationId": {
+          "type": "string",
+          "description": "Destination location URI.",
+          "format": "uri-reference"
+        },
+        "estimatedAt": {
+          "type": "string",
+          "description": "Estimated event instant.",
+          "format": "date-time"
+        },
+        "occurredAt": {
+          "type": "string",
+          "description": "Actual event instant.",
+          "format": "date-time"
+        },
+        "packageCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-relationship-request/schemas/input.schema.json",
+  "title": "Relationship Request input",
+  "description": "Request relationship using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.relationship.request"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Relationship Request parameters.",
+      "additionalProperties": false,
+      "required": [
+        "relationship"
+      ],
+      "properties": {
+        "relationship": {
+          "type": "object",
+          "description": "Typed Relationship data.",
+          "additionalProperties": false,
+          "required": [
+            "subjectId",
+            "issuerId",
+            "referenceNumber"
+          ],
+          "properties": {
+            "statusCode": {
+              "type": "string",
+              "description": "Profile-defined business state.",
+              "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+            },
+            "subjectId": {
+              "type": "string",
+              "description": "Subject URI.",
+              "format": "uri-reference"
+            },
+            "issuerId": {
+              "type": "string",
+              "description": "Issuing or controlling entity URI.",
+              "format": "uri-reference"
+            },
+            "referenceNumber": {
+              "type": "string",
+              "description": "Authority or document reference.",
+              "maxLength": 160
+            },
+            "purposeCode": {
+              "type": "string",
+              "description": "Declared purpose code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "claimCodes": {
+              "type": "array",
+              "description": "Declared claim codes.",
+              "items": {
+                "type": "string",
+                "description": "Claim code.",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "uniqueItems": true,
+              "maxItems": 100
+            },
+            "validFrom": {
+              "type": "string",
+              "description": "Validity start.",
+              "format": "date-time"
+            },
+            "validUntil": {
+              "type": "string",
+              "description": "Validity end.",
+              "format": "date-time"
+            }
+          }
+        },
+        "requestedAt": {
+          "type": "string",
+          "description": "Requested effective instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

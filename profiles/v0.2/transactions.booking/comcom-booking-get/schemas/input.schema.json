@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-get/schemas/input.schema.json",
+  "title": "Booking Get input",
+  "description": "Retrieve booking using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.booking.get"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the Booking to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "bookingId"
+      ],
+      "properties": {
+        "bookingId": {
+          "type": "string",
+          "description": "Booking URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

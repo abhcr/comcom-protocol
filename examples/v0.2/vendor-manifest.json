@@ -1,0 +1,66 @@
+{
+  "protocolVersions": ["0.2"],
+  "entity": {
+    "id": "https://vendor.example",
+    "type": "organization",
+    "name": "Example Vendor"
+  },
+  "roles": ["responder", "asyncResponder"],
+  "serviceOrigins": ["https://vendor.example"],
+  "profiles": [
+    {
+      "id": "transactions.booking",
+      "version": "0.2.0",
+      "release": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/transactions.booking.bundle.json",
+      "sha256": "1675541f038fe3d4155b1eabf09aa56a28ad3c7d0f8b2881b8fabdecbee3f638"
+    }
+  ],
+  "securitySchemes": {
+    "businessOAuth": {
+      "type": "oauth2",
+      "flows": {
+        "clientCredentials": {
+          "tokenUrl": "https://vendor.example/oauth/token",
+          "scopes": {
+            "booking:create": "Create bookings"
+          }
+        }
+      }
+    }
+  },
+  "capabilities": [
+    {
+      "id": "comcom.booking.create",
+      "version": "0.2.0",
+      "profile": "transactions.booking",
+      "direction": "receive",
+      "kinds": ["command"],
+      "inputSchema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/input.schema.json",
+      "outputSchema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/output.schema.json",
+      "executionModes": ["synchronous", "asynchronous"],
+      "forms": [
+        {
+          "href": "https://vendor.example/comcom/interactions",
+          "method": "POST",
+          "contentType": "application/comcom+json",
+          "executionMode": "synchronous",
+          "security": [{"businessOAuth": ["booking:create"]}]
+        },
+        {
+          "href": "https://vendor.example/comcom/interactions",
+          "method": "POST",
+          "contentType": "application/comcom+json",
+          "executionMode": "asynchronous",
+          "security": [{"businessOAuth": ["booking:create"]}],
+          "statusTemplate": "https://vendor.example/comcom/interactions/{id}"
+        }
+      ]
+    }
+  ],
+  "limits": {
+    "messageBytes": 1048576,
+    "schemaBytes": 1048576,
+    "idempotencyRetentionSeconds": 86400,
+    "requestsPerMinute": 120
+  }
+}

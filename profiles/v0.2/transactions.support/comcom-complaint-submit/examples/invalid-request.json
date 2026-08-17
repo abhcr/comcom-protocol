@@ -1,0 +1,15 @@
+{
+  "instance": {
+    "parameters": {
+      "complaint": {
+        "customerId": "https://business.example/customerId/example",
+        "itemId": "https://business.example/itemId/example",
+        "categoryCode": "example"
+      }
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

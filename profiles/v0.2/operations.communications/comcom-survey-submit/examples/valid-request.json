@@ -1,0 +1,12 @@
+{
+  "capability": "comcom.survey.submit",
+  "parameters": {
+    "survey": {
+      "senderId": "https://business.example/senderId/example",
+      "recipientIds": [
+        "https://business.example/recipientIds/example"
+      ],
+      "topic": "example"
+    }
+  }
+}

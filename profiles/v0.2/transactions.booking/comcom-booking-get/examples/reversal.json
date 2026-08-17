@@ -1,0 +1,4 @@
+{
+  "capability": "comcom.booking.cancel",
+  "originalResource": "https://business.example/booking/example"
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/operation.schema.json",
+  "title": "Comcom asynchronous operation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "statusUrl", "state", "acceptedAt", "updatedAt", "originalCorrelationId"],
+  "properties": {
+    "id": { "type": "string", "format": "uri" },
+    "statusUrl": { "type": "string", "format": "uri", "pattern": "^https://" },
+    "state": { "enum": ["accepted", "inProgress", "completed", "failed", "cancelled"] },
+    "acceptedAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "completedAt": { "type": "string", "format": "date-time" },
+    "originalCorrelationId": { "type": "string", "format": "uri" },
+    "output": true,
+    "problemRef": { "type": "string", "format": "uri" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "state": { "const": "completed" } }, "required": ["state"] },
+      "then": { "required": ["completedAt", "output"], "not": { "required": ["problemRef"] } }
+    },
+    {
+      "if": { "properties": { "state": { "const": "failed" } }, "required": ["state"] },
+      "then": { "required": ["completedAt", "problemRef"], "not": { "required": ["output"] } }
+    },
+    {
+      "if": { "properties": { "state": { "const": "cancelled" } }, "required": ["state"] },
+      "then": { "required": ["completedAt"] }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "inventoryId": "https://business.example/inventory/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

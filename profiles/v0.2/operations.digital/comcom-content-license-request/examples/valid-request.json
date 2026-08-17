@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.content.license.request",
+  "parameters": {
+    "contentLicense": {
+      "name": "example",
+      "categoryCode": "example",
+      "sku": "example"
+    }
+  }
+}

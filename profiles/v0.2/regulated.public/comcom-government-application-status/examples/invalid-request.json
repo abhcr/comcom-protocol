@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "governmentApplicationId": "https://business.example/governmentApplication/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

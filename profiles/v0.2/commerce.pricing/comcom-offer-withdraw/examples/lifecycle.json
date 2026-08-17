@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.offer.withdraw-allowed-1",
+      "from": "active",
+      "to": "withdrawn",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.offer.withdraw-forbidden-1",
+      "from": "withdrawn",
+      "to": "active",
+      "expected": "forbidden"
+    }
+  ]
+}

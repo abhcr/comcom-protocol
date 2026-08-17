@@ -1,0 +1,19 @@
+{
+  "capability": "comcom.availability.check",
+  "version": "0.2.0",
+  "domainReview": {
+    "completed": false,
+    "references": []
+  },
+  "primaryStandards": [
+    "https://www.rfc-editor.org/rfc/rfc5545",
+    "https://schema.org/ReserveAction"
+  ],
+  "securityReview": {
+    "completed": false,
+    "references": []
+  },
+  "implementations": [],
+  "interoperabilityJourneys": [],
+  "conformanceDigests": []
+}

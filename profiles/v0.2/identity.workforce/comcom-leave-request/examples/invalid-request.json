@@ -1,0 +1,15 @@
+{
+  "instance": {
+    "parameters": {
+      "leave": {
+        "personId": "https://business.example/personId/example",
+        "organizationId": "https://business.example/organizationId/example",
+        "roleCode": "example"
+      }
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

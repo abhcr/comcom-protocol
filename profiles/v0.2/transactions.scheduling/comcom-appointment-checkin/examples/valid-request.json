@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.appointment.checkin",
+  "parameters": {
+    "appointmentId": "https://business.example/appointment/example"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "mediaStreamId": "https://business.example/mediaStream/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

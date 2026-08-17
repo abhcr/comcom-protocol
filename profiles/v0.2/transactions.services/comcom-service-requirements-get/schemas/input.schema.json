@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-requirements-get/schemas/input.schema.json",
+  "title": "Service Requirements Get input",
+  "description": "Retrieve service requirements using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.service.requirements.get"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the ServiceRequirements to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "serviceRequirementsId"
+      ],
+      "properties": {
+        "serviceRequirementsId": {
+          "type": "string",
+          "description": "ServiceRequirements URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

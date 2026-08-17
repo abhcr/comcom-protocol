@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.membership.leave",
+  "parameters": {
+    "membershipId": "https://business.example/membership/example"
+  }
+}

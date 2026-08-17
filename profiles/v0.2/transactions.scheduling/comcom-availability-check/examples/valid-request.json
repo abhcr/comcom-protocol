@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.availability.check",
+  "parameters": {
+    "availabilityId": "https://business.example/availability/example"
+  }
+}

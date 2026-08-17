@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.employment.offer",
+  "parameters": {
+    "employmentOffer": {
+      "personId": "https://business.example/personId/example",
+      "organizationId": "https://business.example/organizationId/example",
+      "roleCode": "example"
+    }
+  }
+}

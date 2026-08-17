@@ -1,0 +1,50 @@
+{
+  "id": "comcom.education.progress.get",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "regulated.social",
+  "batch": 6,
+  "title": "Education Progress Get",
+  "purpose": "Retrieve education progress using the typed Comcom v0.2 profile.",
+  "requestKind": "query",
+  "resourceType": "EducationProgress",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "anonymousAllowed",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-progress-get/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-progress-get/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-progress-get/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "admission-policy-satisfied"
+  ],
+  "lifecycle": {
+    "states": [],
+    "transitions": []
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": false
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient"
+  ],
+  "standards": [
+    "https://hl7.org/fhir/"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.booking.cancel",
+  "parameters": {
+    "bookingId": "https://business.example/booking/example"
+  }
+}

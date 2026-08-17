@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.appointment.complete",
+  "parameters": {
+    "appointmentId": "https://business.example/appointment/example"
+  }
+}

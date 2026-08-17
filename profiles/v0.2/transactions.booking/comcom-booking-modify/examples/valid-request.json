@@ -1,0 +1,8 @@
+{
+  "capability": "comcom.booking.modify",
+  "parameters": {
+    "bookingId": "https://business.example/booking/example",
+    "expectedRevision": 0,
+    "changes": {}
+  }
+}

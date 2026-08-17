@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.subscription.pause-allowed-1",
+      "from": "active",
+      "to": "paused",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.subscription.pause-forbidden-1",
+      "from": "paused",
+      "to": "active",
+      "expected": "forbidden"
+    }
+  ]
+}

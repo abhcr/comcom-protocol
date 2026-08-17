@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.offer.publish",
+  "parameters": {
+    "offer": {
+      "name": "example",
+      "categoryCode": "example",
+      "sku": "example"
+    }
+  }
+}

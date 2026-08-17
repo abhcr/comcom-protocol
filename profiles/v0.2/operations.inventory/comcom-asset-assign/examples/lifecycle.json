@@ -1,0 +1,11 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.asset.assign-allowed-1",
+      "from": "active",
+      "to": "active",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": []
+}

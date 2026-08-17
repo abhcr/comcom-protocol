@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "slotId": "https://business.example/slot/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

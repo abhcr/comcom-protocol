@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-availability-calendar-get/schemas/input.schema.json",
+  "title": "Availability Calendar Get input",
+  "description": "Retrieve availability calendar using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.availability.calendar.get"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the AvailabilityCalendar to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "availabilityCalendarId"
+      ],
+      "properties": {
+        "availabilityCalendarId": {
+          "type": "string",
+          "description": "AvailabilityCalendar URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

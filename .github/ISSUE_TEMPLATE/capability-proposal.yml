@@ -1,0 +1,56 @@
+name: Capability proposal
+description: Propose an evidence-backed Comcom capability or semantic change
+title: "[Capability]: "
+labels: ["capability-proposal"]
+body:
+  - type: input
+    id: capability
+    attributes:
+      label: Capability ID and version
+      placeholder: comcom.example.action @ 0.2.0
+    validations:
+      required: true
+  - type: textarea
+    id: interaction
+    attributes:
+      label: Business interaction and actors
+      description: Describe the exact business outcome, initiator, responder, and evidence from at least two organizations or implementations.
+    validations:
+      required: true
+  - type: textarea
+    id: semantics
+    attributes:
+      label: Typed semantics
+      description: Link closed input, output, and resource schemas; preconditions; security floor; and execution modes.
+    validations:
+      required: true
+  - type: textarea
+    id: lifecycle
+    attributes:
+      label: Lifecycle and reversal
+      description: List every allowed and forbidden transition, retry behavior, expiry, cancellation, reversal, and compensation.
+    validations:
+      required: true
+  - type: textarea
+    id: standards
+    attributes:
+      label: Primary standards and domain review
+      description: Link primary standards, mappings, domain reviewers, and any known semantic differences.
+    validations:
+      required: true
+  - type: textarea
+    id: conformance
+    attributes:
+      label: Independent conformance evidence
+      description: Link positive and negative fixtures, Node/Python verdicts, security review, interoperability journeys, and immutable digests.
+    validations:
+      required: true
+  - type: checkboxes
+    id: compatibility
+    attributes:
+      label: Change classification
+      options:
+        - label: I have identified whether this changes published wire or business semantics.
+          required: true
+        - label: I am not claiming normative status without all evidence gates.
+          required: true

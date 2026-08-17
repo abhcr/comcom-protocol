@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.inventory.release",
+  "parameters": {
+    "inventoryId": "https://business.example/inventory/example"
+  }
+}

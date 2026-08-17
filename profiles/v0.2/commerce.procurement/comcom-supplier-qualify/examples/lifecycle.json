@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.supplier.qualify-allowed-1",
+      "from": "requested",
+      "to": "accepted",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.supplier.qualify-forbidden-1",
+      "from": "accepted",
+      "to": "requested",
+      "expected": "forbidden"
+    }
+  ]
+}

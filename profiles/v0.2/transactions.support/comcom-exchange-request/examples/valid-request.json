@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.exchange.request",
+  "parameters": {
+    "exchange": {
+      "customerId": "https://business.example/customerId/example",
+      "itemId": "https://business.example/itemId/example",
+      "categoryCode": "example"
+    }
+  }
+}

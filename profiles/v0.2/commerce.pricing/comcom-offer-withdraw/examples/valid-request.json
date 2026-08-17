@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.offer.withdraw",
+  "parameters": {
+    "offerId": "https://business.example/offer/example"
+  }
+}

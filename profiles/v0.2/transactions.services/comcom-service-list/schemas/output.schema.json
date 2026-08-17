@@ -1,0 +1,29 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-list/schemas/output.schema.json",
+  "title": "Service List output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "items"
+  ],
+  "properties": {
+    "status": {
+      "const": "completed"
+    },
+    "items": {
+      "type": "array",
+      "description": "Matching Service resources.",
+      "items": {
+        "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.services/comcom-service-list/schemas/resource.schema.json"
+      },
+      "maxItems": 100
+    },
+    "nextCursor": {
+      "type": "string",
+      "description": "Opaque continuation cursor.",
+      "maxLength": 500
+    }
+  }
+}

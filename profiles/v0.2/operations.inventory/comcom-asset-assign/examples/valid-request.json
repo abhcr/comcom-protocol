@@ -1,0 +1,8 @@
+{
+  "capability": "comcom.asset.assign",
+  "parameters": {
+    "assetId": "https://business.example/asset/example",
+    "expectedRevision": 0,
+    "changes": {}
+  }
+}

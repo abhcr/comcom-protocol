@@ -1,0 +1,50 @@
+{
+  "id": "comcom.review.publish",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "operations.communications",
+  "batch": 4,
+  "title": "Review Publish",
+  "purpose": "Publish review using the typed Comcom v0.2 profile.",
+  "requestKind": "event",
+  "resourceType": "Review",
+  "actors": {
+    "initiator": "publisher",
+    "responder": "inboxReceiver"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "anonymousAllowed",
+  "executionModes": [
+    "synchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-review-publish/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-review-publish/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.communications/comcom-review-publish/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "admission-policy-satisfied"
+  ],
+  "lifecycle": {
+    "states": [],
+    "transitions": []
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": true,
+    "equality": "RFC8785-semantic-projection"
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient"
+  ],
+  "standards": [
+    "https://www.w3.org/TR/activitystreams-vocabulary/"
+  ]
+}

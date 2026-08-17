@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.relationship.request",
+  "parameters": {
+    "relationship": {
+      "subjectId": "https://business.example/subjectId/example",
+      "issuerId": "https://business.example/issuerId/example",
+      "referenceNumber": "example"
+    }
+  }
+}

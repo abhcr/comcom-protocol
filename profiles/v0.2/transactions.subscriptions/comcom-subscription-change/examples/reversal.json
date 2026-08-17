@@ -1,0 +1,4 @@
+{
+  "capability": "comcom.subscription.cancel",
+  "originalResource": "https://business.example/subscription/example"
+}

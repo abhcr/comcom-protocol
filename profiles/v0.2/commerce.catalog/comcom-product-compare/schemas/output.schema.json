@@ -1,0 +1,29 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.catalog/comcom-product-compare/schemas/output.schema.json",
+  "title": "Product Compare output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "items"
+  ],
+  "properties": {
+    "status": {
+      "const": "completed"
+    },
+    "items": {
+      "type": "array",
+      "description": "Matching Product resources.",
+      "items": {
+        "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.catalog/comcom-product-compare/schemas/resource.schema.json"
+      },
+      "maxItems": 100
+    },
+    "nextCursor": {
+      "type": "string",
+      "description": "Opaque continuation cursor.",
+      "maxLength": 500
+    }
+  }
+}

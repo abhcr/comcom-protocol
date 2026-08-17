@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.slot.hold",
+  "parameters": {
+    "slot": {
+      "offeringId": "https://business.example/offeringId/example",
+      "customerId": "https://business.example/customerId/example",
+      "providerId": "https://business.example/providerId/example"
+    }
+  }
+}

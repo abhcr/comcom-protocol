@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.compliance.report.submit",
+  "parameters": {
+    "complianceReport": {
+      "subjectId": "https://business.example/subjectId/example",
+      "issuerId": "https://business.example/issuerId/example",
+      "referenceNumber": "example"
+    }
+  }
+}

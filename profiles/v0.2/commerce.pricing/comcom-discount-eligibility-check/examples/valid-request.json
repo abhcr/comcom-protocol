@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.discount.eligibility.check",
+  "parameters": {
+    "discountEligibilityId": "https://business.example/discountEligibility/example"
+  }
+}

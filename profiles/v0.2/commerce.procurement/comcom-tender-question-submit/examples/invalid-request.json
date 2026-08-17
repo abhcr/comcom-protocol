@@ -1,0 +1,15 @@
+{
+  "instance": {
+    "parameters": {
+      "tenderQuestion": {
+        "buyerId": "https://business.example/buyerId/example",
+        "sellerId": "https://business.example/sellerId/example",
+        "supplierId": "https://business.example/supplierId/example"
+      }
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

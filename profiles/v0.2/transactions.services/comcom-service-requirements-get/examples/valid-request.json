@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.service.requirements.get",
+  "parameters": {
+    "serviceRequirementsId": "https://business.example/serviceRequirements/example"
+  }
+}

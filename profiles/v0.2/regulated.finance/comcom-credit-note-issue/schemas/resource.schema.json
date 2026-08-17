@@ -1,0 +1,137 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.finance/comcom-credit-note-issue/schemas/resource.schema.json",
+  "title": "CreditNote resource for comcom.credit.note.issue",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "type",
+    "state",
+    "revision",
+    "createdAt",
+    "updatedAt"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Globally unique resource URI.",
+      "format": "uri-reference"
+    },
+    "type": {
+      "const": "CreditNote"
+    },
+    "state": {
+      "enum": [
+        "proposed",
+        "accepted",
+        "rejected",
+        "active",
+        "completed",
+        "cancelled"
+      ]
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Creation instant.",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Last update instant.",
+      "format": "date-time"
+    },
+    "statusCode": {
+      "type": "string",
+      "description": "Profile-defined business state.",
+      "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+    },
+    "accountId": {
+      "type": "string",
+      "description": "Account URI.",
+      "format": "uri-reference"
+    },
+    "payerId": {
+      "type": "string",
+      "description": "Payer URI.",
+      "format": "uri-reference"
+    },
+    "payeeId": {
+      "type": "string",
+      "description": "Payee URI.",
+      "format": "uri-reference"
+    },
+    "amount": {
+      "type": "string",
+      "description": "Monetary amount.",
+      "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+    },
+    "currency": {
+      "type": "string",
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "dueAt": {
+      "type": "string",
+      "description": "Payment or document due instant.",
+      "format": "date-time"
+    },
+    "validUntil": {
+      "type": "string",
+      "description": "Validity expiry.",
+      "format": "date-time"
+    },
+    "lines": {
+      "type": "array",
+      "description": "Typed monetary lines.",
+      "items": {
+        "type": "object",
+        "description": "A priced line.",
+        "additionalProperties": false,
+        "required": [
+          "itemId",
+          "quantity",
+          "unitCode"
+        ],
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "description": "Item URI.",
+            "format": "uri-reference"
+          },
+          "description": {
+            "type": "string",
+            "description": "Line description.",
+            "maxLength": 500
+          },
+          "quantity": {
+            "type": "string",
+            "description": "Requested quantity.",
+            "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+          },
+          "unitCode": {
+            "type": "string",
+            "description": "UNECE or profile-declared unit code.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "unitPrice": {
+            "type": "string",
+            "description": "Unit price.",
+            "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+          },
+          "currency": {
+            "type": "string",
+            "description": "ISO 4217 currency code.",
+            "pattern": "^[A-Z]{3}$"
+          }
+        }
+      },
+      "minItems": 1,
+      "maxItems": 1000
+    }
+  }
+}

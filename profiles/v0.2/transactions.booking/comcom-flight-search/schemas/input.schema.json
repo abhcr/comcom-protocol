@@ -1,0 +1,91 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-flight-search/schemas/input.schema.json",
+  "title": "Flight Search input",
+  "description": "Search for flight using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.flight.search"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Typed Flight discovery parameters.",
+      "additionalProperties": false,
+      "required": [
+        "filters"
+      ],
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+          "maxLength": 500
+        },
+        "filters": {
+          "type": "object",
+          "description": "Typed Flight filters.",
+          "additionalProperties": false,
+          "required": [],
+          "properties": {
+            "statusCode": {
+              "type": "string",
+              "description": "Profile-defined business state.",
+              "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+            },
+            "offeringId": {
+              "type": "string",
+              "description": "Bookable offering or service URI.",
+              "format": "uri-reference"
+            },
+            "customerId": {
+              "type": "string",
+              "description": "Customer URI.",
+              "format": "uri-reference"
+            },
+            "providerId": {
+              "type": "string",
+              "description": "Provider URI.",
+              "format": "uri-reference"
+            },
+            "start": {
+              "type": "string",
+              "description": "Inclusive start instant.",
+              "format": "date-time"
+            },
+            "end": {
+              "type": "string",
+              "description": "Exclusive end instant.",
+              "format": "date-time"
+            },
+            "timeZone": {
+              "type": "string",
+              "description": "IANA time-zone identifier.",
+              "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+            },
+            "locationId": {
+              "type": "string",
+              "description": "Location URI.",
+              "format": "uri-reference"
+            }
+          }
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 20
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    }
+  }
+}

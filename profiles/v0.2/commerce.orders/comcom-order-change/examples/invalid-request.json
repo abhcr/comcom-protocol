@@ -1,0 +1,13 @@
+{
+  "instance": {
+    "parameters": {
+      "orderId": "https://business.example/order/example",
+      "expectedRevision": 0,
+      "changes": {}
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

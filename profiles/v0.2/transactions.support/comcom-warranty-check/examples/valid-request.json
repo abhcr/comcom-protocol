@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.warranty.check",
+  "parameters": {
+    "warrantyId": "https://business.example/warranty/example"
+  }
+}

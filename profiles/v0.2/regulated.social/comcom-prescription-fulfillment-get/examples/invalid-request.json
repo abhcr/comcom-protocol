@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "prescriptionFulfillmentId": "https://business.example/prescriptionFulfillment/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

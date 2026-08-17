@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.consent.grant-allowed-1",
+      "from": "requested",
+      "to": "granted",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.consent.grant-forbidden-1",
+      "from": "granted",
+      "to": "requested",
+      "expected": "forbidden"
+    }
+  ]
+}

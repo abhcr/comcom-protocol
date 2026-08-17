@@ -1,0 +1,86 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.support/comcom-warranty-claim/schemas/resource.schema.json",
+  "title": "WarrantyClaim resource for comcom.warranty.claim",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "type",
+    "state",
+    "revision",
+    "createdAt",
+    "updatedAt"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Globally unique resource URI.",
+      "format": "uri-reference"
+    },
+    "type": {
+      "const": "WarrantyClaim"
+    },
+    "state": {
+      "enum": [
+        "submitted",
+        "accepted",
+        "rejected"
+      ]
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Creation instant.",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Last update instant.",
+      "format": "date-time"
+    },
+    "statusCode": {
+      "type": "string",
+      "description": "Profile-defined business state.",
+      "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+    },
+    "customerId": {
+      "type": "string",
+      "description": "Customer URI.",
+      "format": "uri-reference"
+    },
+    "itemId": {
+      "type": "string",
+      "description": "Affected product, order, or service URI.",
+      "format": "uri-reference"
+    },
+    "categoryCode": {
+      "type": "string",
+      "description": "Case category code.",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "reasonCode": {
+      "type": "string",
+      "description": "Reason code.",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "summary": {
+      "type": "string",
+      "description": "Case summary.",
+      "maxLength": 1000
+    },
+    "requestedResolutionCode": {
+      "type": "string",
+      "description": "Requested resolution code.",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "openedAt": {
+      "type": "string",
+      "description": "Case creation instant.",
+      "format": "date-time"
+    }
+  }
+}

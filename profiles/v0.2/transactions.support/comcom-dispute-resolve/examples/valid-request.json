@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.dispute.resolve",
+  "parameters": {
+    "disputeResolveId": "https://business.example/disputeResolve/example"
+  }
+}

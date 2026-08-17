@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.return.authorize",
+  "parameters": {
+    "returnId": "https://business.example/return/example"
+  }
+}

@@ -1,0 +1,3105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/transactions.scheduling.bundle.json",
+  "profile": "transactions.scheduling",
+  "version": "0.2.0",
+  "capabilityIds": [
+    "comcom.appointment.cancel",
+    "comcom.appointment.checkin",
+    "comcom.appointment.complete",
+    "comcom.appointment.create",
+    "comcom.appointment.get",
+    "comcom.appointment.reschedule",
+    "comcom.availability.calendar.get",
+    "comcom.availability.check",
+    "comcom.slot.hold",
+    "comcom.slot.release"
+  ],
+  "capabilities": [
+    {
+      "definition": {
+        "id": "comcom.appointment.cancel",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.scheduling",
+        "batch": 3,
+        "title": "Appointment Cancel",
+        "purpose": "Cancel appointment using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Appointment",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-cancel/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-cancel/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-cancel/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "accepted",
+            "active",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "accepted",
+              "to": "cancelled"
+            },
+            {
+              "from": "active",
+              "to": "cancelled"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.appointment.cancel",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.appointment.cancel",
+          "parameters": {
+            "appointmentId": "https://business.example/appointment/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "appointmentId": "https://business.example/appointment/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.appointment.cancel-allowed-1",
+              "from": "accepted",
+              "to": "cancelled",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.appointment.cancel-allowed-2",
+              "from": "active",
+              "to": "cancelled",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.appointment.cancel-forbidden-1",
+              "from": "cancelled",
+              "to": "accepted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/appointment/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.appointment.checkin",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.scheduling",
+        "batch": 3,
+        "title": "Appointment Checkin",
+        "purpose": "Check in to appointment using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Appointment",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-checkin/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-checkin/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-checkin/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "active",
+              "revisionRequired": true
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.appointment.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.appointment.checkin",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.appointment.checkin",
+          "parameters": {
+            "appointmentId": "https://business.example/appointment/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "appointmentId": "https://business.example/appointment/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.appointment.checkin-allowed-1",
+              "from": "active",
+              "to": "active",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": []
+        },
+        "reversal": {
+          "capability": "comcom.appointment.cancel",
+          "originalResource": "https://business.example/appointment/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.appointment.complete",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.scheduling",
+        "batch": 3,
+        "title": "Appointment Complete",
+        "purpose": "Complete appointment using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Appointment",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-complete/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-complete/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-complete/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "accepted",
+            "active",
+            "inProgress",
+            "completed"
+          ],
+          "transitions": [
+            {
+              "from": "accepted",
+              "to": "completed"
+            },
+            {
+              "from": "active",
+              "to": "completed"
+            },
+            {
+              "from": "inProgress",
+              "to": "completed"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.appointment.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.appointment.complete",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.appointment.complete",
+          "parameters": {
+            "appointmentId": "https://business.example/appointment/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "appointmentId": "https://business.example/appointment/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.appointment.complete-allowed-1",
+              "from": "accepted",
+              "to": "completed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.appointment.complete-allowed-2",
+              "from": "active",
+              "to": "completed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.appointment.complete-allowed-3",
+              "from": "inProgress",
+              "to": "completed",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.appointment.complete-forbidden-1",
+              "from": "completed",
+              "to": "accepted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "capability": "comcom.appointment.cancel",
+          "originalResource": "https://business.example/appointment/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.appointment.create",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.scheduling",
+        "batch": 3,
+        "title": "Appointment Create",
+        "purpose": "Create appointment using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Appointment",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-create/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-create/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-create/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.appointment.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.appointment.create",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.appointment.create",
+          "parameters": {
+            "appointment": {
+              "offeringId": "https://business.example/offeringId/example",
+              "customerId": "https://business.example/customerId/example",
+              "providerId": "https://business.example/providerId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "appointment": {
+                "offeringId": "https://business.example/offeringId/example",
+                "customerId": "https://business.example/customerId/example",
+                "providerId": "https://business.example/providerId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.appointment.create-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.appointment.create-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.appointment.create-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.appointment.create-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "capability": "comcom.appointment.cancel",
+          "originalResource": "https://business.example/appointment/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.appointment.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.scheduling",
+        "batch": 3,
+        "title": "Appointment Get",
+        "purpose": "Retrieve appointment using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Appointment",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.appointment.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.appointment.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.appointment.get",
+          "parameters": {
+            "appointmentId": "https://business.example/appointment/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "appointmentId": "https://business.example/appointment/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "capability": "comcom.appointment.cancel",
+          "originalResource": "https://business.example/appointment/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.appointment.reschedule",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.scheduling",
+        "batch": 3,
+        "title": "Appointment Reschedule",
+        "purpose": "Reschedule appointment using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Appointment",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-reschedule/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-reschedule/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-reschedule/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "active",
+              "revisionRequired": true
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "explicitCapability",
+          "capability": "comcom.appointment.cancel"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.appointment.reschedule",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.appointment.reschedule",
+          "parameters": {
+            "appointmentId": "https://business.example/appointment/example",
+            "expectedRevision": 0,
+            "changes": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "appointmentId": "https://business.example/appointment/example",
+              "expectedRevision": 0,
+              "changes": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.appointment.reschedule-allowed-1",
+              "from": "active",
+              "to": "active",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": []
+        },
+        "reversal": {
+          "capability": "comcom.appointment.cancel",
+          "originalResource": "https://business.example/appointment/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.availability.calendar.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.scheduling",
+        "batch": 3,
+        "title": "Availability Calendar Get",
+        "purpose": "Retrieve availability calendar using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "AvailabilityCalendar",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-availability-calendar-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-availability-calendar-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-availability-calendar-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.availability.calendar.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.availability.calendar.get",
+          "parameters": {
+            "availabilityCalendarId": "https://business.example/availabilityCalendar/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "availabilityCalendarId": "https://business.example/availabilityCalendar/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/availabilityCalendar/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.availability.check",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.scheduling",
+        "batch": 3,
+        "title": "Availability Check",
+        "purpose": "Check availability using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Availability",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-availability-check/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-availability-check/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-availability-check/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.availability.check",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.availability.check",
+          "parameters": {
+            "availabilityId": "https://business.example/availability/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "availabilityId": "https://business.example/availability/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/availability/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.slot.hold",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.scheduling",
+        "batch": 3,
+        "title": "Slot Hold",
+        "purpose": "Place a hold on slot using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Slot",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-slot-hold/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-slot-hold/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-slot-hold/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "available",
+            "held"
+          ],
+          "transitions": [
+            {
+              "from": "available",
+              "to": "held"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.slot.hold",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.slot.hold",
+          "parameters": {
+            "slot": {
+              "offeringId": "https://business.example/offeringId/example",
+              "customerId": "https://business.example/customerId/example",
+              "providerId": "https://business.example/providerId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "slot": {
+                "offeringId": "https://business.example/offeringId/example",
+                "customerId": "https://business.example/customerId/example",
+                "providerId": "https://business.example/providerId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.slot.hold-allowed-1",
+              "from": "available",
+              "to": "held",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.slot.hold-forbidden-1",
+              "from": "held",
+              "to": "available",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/slot/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.slot.release",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "transactions.scheduling",
+        "batch": 3,
+        "title": "Slot Release",
+        "purpose": "Release slot using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Slot",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-slot-release/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-slot-release/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-slot-release/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active",
+            "released"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "released"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.slot.release",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://www.rfc-editor.org/rfc/rfc5545",
+          "https://schema.org/ReserveAction"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.slot.release",
+          "parameters": {
+            "slotId": "https://business.example/slot/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "slotId": "https://business.example/slot/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.slot.release-allowed-1",
+              "from": "active",
+              "to": "released",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.slot.release-forbidden-1",
+              "from": "released",
+              "to": "active",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/slot/example"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-cancel__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-cancel/schemas/input.schema.json",
+      "title": "Appointment Cancel input",
+      "description": "Cancel appointment using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.appointment.cancel"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Appointment Cancel parameters.",
+          "additionalProperties": false,
+          "required": [
+            "appointmentId"
+          ],
+          "properties": {
+            "appointmentId": {
+              "type": "string",
+              "description": "Appointment URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-cancel__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-cancel/schemas/output.schema.json",
+      "title": "Appointment Cancel output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-cancel/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-cancel__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-cancel/schemas/resource.schema.json",
+      "title": "Appointment resource for comcom.appointment.cancel",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Appointment"
+        },
+        "state": {
+          "enum": [
+            "accepted",
+            "active",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-checkin__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-checkin/schemas/input.schema.json",
+      "title": "Appointment Checkin input",
+      "description": "Check in to appointment using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.appointment.checkin"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Appointment Checkin parameters.",
+          "additionalProperties": false,
+          "required": [
+            "appointmentId"
+          ],
+          "properties": {
+            "appointmentId": {
+              "type": "string",
+              "description": "Appointment URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-checkin__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-checkin/schemas/output.schema.json",
+      "title": "Appointment Checkin output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-checkin/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-checkin__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-checkin/schemas/resource.schema.json",
+      "title": "Appointment resource for comcom.appointment.checkin",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Appointment"
+        },
+        "state": {
+          "enum": [
+            "active"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-complete__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-complete/schemas/input.schema.json",
+      "title": "Appointment Complete input",
+      "description": "Complete appointment using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.appointment.complete"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Appointment Complete parameters.",
+          "additionalProperties": false,
+          "required": [
+            "appointmentId"
+          ],
+          "properties": {
+            "appointmentId": {
+              "type": "string",
+              "description": "Appointment URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-complete__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-complete/schemas/output.schema.json",
+      "title": "Appointment Complete output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-complete/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-complete__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-complete/schemas/resource.schema.json",
+      "title": "Appointment resource for comcom.appointment.complete",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Appointment"
+        },
+        "state": {
+          "enum": [
+            "accepted",
+            "active",
+            "inProgress",
+            "completed"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-create__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-create/schemas/input.schema.json",
+      "title": "Appointment Create input",
+      "description": "Create appointment using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.appointment.create"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Appointment Create parameters.",
+          "additionalProperties": false,
+          "required": [
+            "appointment"
+          ],
+          "properties": {
+            "appointment": {
+              "type": "object",
+              "description": "Typed Appointment data.",
+              "additionalProperties": false,
+              "required": [
+                "offeringId",
+                "customerId",
+                "providerId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "partySize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-create__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-create/schemas/output.schema.json",
+      "title": "Appointment Create output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-create/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-create__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-create/schemas/resource.schema.json",
+      "title": "Appointment resource for comcom.appointment.create",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Appointment"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-get/schemas/input.schema.json",
+      "title": "Appointment Get input",
+      "description": "Retrieve appointment using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.appointment.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the Appointment to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "appointmentId"
+          ],
+          "properties": {
+            "appointmentId": {
+              "type": "string",
+              "description": "Appointment URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-get/schemas/output.schema.json",
+      "title": "Appointment Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-get/schemas/resource.schema.json",
+      "title": "Appointment resource for comcom.appointment.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Appointment"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-reschedule__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-reschedule/schemas/input.schema.json",
+      "title": "Appointment Reschedule input",
+      "description": "Reschedule appointment using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.appointment.reschedule"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Appointment Reschedule parameters.",
+          "additionalProperties": false,
+          "required": [
+            "appointmentId",
+            "expectedRevision",
+            "changes"
+          ],
+          "properties": {
+            "appointmentId": {
+              "type": "string",
+              "description": "Appointment URI.",
+              "format": "uri-reference"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "changes": {
+              "type": "object",
+              "description": "Permitted Appointment changes.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "partySize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-reschedule__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-reschedule/schemas/output.schema.json",
+      "title": "Appointment Reschedule output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-reschedule/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-appointment-reschedule__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-appointment-reschedule/schemas/resource.schema.json",
+      "title": "Appointment resource for comcom.appointment.reschedule",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Appointment"
+        },
+        "state": {
+          "enum": [
+            "active"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-availability-calendar-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-availability-calendar-get/schemas/input.schema.json",
+      "title": "Availability Calendar Get input",
+      "description": "Retrieve availability calendar using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.availability.calendar.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the AvailabilityCalendar to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "availabilityCalendarId"
+          ],
+          "properties": {
+            "availabilityCalendarId": {
+              "type": "string",
+              "description": "AvailabilityCalendar URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-availability-calendar-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-availability-calendar-get/schemas/output.schema.json",
+      "title": "Availability Calendar Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-availability-calendar-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-availability-calendar-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-availability-calendar-get/schemas/resource.schema.json",
+      "title": "AvailabilityCalendar resource for comcom.availability.calendar.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "AvailabilityCalendar"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-availability-check__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-availability-check/schemas/input.schema.json",
+      "title": "Availability Check input",
+      "description": "Check availability using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.availability.check"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the Availability to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "availabilityId"
+          ],
+          "properties": {
+            "availabilityId": {
+              "type": "string",
+              "description": "Availability URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-availability-check__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-availability-check/schemas/output.schema.json",
+      "title": "Availability Check output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-availability-check/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-availability-check__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-availability-check/schemas/resource.schema.json",
+      "title": "Availability resource for comcom.availability.check",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Availability"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-slot-hold__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-slot-hold/schemas/input.schema.json",
+      "title": "Slot Hold input",
+      "description": "Place a hold on slot using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.slot.hold"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Slot Hold parameters.",
+          "additionalProperties": false,
+          "required": [
+            "slot"
+          ],
+          "properties": {
+            "slot": {
+              "type": "object",
+              "description": "Typed Slot data.",
+              "additionalProperties": false,
+              "required": [
+                "offeringId",
+                "customerId",
+                "providerId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "partySize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-slot-hold__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-slot-hold/schemas/output.schema.json",
+      "title": "Slot Hold output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-slot-hold/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-slot-hold__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-slot-hold/schemas/resource.schema.json",
+      "title": "Slot resource for comcom.slot.hold",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Slot"
+        },
+        "state": {
+          "enum": [
+            "available",
+            "held"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-slot-release__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-slot-release/schemas/input.schema.json",
+      "title": "Slot Release input",
+      "description": "Release slot using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.slot.release"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Slot Release parameters.",
+          "additionalProperties": false,
+          "required": [
+            "slotId"
+          ],
+          "properties": {
+            "slotId": {
+              "type": "string",
+              "description": "Slot URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-slot-release__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-slot-release/schemas/output.schema.json",
+      "title": "Slot Release output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-slot-release/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__transactions.scheduling__comcom-slot-release__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.scheduling/comcom-slot-release/schemas/resource.schema.json",
+      "title": "Slot resource for comcom.slot.release",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Slot"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "released"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    }
+  }
+}

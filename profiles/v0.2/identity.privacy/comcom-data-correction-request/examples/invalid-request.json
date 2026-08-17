@@ -1,0 +1,15 @@
+{
+  "instance": {
+    "parameters": {
+      "dataCorrection": {
+        "subjectId": "https://business.example/subjectId/example",
+        "issuerId": "https://business.example/issuerId/example",
+        "referenceNumber": "example"
+      }
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

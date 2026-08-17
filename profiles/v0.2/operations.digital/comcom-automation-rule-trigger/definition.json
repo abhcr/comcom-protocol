@@ -1,0 +1,63 @@
+{
+  "id": "comcom.automation.rule.trigger",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "operations.digital",
+  "batch": 4,
+  "title": "Automation Rule Trigger",
+  "purpose": "Trigger automation rule using the typed Comcom v0.2 profile.",
+  "requestKind": "command",
+  "resourceType": "AutomationRule",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "authenticated",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-automation-rule-trigger/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-automation-rule-trigger/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-automation-rule-trigger/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "authenticated-sender",
+    "authorized-principal",
+    "valid-resource-state"
+  ],
+  "lifecycle": {
+    "states": [
+      "active"
+    ],
+    "transitions": [
+      {
+        "from": "active",
+        "to": "active",
+        "revisionRequired": true
+      }
+    ]
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": true,
+    "equality": "RFC8785-semantic-projection"
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient",
+    "invalid-state-transition",
+    "idempotency-conflict"
+  ],
+  "standards": [
+    "https://www.w3.org/TR/wot-thing-description11/"
+  ]
+}

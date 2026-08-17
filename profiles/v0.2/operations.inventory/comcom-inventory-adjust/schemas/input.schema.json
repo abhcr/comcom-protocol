@@ -1,0 +1,86 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.inventory/comcom-inventory-adjust/schemas/input.schema.json",
+  "title": "Inventory Adjust input",
+  "description": "Adjust inventory using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.inventory.adjust"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Inventory Adjust parameters.",
+      "additionalProperties": false,
+      "required": [
+        "inventoryId",
+        "expectedRevision",
+        "changes"
+      ],
+      "properties": {
+        "inventoryId": {
+          "type": "string",
+          "description": "Inventory URI.",
+          "format": "uri-reference"
+        },
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "changes": {
+          "type": "object",
+          "description": "Permitted Inventory changes.",
+          "additionalProperties": false,
+          "required": [],
+          "properties": {
+            "statusCode": {
+              "type": "string",
+              "description": "Profile-defined business state.",
+              "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+            },
+            "assetId": {
+              "type": "string",
+              "description": "Asset or device URI.",
+              "format": "uri-reference"
+            },
+            "locationId": {
+              "type": "string",
+              "description": "Location URI.",
+              "format": "uri-reference"
+            },
+            "metricCode": {
+              "type": "string",
+              "description": "Metric or operation code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "value": {
+              "type": "string",
+              "description": "Measured or requested numeric value.",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            },
+            "unitCode": {
+              "type": "string",
+              "description": "UNECE or profile-declared unit code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "observedAt": {
+              "type": "string",
+              "description": "Observation instant.",
+              "format": "date-time"
+            },
+            "commandCode": {
+              "type": "string",
+              "description": "Command or rule code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

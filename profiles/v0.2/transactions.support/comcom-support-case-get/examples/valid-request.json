@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.support.case.get",
+  "parameters": {
+    "supportCaseId": "https://business.example/supportCase/example"
+  }
+}

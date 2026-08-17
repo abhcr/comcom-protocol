@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.utility.meter.reading.submit-allowed-1",
+      "from": "none",
+      "to": "submitted",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.utility.meter.reading.submit-forbidden-1",
+      "from": "rejected",
+      "to": "submitted",
+      "expected": "forbidden"
+    }
+  ]
+}

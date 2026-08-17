@@ -1,0 +1,8 @@
+{
+  "capability": "comcom.order.change",
+  "parameters": {
+    "orderId": "https://business.example/order/example",
+    "expectedRevision": 0,
+    "changes": {}
+  }
+}

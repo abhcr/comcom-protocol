@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "returnStatusId": "https://business.example/returnStatus/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.permit.status.get",
+  "parameters": {
+    "permitStatusId": "https://business.example/permitStatus/example"
+  }
+}

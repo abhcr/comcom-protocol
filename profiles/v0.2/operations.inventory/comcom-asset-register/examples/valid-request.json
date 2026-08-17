@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.asset.register",
+  "parameters": {
+    "asset": {
+      "assetId": "https://business.example/assetId/example",
+      "locationId": "https://business.example/locationId/example",
+      "metricCode": "example"
+    }
+  }
+}

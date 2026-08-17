@@ -1,0 +1,13 @@
+{
+  "instance": {
+    "parameters": {
+      "interviewId": "https://business.example/interview/example",
+      "expectedRevision": 0,
+      "changes": {}
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

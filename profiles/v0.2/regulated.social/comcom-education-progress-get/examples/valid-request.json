@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.education.progress.get",
+  "parameters": {
+    "educationProgressId": "https://business.example/educationProgress/example"
+  }
+}

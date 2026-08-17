@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.relationships/comcom-identity-verify/schemas/input.schema.json",
+  "title": "Identity Verify input",
+  "description": "Verify identity using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.identity.verify"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the Identity to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "identityId"
+      ],
+      "properties": {
+        "identityId": {
+          "type": "string",
+          "description": "Identity URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

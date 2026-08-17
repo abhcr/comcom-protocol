@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "membershipId": "https://business.example/membership/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

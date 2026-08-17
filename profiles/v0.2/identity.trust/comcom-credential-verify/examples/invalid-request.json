@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "credentialId": "https://business.example/credential/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

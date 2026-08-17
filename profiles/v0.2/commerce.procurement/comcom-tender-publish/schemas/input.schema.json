@@ -1,0 +1,133 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.procurement/comcom-tender-publish/schemas/input.schema.json",
+  "title": "Tender Publish input",
+  "description": "Publish tender using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.tender.publish"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Tender Publish parameters.",
+      "additionalProperties": false,
+      "required": [
+        "tender"
+      ],
+      "properties": {
+        "tender": {
+          "type": "object",
+          "description": "Typed Tender data.",
+          "additionalProperties": false,
+          "required": [
+            "buyerId",
+            "sellerId",
+            "supplierId"
+          ],
+          "properties": {
+            "statusCode": {
+              "type": "string",
+              "description": "Profile-defined business state.",
+              "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+            },
+            "buyerId": {
+              "type": "string",
+              "description": "Buyer URI.",
+              "format": "uri-reference"
+            },
+            "sellerId": {
+              "type": "string",
+              "description": "Seller URI.",
+              "format": "uri-reference"
+            },
+            "supplierId": {
+              "type": "string",
+              "description": "Supplier URI.",
+              "format": "uri-reference"
+            },
+            "referenceNumber": {
+              "type": "string",
+              "description": "Business document reference.",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "currency": {
+              "type": "string",
+              "description": "ISO 4217 currency code.",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "total": {
+              "type": "string",
+              "description": "Document total.",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            },
+            "lines": {
+              "type": "array",
+              "description": "Typed trade lines.",
+              "items": {
+                "type": "object",
+                "description": "A priced line.",
+                "additionalProperties": false,
+                "required": [
+                  "itemId",
+                  "quantity",
+                  "unitCode"
+                ],
+                "properties": {
+                  "itemId": {
+                    "type": "string",
+                    "description": "Item URI.",
+                    "format": "uri-reference"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Line description.",
+                    "maxLength": 500
+                  },
+                  "quantity": {
+                    "type": "string",
+                    "description": "Requested quantity.",
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                  },
+                  "unitCode": {
+                    "type": "string",
+                    "description": "UNECE or profile-declared unit code.",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                  },
+                  "unitPrice": {
+                    "type": "string",
+                    "description": "Unit price.",
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "ISO 4217 currency code.",
+                    "pattern": "^[A-Z]{3}$"
+                  }
+                }
+              },
+              "minItems": 1,
+              "maxItems": 1000
+            },
+            "validUntil": {
+              "type": "string",
+              "description": "Validity expiry.",
+              "format": "date-time"
+            }
+          }
+        },
+        "requestedAt": {
+          "type": "string",
+          "description": "Requested effective instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

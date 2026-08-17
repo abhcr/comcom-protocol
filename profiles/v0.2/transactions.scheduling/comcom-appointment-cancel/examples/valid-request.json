@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.appointment.cancel",
+  "parameters": {
+    "appointmentId": "https://business.example/appointment/example"
+  }
+}

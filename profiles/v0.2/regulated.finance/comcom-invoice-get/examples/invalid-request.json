@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "invoiceId": "https://business.example/invoice/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

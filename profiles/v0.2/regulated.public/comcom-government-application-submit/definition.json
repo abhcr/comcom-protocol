@@ -1,0 +1,64 @@
+{
+  "id": "comcom.government.application.submit",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "regulated.public",
+  "batch": 6,
+  "title": "Government Application Submit",
+  "purpose": "Submit government application using the typed Comcom v0.2 profile.",
+  "requestKind": "command",
+  "resourceType": "GovernmentApplication",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "authenticated",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-submit/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-submit/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-government-application-submit/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "authenticated-sender",
+    "authorized-principal",
+    "valid-resource-state"
+  ],
+  "lifecycle": {
+    "states": [
+      "submitted",
+      "accepted",
+      "rejected"
+    ],
+    "transitions": [
+      {
+        "from": "none",
+        "to": "submitted"
+      }
+    ]
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": true,
+    "equality": "RFC8785-semantic-projection"
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient",
+    "invalid-state-transition",
+    "idempotency-conflict"
+  ],
+  "standards": [
+    "https://schema.org/GovernmentService"
+  ]
+}

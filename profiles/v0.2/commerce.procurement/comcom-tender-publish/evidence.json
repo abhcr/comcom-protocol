@@ -1,0 +1,19 @@
+{
+  "capability": "comcom.tender.publish",
+  "version": "0.2.0",
+  "domainReview": {
+    "completed": false,
+    "references": []
+  },
+  "primaryStandards": [
+    "https://docs.oasis-open.org/ubl/UBL-2.4.html",
+    "https://unece.org/trade/documents/2019/08/brs-buy-ship-pay-reference-data-model-bsp-rdm"
+  ],
+  "securityReview": {
+    "completed": false,
+    "references": []
+  },
+  "implementations": [],
+  "interoperabilityJourneys": [],
+  "conformanceDigests": []
+}

@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.finance.account.balance.get",
+  "parameters": {
+    "financeAccountBalanceId": "https://business.example/financeAccountBalance/example"
+  }
+}

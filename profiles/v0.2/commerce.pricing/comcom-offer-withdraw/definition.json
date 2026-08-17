@@ -1,0 +1,64 @@
+{
+  "id": "comcom.offer.withdraw",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "commerce.pricing",
+  "batch": 2,
+  "title": "Offer Withdraw",
+  "purpose": "Withdraw offer using the typed Comcom v0.2 profile.",
+  "requestKind": "command",
+  "resourceType": "Offer",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "authenticated",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-withdraw/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-withdraw/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-offer-withdraw/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "authenticated-sender",
+    "authorized-principal",
+    "valid-resource-state"
+  ],
+  "lifecycle": {
+    "states": [
+      "active",
+      "withdrawn"
+    ],
+    "transitions": [
+      {
+        "from": "active",
+        "to": "withdrawn"
+      }
+    ]
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": true,
+    "equality": "RFC8785-semantic-projection"
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient",
+    "invalid-state-transition",
+    "idempotency-conflict"
+  ],
+  "standards": [
+    "https://schema.org/Offer",
+    "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+  ]
+}

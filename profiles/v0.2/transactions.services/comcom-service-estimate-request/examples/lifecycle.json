@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.service.estimate.request-allowed-1",
+      "from": "none",
+      "to": "submitted",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.service.estimate.request-forbidden-1",
+      "from": "rejected",
+      "to": "submitted",
+      "expected": "forbidden"
+    }
+  ]
+}

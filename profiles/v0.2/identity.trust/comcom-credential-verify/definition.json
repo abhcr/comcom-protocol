@@ -1,0 +1,50 @@
+{
+  "id": "comcom.credential.verify",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "identity.trust",
+  "batch": 5,
+  "title": "Credential Verify",
+  "purpose": "Verify credential using the typed Comcom v0.2 profile.",
+  "requestKind": "query",
+  "resourceType": "Credential",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "anonymousAllowed",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.trust/comcom-credential-verify/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.trust/comcom-credential-verify/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.trust/comcom-credential-verify/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "admission-policy-satisfied"
+  ],
+  "lifecycle": {
+    "states": [],
+    "transitions": []
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": false
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient"
+  ],
+  "standards": [
+    "https://www.w3.org/TR/vc-data-model-2.0/"
+  ]
+}

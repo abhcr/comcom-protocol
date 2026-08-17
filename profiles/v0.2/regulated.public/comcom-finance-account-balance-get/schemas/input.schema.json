@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-finance-account-balance-get/schemas/input.schema.json",
+  "title": "Finance Account Balance Get input",
+  "description": "Retrieve finance account balance using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.finance.account.balance.get"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the FinanceAccountBalance to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "financeAccountBalanceId"
+      ],
+      "properties": {
+        "financeAccountBalanceId": {
+          "type": "string",
+          "description": "FinanceAccountBalance URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

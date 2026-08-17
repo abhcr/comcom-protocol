@@ -1,0 +1,24 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.subscription.cancel-allowed-1",
+      "from": "accepted",
+      "to": "cancelled",
+      "expected": "allowed"
+    },
+    {
+      "case": "comcom.subscription.cancel-allowed-2",
+      "from": "active",
+      "to": "cancelled",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.subscription.cancel-forbidden-1",
+      "from": "cancelled",
+      "to": "accepted",
+      "expected": "forbidden"
+    }
+  ]
+}

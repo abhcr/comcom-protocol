@@ -1,0 +1,46 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-media-stream-authorize/schemas/input.schema.json",
+  "title": "Media Stream Authorize input",
+  "description": "Authorize media stream using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.media.stream.authorize"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Media Stream Authorize parameters.",
+      "additionalProperties": false,
+      "required": [
+        "mediaStreamId"
+      ],
+      "properties": {
+        "mediaStreamId": {
+          "type": "string",
+          "description": "MediaStream URI.",
+          "format": "uri-reference"
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Profile-defined reason code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "effectiveAt": {
+          "type": "string",
+          "description": "Requested effective instant.",
+          "format": "date-time"
+        },
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

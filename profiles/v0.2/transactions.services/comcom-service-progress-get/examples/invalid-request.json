@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "serviceProgressId": "https://business.example/serviceProgress/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

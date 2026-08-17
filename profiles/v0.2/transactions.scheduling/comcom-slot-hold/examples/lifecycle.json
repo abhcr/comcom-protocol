@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.slot.hold-allowed-1",
+      "from": "available",
+      "to": "held",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.slot.hold-forbidden-1",
+      "from": "held",
+      "to": "available",
+      "expected": "forbidden"
+    }
+  ]
+}

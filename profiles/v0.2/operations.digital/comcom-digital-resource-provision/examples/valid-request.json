@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.digital.resource.provision",
+  "parameters": {
+    "digitalResource": {
+      "assetId": "https://business.example/assetId/example",
+      "locationId": "https://business.example/locationId/example",
+      "metricCode": "example"
+    }
+  }
+}

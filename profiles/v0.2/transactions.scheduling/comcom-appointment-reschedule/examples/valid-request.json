@@ -1,0 +1,8 @@
+{
+  "capability": "comcom.appointment.reschedule",
+  "parameters": {
+    "appointmentId": "https://business.example/appointment/example",
+    "expectedRevision": 0,
+    "changes": {}
+  }
+}

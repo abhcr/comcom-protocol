@@ -1,0 +1,89 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-rate-list/schemas/input.schema.json",
+  "title": "Rate List input",
+  "description": "List rate using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.rate.list"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Typed Rate discovery parameters.",
+      "additionalProperties": false,
+      "required": [],
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+          "maxLength": 500
+        },
+        "filters": {
+          "type": "object",
+          "description": "Typed Rate filters.",
+          "additionalProperties": false,
+          "required": [],
+          "properties": {
+            "statusCode": {
+              "type": "string",
+              "description": "Profile-defined business state.",
+              "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+            },
+            "accountId": {
+              "type": "string",
+              "description": "Account URI.",
+              "format": "uri-reference"
+            },
+            "payerId": {
+              "type": "string",
+              "description": "Payer URI.",
+              "format": "uri-reference"
+            },
+            "payeeId": {
+              "type": "string",
+              "description": "Payee URI.",
+              "format": "uri-reference"
+            },
+            "amount": {
+              "type": "string",
+              "description": "Monetary amount.",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            },
+            "currency": {
+              "type": "string",
+              "description": "ISO 4217 currency code.",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "dueAt": {
+              "type": "string",
+              "description": "Payment or document due instant.",
+              "format": "date-time"
+            },
+            "validUntil": {
+              "type": "string",
+              "description": "Validity expiry.",
+              "format": "date-time"
+            }
+          }
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 20
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    }
+  }
+}

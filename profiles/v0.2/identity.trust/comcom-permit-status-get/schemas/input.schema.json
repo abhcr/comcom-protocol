@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.trust/comcom-permit-status-get/schemas/input.schema.json",
+  "title": "Permit Status Get input",
+  "description": "Retrieve permit status using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.permit.status.get"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the PermitStatus to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "permitStatusId"
+      ],
+      "properties": {
+        "permitStatusId": {
+          "type": "string",
+          "description": "PermitStatus URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

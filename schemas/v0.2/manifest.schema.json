@@ -1,0 +1,147 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/manifest.schema.json",
+  "title": "Comcom v0.2 capability manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["protocolVersions", "entity", "roles", "serviceOrigins", "profiles", "capabilities", "limits"],
+  "properties": {
+    "protocolVersions": {
+      "type": "array",
+      "items": { "const": "0.2" },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "entity": { "$ref": "entity.schema.json" },
+    "roles": {
+      "type": "array",
+      "items": { "enum": ["responder", "initiator", "inboxReceiver", "asyncResponder"] },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "serviceOrigins": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri", "pattern": "^https://[^/?#]+$" },
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "version", "release", "sha256"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*(?:\\.[a-z][a-z0-9-]*)+$" },
+          "version": { "const": "0.2.0" },
+          "release": { "type": "string", "format": "uri", "pattern": "^https://" },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      },
+      "uniqueItems": true
+    },
+    "securitySchemes": {
+      "type": "object",
+      "propertyNames": { "type": "string", "pattern": "^[A-Za-z0-9._-]+$" },
+      "additionalProperties": { "$ref": "security.schema.json#/$defs/scheme" }
+    },
+    "security": { "$ref": "security.schema.json#/$defs/requirements" },
+    "capabilities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "version", "profile", "direction", "kinds", "inputSchema", "outputSchema", "executionModes"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$" },
+          "version": { "type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$" },
+          "profile": { "type": "string", "pattern": "^[a-z][a-z0-9-]*(?:\\.[a-z][a-z0-9-]*)+$" },
+          "direction": { "enum": ["send", "receive"] },
+          "kinds": {
+            "type": "array",
+            "items": { "enum": ["query", "command", "event"] },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "inputSchema": { "type": "string", "format": "uri", "pattern": "^https://" },
+          "outputSchema": { "type": "string", "format": "uri", "pattern": "^https://" },
+          "executionModes": {
+            "type": "array",
+            "items": { "enum": ["synchronous", "asynchronous"] },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "forms": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["href", "method", "contentType", "executionMode", "security"],
+              "properties": {
+                "href": { "type": "string", "format": "uri", "pattern": "^https://" },
+                "method": { "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"] },
+                "contentType": { "const": "application/comcom+json" },
+                "executionMode": { "enum": ["synchronous", "asynchronous"] },
+                "security": { "$ref": "security.schema.json#/$defs/requirements" },
+                "statusTemplate": { "type": "string", "format": "uri-template", "pattern": "^https://" }
+              }
+            }
+          },
+          "anonymousCommand": { "type": "boolean", "default": false }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "direction": { "const": "receive" } }, "required": ["direction"] },
+            "then": { "required": ["forms"] },
+            "else": { "not": { "required": ["forms"] } }
+          }
+        ]
+      }
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["messageBytes", "schemaBytes", "idempotencyRetentionSeconds"],
+      "properties": {
+        "messageBytes": { "type": "integer", "minimum": 1, "maximum": 1048576 },
+        "schemaBytes": { "type": "integer", "minimum": 1, "maximum": 1048576 },
+        "idempotencyRetentionSeconds": { "type": "integer", "minimum": 1, "maximum": 31536000 },
+        "requestsPerMinute": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "inbox": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["href", "admissions"],
+      "properties": {
+        "href": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "admissions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["capabilities", "topics", "senderIds", "maxBytes", "security"],
+            "properties": {
+              "capabilities": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
+              "topics": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+              "senderIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "format": "uri" } },
+              "maxBytes": { "type": "integer", "minimum": 1, "maximum": 1048576 },
+              "security": { "$ref": "security.schema.json#/$defs/requirements" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "roles": { "contains": { "const": "inboxReceiver" } } }, "required": ["roles"] },
+      "then": { "required": ["inbox"] },
+      "else": { "not": { "required": ["inbox"] } }
+    }
+  ]
+}

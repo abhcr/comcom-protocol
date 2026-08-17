@@ -1,0 +1,17 @@
+{
+  "instance": {
+    "parameters": {
+      "message": {
+        "senderId": "https://business.example/senderId/example",
+        "recipientIds": [
+          "https://business.example/recipientIds/example"
+        ],
+        "topic": "example"
+      }
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

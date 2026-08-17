@@ -1,0 +1,74 @@
+{
+  "id": "comcom.order.complete",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "commerce.orders",
+  "batch": 2,
+  "title": "Order Complete",
+  "purpose": "Complete order using the typed Comcom v0.2 profile.",
+  "requestKind": "command",
+  "resourceType": "Order",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "authenticated",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.orders/comcom-order-complete/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.orders/comcom-order-complete/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.orders/comcom-order-complete/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "authenticated-sender",
+    "authorized-principal",
+    "valid-resource-state"
+  ],
+  "lifecycle": {
+    "states": [
+      "accepted",
+      "active",
+      "inProgress",
+      "completed"
+    ],
+    "transitions": [
+      {
+        "from": "accepted",
+        "to": "completed"
+      },
+      {
+        "from": "active",
+        "to": "completed"
+      },
+      {
+        "from": "inProgress",
+        "to": "completed"
+      }
+    ]
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": true,
+    "equality": "RFC8785-semantic-projection"
+  },
+  "reversal": {
+    "mode": "explicitCapability",
+    "capability": "comcom.order.cancel"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient",
+    "invalid-state-transition",
+    "idempotency-conflict"
+  ],
+  "standards": [
+    "https://docs.oasis-open.org/ubl/UBL-2.4.html"
+  ]
+}

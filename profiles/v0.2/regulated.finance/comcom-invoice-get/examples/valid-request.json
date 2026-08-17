@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.invoice.get",
+  "parameters": {
+    "invoiceId": "https://business.example/invoice/example"
+  }
+}

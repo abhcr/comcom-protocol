@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.payment.confirm-allowed-1",
+      "from": "requested",
+      "to": "accepted",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.payment.confirm-forbidden-1",
+      "from": "accepted",
+      "to": "requested",
+      "expected": "forbidden"
+    }
+  ]
+}

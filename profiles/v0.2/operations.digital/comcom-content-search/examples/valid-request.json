@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.content.search",
+  "parameters": {
+    "filters": {}
+  }
+}

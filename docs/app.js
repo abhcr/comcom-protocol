@@ -1,36 +1,37 @@
-const response = await fetch('./registry/v0.1/capabilities.json');
-const registry = await response.json();
 const search = document.querySelector('#search');
 const list = document.querySelector('#capabilities');
-const domains = document.querySelector('#domains');
+const profiles = document.querySelector('#profiles');
 const count = document.querySelector('#count');
-let selectedDomain = 'all';
-
-const domainNames = [...new Set(registry.capabilities.map(capability => capability.domain))].sort();
-for (const domain of ['all', ...domainNames]) {
-  const button = document.createElement('button');
-  button.textContent = domain === 'all' ? 'All' : domain.replace(/([A-Z])/g, ' $1');
-  button.dataset.domain = domain;
-  button.classList.toggle('active', domain === 'all');
-  button.addEventListener('click', () => {
-    selectedDomain = domain;
-    for (const item of domains.children) item.classList.toggle('active', item === button);
-    render();
-  });
-  domains.append(button);
-}
+const status = document.querySelector('#catalog-status');
+const pageLabel = document.querySelector('#page');
+const previous = document.querySelector('#previous');
+const next = document.querySelector('#next');
+const pageSize = 24;
+let registry;
+let selectedProfile = 'all';
+let currentPage = 1;
 
 function render() {
+  if (!registry) return;
   const query = search.value.trim().toLowerCase();
   const matches = registry.capabilities.filter(capability => {
-    const domainMatch = selectedDomain === 'all' || capability.domain === selectedDomain;
-    const queryMatch = !query || `${capability.id} ${capability.title} ${capability.purpose} ${capability.resourceType}`.toLowerCase().includes(query);
-    return domainMatch && queryMatch;
+    const profileMatch = selectedProfile === 'all' || capability.profile === selectedProfile;
+    const queryMatch = !query || `${capability.id} ${capability.title} ${capability.purpose} ${capability.resourceType} ${capability.profile}`.toLowerCase().includes(query);
+    return profileMatch && queryMatch;
   });
+  const pages = Math.max(1, Math.ceil(matches.length / pageSize));
+  currentPage = Math.min(currentPage, pages);
+  const visible = matches.slice((currentPage - 1) * pageSize, currentPage * pageSize);
   count.textContent = matches.length;
-  list.replaceChildren(...matches.map(capability => {
+  status.textContent = `Showing ${matches.length} result${matches.length === 1 ? '' : 's'}; page ${currentPage} of ${pages}.`;
+  pageLabel.textContent = `Page ${currentPage} of ${pages}`;
+  previous.disabled = currentPage === 1;
+  next.disabled = currentPage === pages;
+  list.replaceChildren(...visible.map(capability => {
     const article = document.createElement('article');
     article.className = 'capability';
+    const link = document.createElement('a');
+    link.href = `./capabilities/${capability.id.replaceAll('.', '-')}.html`;
     const id = document.createElement('small');
     id.textContent = capability.id;
     const title = document.createElement('b');
@@ -38,20 +39,77 @@ function render() {
     const purpose = document.createElement('p');
     purpose.textContent = capability.purpose;
     const tags = document.createElement('div');
-    for (const value of [capability.kind, capability.resourceType]) {
+    tags.className = 'tags';
+    for (const value of [capability.requestKind, capability.status]) {
       const tag = document.createElement('span');
       tag.textContent = value;
       tags.append(tag);
     }
-    article.append(id, title, purpose, tags);
+    link.append(id, title, purpose, tags);
+    article.append(link);
     return article;
   }));
 }
 
-search.addEventListener('input', render);
-document.querySelector('[data-copy="discovery"]').addEventListener('click', async event => {
-  await navigator.clipboard.writeText(document.querySelector('#discovery').textContent);
-  event.currentTarget.textContent = 'Copied';
-  setTimeout(() => { event.currentTarget.textContent = 'Copy'; }, 1200);
+try {
+  const response = await fetch('./registry/v0.2/capabilities.json');
+  if (!response.ok) throw new Error(`registry returned ${response.status}`);
+  registry = await response.json();
+  const profileNames = [...new Set(registry.capabilities.map(capability => capability.profile))].sort();
+  for (const profile of ['all', ...profileNames]) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = profile === 'all' ? 'All profiles' : profile;
+    button.classList.toggle('active', profile === 'all');
+    button.setAttribute('aria-pressed', profile === 'all' ? 'true' : 'false');
+    button.addEventListener('click', () => {
+      selectedProfile = profile;
+      currentPage = 1;
+      for (const item of profiles.children) {
+        const active = item === button;
+        item.classList.toggle('active', active);
+        item.setAttribute('aria-pressed', String(active));
+      }
+      render();
+    });
+    profiles.append(button);
+  }
+  document.querySelector('#js-status').hidden = true;
+  render();
+} catch (error) {
+  status.textContent = 'Interactive catalog unavailable. Use the complete no-JavaScript catalog link below.';
+}
+
+search.addEventListener('input', () => { currentPage = 1; render(); });
+previous.addEventListener('click', () => { currentPage -= 1; render(); document.querySelector('#catalog').scrollIntoView(); });
+next.addEventListener('click', () => { currentPage += 1; render(); document.querySelector('#catalog').scrollIntoView(); });
+
+for (const button of document.querySelectorAll('[data-copy]')) {
+  button.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(document.querySelector(`#${button.dataset.copy}`).textContent);
+    const label = button.textContent;
+    button.textContent = 'Copied';
+    setTimeout(() => { button.textContent = label; }, 1200);
+  });
+}
+
+const file = document.querySelector('#document-file');
+const documentJson = document.querySelector('#document-json');
+file.addEventListener('change', async () => {
+  if (file.files[0]) documentJson.value = await file.files[0].text();
 });
-render();
+
+document.querySelector('#validator-form').addEventListener('submit', event => {
+  event.preventDefault();
+  const output = document.querySelector('#validator-result');
+  if (!window.comcomOffline) {
+    output.className = 'invalid';
+    output.textContent = 'The bundled validator failed to load. Use the Node or Python CLI.';
+    return;
+  }
+  const verdict = window.comcomOffline.validate(document.querySelector('#document-type').value, documentJson.value);
+  output.className = verdict.valid ? 'valid' : 'invalid';
+  output.textContent = verdict.valid
+    ? 'Valid against the bundled v0.2 document schemas.'
+    : `${verdict.phase}: ${verdict.code}\n${verdict.errors.map(error => `${error.path} ${error.message}`).join('\n')}`;
+});

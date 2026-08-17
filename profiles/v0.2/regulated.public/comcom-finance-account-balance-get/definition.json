@@ -1,0 +1,50 @@
+{
+  "id": "comcom.finance.account.balance.get",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "regulated.public",
+  "batch": 6,
+  "title": "Finance Account Balance Get",
+  "purpose": "Retrieve finance account balance using the typed Comcom v0.2 profile.",
+  "requestKind": "query",
+  "resourceType": "FinanceAccountBalance",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "anonymousAllowed",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-finance-account-balance-get/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-finance-account-balance-get/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-finance-account-balance-get/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "admission-policy-satisfied"
+  ],
+  "lifecycle": {
+    "states": [],
+    "transitions": []
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": false
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient"
+  ],
+  "standards": [
+    "https://schema.org/GovernmentService"
+  ]
+}

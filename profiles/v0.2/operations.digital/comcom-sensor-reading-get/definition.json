@@ -1,0 +1,50 @@
+{
+  "id": "comcom.sensor.reading.get",
+  "version": "0.2.0",
+  "status": "draft",
+  "profile": "operations.digital",
+  "batch": 4,
+  "title": "Sensor Reading Get",
+  "purpose": "Retrieve sensor reading using the typed Comcom v0.2 profile.",
+  "requestKind": "query",
+  "resourceType": "SensorReading",
+  "actors": {
+    "initiator": "requester",
+    "responder": "provider"
+  },
+  "directions": [
+    "send",
+    "receive"
+  ],
+  "minimumSecurity": "anonymousAllowed",
+  "executionModes": [
+    "synchronous",
+    "asynchronous"
+  ],
+  "schemas": {
+    "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-sensor-reading-get/schemas/input.schema.json",
+    "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-sensor-reading-get/schemas/output.schema.json",
+    "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-sensor-reading-get/schemas/resource.schema.json"
+  },
+  "preconditions": [
+    "admission-policy-satisfied"
+  ],
+  "lifecycle": {
+    "states": [],
+    "transitions": []
+  },
+  "retry": {
+    "safe": true,
+    "idempotencyRequired": false
+  },
+  "reversal": {
+    "mode": "compensationRequired"
+  },
+  "errors": [
+    "schema-invalid",
+    "authorization-insufficient"
+  ],
+  "standards": [
+    "https://www.w3.org/TR/wot-thing-description11/"
+  ]
+}

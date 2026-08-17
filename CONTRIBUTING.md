@@ -12,8 +12,8 @@ Comcom welcomes implementation reports, protocol feedback, capability proposals,
 ## Pull requests
 
 1. Fork the repository and create a focused branch.
-2. Change the generator source when modifying generated registry, schema, or fixture artifacts.
-3. Run `npm install`, `npm run generate`, `npm run validate`, and `npm test`.
+2. Edit the applicable authored source under `profiles/v0.2/`; generators must not create schemas, transitions, fixtures, or business semantics.
+3. Run `npm install`, install `requirements.txt` with Python 3.13, then run `npm run build:v0.2`, `npm run check:v0.2`, `npm run conformance:v0.2`, and `npm test`.
 4. Include valid and invalid examples for behavior changes.
 5. Explain compatibility and security consequences.
 
@@ -21,7 +21,7 @@ Published versioned artifacts are immutable. Fixes to a published version are re
 
 ## Capability proposals
 
-A proposed core capability must define its identifier, roles, message kinds, resource, input/output shapes, preconditions, lifecycle transitions, retry and reversal rules, examples, and relevant standards mappings. Core acceptance requires demonstrated general use across more than one organization or domain.
+A proposed core capability must define its identifier, roles, message kinds, resource, closed input/output/resource schemas, preconditions, every allowed and forbidden lifecycle transition, retry and reversal rules, positive and independently authored negative examples, security floor, relevant standards mappings, and an evidence record. Normative promotion requires two successful independent interoperability journeys plus the gates in [GOVERNANCE.md](GOVERNANCE.md).
 
 Experimental behavior should use a reverse-domain namespace such as `org.example.*`. Successful extensions can later be proposed for the core registry without breaking their original namespace.
 

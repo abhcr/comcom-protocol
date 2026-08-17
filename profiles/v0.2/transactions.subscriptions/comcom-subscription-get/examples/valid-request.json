@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.subscription.get",
+  "parameters": {
+    "subscriptionId": "https://business.example/subscription/example"
+  }
+}

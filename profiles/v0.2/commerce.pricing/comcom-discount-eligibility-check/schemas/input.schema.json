@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.pricing/comcom-discount-eligibility-check/schemas/input.schema.json",
+  "title": "Discount Eligibility Check input",
+  "description": "Check discount eligibility using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.discount.eligibility.check"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the DiscountEligibility to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "discountEligibilityId"
+      ],
+      "properties": {
+        "discountEligibilityId": {
+          "type": "string",
+          "description": "DiscountEligibility URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

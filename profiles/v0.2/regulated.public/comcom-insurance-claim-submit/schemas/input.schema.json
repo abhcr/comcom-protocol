@@ -1,0 +1,84 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.public/comcom-insurance-claim-submit/schemas/input.schema.json",
+  "title": "Insurance Claim Submit input",
+  "description": "Submit insurance claim using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.insurance.claim.submit"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Insurance Claim Submit parameters.",
+      "additionalProperties": false,
+      "required": [
+        "insuranceClaim"
+      ],
+      "properties": {
+        "insuranceClaim": {
+          "type": "object",
+          "description": "Typed InsuranceClaim data.",
+          "additionalProperties": false,
+          "required": [
+            "applicantId",
+            "authorityId",
+            "serviceCode"
+          ],
+          "properties": {
+            "statusCode": {
+              "type": "string",
+              "description": "Profile-defined business state.",
+              "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+            },
+            "applicantId": {
+              "type": "string",
+              "description": "Applicant or customer URI.",
+              "format": "uri-reference"
+            },
+            "authorityId": {
+              "type": "string",
+              "description": "Responsible authority or provider URI.",
+              "format": "uri-reference"
+            },
+            "serviceCode": {
+              "type": "string",
+              "description": "Public, regulated, or professional service code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "referenceNumber": {
+              "type": "string",
+              "description": "Application reference.",
+              "maxLength": 160
+            },
+            "submittedAt": {
+              "type": "string",
+              "description": "Submission instant.",
+              "format": "date-time"
+            },
+            "country": {
+              "type": "string",
+              "description": "ISO 3166-1 alpha-2 country code.",
+              "pattern": "^[A-Z]{2}$"
+            },
+            "summary": {
+              "type": "string",
+              "description": "Request summary.",
+              "maxLength": 2000
+            }
+          }
+        },
+        "requestedAt": {
+          "type": "string",
+          "description": "Requested effective instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

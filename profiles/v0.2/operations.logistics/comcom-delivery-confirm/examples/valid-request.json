@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.delivery.confirm",
+  "parameters": {
+    "deliveryId": "https://business.example/delivery/example"
+  }
+}

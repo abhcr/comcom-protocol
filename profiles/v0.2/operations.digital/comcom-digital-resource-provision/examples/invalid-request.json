@@ -1,0 +1,15 @@
+{
+  "instance": {
+    "parameters": {
+      "digitalResource": {
+        "assetId": "https://business.example/assetId/example",
+        "locationId": "https://business.example/locationId/example",
+        "metricCode": "example"
+      }
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

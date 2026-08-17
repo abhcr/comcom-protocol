@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.product.sample.request",
+  "parameters": {
+    "productSample": {
+      "name": "example",
+      "categoryCode": "example",
+      "sku": "example"
+    }
+  }
+}

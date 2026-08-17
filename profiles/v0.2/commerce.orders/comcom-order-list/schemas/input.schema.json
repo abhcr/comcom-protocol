@@ -1,0 +1,133 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.orders/comcom-order-list/schemas/input.schema.json",
+  "title": "Order List input",
+  "description": "List order using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.order.list"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Typed Order discovery parameters.",
+      "additionalProperties": false,
+      "required": [],
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+          "maxLength": 500
+        },
+        "filters": {
+          "type": "object",
+          "description": "Typed Order filters.",
+          "additionalProperties": false,
+          "required": [],
+          "properties": {
+            "statusCode": {
+              "type": "string",
+              "description": "Profile-defined business state.",
+              "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+            },
+            "buyerId": {
+              "type": "string",
+              "description": "Buyer URI.",
+              "format": "uri-reference"
+            },
+            "sellerId": {
+              "type": "string",
+              "description": "Seller URI.",
+              "format": "uri-reference"
+            },
+            "supplierId": {
+              "type": "string",
+              "description": "Supplier URI.",
+              "format": "uri-reference"
+            },
+            "referenceNumber": {
+              "type": "string",
+              "description": "Business document reference.",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "currency": {
+              "type": "string",
+              "description": "ISO 4217 currency code.",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "total": {
+              "type": "string",
+              "description": "Document total.",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            },
+            "lines": {
+              "type": "array",
+              "description": "Typed trade lines.",
+              "items": {
+                "type": "object",
+                "description": "A priced line.",
+                "additionalProperties": false,
+                "required": [
+                  "itemId",
+                  "quantity",
+                  "unitCode"
+                ],
+                "properties": {
+                  "itemId": {
+                    "type": "string",
+                    "description": "Item URI.",
+                    "format": "uri-reference"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Line description.",
+                    "maxLength": 500
+                  },
+                  "quantity": {
+                    "type": "string",
+                    "description": "Requested quantity.",
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                  },
+                  "unitCode": {
+                    "type": "string",
+                    "description": "UNECE or profile-declared unit code.",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                  },
+                  "unitPrice": {
+                    "type": "string",
+                    "description": "Unit price.",
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "ISO 4217 currency code.",
+                    "pattern": "^[A-Z]{3}$"
+                  }
+                }
+              },
+              "minItems": 1,
+              "maxItems": 1000
+            }
+          }
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 20
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    }
+  }
+}

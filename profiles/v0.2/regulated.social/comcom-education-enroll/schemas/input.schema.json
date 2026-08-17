@@ -1,0 +1,84 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-enroll/schemas/input.schema.json",
+  "title": "Education Enroll input",
+  "description": "Enroll in education using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.education.enroll"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Education Enroll parameters.",
+      "additionalProperties": false,
+      "required": [
+        "education"
+      ],
+      "properties": {
+        "education": {
+          "type": "object",
+          "description": "Typed Education data.",
+          "additionalProperties": false,
+          "required": [
+            "learnerId",
+            "providerId",
+            "courseId"
+          ],
+          "properties": {
+            "statusCode": {
+              "type": "string",
+              "description": "Profile-defined business state.",
+              "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+            },
+            "learnerId": {
+              "type": "string",
+              "description": "Learner URI.",
+              "format": "uri-reference"
+            },
+            "providerId": {
+              "type": "string",
+              "description": "Education or research provider URI.",
+              "format": "uri-reference"
+            },
+            "courseId": {
+              "type": "string",
+              "description": "Course URI.",
+              "format": "uri-reference"
+            },
+            "assessmentCode": {
+              "type": "string",
+              "description": "Assessment or progress code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "score": {
+              "type": "string",
+              "description": "Score or measured progress.",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            },
+            "completedAt": {
+              "type": "string",
+              "description": "Completion instant.",
+              "format": "date-time"
+            },
+            "purposeCode": {
+              "type": "string",
+              "description": "Research or education purpose code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            }
+          }
+        },
+        "requestedAt": {
+          "type": "string",
+          "description": "Requested effective instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

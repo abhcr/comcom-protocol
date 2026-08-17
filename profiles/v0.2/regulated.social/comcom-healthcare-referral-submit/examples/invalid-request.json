@@ -1,0 +1,15 @@
+{
+  "instance": {
+    "parameters": {
+      "healthcareReferral": {
+        "patientId": "https://business.example/patientId/example",
+        "providerId": "https://business.example/providerId/example",
+        "serviceCode": "example"
+      }
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

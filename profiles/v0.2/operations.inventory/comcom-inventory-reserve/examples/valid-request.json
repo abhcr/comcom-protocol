@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.inventory.reserve",
+  "parameters": {
+    "inventory": {
+      "assetId": "https://business.example/assetId/example",
+      "locationId": "https://business.example/locationId/example",
+      "metricCode": "example"
+    }
+  }
+}

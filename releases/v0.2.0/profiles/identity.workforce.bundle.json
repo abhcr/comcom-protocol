@@ -1,0 +1,3232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/identity.workforce.bundle.json",
+  "profile": "identity.workforce",
+  "version": "0.2.0",
+  "capabilityIds": [
+    "comcom.candidate.status.get",
+    "comcom.employee.offboard",
+    "comcom.employee.onboard",
+    "comcom.employment.offer",
+    "comcom.interview.schedule",
+    "comcom.job.apply",
+    "comcom.job.publish",
+    "comcom.leave.request",
+    "comcom.shift.get",
+    "comcom.shift.swap.request"
+  ],
+  "capabilities": [
+    {
+      "definition": {
+        "id": "comcom.candidate.status.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.workforce",
+        "batch": 5,
+        "title": "Candidate Status Get",
+        "purpose": "Retrieve candidate status using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "CandidateStatus",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-candidate-status-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-candidate-status-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-candidate-status-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/JobPosting"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.candidate.status.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JobPosting"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.candidate.status.get",
+          "parameters": {
+            "candidateStatusId": "https://business.example/candidateStatus/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "candidateStatusId": "https://business.example/candidateStatus/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/candidateStatus/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.employee.offboard",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.workforce",
+        "batch": 5,
+        "title": "Employee Offboard",
+        "purpose": "Offboard employee using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Employee",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employee-offboard/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employee-offboard/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employee-offboard/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active",
+            "offboarded"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "offboarded"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/JobPosting"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.employee.offboard",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JobPosting"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.employee.offboard",
+          "parameters": {
+            "employeeId": "https://business.example/employee/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "employeeId": "https://business.example/employee/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.employee.offboard-allowed-1",
+              "from": "active",
+              "to": "offboarded",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.employee.offboard-forbidden-1",
+              "from": "offboarded",
+              "to": "active",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/employee/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.employee.onboard",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.workforce",
+        "batch": 5,
+        "title": "Employee Onboard",
+        "purpose": "Onboard employee using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Employee",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employee-onboard/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employee-onboard/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employee-onboard/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/JobPosting"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.employee.onboard",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JobPosting"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.employee.onboard",
+          "parameters": {
+            "employee": {
+              "personId": "https://business.example/personId/example",
+              "organizationId": "https://business.example/organizationId/example",
+              "roleCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "employee": {
+                "personId": "https://business.example/personId/example",
+                "organizationId": "https://business.example/organizationId/example",
+                "roleCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.employee.onboard-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.employee.onboard-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.employee.onboard-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.employee.onboard-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/employee/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.employment.offer",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.workforce",
+        "batch": 5,
+        "title": "Employment Offer",
+        "purpose": "Execute employment offer using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "EmploymentOffer",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employment-offer/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employment-offer/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employment-offer/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "proposed"
+            },
+            {
+              "from": "proposed",
+              "to": "accepted"
+            },
+            {
+              "from": "proposed",
+              "to": "rejected"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/JobPosting"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.employment.offer",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JobPosting"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.employment.offer",
+          "parameters": {
+            "employmentOffer": {
+              "personId": "https://business.example/personId/example",
+              "organizationId": "https://business.example/organizationId/example",
+              "roleCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "employmentOffer": {
+                "personId": "https://business.example/personId/example",
+                "organizationId": "https://business.example/organizationId/example",
+                "roleCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.employment.offer-allowed-1",
+              "from": "none",
+              "to": "proposed",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.employment.offer-allowed-2",
+              "from": "proposed",
+              "to": "accepted",
+              "expected": "allowed"
+            },
+            {
+              "case": "comcom.employment.offer-allowed-3",
+              "from": "proposed",
+              "to": "rejected",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.employment.offer-forbidden-1",
+              "from": "cancelled",
+              "to": "proposed",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/employmentOffer/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.interview.schedule",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.workforce",
+        "batch": 5,
+        "title": "Interview Schedule",
+        "purpose": "Schedule interview using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Interview",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-interview-schedule/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-interview-schedule/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-interview-schedule/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "active"
+          ],
+          "transitions": [
+            {
+              "from": "active",
+              "to": "active",
+              "revisionRequired": true
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/JobPosting"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.interview.schedule",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JobPosting"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.interview.schedule",
+          "parameters": {
+            "interviewId": "https://business.example/interview/example",
+            "expectedRevision": 0,
+            "changes": {}
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "interviewId": "https://business.example/interview/example",
+              "expectedRevision": 0,
+              "changes": {}
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.interview.schedule-allowed-1",
+              "from": "active",
+              "to": "active",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/interview/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.job.apply",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.workforce",
+        "batch": 5,
+        "title": "Job Apply",
+        "purpose": "Apply for job using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Job",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-job-apply/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-job-apply/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-job-apply/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/JobPosting"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.job.apply",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JobPosting"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.job.apply",
+          "parameters": {
+            "job": {
+              "personId": "https://business.example/personId/example",
+              "organizationId": "https://business.example/organizationId/example",
+              "roleCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "job": {
+                "personId": "https://business.example/personId/example",
+                "organizationId": "https://business.example/organizationId/example",
+                "roleCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.job.apply-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.job.apply-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/job/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.job.publish",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.workforce",
+        "batch": 5,
+        "title": "Job Publish",
+        "purpose": "Publish job using the typed Comcom v0.2 profile.",
+        "requestKind": "event",
+        "resourceType": "Job",
+        "actors": {
+          "initiator": "publisher",
+          "responder": "inboxReceiver"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-job-publish/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-job-publish/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-job-publish/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/JobPosting"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.job.publish",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JobPosting"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.job.publish",
+          "parameters": {
+            "job": {
+              "personId": "https://business.example/personId/example",
+              "organizationId": "https://business.example/organizationId/example",
+              "roleCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "job": {
+                "personId": "https://business.example/personId/example",
+                "organizationId": "https://business.example/organizationId/example",
+                "roleCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/job/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.leave.request",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.workforce",
+        "batch": 5,
+        "title": "Leave Request",
+        "purpose": "Request leave using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "Leave",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-leave-request/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-leave-request/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-leave-request/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/JobPosting"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.leave.request",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JobPosting"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.leave.request",
+          "parameters": {
+            "leave": {
+              "personId": "https://business.example/personId/example",
+              "organizationId": "https://business.example/organizationId/example",
+              "roleCode": "example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "leave": {
+                "personId": "https://business.example/personId/example",
+                "organizationId": "https://business.example/organizationId/example",
+                "roleCode": "example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.leave.request-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.leave.request-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/leave/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.shift.get",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.workforce",
+        "batch": 5,
+        "title": "Shift Get",
+        "purpose": "Retrieve shift using the typed Comcom v0.2 profile.",
+        "requestKind": "query",
+        "resourceType": "Shift",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "anonymousAllowed",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-shift-get/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-shift-get/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-shift-get/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "admission-policy-satisfied"
+        ],
+        "lifecycle": {
+          "states": [],
+          "transitions": []
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": false
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient"
+        ],
+        "standards": [
+          "https://schema.org/JobPosting"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.shift.get",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JobPosting"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.shift.get",
+          "parameters": {
+            "shiftId": "https://business.example/shift/example"
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "shiftId": "https://business.example/shift/example"
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [],
+          "forbidden": []
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/shift/example"
+        }
+      }
+    },
+    {
+      "definition": {
+        "id": "comcom.shift.swap.request",
+        "version": "0.2.0",
+        "status": "draft",
+        "profile": "identity.workforce",
+        "batch": 5,
+        "title": "Shift Swap Request",
+        "purpose": "Request shift swap using the typed Comcom v0.2 profile.",
+        "requestKind": "command",
+        "resourceType": "ShiftSwap",
+        "actors": {
+          "initiator": "requester",
+          "responder": "provider"
+        },
+        "directions": [
+          "send",
+          "receive"
+        ],
+        "minimumSecurity": "authenticated",
+        "executionModes": [
+          "synchronous",
+          "asynchronous"
+        ],
+        "schemas": {
+          "input": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-shift-swap-request/schemas/input.schema.json",
+          "output": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-shift-swap-request/schemas/output.schema.json",
+          "resource": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-shift-swap-request/schemas/resource.schema.json"
+        },
+        "preconditions": [
+          "authenticated-sender",
+          "authorized-principal",
+          "valid-resource-state"
+        ],
+        "lifecycle": {
+          "states": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ],
+          "transitions": [
+            {
+              "from": "none",
+              "to": "submitted"
+            }
+          ]
+        },
+        "retry": {
+          "safe": true,
+          "idempotencyRequired": true,
+          "equality": "RFC8785-semantic-projection"
+        },
+        "reversal": {
+          "mode": "compensationRequired"
+        },
+        "errors": [
+          "schema-invalid",
+          "authorization-insufficient",
+          "invalid-state-transition",
+          "idempotency-conflict"
+        ],
+        "standards": [
+          "https://schema.org/JobPosting"
+        ]
+      },
+      "evidence": {
+        "capability": "comcom.shift.swap.request",
+        "version": "0.2.0",
+        "domainReview": {
+          "completed": false,
+          "references": []
+        },
+        "primaryStandards": [
+          "https://schema.org/JobPosting"
+        ],
+        "securityReview": {
+          "completed": false,
+          "references": []
+        },
+        "implementations": [],
+        "interoperabilityJourneys": [],
+        "conformanceDigests": []
+      },
+      "examples": {
+        "valid-request": {
+          "capability": "comcom.shift.swap.request",
+          "parameters": {
+            "shiftSwap": {
+              "offeringId": "https://business.example/offeringId/example",
+              "customerId": "https://business.example/customerId/example",
+              "providerId": "https://business.example/providerId/example"
+            }
+          }
+        },
+        "invalid-request": {
+          "instance": {
+            "parameters": {
+              "shiftSwap": {
+                "offeringId": "https://business.example/offeringId/example",
+                "customerId": "https://business.example/customerId/example",
+                "providerId": "https://business.example/providerId/example"
+              }
+            }
+          },
+          "expected": {
+            "phase": "payload",
+            "code": "schema-invalid"
+          }
+        },
+        "lifecycle": {
+          "allowed": [
+            {
+              "case": "comcom.shift.swap.request-allowed-1",
+              "from": "none",
+              "to": "submitted",
+              "expected": "allowed"
+            }
+          ],
+          "forbidden": [
+            {
+              "case": "comcom.shift.swap.request-forbidden-1",
+              "from": "rejected",
+              "to": "submitted",
+              "expected": "forbidden"
+            }
+          ]
+        },
+        "reversal": {
+          "mode": "compensationRequired",
+          "originalResource": "https://business.example/shiftSwap/example"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "profiles__v0.2__identity.workforce__comcom-candidate-status-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-candidate-status-get/schemas/input.schema.json",
+      "title": "Candidate Status Get input",
+      "description": "Retrieve candidate status using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.candidate.status.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the CandidateStatus to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "candidateStatusId"
+          ],
+          "properties": {
+            "candidateStatusId": {
+              "type": "string",
+              "description": "CandidateStatus URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-candidate-status-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-candidate-status-get/schemas/output.schema.json",
+      "title": "Candidate Status Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-candidate-status-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-candidate-status-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-candidate-status-get/schemas/resource.schema.json",
+      "title": "CandidateStatus resource for comcom.candidate.status.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "CandidateStatus"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "personId": {
+          "type": "string",
+          "description": "Person URI.",
+          "format": "uri-reference"
+        },
+        "organizationId": {
+          "type": "string",
+          "description": "Organization URI.",
+          "format": "uri-reference"
+        },
+        "roleCode": {
+          "type": "string",
+          "description": "Job or role code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "start": {
+          "type": "string",
+          "description": "Employment or assignment start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Employment or assignment end.",
+          "format": "date-time"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Work location URI.",
+          "format": "uri-reference"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Role or request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-employee-offboard__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employee-offboard/schemas/input.schema.json",
+      "title": "Employee Offboard input",
+      "description": "Offboard employee using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.employee.offboard"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Employee Offboard parameters.",
+          "additionalProperties": false,
+          "required": [
+            "employeeId"
+          ],
+          "properties": {
+            "employeeId": {
+              "type": "string",
+              "description": "Employee URI.",
+              "format": "uri-reference"
+            },
+            "reasonCode": {
+              "type": "string",
+              "description": "Profile-defined reason code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "effectiveAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-employee-offboard__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employee-offboard/schemas/output.schema.json",
+      "title": "Employee Offboard output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employee-offboard/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-employee-offboard__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employee-offboard/schemas/resource.schema.json",
+      "title": "Employee resource for comcom.employee.offboard",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Employee"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "offboarded"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "personId": {
+          "type": "string",
+          "description": "Person URI.",
+          "format": "uri-reference"
+        },
+        "organizationId": {
+          "type": "string",
+          "description": "Organization URI.",
+          "format": "uri-reference"
+        },
+        "roleCode": {
+          "type": "string",
+          "description": "Job or role code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "start": {
+          "type": "string",
+          "description": "Employment or assignment start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Employment or assignment end.",
+          "format": "date-time"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Work location URI.",
+          "format": "uri-reference"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Role or request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-employee-onboard__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employee-onboard/schemas/input.schema.json",
+      "title": "Employee Onboard input",
+      "description": "Onboard employee using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.employee.onboard"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Employee Onboard parameters.",
+          "additionalProperties": false,
+          "required": [
+            "employee"
+          ],
+          "properties": {
+            "employee": {
+              "type": "object",
+              "description": "Typed Employee data.",
+              "additionalProperties": false,
+              "required": [
+                "personId",
+                "organizationId",
+                "roleCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "personId": {
+                  "type": "string",
+                  "description": "Person URI.",
+                  "format": "uri-reference"
+                },
+                "organizationId": {
+                  "type": "string",
+                  "description": "Organization URI.",
+                  "format": "uri-reference"
+                },
+                "roleCode": {
+                  "type": "string",
+                  "description": "Job or role code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Employment or assignment start.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Employment or assignment end.",
+                  "format": "date-time"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Work location URI.",
+                  "format": "uri-reference"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Role or request summary.",
+                  "maxLength": 2000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-employee-onboard__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employee-onboard/schemas/output.schema.json",
+      "title": "Employee Onboard output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employee-onboard/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-employee-onboard__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employee-onboard/schemas/resource.schema.json",
+      "title": "Employee resource for comcom.employee.onboard",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Employee"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "personId": {
+          "type": "string",
+          "description": "Person URI.",
+          "format": "uri-reference"
+        },
+        "organizationId": {
+          "type": "string",
+          "description": "Organization URI.",
+          "format": "uri-reference"
+        },
+        "roleCode": {
+          "type": "string",
+          "description": "Job or role code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "start": {
+          "type": "string",
+          "description": "Employment or assignment start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Employment or assignment end.",
+          "format": "date-time"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Work location URI.",
+          "format": "uri-reference"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Role or request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-employment-offer__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employment-offer/schemas/input.schema.json",
+      "title": "Employment Offer input",
+      "description": "Execute employment offer using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.employment.offer"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Employment Offer parameters.",
+          "additionalProperties": false,
+          "required": [
+            "employmentOffer"
+          ],
+          "properties": {
+            "employmentOffer": {
+              "type": "object",
+              "description": "Typed EmploymentOffer data.",
+              "additionalProperties": false,
+              "required": [
+                "personId",
+                "organizationId",
+                "roleCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "personId": {
+                  "type": "string",
+                  "description": "Person URI.",
+                  "format": "uri-reference"
+                },
+                "organizationId": {
+                  "type": "string",
+                  "description": "Organization URI.",
+                  "format": "uri-reference"
+                },
+                "roleCode": {
+                  "type": "string",
+                  "description": "Job or role code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Employment or assignment start.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Employment or assignment end.",
+                  "format": "date-time"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Work location URI.",
+                  "format": "uri-reference"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Role or request summary.",
+                  "maxLength": 2000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-employment-offer__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employment-offer/schemas/output.schema.json",
+      "title": "Employment Offer output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employment-offer/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-employment-offer__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-employment-offer/schemas/resource.schema.json",
+      "title": "EmploymentOffer resource for comcom.employment.offer",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "EmploymentOffer"
+        },
+        "state": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "active",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "personId": {
+          "type": "string",
+          "description": "Person URI.",
+          "format": "uri-reference"
+        },
+        "organizationId": {
+          "type": "string",
+          "description": "Organization URI.",
+          "format": "uri-reference"
+        },
+        "roleCode": {
+          "type": "string",
+          "description": "Job or role code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "start": {
+          "type": "string",
+          "description": "Employment or assignment start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Employment or assignment end.",
+          "format": "date-time"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Work location URI.",
+          "format": "uri-reference"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Role or request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-interview-schedule__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-interview-schedule/schemas/input.schema.json",
+      "title": "Interview Schedule input",
+      "description": "Schedule interview using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.interview.schedule"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Interview Schedule parameters.",
+          "additionalProperties": false,
+          "required": [
+            "interviewId",
+            "expectedRevision",
+            "changes"
+          ],
+          "properties": {
+            "interviewId": {
+              "type": "string",
+              "description": "Interview URI.",
+              "format": "uri-reference"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "changes": {
+              "type": "object",
+              "description": "Permitted Interview changes.",
+              "additionalProperties": false,
+              "required": [],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "partySize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-interview-schedule__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-interview-schedule/schemas/output.schema.json",
+      "title": "Interview Schedule output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-interview-schedule/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-interview-schedule__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-interview-schedule/schemas/resource.schema.json",
+      "title": "Interview resource for comcom.interview.schedule",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Interview"
+        },
+        "state": {
+          "enum": [
+            "active"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-job-apply__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-job-apply/schemas/input.schema.json",
+      "title": "Job Apply input",
+      "description": "Apply for job using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.job.apply"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Job Apply parameters.",
+          "additionalProperties": false,
+          "required": [
+            "job"
+          ],
+          "properties": {
+            "job": {
+              "type": "object",
+              "description": "Typed Job data.",
+              "additionalProperties": false,
+              "required": [
+                "personId",
+                "organizationId",
+                "roleCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "personId": {
+                  "type": "string",
+                  "description": "Person URI.",
+                  "format": "uri-reference"
+                },
+                "organizationId": {
+                  "type": "string",
+                  "description": "Organization URI.",
+                  "format": "uri-reference"
+                },
+                "roleCode": {
+                  "type": "string",
+                  "description": "Job or role code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Employment or assignment start.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Employment or assignment end.",
+                  "format": "date-time"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Work location URI.",
+                  "format": "uri-reference"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Role or request summary.",
+                  "maxLength": 2000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-job-apply__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-job-apply/schemas/output.schema.json",
+      "title": "Job Apply output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-job-apply/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-job-apply__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-job-apply/schemas/resource.schema.json",
+      "title": "Job resource for comcom.job.apply",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Job"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "personId": {
+          "type": "string",
+          "description": "Person URI.",
+          "format": "uri-reference"
+        },
+        "organizationId": {
+          "type": "string",
+          "description": "Organization URI.",
+          "format": "uri-reference"
+        },
+        "roleCode": {
+          "type": "string",
+          "description": "Job or role code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "start": {
+          "type": "string",
+          "description": "Employment or assignment start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Employment or assignment end.",
+          "format": "date-time"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Work location URI.",
+          "format": "uri-reference"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Role or request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-job-publish__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-job-publish/schemas/input.schema.json",
+      "title": "Job Publish input",
+      "description": "Publish job using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.job.publish"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Job Publish parameters.",
+          "additionalProperties": false,
+          "required": [
+            "job"
+          ],
+          "properties": {
+            "job": {
+              "type": "object",
+              "description": "Typed Job data.",
+              "additionalProperties": false,
+              "required": [
+                "personId",
+                "organizationId",
+                "roleCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "personId": {
+                  "type": "string",
+                  "description": "Person URI.",
+                  "format": "uri-reference"
+                },
+                "organizationId": {
+                  "type": "string",
+                  "description": "Organization URI.",
+                  "format": "uri-reference"
+                },
+                "roleCode": {
+                  "type": "string",
+                  "description": "Job or role code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Employment or assignment start.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Employment or assignment end.",
+                  "format": "date-time"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Work location URI.",
+                  "format": "uri-reference"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Role or request summary.",
+                  "maxLength": 2000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-job-publish__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-job-publish/schemas/output.schema.json",
+      "title": "Job Publish output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "receivedAt"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "accepted",
+            "discarded",
+            "duplicate"
+          ]
+        },
+        "receivedAt": {
+          "type": "string",
+          "description": "Receipt instant.",
+          "format": "date-time"
+        },
+        "policyCode": {
+          "type": "string",
+          "description": "Admission policy code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-job-publish__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-job-publish/schemas/resource.schema.json",
+      "title": "Job resource for comcom.job.publish",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Job"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "personId": {
+          "type": "string",
+          "description": "Person URI.",
+          "format": "uri-reference"
+        },
+        "organizationId": {
+          "type": "string",
+          "description": "Organization URI.",
+          "format": "uri-reference"
+        },
+        "roleCode": {
+          "type": "string",
+          "description": "Job or role code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "start": {
+          "type": "string",
+          "description": "Employment or assignment start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Employment or assignment end.",
+          "format": "date-time"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Work location URI.",
+          "format": "uri-reference"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Role or request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-leave-request__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-leave-request/schemas/input.schema.json",
+      "title": "Leave Request input",
+      "description": "Request leave using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.leave.request"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Leave Request parameters.",
+          "additionalProperties": false,
+          "required": [
+            "leave"
+          ],
+          "properties": {
+            "leave": {
+              "type": "object",
+              "description": "Typed Leave data.",
+              "additionalProperties": false,
+              "required": [
+                "personId",
+                "organizationId",
+                "roleCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "personId": {
+                  "type": "string",
+                  "description": "Person URI.",
+                  "format": "uri-reference"
+                },
+                "organizationId": {
+                  "type": "string",
+                  "description": "Organization URI.",
+                  "format": "uri-reference"
+                },
+                "roleCode": {
+                  "type": "string",
+                  "description": "Job or role code.",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Employment or assignment start.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Employment or assignment end.",
+                  "format": "date-time"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Work location URI.",
+                  "format": "uri-reference"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Role or request summary.",
+                  "maxLength": 2000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-leave-request__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-leave-request/schemas/output.schema.json",
+      "title": "Leave Request output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-leave-request/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-leave-request__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-leave-request/schemas/resource.schema.json",
+      "title": "Leave resource for comcom.leave.request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Leave"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "personId": {
+          "type": "string",
+          "description": "Person URI.",
+          "format": "uri-reference"
+        },
+        "organizationId": {
+          "type": "string",
+          "description": "Organization URI.",
+          "format": "uri-reference"
+        },
+        "roleCode": {
+          "type": "string",
+          "description": "Job or role code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "start": {
+          "type": "string",
+          "description": "Employment or assignment start.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Employment or assignment end.",
+          "format": "date-time"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Work location URI.",
+          "format": "uri-reference"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Role or request summary.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-shift-get__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-shift-get/schemas/input.schema.json",
+      "title": "Shift Get input",
+      "description": "Retrieve shift using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.shift.get"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Identify the Shift to inspect.",
+          "additionalProperties": false,
+          "required": [
+            "shiftId"
+          ],
+          "properties": {
+            "shiftId": {
+              "type": "string",
+              "description": "Shift URI.",
+              "format": "uri-reference"
+            },
+            "at": {
+              "type": "string",
+              "description": "Evaluation instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-shift-get__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-shift-get/schemas/output.schema.json",
+      "title": "Shift Get output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-shift-get/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-shift-get__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-shift-get/schemas/resource.schema.json",
+      "title": "Shift resource for comcom.shift.get",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "Shift"
+        },
+        "state": {
+          "type": "string",
+          "description": "Profile-defined state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-shift-swap-request__schemas__input.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-shift-swap-request/schemas/input.schema.json",
+      "title": "Shift Swap Request input",
+      "description": "Request shift swap using an exact, schema-validated Comcom interaction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "parameters"
+      ],
+      "properties": {
+        "capability": {
+          "const": "comcom.shift.swap.request"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Shift Swap Request parameters.",
+          "additionalProperties": false,
+          "required": [
+            "shiftSwap"
+          ],
+          "properties": {
+            "shiftSwap": {
+              "type": "object",
+              "description": "Typed ShiftSwap data.",
+              "additionalProperties": false,
+              "required": [
+                "offeringId",
+                "customerId",
+                "providerId"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "description": "Profile-defined business state.",
+                  "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+                },
+                "offeringId": {
+                  "type": "string",
+                  "description": "Bookable offering or service URI.",
+                  "format": "uri-reference"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "Customer URI.",
+                  "format": "uri-reference"
+                },
+                "providerId": {
+                  "type": "string",
+                  "description": "Provider URI.",
+                  "format": "uri-reference"
+                },
+                "start": {
+                  "type": "string",
+                  "description": "Inclusive start instant.",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "description": "Exclusive end instant.",
+                  "format": "date-time"
+                },
+                "timeZone": {
+                  "type": "string",
+                  "description": "IANA time-zone identifier.",
+                  "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+                },
+                "locationId": {
+                  "type": "string",
+                  "description": "Location URI.",
+                  "format": "uri-reference"
+                },
+                "partySize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                }
+              }
+            },
+            "requestedAt": {
+              "type": "string",
+              "description": "Requested effective instant.",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-shift-swap-request__schemas__output.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-shift-swap-request/schemas/output.schema.json",
+      "title": "Shift Swap Request output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "resource"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "resource": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-shift-swap-request/schemas/resource.schema.json"
+        },
+        "nextActions": {
+          "type": "array",
+          "description": "Exact capability IDs permitted next.",
+          "items": {
+            "type": "string",
+            "description": "Capability ID.",
+            "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 50
+        }
+      }
+    },
+    "profiles__v0.2__identity.workforce__comcom-shift-swap-request__schemas__resource.schema.json": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/identity.workforce/comcom-shift-swap-request/schemas/resource.schema.json",
+      "title": "ShiftSwap resource for comcom.shift.swap.request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "state",
+        "revision",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Globally unique resource URI.",
+          "format": "uri-reference"
+        },
+        "type": {
+          "const": "ShiftSwap"
+        },
+        "state": {
+          "enum": [
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation instant.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update instant.",
+          "format": "date-time"
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Profile-defined business state.",
+          "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+        },
+        "offeringId": {
+          "type": "string",
+          "description": "Bookable offering or service URI.",
+          "format": "uri-reference"
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Customer URI.",
+          "format": "uri-reference"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "Provider URI.",
+          "format": "uri-reference"
+        },
+        "start": {
+          "type": "string",
+          "description": "Inclusive start instant.",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "description": "Exclusive end instant.",
+          "format": "date-time"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time-zone identifier.",
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+$"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Location URI.",
+          "format": "uri-reference"
+        },
+        "partySize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    }
+  }
+}

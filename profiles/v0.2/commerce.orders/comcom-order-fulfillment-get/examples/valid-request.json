@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.order.fulfillment.get",
+  "parameters": {
+    "orderFulfillmentId": "https://business.example/orderFulfillment/example"
+  }
+}

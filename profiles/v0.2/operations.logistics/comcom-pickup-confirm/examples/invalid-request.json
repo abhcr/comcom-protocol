@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "pickupId": "https://business.example/pickup/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

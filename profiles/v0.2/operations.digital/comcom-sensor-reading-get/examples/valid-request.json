@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.sensor.reading.get",
+  "parameters": {
+    "sensorReadingId": "https://business.example/sensorReading/example"
+  }
+}

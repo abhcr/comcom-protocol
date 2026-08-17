@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.product.get",
+  "parameters": {
+    "productId": "https://business.example/product/example"
+  }
+}

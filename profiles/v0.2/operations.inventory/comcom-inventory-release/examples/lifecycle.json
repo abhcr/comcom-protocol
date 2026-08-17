@@ -1,0 +1,18 @@
+{
+  "allowed": [
+    {
+      "case": "comcom.inventory.release-allowed-1",
+      "from": "active",
+      "to": "released",
+      "expected": "allowed"
+    }
+  ],
+  "forbidden": [
+    {
+      "case": "comcom.inventory.release-forbidden-1",
+      "from": "released",
+      "to": "active",
+      "expected": "forbidden"
+    }
+  ]
+}

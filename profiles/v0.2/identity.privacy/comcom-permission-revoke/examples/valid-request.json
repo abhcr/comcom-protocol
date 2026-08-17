@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.permission.revoke",
+  "parameters": {
+    "permissionId": "https://business.example/permission/example"
+  }
+}

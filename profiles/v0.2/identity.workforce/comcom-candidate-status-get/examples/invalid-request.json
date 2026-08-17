@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "candidateStatusId": "https://business.example/candidateStatus/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

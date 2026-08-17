@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.tender.bid.withdraw",
+  "parameters": {
+    "tenderBidId": "https://business.example/tenderBid/example"
+  }
+}

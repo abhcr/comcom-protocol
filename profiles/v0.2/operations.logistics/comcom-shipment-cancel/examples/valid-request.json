@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.shipment.cancel",
+  "parameters": {
+    "shipmentId": "https://business.example/shipment/example"
+  }
+}

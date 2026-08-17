@@ -1,0 +1,46 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.finance/comcom-payment-confirm/schemas/input.schema.json",
+  "title": "Payment Confirm input",
+  "description": "Confirm payment using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.payment.confirm"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Payment Confirm parameters.",
+      "additionalProperties": false,
+      "required": [
+        "paymentId"
+      ],
+      "properties": {
+        "paymentId": {
+          "type": "string",
+          "description": "Payment URI.",
+          "format": "uri-reference"
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Profile-defined reason code.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "effectiveAt": {
+          "type": "string",
+          "description": "Requested effective instant.",
+          "format": "date-time"
+        },
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

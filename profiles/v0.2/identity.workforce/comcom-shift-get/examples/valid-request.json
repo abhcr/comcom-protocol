@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.shift.get",
+  "parameters": {
+    "shiftId": "https://business.example/shift/example"
+  }
+}

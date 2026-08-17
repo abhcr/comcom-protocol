@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.return.status.get",
+  "parameters": {
+    "returnStatusId": "https://business.example/returnStatus/example"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "instance": {
+    "parameters": {
+      "discountEligibilityId": "https://business.example/discountEligibility/example"
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "capability": "comcom.interview.schedule",
+  "parameters": {
+    "interviewId": "https://business.example/interview/example",
+    "expectedRevision": 0,
+    "changes": {}
+  }
+}

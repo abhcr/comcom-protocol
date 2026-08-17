@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.license.issue",
+  "parameters": {
+    "license": {
+      "subjectId": "https://business.example/subjectId/example",
+      "issuerId": "https://business.example/issuerId/example",
+      "referenceNumber": "example"
+    }
+  }
+}

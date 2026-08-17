@@ -1,0 +1,92 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.social/comcom-education-course-search/schemas/input.schema.json",
+  "title": "Education Course Search input",
+  "description": "Search for education course using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.education.course.search"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Typed EducationCourse discovery parameters.",
+      "additionalProperties": false,
+      "required": [
+        "filters"
+      ],
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Human-supplied literal search text; no fuzzy capability matching is implied.",
+          "maxLength": 500
+        },
+        "filters": {
+          "type": "object",
+          "description": "Typed EducationCourse filters.",
+          "additionalProperties": false,
+          "required": [],
+          "properties": {
+            "statusCode": {
+              "type": "string",
+              "description": "Profile-defined business state.",
+              "pattern": "^[a-z][a-zA-Z0-9.-]{0,63}$"
+            },
+            "name": {
+              "type": "string",
+              "description": "Display name.",
+              "minLength": 1,
+              "maxLength": 300
+            },
+            "description": {
+              "type": "string",
+              "description": "Description.",
+              "maxLength": 5000
+            },
+            "categoryCode": {
+              "type": "string",
+              "description": "Standard or provider category code.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "sku": {
+              "type": "string",
+              "description": "Seller stock-keeping unit.",
+              "maxLength": 100
+            },
+            "gtin": {
+              "type": "string",
+              "description": "GS1 Global Trade Item Number.",
+              "pattern": "^[0-9]{8}([0-9]{4,6})?$"
+            },
+            "providerId": {
+              "type": "string",
+              "description": "Provider URI.",
+              "format": "uri-reference"
+            },
+            "amount": {
+              "type": "string",
+              "description": "Price amount.",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            }
+          }
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 20
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Opaque continuation cursor.",
+          "maxLength": 500
+        }
+      }
+    }
+  }
+}

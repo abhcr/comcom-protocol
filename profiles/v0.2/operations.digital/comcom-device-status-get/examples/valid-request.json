@@ -1,0 +1,6 @@
+{
+  "capability": "comcom.device.status.get",
+  "parameters": {
+    "deviceStatusId": "https://business.example/deviceStatus/example"
+  }
+}

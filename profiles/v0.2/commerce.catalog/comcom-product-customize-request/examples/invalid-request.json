@@ -1,0 +1,15 @@
+{
+  "instance": {
+    "parameters": {
+      "productCustomize": {
+        "name": "example",
+        "categoryCode": "example",
+        "sku": "example"
+      }
+    }
+  },
+  "expected": {
+    "phase": "payload",
+    "code": "schema-invalid"
+  }
+}

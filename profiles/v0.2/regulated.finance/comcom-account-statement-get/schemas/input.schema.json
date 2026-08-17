@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/regulated.finance/comcom-account-statement-get/schemas/input.schema.json",
+  "title": "Account Statement Get input",
+  "description": "Retrieve account statement using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.account.statement.get"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the AccountStatement to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "accountStatementId"
+      ],
+      "properties": {
+        "accountStatementId": {
+          "type": "string",
+          "description": "AccountStatement URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "capability": "comcom.subscription.create",
+  "parameters": {
+    "subscription": {
+      "subscriberId": "https://business.example/subscriberId/example",
+      "planId": "https://business.example/planId/example",
+      "start": "2026-09-01T09:00:00Z"
+    }
+  }
+}

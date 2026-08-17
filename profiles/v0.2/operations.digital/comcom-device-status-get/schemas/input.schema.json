@@ -1,0 +1,37 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/operations.digital/comcom-device-status-get/schemas/input.schema.json",
+  "title": "Device Status Get input",
+  "description": "Retrieve device status using an exact, schema-validated Comcom interaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability",
+    "parameters"
+  ],
+  "properties": {
+    "capability": {
+      "const": "comcom.device.status.get"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Identify the DeviceStatus to inspect.",
+      "additionalProperties": false,
+      "required": [
+        "deviceStatusId"
+      ],
+      "properties": {
+        "deviceStatusId": {
+          "type": "string",
+          "description": "DeviceStatus URI.",
+          "format": "uri-reference"
+        },
+        "at": {
+          "type": "string",
+          "description": "Evaluation instant.",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}
