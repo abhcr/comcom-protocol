@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -10,7 +11,8 @@ const corpus = JSON.parse(await readFile(resolve(corpusRoot, "cases.json"), "utf
 const manifest = JSON.parse(await readFile(resolve(root, "examples/v0.2/vendor-manifest.json"), "utf8"));
 const request = JSON.parse(await readFile(resolve(root, "examples/v0.2/booking-create.request.json"), "utf8"));
 const protocol = await createProtocolV02();
-const python = process.env.COMCOM_PYTHON ?? resolve(root, ".venv/bin/python");
+const venvPython = resolve(root, ".venv/bin/python");
+const python = process.env.COMCOM_PYTHON ?? (existsSync(venvPython) ? venvPython : "python3");
 
 function baseContext(name) {
   if (name === "request") return {
