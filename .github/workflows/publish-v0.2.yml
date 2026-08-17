@@ -2,6 +2,9 @@ name: Publish v0.2 releases
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/publish-v0.2.yml]
 
 permissions:
   contents: write
@@ -21,6 +24,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          gh release edit v0.1.0 \
+            --title "Comcom Protocol v0.1.0 — Experimental prototype" \
+            --notes "Experimental prototype retained for compatibility. See advisories/v0.1.md for known semantic and security limitations. Use the evidence-gated v0.2 line for current work."
+
           for release in \
             v0.2.0-alpha.1 v0.2.0-alpha.2 v0.2.0-alpha.3 \
             v0.2.0-alpha.4 v0.2.0-alpha.5 v0.2.0-alpha.6 \
