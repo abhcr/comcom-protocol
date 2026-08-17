@@ -1,6 +1,6 @@
 {
   "name": "comcom-protocol",
-  "version": "0.2.0-alpha.3",
+  "version": "0.2.0-alpha.4",
   "private": true,
   "description": "Deterministic business interaction for the web",
   "type": "module",
