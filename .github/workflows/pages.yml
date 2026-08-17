@@ -37,12 +37,26 @@ jobs:
       - run: npm test
       - run: npm run conformance:v0.2
       - name: Assemble GitHub Pages artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p _site/releases/v0.2.0/profiles _site/releases/v0.2.0/schemas
           cp -R docs/. _site/
           cp -R schemas registry spec examples releases profiles _site/
           cp -R profiles/v0.2 _site/releases/v0.2.0/profiles/v0.2
           cp -R schemas/v0.2/. _site/releases/v0.2.0/schemas/
+
+          mkdir -p _release_assets
+          gh release download v0.2.0 --dir _release_assets
+          echo "82b0d547d2e68250f9202dbd77d47a336e4a9319b518e5a7564b8b77e97f5ad4  _release_assets/release-manifest.json" | sha256sum --check --strict
+          while IFS=$'\t' read -r asset_path expected_sha; do
+            source="_release_assets/${asset_path##*/}"
+            target="_site/releases/v0.2.0/$asset_path"
+            echo "$expected_sha  $source" | sha256sum --check --strict
+            mkdir -p "$(dirname "$target")"
+            cp "$source" "$target"
+          done < <(jq -r '.files[] | [.path, .sha256] | @tsv' _release_assets/release-manifest.json)
+          cp _release_assets/release-manifest.json _site/releases/v0.2.0/release-manifest.json
           touch _site/.nojekyll
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
