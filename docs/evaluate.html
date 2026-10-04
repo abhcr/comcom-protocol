@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Evaluate Comcom: booking and Purplecore discovery</title>
+  <meta name="description" content="Run a complete booking exchange, validate Purplecore's discovery-only website, and contribute reproducible implementation evidence.">
+  <link rel="canonical" href="https://abhcr.github.io/comcom-protocol/evaluate.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Evaluate Comcom: one booking, one contact-only website">
+  <meta property="og:description" content="A practical walkthrough of the experimental business protocol, with expected outcomes and honest implementation boundaries.">
+  <meta property="og:url" content="https://abhcr.github.io/comcom-protocol/evaluate.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="subhead"><nav aria-label="Primary"><a class="mark" href="./"><span>CC</span> Comcom</a><div><a href="./#checker">Document checker</a><a href="https://github.com/abhcr/comcom-protocol">GitHub</a></div></nav></header>
+<main id="content" class="detail">
+<p class="notice"><strong>Experimental v0.2 line.</strong> All 201 capabilities remain draft. Purplecore's first-party deployment is pending and supplies no independent interoperability evidence.</p>
+<p class="eyebrow">An evaluation you can reproduce</p><h1>One booking. One contact-only website.</h1>
+<p class="lead dark">Try the business exchange locally, then inspect public discovery without sending a business request.</p>
+<section id="booking"><h2>1. Run the booking exchange</h2>
+<p>Use Node.js 24. This first evaluation requires no Python, API key, or account:</p>
+<pre><code>git clone https://github.com/abhcr/comcom-protocol.git
+cd comcom-protocol
+npm ci
+npm run demo:v0.2</code></pre>
+<p>The runner starts the existing responder on an available local port, discovers its manifest, constructs a fresh booking, validates the result, and stops the responder automatically. It uses HTTP loopback and mocked authentication. The advertised example HTTPS URLs are mapped to that local server; this is development transport.</p>
+<pre><code>PASS discovery and pinned-profile manifest validation
+PASS booking.create: HTTP 200, correlated and identity-bound result
+PASS exact replay: identical response bytes
+PASS changed request with reused key: HTTP 409 idempotency-conflict
+PASS asynchronous booking: HTTP 202 → polling → completed
+Evaluation passed. No external business service was called.</code></pre>
+<p>Each line is backed by an assertion. The command exits unsuccessfully on a mismatch. Inspect <a href="https://github.com/abhcr/comcom-protocol/blob/main/reference/v0.2/demo.mjs">the runner</a> to see the actual exchange and <a href="./capabilities/comcom-booking-create.html">the booking contract</a> for schemas and lifecycle rules. Authentication headers in this demo are not an authentication implementation.</p>
+</section>
+<section id="purplecore"><h2>2. Inspect Purplecore discovery</h2>
+<p><strong>Deployment pending:</strong> the public routes returned website HTML during the 2026-10-04 evaluation. The local examples validate, but the command below must pass against the deployed site before launch.</p>
+<p>The public endpoints are <a href="https://purplecore.in/.well-known/api-catalog">the RFC 9727 catalog</a> and <a href="https://purplecore.in/comcom/manifest.json">the company manifest</a>. Run the following from the repository checkout. It performs two bounded HTTPS GET requests and validates their raw bytes against pinned local artifacts. Network or deployment failures fail the evaluation; do not replace missing evidence with a success claim.</p>
+<pre id="purplecore-command"><code>node --input-type=module &lt;&lt;'NODE'
+import assert from 'node:assert/strict';
+import { createProtocolV02 } from './reference/v0.2/protocol.mjs';
+import { secureFetch } from './reference/v0.2/secure-fetch.mjs';
+const protocol = await createProtocolV02();
+const catalog = await secureFetch('https://purplecore.in/.well-known/api-catalog');
+assert.equal(catalog.status, 200);
+assert.equal(catalog.headers['content-type'].split(';')[0], 'application/linkset+json');
+const discovery = protocol.validateDiscovery(catalog.body, {
+  method: 'GET', contentType: catalog.headers['content-type']
+});
+assert.equal(discovery.valid, true, JSON.stringify(discovery));
+const profile = 'https://abhcr.github.io/comcom-protocol/releases/v0.2.1/profiles/manifest';
+const link = discovery.value.linkset.flatMap(entry => entry.item)
+  .find(item => item.profile === profile);
+assert.ok(link, 'Expected the v0.2.1 manifest profile');
+const document = await secureFetch(link.href);
+assert.equal(document.status, 200);
+assert.equal(document.headers['content-type'].split(';')[0], 'application/vnd.comcom.manifest+json');
+const manifest = protocol.validateManifest(document.body, { manifestProfile: link.profile });
+assert.equal(manifest.valid, true, JSON.stringify(manifest));
+assert.equal(manifest.value.entity.id, 'https://purplecore.in');
+assert.deepEqual(manifest.value.roles, ['discoveryPublisher']);
+assert.deepEqual(manifest.value.capabilities, []);
+assert.equal(manifest.value.contactUrl, 'https://purplecore.in/#contact-form');
+console.log('PASS Purplecore discovery-only manifest', manifest.value);
+NODE</code></pre>
+<p>The result identifies Purplecore Software Systems Pvt Ltd and points to its existing contact form. Empty profiles and capabilities mean it advertises zero interactions. The <code>contactUrl</code> is a navigation link, not a submission endpoint. This walkthrough never fetches that contact link or sends an enquiry.</p>
+<p>To inspect the same shape without network access, select “Manifest” and “v0.2.1” in the <a href="./#checker">browser checker</a>, then “Load example”. That validates document shape only. The public command above additionally checks the live HTTP responses.</p>
+</section>
+<section id="adopt"><h2>3. Decide what your project actually needs</h2>
+<p>Compare one business interaction with its exact capability contract. Check input/output semantics, lifecycle, retry/replay, reversal, permissions, and what your system can guarantee. A passing example is not enough to claim your service conforms.</p>
+<ol>
+<li>Pin an immutable release and verify artifact digests. The provided validators verify their local schema and registry bytes before use.</li>
+<li>Use the advertised manifest profile explicitly. v0.2.1 accepts the original interactive manifest or a discovery-only publisher; old validators do not understand the new profile. CLI/library defaults remain v0.2.0.</li>
+<li>Map one existing operation to a compatible draft capability. Bind identities using your authenticated transport; full response validation needs the original request and trusted <code>transport.senderId</code>.</li>
+<li>Exercise valid inputs, invalid inputs, duplicate requests, conflicts, lifecycle boundaries, and failure recovery before exposing the capability. Publish only interactions you implement.</li>
+</ol>
+<p>No SDK or MCP server is required by this repository. Your current HTTP client can send the document; the <a href="https://github.com/abhcr/comcom-protocol/blob/main/README.md#use-the-validators">CLI framing</a> is the integration starting point. Python 3.13 plus <code>requirements.txt</code> enables the independent cross-validator checks via <code>npm run conformance:v0.2</code>.</p>
+<h3>Prompt for a coding agent</h3>
+<pre><code>Evaluate Comcom for one concrete interaction in this project.
+Read its README, AGENTS.md, and evaluation walkthrough.
+Use a separate checkout. Run npm ci and npm run demo:v0.2.
+Compare one exact capability's semantics, security, lifecycle,
+retry, and reversal requirements with our current code.
+Report the commit, commands, observed outcomes, missing requirements,
+and the smallest useful integration, or a reason not to adopt.
+Do not add a dependency, submit an enquiry, or make a real business
+transaction without authorization. Propose a focused contribution
+only where reproducible evidence supports it.</code></pre>
+</section>
+<section id="contribute"><h2>4. Share a reproducible evaluation</h2>
+<p><a href="https://github.com/abhcr/comcom-protocol/issues/new?template=implementation-report.yml">Submit an implementation report</a> with your commit, environment, commands, outcomes, and gaps. Include whether you implemented both sides yourself or worked with an independent counterparty. Sanitize credentials and customer data.</p>
+<p>Useful bounded contributions include a Python booking initiator, additional discovery compatibility cases, contextual response-identity regressions, and independent booking implementation reports. Small documentation and test fixes can go directly to a PR; semantic changes follow the <a href="https://github.com/abhcr/comcom-protocol/blob/main/CONTRIBUTING.md">contribution guide</a>.</p>
+<p><strong>Invitation:</strong> Evaluate one booking capability in your project and submit a reproducible implementation report. A well-supported “not a fit” result is useful too.</p>
+</section>
+<section id="launch-drafts"><h2>Launch materials — drafts for review</h2>
+<p>These materials are prepared for review, not evidence of an external announcement. Publish only after the tagged checks, live Purplecore checks, and two fresh agent evaluations pass. Record the tested release SHA and public verification date alongside the published article.</p>
+<details><summary>Developer article draft</summary>
+<h3>Can a business contract be small enough for an agent to evaluate?</h3>
+<p>Comcom is an experimental attempt to make business interactions explicit: discover a website's manifest, select an exact capability version, validate a typed request, and use the correlated result as the business record. The first reproducible exercise is booking creation.</p>
+<p>Clone the repository and run <code>npm ci &amp;&amp; npm run demo:v0.2</code> with Node.js 24. The demo checks discovery, a booking result, exact replay, a changed request reusing the same key, and asynchronous completion. It uses loopback HTTP and mocked authentication; production identity and authorization remain the implementer's responsibility.</p>
+<p>The second exercise is smaller. Purplecore's website publishes its company identity and a contact-page link through a discovery-only manifest. It declares no callable capabilities. That makes its existing enquiry route discoverable without implying that a business API exists.</p>
+<p>Comcom is complementary to service descriptions and agent interfaces: it experiments with shared business capability semantics. All 201 catalog profiles are still draft. Purplecore and the booking responder are first-party examples; independent interoperability has not been established by those examples.</p>
+<p>We are looking for narrow evaluations: does one booking contract fit your project, which fields or lifecycle rules do not, and can you reproduce the result? Use the walkthrough and submit an implementation report or a focused regression/documentation PR.</p>
+<p>Try it: <a href="https://abhcr.github.io/comcom-protocol/evaluate.html">the runnable walkthrough</a>. Source: <a href="https://github.com/abhcr/comcom-protocol">Comcom on GitHub</a>.</p>
+</details>
+<details><summary>Show HN submission draft</summary>
+<p><strong>Title:</strong> Show HN: Comcom — typed business contracts with a runnable booking demo</p>
+<p><strong>URL:</strong> https://abhcr.github.io/comcom-protocol/evaluate.html</p>
+<p><strong>Opening comment:</strong> I am experimenting with exact, versioned business interactions that conventional software or coding agents can inspect and evaluate. The Node-only demo creates a booking, validates the result, checks exact replay and conflict handling, and polls an asynchronous operation. A second walkthrough reads Purplecore's discovery-only manifest; it exposes company identity and a contact link, with zero callable interactions. All profiles are experimental drafts, and the demo mocks authentication. I would value reproducible evaluations, especially cases where an existing API contract is sufficient or these semantics do not fit. The repository includes validators, fixtures, and small contribution opportunities.</p>
+</details>
+<details><summary>Short demo recording sequence</summary>
+<ol><li>Show the experimental-status notice and the Node-only quickstart.</li><li>Run the booking command and record the five actual PASS lines.</li><li>Open the runner beside a complete correlated result and explain the mocked transport.</li><li>Run the read-only Purplecore command, showing its empty capabilities and contact-page link.</li><li>Show the implementation-report form and ask viewers to evaluate one capability.</li></ol>
+<p>Keep credentials, private windows, and customer data out of the recording. The launch recording must show the tested release and real command output.</p>
+</details>
+</section>
+</main><footer><a href="./">Comcom home</a> · <a href="https://github.com/abhcr/comcom-protocol/issues">Contribution opportunities</a></footer>
+</body>
+</html>

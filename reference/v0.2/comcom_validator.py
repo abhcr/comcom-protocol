@@ -16,6 +16,11 @@ from referencing.jsonschema import DRAFT202012
 
 ROOT = Path(__file__).resolve().parents[2]
 SCHEMA_BASE = "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/"
+DISCOVERY_SCHEMA_BASE = "https://abhcr.github.io/comcom-protocol/releases/v0.2.1/schemas/"
+MANIFEST_SCHEMAS = {
+    "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/manifest": SCHEMA_BASE + "manifest.schema.json",
+    "https://abhcr.github.io/comcom-protocol/releases/v0.2.1/profiles/manifest": DISCOVERY_SCHEMA_BASE + "manifest.schema.json",
+}
 OFFICIAL_DIALECT = "https://json-schema.org/draft/2020-12/schema"
 
 
@@ -129,12 +134,31 @@ def semantic_hash(message):
 
 class Protocol:
     def __init__(self):
+        releases = {}
+        for version in ("v0.2.0", "v0.2.1"):
+            manifest = json.loads((ROOT / f"releases/{version}/release-manifest.json").read_text())
+            tree = hashlib.sha256("".join(f"{file['path']}\0{file['sha256']}\n" for file in manifest["files"]).encode()).hexdigest()
+            if tree != manifest["treeSha256"]:
+                raise StrictJsonError("digest-mismatch", f"{version} release tree digest does not match")
+            releases[version] = (manifest, {file["path"]: file for file in manifest["files"]})
+
+        def verified_json(path, version, release_path):
+            data = path.read_bytes()
+            expected = releases[version][1].get(release_path)
+            if not expected or len(data) != expected["bytes"] or hashlib.sha256(data).hexdigest() != expected["sha256"]:
+                raise StrictJsonError("digest-mismatch", f"{release_path} does not match the {version} release manifest")
+            return json.loads(data)
+
         paths = sorted((ROOT / "schemas/v0.2").glob("*.json"))
+        paths += sorted((ROOT / "schemas/v0.2.1").glob("*.json"))
         paths += sorted((ROOT / "profiles/v0.2").glob("**/*.schema.json"))
         schemas = []
         registry = Registry()
         for path in paths:
-            schema = json.loads(path.read_text())
+            source = path.relative_to(ROOT).as_posix()
+            version = "v0.2.1" if source.startswith("schemas/v0.2.1/") else "v0.2.0"
+            release_path = "schemas/" + path.name if source.startswith("schemas/") else source
+            schema = verified_json(path, version, release_path)
             schema["$schema"] = OFFICIAL_DIALECT
             schemas.append(schema)
             registry = registry.with_resource(schema["$id"], Resource.from_contents(schema, default_specification=DRAFT202012))
@@ -143,10 +167,9 @@ class Protocol:
             schema["$id"]: Draft202012Validator(schema, registry=registry, format_checker=checker)
             for schema in schemas
         }
-        self.registry = json.loads((ROOT / "registry/v0.2/capabilities.json").read_text())
+        self.registry = verified_json(ROOT / "registry/v0.2/capabilities.json", "v0.2.0", "registry.json")
         self.capabilities = {capability["id"]: capability for capability in self.registry["capabilities"]}
-        self.release_manifest = json.loads((ROOT / "releases/v0.2.0/release-manifest.json").read_text())
-        self.release_files = {file["path"]: file for file in self.release_manifest["files"]}
+        self.release_manifest, self.release_files = releases["v0.2.0"]
 
     @staticmethod
     def _raw(raw, max_bytes=1_048_576):
@@ -203,20 +226,29 @@ class Protocol:
             return verdict_invalid("discovery", "method-not-allowed", "Discovery supports GET and HEAD", 405)
         if context.get("contentType") and context["contentType"].split(";")[0].strip() != "application/linkset+json":
             return verdict_invalid("discovery", "content-type-mismatch", "RFC 9727 discovery requires application/linkset+json", 415)
-        failure = self._schema(SCHEMA_BASE + "discovery.schema.json", value, "discovery")
+        failure = self._schema(DISCOVERY_SCHEMA_BASE + "discovery.schema.json", value, "discovery")
         if failure:
             return failure
         if any(not item["href"].startswith("https://") for group in value["linkset"] for item in group["item"]):
             return verdict_invalid("discovery", "unsafe-url", "Manifest links must use HTTPS")
+        if any(not group["anchor"].startswith("https://") for group in value["linkset"]):
+            return verdict_invalid("discovery", "unsafe-url", "Discovery anchors must use HTTPS")
         return verdict_valid(value)
 
-    def validate_manifest(self, raw, _context=None):
+    def validate_manifest(self, raw, context=None):
+        context = context or {}
+        profile = context.get("manifestProfile", "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/manifest")
+        schema = MANIFEST_SCHEMAS.get(profile) if isinstance(profile, str) else None
+        if not schema:
+            return verdict_invalid("manifest", "unsupported-manifest-profile", "manifestProfile must identify a supported pinned manifest profile")
         value, failure = self._raw(raw)
         if failure:
             return failure
-        failure = self._schema(SCHEMA_BASE + "manifest.schema.json", value, "manifest")
+        failure = self._schema(schema, value, "manifest")
         if failure:
             return failure
+        if "discoveryPublisher" in value["roles"]:
+            return verdict_valid(value)
         profiles = {profile["id"] for profile in value["profiles"]}
         schemes = set(value.get("securitySchemes", {}))
         for profile in value["profiles"]:
@@ -339,7 +371,7 @@ class Protocol:
             return verdict_invalid("correlation", "correlation-mismatch", "Response correlationId does not equal the request id", 422)
         if message["recipient"]["id"] != request["sender"]["id"] or message["sender"]["id"] != request["recipient"]["id"]:
             return verdict_invalid("recipient", "recipient-mismatch", "Response participants do not reverse the request participants", 403)
-        if context.get("transport", {}).get("senderId") and message["sender"]["id"] != context["transport"]["senderId"]:
+        if not context.get("transport", {}).get("senderId") or message["sender"]["id"] != context["transport"]["senderId"]:
             return verdict_invalid("identity", "sender-identity-mismatch", "Authenticated responder does not match message.sender.id", 403)
         failure = self._extensions(message, context.get("supportedExtensions", []))
         if failure:
@@ -394,7 +426,11 @@ def main():
         print(json.dumps(verdict_invalid("raw", error.code, str(error)), separators=(",", ":")))
         return 1
     raw = incoming[separator + 2:]
-    protocol = Protocol()
+    try:
+        protocol = Protocol()
+    except StrictJsonError as error:
+        print(json.dumps(verdict_invalid("bundle", error.code, str(error)), separators=(",", ":")))
+        return 1
     commands = {
         "request": protocol.validate_request,
         "response": protocol.validate_response,

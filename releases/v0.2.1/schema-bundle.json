@@ -1,0 +1,1324 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.1/schema-bundle.json",
+  "$defs": {
+    "comcom-meta": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$dynamicAnchor": "meta",
+      "$vocabulary": {
+        "https://json-schema.org/draft/2020-12/vocab/core": true,
+        "https://json-schema.org/draft/2020-12/vocab/applicator": true,
+        "https://json-schema.org/draft/2020-12/vocab/unevaluated": true,
+        "https://json-schema.org/draft/2020-12/vocab/validation": true,
+        "https://json-schema.org/draft/2020-12/vocab/meta-data": true,
+        "https://json-schema.org/draft/2020-12/vocab/format-annotation": true,
+        "https://json-schema.org/draft/2020-12/vocab/format-assertion": true,
+        "https://json-schema.org/draft/2020-12/vocab/content": true
+      },
+      "allOf": [
+        {
+          "$ref": "https://json-schema.org/draft/2020-12/schema"
+        }
+      ]
+    },
+    "discovery": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/discovery.schema.json",
+      "title": "Comcom RFC 9727 API catalog linkset",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "linkset"
+      ],
+      "properties": {
+        "linkset": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "anchor",
+              "item"
+            ],
+            "properties": {
+              "anchor": {
+                "type": "string",
+                "format": "uri"
+              },
+              "item": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 32,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "href",
+                    "type",
+                    "profile"
+                  ],
+                  "properties": {
+                    "href": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "type": {
+                      "const": "application/vnd.comcom.manifest+json"
+                    },
+                    "profile": {
+                      "const": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/manifest"
+                    },
+                    "title": {
+                      "type": "string",
+                      "maxLength": 300
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "entity": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/entity.schema.json",
+      "title": "Comcom entity reference",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "enum": [
+            "person",
+            "organization",
+            "government",
+            "nonprofit",
+            "system",
+            "device"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        }
+      }
+    },
+    "envelope": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/envelope.schema.json",
+      "title": "Comcom v0.2 message envelope",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocolVersion",
+        "id",
+        "kind",
+        "capability",
+        "principal",
+        "sender",
+        "recipient",
+        "issuedAt",
+        "payload"
+      ],
+      "properties": {
+        "protocolVersion": {
+          "const": "0.2"
+        },
+        "id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "kind": {
+          "enum": [
+            "query",
+            "command",
+            "event",
+            "result",
+            "receipt"
+          ]
+        },
+        "capability": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "version"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+            },
+            "version": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+            }
+          }
+        },
+        "principal": {
+          "$ref": "entity.schema.json"
+        },
+        "sender": {
+          "$ref": "entity.schema.json"
+        },
+        "recipient": {
+          "$ref": "entity.schema.json"
+        },
+        "agent": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "type"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uri"
+            },
+            "type": {
+              "enum": [
+                "software",
+                "ui",
+                "workflow",
+                "ai"
+              ]
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 300
+            }
+          }
+        },
+        "authorization": {
+          "type": "string",
+          "format": "uri"
+        },
+        "issuedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "conversationId": {
+          "type": "string",
+          "format": "uri"
+        },
+        "correlationId": {
+          "type": "string",
+          "format": "uri"
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 200,
+          "pattern": "^[A-Za-z0-9._~-]+$"
+        },
+        "resource": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "type"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uri"
+            },
+            "type": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Za-z0-9]{0,63}$"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "criticalExtensions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+(?:\\.[a-z0-9-]+)+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 32
+        },
+        "extensions": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+(?:\\.[a-z0-9-]+)+$"
+          },
+          "additionalProperties": true,
+          "maxProperties": 64
+        },
+        "payload": true
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "command",
+                  "event"
+                ]
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "idempotencyKey"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "result",
+                  "receipt"
+                ]
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "correlationId"
+            ]
+          }
+        }
+      ]
+    },
+    "manifest": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/manifest.schema.json",
+      "title": "Comcom v0.2 capability manifest",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocolVersions",
+        "entity",
+        "roles",
+        "serviceOrigins",
+        "profiles",
+        "capabilities",
+        "limits"
+      ],
+      "properties": {
+        "protocolVersions": {
+          "type": "array",
+          "items": {
+            "const": "0.2"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "entity": {
+          "$ref": "entity.schema.json"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "responder",
+              "initiator",
+              "inboxReceiver",
+              "asyncResponder"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "serviceOrigins": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://[^/?#]+$"
+          },
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true
+        },
+        "profiles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "version",
+              "release",
+              "sha256"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*(?:\\.[a-z][a-z0-9-]*)+$"
+              },
+              "version": {
+                "const": "0.2.0"
+              },
+              "release": {
+                "type": "string",
+                "format": "uri",
+                "pattern": "^https://"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            }
+          },
+          "uniqueItems": true
+        },
+        "securitySchemes": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9._-]+$"
+          },
+          "additionalProperties": {
+            "$ref": "security.schema.json#/$defs/scheme"
+          }
+        },
+        "security": {
+          "$ref": "security.schema.json#/$defs/requirements"
+        },
+        "capabilities": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "version",
+              "profile",
+              "direction",
+              "kinds",
+              "inputSchema",
+              "outputSchema",
+              "executionModes"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^(comcom|[a-z0-9-]+(?:\\.[a-z0-9-]+)+)\\.[a-z0-9.-]+$"
+              },
+              "version": {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+              },
+              "profile": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*(?:\\.[a-z][a-z0-9-]*)+$"
+              },
+              "direction": {
+                "enum": [
+                  "send",
+                  "receive"
+                ]
+              },
+              "kinds": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "query",
+                    "command",
+                    "event"
+                  ]
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "inputSchema": {
+                "type": "string",
+                "format": "uri",
+                "pattern": "^https://"
+              },
+              "outputSchema": {
+                "type": "string",
+                "format": "uri",
+                "pattern": "^https://"
+              },
+              "executionModes": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "synchronous",
+                    "asynchronous"
+                  ]
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "forms": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "href",
+                    "method",
+                    "contentType",
+                    "executionMode",
+                    "security"
+                  ],
+                  "properties": {
+                    "href": {
+                      "type": "string",
+                      "format": "uri",
+                      "pattern": "^https://"
+                    },
+                    "method": {
+                      "enum": [
+                        "GET",
+                        "POST",
+                        "PUT",
+                        "PATCH",
+                        "DELETE"
+                      ]
+                    },
+                    "contentType": {
+                      "const": "application/comcom+json"
+                    },
+                    "executionMode": {
+                      "enum": [
+                        "synchronous",
+                        "asynchronous"
+                      ]
+                    },
+                    "security": {
+                      "$ref": "security.schema.json#/$defs/requirements"
+                    },
+                    "statusTemplate": {
+                      "type": "string",
+                      "format": "uri-template",
+                      "pattern": "^https://"
+                    }
+                  }
+                }
+              },
+              "anonymousCommand": {
+                "type": "boolean",
+                "default": false
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "direction": {
+                      "const": "receive"
+                    }
+                  },
+                  "required": [
+                    "direction"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "forms"
+                  ]
+                },
+                "else": {
+                  "not": {
+                    "required": [
+                      "forms"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limits": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "messageBytes",
+            "schemaBytes",
+            "idempotencyRetentionSeconds"
+          ],
+          "properties": {
+            "messageBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1048576
+            },
+            "schemaBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1048576
+            },
+            "idempotencyRetentionSeconds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 31536000
+            },
+            "requestsPerMinute": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "inbox": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "href",
+            "admissions"
+          ],
+          "properties": {
+            "href": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https://"
+            },
+            "admissions": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "capabilities",
+                  "topics",
+                  "senderIds",
+                  "maxBytes",
+                  "security"
+                ],
+                "properties": {
+                  "capabilities": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "topics": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "senderIds": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  },
+                  "maxBytes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1048576
+                  },
+                  "security": {
+                    "$ref": "security.schema.json#/$defs/requirements"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "roles": {
+                "contains": {
+                  "const": "inboxReceiver"
+                }
+              }
+            },
+            "required": [
+              "roles"
+            ]
+          },
+          "then": {
+            "required": [
+              "inbox"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "inbox"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "operation": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/operation.schema.json",
+      "title": "Comcom asynchronous operation",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "statusUrl",
+        "state",
+        "acceptedAt",
+        "updatedAt",
+        "originalCorrelationId"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "statusUrl": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "state": {
+          "enum": [
+            "accepted",
+            "inProgress",
+            "completed",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "acceptedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "completedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "originalCorrelationId": {
+          "type": "string",
+          "format": "uri"
+        },
+        "output": true,
+        "problemRef": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "completed"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "completedAt",
+              "output"
+            ],
+            "not": {
+              "required": [
+                "problemRef"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "failed"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "completedAt",
+              "problemRef"
+            ],
+            "not": {
+              "required": [
+                "output"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "cancelled"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "completedAt"
+            ]
+          }
+        }
+      ]
+    },
+    "problem": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/problem.schema.json",
+      "title": "Comcom RFC 9457 problem detail",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "title",
+        "status",
+        "phase",
+        "code"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "format": "uri"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "status": {
+          "type": "integer",
+          "minimum": 400,
+          "maximum": 599
+        },
+        "detail": {
+          "type": "string",
+          "maxLength": 5000
+        },
+        "instance": {
+          "type": "string",
+          "format": "uri"
+        },
+        "phase": {
+          "enum": [
+            "raw",
+            "envelope",
+            "protocol",
+            "capability",
+            "direction",
+            "role",
+            "recipient",
+            "identity",
+            "endpoint",
+            "security",
+            "extensions",
+            "payload",
+            "response",
+            "correlation",
+            "expiry",
+            "idempotency",
+            "discovery",
+            "manifest",
+            "bundle"
+          ]
+        },
+        "code": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "errors": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "message"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "keyword": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "extensions": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+(?:\\.[a-z0-9-]+)+$"
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "release-manifest": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/release-manifest.schema.json",
+      "title": "Comcom immutable release manifest",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "release",
+        "protocolVersion",
+        "maturity",
+        "createdAt",
+        "files",
+        "treeSha256"
+      ],
+      "properties": {
+        "release": {
+          "type": "string",
+          "pattern": "^v(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?$"
+        },
+        "protocolVersion": {
+          "const": "0.2"
+        },
+        "maturity": {
+          "enum": [
+            "experimental",
+            "stable"
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "files": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "mediaType",
+              "bytes",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 16777216
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            }
+          }
+        },
+        "treeSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "security": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/security.schema.json",
+      "title": "OpenAPI 3.1.1 security subset used by Comcom",
+      "$defs": {
+        "scopes": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "oauthFlow": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "authorizationUrl": {
+              "type": "string",
+              "format": "uri"
+            },
+            "tokenUrl": {
+              "type": "string",
+              "format": "uri"
+            },
+            "refreshUrl": {
+              "type": "string",
+              "format": "uri"
+            },
+            "scopes": {
+              "$ref": "#/$defs/scopes"
+            }
+          }
+        },
+        "scheme": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "name",
+                "in"
+              ],
+              "properties": {
+                "type": {
+                  "const": "apiKey"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "in": {
+                  "enum": [
+                    "query",
+                    "header",
+                    "cookie"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "scheme"
+              ],
+              "properties": {
+                "type": {
+                  "const": "http"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "scheme": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "bearerFormat": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "const": "mutualTLS"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "flows"
+              ],
+              "properties": {
+                "type": {
+                  "const": "oauth2"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "flows": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "minProperties": 1,
+                  "properties": {
+                    "implicit": {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/oauthFlow"
+                        },
+                        {
+                          "required": [
+                            "authorizationUrl",
+                            "scopes"
+                          ],
+                          "not": {
+                            "required": [
+                              "tokenUrl"
+                            ]
+                          }
+                        }
+                      ]
+                    },
+                    "password": {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/oauthFlow"
+                        },
+                        {
+                          "required": [
+                            "tokenUrl",
+                            "scopes"
+                          ]
+                        }
+                      ]
+                    },
+                    "clientCredentials": {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/oauthFlow"
+                        },
+                        {
+                          "required": [
+                            "tokenUrl",
+                            "scopes"
+                          ]
+                        }
+                      ]
+                    },
+                    "authorizationCode": {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/oauthFlow"
+                        },
+                        {
+                          "required": [
+                            "authorizationUrl",
+                            "tokenUrl",
+                            "scopes"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "openIdConnectUrl"
+              ],
+              "properties": {
+                "type": {
+                  "const": "openIdConnect"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "openIdConnectUrl": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          ]
+        },
+        "requirement": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          }
+        },
+        "requirements": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/requirement"
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/scheme"
+        },
+        {
+          "$ref": "#/$defs/requirements"
+        }
+      ]
+    },
+    "v021_discovery": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.1/schemas/discovery.schema.json",
+      "title": "Comcom v0.2.1 RFC 9727 API catalog linkset",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "linkset"
+      ],
+      "properties": {
+        "linkset": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "anchor",
+              "item"
+            ],
+            "properties": {
+              "anchor": {
+                "type": "string",
+                "format": "uri"
+              },
+              "item": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 32,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "href",
+                    "type",
+                    "profile"
+                  ],
+                  "properties": {
+                    "href": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "type": {
+                      "const": "application/vnd.comcom.manifest+json"
+                    },
+                    "profile": {
+                      "enum": [
+                        "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/manifest",
+                        "https://abhcr.github.io/comcom-protocol/releases/v0.2.1/profiles/manifest"
+                      ]
+                    },
+                    "title": {
+                      "type": "string",
+                      "maxLength": 300
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "v021_manifest": {
+      "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+      "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.1/schemas/manifest.schema.json",
+      "title": "Comcom v0.2.1 interaction or discovery-only manifest",
+      "oneOf": [
+        {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/manifest.schema.json"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "protocolVersions",
+            "entity",
+            "roles",
+            "profiles",
+            "capabilities"
+          ],
+          "properties": {
+            "protocolVersions": {
+              "const": [
+                "0.2"
+              ]
+            },
+            "entity": {
+              "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/entity.schema.json"
+            },
+            "roles": {
+              "const": [
+                "discoveryPublisher"
+              ]
+            },
+            "profiles": {
+              "const": []
+            },
+            "capabilities": {
+              "const": []
+            },
+            "contactUrl": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https://[^/?#@\\\\\\s]+(?:[/?#][^\\\\\\s]*)?$"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

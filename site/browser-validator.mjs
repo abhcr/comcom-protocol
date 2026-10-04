@@ -1,7 +1,7 @@
 import Ajv from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import { parseStrictJson } from "../reference/v0.2/strict-json.mjs";
-import { registry, schemas } from "comcom:validation-data";
+import { registry, schemas, examples } from "comcom:validation-data";
 
 const ajv = new Ajv({ allErrors: true, strict: false, validateFormats: true });
 addFormats(ajv);
@@ -14,16 +14,21 @@ const base = "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/";
 const errors = validation => (validation.errors ?? []).map(error => ({ path: error.instancePath || "/", message: error.message }));
 
 window.comcomOffline = {
-  validate(type, raw) {
+  examples,
+  validate(type, raw, context = {}) {
     let value;
     try {
       value = parseStrictJson(raw);
     } catch (error) {
       return { valid: false, phase: "raw", code: error.code ?? "invalid-json", errors: [{ path: "/", message: error.message }] };
     }
+    const manifestProfile = context.manifestProfile === undefined ? "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/manifest" : context.manifestProfile;
+    if (type === "manifest" && !["v0.2.0", "v0.2.1"].some(version => manifestProfile === `https://abhcr.github.io/comcom-protocol/releases/${version}/profiles/manifest`)) {
+      return { valid: false, phase: "manifest", code: "unsupported-manifest-profile", errors: [{ path: "/", message: "Select a supported pinned manifest profile" }] };
+    }
     const schemaId = {
-      discovery: `${base}discovery.schema.json`,
-      manifest: `${base}manifest.schema.json`,
+      discovery: "https://abhcr.github.io/comcom-protocol/releases/v0.2.1/schemas/discovery.schema.json",
+      manifest: type === "manifest" ? manifestProfile.replace("/profiles/manifest", "/schemas/manifest.schema.json") : undefined,
       request: `${base}envelope.schema.json`,
       response: `${base}envelope.schema.json`,
       "release-manifest": `${base}release-manifest.schema.json`

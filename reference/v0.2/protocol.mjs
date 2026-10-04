@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { readFile, readdir } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
+import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
@@ -9,12 +9,16 @@ import { parseStrictJson, StrictJsonError } from "./strict-json.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const ids = {
-  discovery: "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/discovery.schema.json",
+  discovery: "https://abhcr.github.io/comcom-protocol/releases/v0.2.1/schemas/discovery.schema.json",
   envelope: "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/envelope.schema.json",
   manifest: "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/manifest.schema.json",
   operation: "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/operation.schema.json",
   release: "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/release-manifest.schema.json"
 };
+const manifestSchemas = new Map([
+  ["https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/manifest", ids.manifest],
+  ["https://abhcr.github.io/comcom-protocol/releases/v0.2.1/profiles/manifest", "https://abhcr.github.io/comcom-protocol/releases/v0.2.1/schemas/manifest.schema.json"]
+]);
 
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -119,18 +123,37 @@ export function semanticHash(message) {
 }
 
 export async function createProtocolV02() {
+  const releases = new Map();
+  for (const version of ["v0.2.0", "v0.2.1"]) {
+    const manifest = JSON.parse(await readFile(resolve(root, `releases/${version}/release-manifest.json`), "utf8"));
+    const tree = createHash("sha256").update(manifest.files.map(file => `${file.path}\0${file.sha256}\n`).join("")).digest("hex");
+    if (tree !== manifest.treeSha256) throw new StrictJsonError("digest-mismatch", `${version} release tree digest does not match`);
+    releases.set(version, { manifest, files: new Map(manifest.files.map(file => [file.path, file])) });
+  }
+  async function verifiedJson(path, version, releasePath) {
+    const bytes = await readFile(path);
+    const expected = releases.get(version).files.get(releasePath);
+    if (!expected || bytes.length !== expected.bytes || createHash("sha256").update(bytes).digest("hex") !== expected.sha256) {
+      throw new StrictJsonError("digest-mismatch", `${releasePath} does not match the ${version} release manifest`);
+    }
+    return JSON.parse(bytes);
+  }
   const ajv = new Ajv({ allErrors: true, strict: false, validateFormats: true });
   addFormats(ajv);
-  const kernel = await Promise.all((await walk(resolve(root, "schemas/v0.2"))).filter(path => path.endsWith(".json")).sort().map(async path => JSON.parse(await readFile(path, "utf8"))));
+  const kernel = [];
+  for (const [directory, version] of [["v0.2", "v0.2.0"], ["v0.2.1", "v0.2.1"]]) {
+    for (const path of (await walk(resolve(root, `schemas/${directory}`))).filter(path => path.endsWith(".json")).sort()) {
+      kernel.push(await verifiedJson(path, version, `schemas/${relative(resolve(root, `schemas/${directory}`), path)}`));
+    }
+  }
   const meta = kernel.find(schema => schema.$id.endsWith("comcom-meta.schema.json"));
   ajv.addMetaSchema(meta);
   for (const schema of kernel.filter(schema => schema !== meta)) ajv.addSchema(schema);
   const profileSchemas = (await walk(resolve(root, "profiles/v0.2"))).filter(path => path.endsWith(".schema.json")).sort();
-  for (const path of profileSchemas) ajv.addSchema(JSON.parse(await readFile(path, "utf8")));
-  const registry = JSON.parse(await readFile(resolve(root, "registry/v0.2/capabilities.json"), "utf8"));
+  for (const path of profileSchemas) ajv.addSchema(await verifiedJson(path, "v0.2.0", relative(root, path)));
+  const registry = await verifiedJson(resolve(root, "registry/v0.2/capabilities.json"), "v0.2.0", "registry.json");
   const capabilities = new Map(registry.capabilities.map(capability => [capability.id, capability]));
-  const releaseManifest = JSON.parse(await readFile(resolve(root, "releases/v0.2.0/release-manifest.json"), "utf8"));
-  const releaseFiles = new Map(releaseManifest.files.map(file => [file.path, file]));
+  const { manifest: releaseManifest, files: releaseFiles } = releases.get("v0.2.0");
 
   const protocol = {
     ajv,
@@ -156,12 +179,15 @@ export async function createProtocolV02() {
       return valid(parsed.value);
     },
 
-    validateManifest(raw) {
+    validateManifest(raw, context = {}) {
+      const schema = context.manifestProfile === undefined ? ids.manifest : manifestSchemas.get(context.manifestProfile);
+      if (!schema) return invalid("manifest", "unsupported-manifest-profile", "manifestProfile must identify a supported pinned manifest profile");
       const parsed = rawValue(raw);
       if (parsed.error) return parsed.error;
-      const validate = ajv.getSchema(ids.manifest);
+      const validate = ajv.getSchema(schema);
       if (!validate(parsed.value)) return invalid("manifest", "schema-invalid", "Invalid manifest", 400, normalizeErrors(validate.errors));
       const manifest = parsed.value;
+      if (manifest.roles.includes("discoveryPublisher")) return valid(manifest);
       const profileIds = new Set(manifest.profiles.map(profile => profile.id));
       const schemes = new Set(Object.keys(manifest.securitySchemes ?? {}));
       for (const profile of manifest.profiles) {
@@ -247,7 +273,7 @@ export async function createProtocolV02() {
       if (message.kind !== expectedKind) return invalid("response", "response-kind-mismatch", `Expected ${expectedKind}, received ${message.kind}`, 422);
       if (message.correlationId !== request.id) return invalid("correlation", "correlation-mismatch", "Response correlationId does not equal the request id", 422);
       if (message.recipient.id !== request.sender.id || message.sender.id !== request.recipient.id) return invalid("recipient", "recipient-mismatch", "Response participants do not reverse the request participants", 403);
-      if (context.transport?.senderId && message.sender.id !== context.transport.senderId) return invalid("identity", "sender-identity-mismatch", "Authenticated responder does not match message.sender.id", 403);
+      if (!context.transport?.senderId || message.sender.id !== context.transport.senderId) return invalid("identity", "sender-identity-mismatch", "Authenticated responder does not match message.sender.id", 403);
       const extensionFailure = criticalExtensions(message, context.supportedExtensions);
       if (extensionFailure) return extensionFailure;
       const operationPayload = message.kind === "result" && message.payload && typeof message.payload === "object" && "statusUrl" in message.payload && "state" in message.payload;

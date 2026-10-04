@@ -1,6 +1,6 @@
 {
   "name": "comcom-protocol",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "Deterministic business interaction for the web",
   "type": "module",
@@ -12,6 +12,8 @@
     "check:generated": "node scripts/generate-artifacts.mjs --check",
     "build:v0.2": "node scripts/build-v0.2.mjs",
     "check:v0.2": "node scripts/build-v0.2.mjs --check && node scripts/verify-v0.1.mjs",
+    "build:v0.2.1": "node scripts/build-v0.2.1.mjs",
+    "check:v0.2.1": "node scripts/build-v0.2.1.mjs --check",
     "conformance:v0.2": "node scripts/run-conformance.mjs",
     "build:site": "node scripts/build-site.mjs",
     "check:site": "node scripts/build-site.mjs --check",
@@ -21,6 +23,7 @@
     "validate": "node scripts/validate.mjs",
     "demo": "node reference/server.mjs",
     "demo:caller": "node reference/caller.mjs",
+    "demo:v0.2": "node reference/v0.2/demo.mjs",
     "test": "node --test"
   },
   "dependencies": {

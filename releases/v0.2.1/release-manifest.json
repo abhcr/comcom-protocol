@@ -1,0 +1,39 @@
+{
+  "release": "v0.2.1",
+  "protocolVersion": "0.2",
+  "maturity": "experimental",
+  "createdAt": "2026-10-04T00:00:00Z",
+  "files": [
+    {
+      "path": "offline-bundle.json",
+      "mediaType": "application/json",
+      "bytes": 41532,
+      "sha256": "a253f3e627e722b8fb7919de3e8046ab2959375bb6644ce4a04f5f22e2e4384c"
+    },
+    {
+      "path": "profiles/manifest",
+      "mediaType": "text/html",
+      "bytes": 362,
+      "sha256": "909de7c21b3ef427a531d37594f399b71798d4e0b2680bc79eb0e26c787a76e7"
+    },
+    {
+      "path": "schema-bundle.json",
+      "mediaType": "application/json",
+      "bytes": 36138,
+      "sha256": "54772d8fb0bc683041b3a969eeebba463b2ba0c1228512b2a0a9202e7f7b7ec4"
+    },
+    {
+      "path": "schemas/discovery.schema.json",
+      "mediaType": "application/schema+json",
+      "bytes": 1775,
+      "sha256": "658ef182e55785412389e08367d2bccf58103e69b89644116d5989cd3dd670d1"
+    },
+    {
+      "path": "schemas/manifest.schema.json",
+      "mediaType": "application/schema+json",
+      "bytes": 1236,
+      "sha256": "09a1366340667c2cf00357b92dbe45aa0509fce8e93d253dc57e11969bf8a4ef"
+    }
+  ],
+  "treeSha256": "b88d4fdf0a540bdfee7585b3a01cee4b0dcc493e8955682949eea5082dfed7b9"
+}

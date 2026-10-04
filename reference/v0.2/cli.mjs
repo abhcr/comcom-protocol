@@ -1,10 +1,11 @@
 #!/usr/bin/env node
-import { readFile } from "node:fs/promises";
 import { createProtocolV02 } from "./protocol.mjs";
-import { parseStrictJson } from "./strict-json.mjs";
+import { parseStrictJson, StrictJsonError } from "./strict-json.mjs";
 
 const command = process.argv[2];
-const input = await readFile(0);
+const chunks = [];
+for await (const chunk of process.stdin) chunks.push(chunk);
+const input = Buffer.concat(chunks);
 const separator = input.indexOf("\n\n");
 if (separator < 0) {
   console.log(JSON.stringify({ valid: false, phase: "raw", code: "cli-input-invalid", errors: [{ path: "/", message: "stdin must contain context JSON, a blank line, then raw document bytes" }] }));
@@ -19,7 +20,14 @@ try {
   process.exit(1);
 }
 const raw = input.subarray(separator + 2);
-const protocol = await createProtocolV02();
+let protocol;
+try {
+  protocol = await createProtocolV02();
+} catch (error) {
+  if (!(error instanceof StrictJsonError)) throw error;
+  console.log(JSON.stringify({ valid: false, phase: "bundle", code: error.code, errors: [{ path: "/", message: error.message }] }));
+  process.exit(1);
+}
 const validators = {
   request: () => protocol.validateRequest(raw, context),
   response: () => protocol.validateResponse(raw, context),

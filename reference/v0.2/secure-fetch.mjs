@@ -103,7 +103,15 @@ async function addressesFor(hostname, resolver) {
 }
 
 export async function secureFetch(urlValue, options = {}) {
-  const deadline = Date.now() + (options.timeoutMs ?? 10_000);
+  const controller = new AbortController();
+  const timeoutError = new UnsafeUrlError("fetch-timeout", "Retrieval exceeded the total timeout");
+  let timer;
+  const timeout = new Promise((_, reject) => {
+    timer = setTimeout(() => {
+      controller.abort();
+      reject(timeoutError);
+    }, options.timeoutMs ?? 10_000);
+  });
   const maxRedirects = options.maxRedirects ?? 3;
   const maxBytes = options.maxBytes ?? 1_048_576;
   const resolver = options.resolver ?? dnsLookup;
@@ -111,51 +119,57 @@ export async function secureFetch(urlValue, options = {}) {
   let redirects = 0;
   let nonConformantDevelopment = false;
 
-  while (true) {
-    const parsed = parseUrl(current, options.allowInsecureLoopback === true);
-    nonConformantDevelopment ||= parsed.development;
-    const hostname = parsed.url.hostname.replace(/^\[|\]$/g, "");
-    const records = await addressesFor(hostname, resolver);
-    if (!parsed.development && records.some(record => !isPublicAddress(record.address))) throw new UnsafeUrlError("unsafe-address", "Host resolves to a non-public address");
-    if (parsed.development && records.some(record => !loopbackAddress(record.address))) throw new UnsafeUrlError("unsafe-address", "Development HTTP is limited to loopback addresses");
-    const pinned = records[0];
-    const remaining = deadline - Date.now();
-    if (remaining <= 0) throw new UnsafeUrlError("fetch-timeout", "Retrieval exceeded the 10-second total timeout");
+  try {
+    while (true) {
+      const parsed = parseUrl(current, options.allowInsecureLoopback === true);
+      nonConformantDevelopment ||= parsed.development;
+      const hostname = parsed.url.hostname.replace(/^\[|\]$/g, "");
+      const records = await Promise.race([addressesFor(hostname, resolver), timeout]);
+      if (!parsed.development && records.some(record => !isPublicAddress(record.address))) throw new UnsafeUrlError("unsafe-address", "Host resolves to a non-public address");
+      if (parsed.development && records.some(record => !loopbackAddress(record.address))) throw new UnsafeUrlError("unsafe-address", "Development HTTP is limited to loopback addresses");
+      const pinned = records[0];
 
-    const response = await new Promise((resolveResponse, reject) => {
-      const transport = parsed.url.protocol === "https:" ? https : http;
-      const request = transport.request(parsed.url, {
-        method: options.method ?? "GET",
-        headers: options.headers,
-        servername: isIP(hostname) ? undefined : hostname,
-        lookup: (_host, _lookupOptions, callback) => callback(null, pinned.address, pinned.family)
-      }, responseValue => {
-        const chunks = [];
-        let bytes = 0;
-        responseValue.on("data", chunk => {
-          bytes += chunk.length;
-          if (bytes > maxBytes) request.destroy(new UnsafeUrlError("response-too-large", `Response exceeds ${maxBytes} bytes`));
-          else chunks.push(chunk);
+      const response = await Promise.race([new Promise((resolveResponse, reject) => {
+        const transport = parsed.url.protocol === "https:" ? https : http;
+        const request = transport.request(parsed.url, {
+          method: options.method ?? "GET",
+          headers: options.headers,
+          signal: controller.signal,
+          servername: isIP(hostname) ? undefined : hostname,
+          lookup: (_host, lookupOptions, callback) => lookupOptions.all ? callback(null, [pinned]) : callback(null, pinned.address, pinned.family)
+        }, responseValue => {
+          const chunks = [];
+          let bytes = 0;
+          responseValue.on("data", chunk => {
+            bytes += chunk.length;
+            if (bytes > maxBytes) request.destroy(new UnsafeUrlError("response-too-large", `Response exceeds ${maxBytes} bytes`));
+            else chunks.push(chunk);
+          });
+          responseValue.on("error", reject);
+          responseValue.on("end", () => resolveResponse({ status: responseValue.statusCode, headers: responseValue.headers, body: Buffer.concat(chunks) }));
         });
-        responseValue.on("end", () => resolveResponse({ status: responseValue.statusCode, headers: responseValue.headers, body: Buffer.concat(chunks) }));
-      });
-      request.setTimeout(remaining, () => request.destroy(new UnsafeUrlError("fetch-timeout", "Retrieval exceeded the total timeout")));
-      request.on("socket", socket => socket.once("connect", () => {
-        const remote = socket.remoteAddress?.replace(/^::ffff:/, "");
-        const expected = pinned.address.replace(/^::ffff:/, "");
-        if (remote !== expected) request.destroy(new UnsafeUrlError("dns-rebinding", "Connected address differs from the pinned DNS result"));
-        else if (!parsed.development && !isPublicAddress(socket.remoteAddress)) request.destroy(new UnsafeUrlError("unsafe-address", "Connected address is not public"));
-      }));
-      request.on("error", reject);
-      request.end();
-    });
+        request.on("socket", socket => socket.once("connect", () => {
+          const remote = socket.remoteAddress?.replace(/^::ffff:/, "");
+          const expected = pinned.address.replace(/^::ffff:/, "");
+          if (remote !== expected) request.destroy(new UnsafeUrlError("dns-rebinding", "Connected address differs from the pinned DNS result"));
+          else if (!parsed.development && !isPublicAddress(socket.remoteAddress)) request.destroy(new UnsafeUrlError("unsafe-address", "Connected address is not public"));
+        }));
+        request.on("error", reject);
+        request.end();
+      }), timeout]);
 
-    if ([301, 302, 303, 307, 308].includes(response.status) && response.headers.location) {
-      if (redirects >= maxRedirects) throw new UnsafeUrlError("redirect-limit", `Retrieval exceeds ${maxRedirects} redirects`);
-      current = new URL(response.headers.location, parsed.url).href;
-      redirects += 1;
-      continue;
+      if ([301, 302, 303, 307, 308].includes(response.status) && response.headers.location) {
+        if (redirects >= maxRedirects) throw new UnsafeUrlError("redirect-limit", `Retrieval exceeds ${maxRedirects} redirects`);
+        current = new URL(response.headers.location, parsed.url).href;
+        redirects += 1;
+        continue;
+      }
+      return { ...response, url: parsed.url.href, redirects, conformant: !nonConformantDevelopment };
     }
-    return { ...response, url: parsed.url.href, redirects, conformant: !nonConformantDevelopment };
+  } catch (error) {
+    if (controller.signal.aborted) throw timeoutError;
+    throw error;
+  } finally {
+    clearTimeout(timer);
   }
 }

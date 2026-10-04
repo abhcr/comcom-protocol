@@ -1,0 +1,16 @@
+{
+  "protocolVersions": [
+    "0.2"
+  ],
+  "entity": {
+    "id": "https://purplecore.in",
+    "type": "organization",
+    "name": "Purplecore Software Systems Pvt Ltd"
+  },
+  "roles": [
+    "discoveryPublisher"
+  ],
+  "profiles": [],
+  "capabilities": [],
+  "contactUrl": "https://purplecore.in/#contact-form"
+}

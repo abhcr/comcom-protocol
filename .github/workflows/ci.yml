@@ -20,6 +20,7 @@ jobs:
       - run: npm audit --audit-level=moderate
       - run: npm run check:generated
       - run: npm run check:v0.2
+      - run: npm run check:v0.2.1
       - run: npm run check:site
       - run: npm run verify:release
       - run: npm run verify:site

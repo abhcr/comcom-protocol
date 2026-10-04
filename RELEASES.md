@@ -15,3 +15,7 @@ Every v0.2 release is experimental. Capability maturity remains independent of r
 | `v0.2.0` | Experimental final. No production-readiness or global-interoperability claim. |
 
 `node scripts/package-release.mjs <tag>` creates the exact stage-qualified registry, profile bundles, conformance corpus, offline bundle, and release manifest in `dist/<tag>/`. Release assets are immutable after publication.
+
+## v0.2.1 discovery addition
+
+The v0.2.1 artifacts add only the discovery-only manifest profile and its offline schema dependencies. Existing v0.2.0 artifacts remain immutable. Run `npm run build:v0.2.1` to generate the new artifacts, then run all CI checks. Publish through the single-tag workflow only after its exact tagged commit passes the checks. The workflow refuses to replace an existing release.

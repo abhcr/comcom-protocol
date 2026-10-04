@@ -1,0 +1,47 @@
+{
+  "$schema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/comcom-meta.schema.json",
+  "$id": "https://abhcr.github.io/comcom-protocol/releases/v0.2.1/schemas/manifest.schema.json",
+  "title": "Comcom v0.2.1 interaction or discovery-only manifest",
+  "oneOf": [
+    {
+      "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/manifest.schema.json"
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocolVersions",
+        "entity",
+        "roles",
+        "profiles",
+        "capabilities"
+      ],
+      "properties": {
+        "protocolVersions": {
+          "const": [
+            "0.2"
+          ]
+        },
+        "entity": {
+          "$ref": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/schemas/entity.schema.json"
+        },
+        "roles": {
+          "const": [
+            "discoveryPublisher"
+          ]
+        },
+        "profiles": {
+          "const": []
+        },
+        "capabilities": {
+          "const": []
+        },
+        "contactUrl": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://[^/?#@\\\\\\s]+(?:[/?#][^\\\\\\s]*)?$"
+        }
+      }
+    }
+  ]
+}

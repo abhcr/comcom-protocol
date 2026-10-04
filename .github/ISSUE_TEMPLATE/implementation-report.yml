@@ -1,0 +1,32 @@
+name: Implementation or evaluation report
+description: Report a reproducible evaluation, integration attempt, or missing requirement
+title: "[Evaluation]: "
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Commit or release and environment
+      placeholder: v0.2.1 / commit SHA, Node or Python version, OS
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Project and intended interaction
+      description: Explain the business use case, your relationship to Comcom, and which capability or discovery profile you evaluated. Private project details are optional.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Reproduction and observed results
+      description: Include exact commands, expected versus actual outcomes, and sanitized logs or a small reproducible example. Do not include credentials or customer data.
+    validations:
+      required: true
+  - type: textarea
+    id: fit
+    attributes:
+      label: Fit, gaps, and next step
+      description: Is this usable for your project? Identify missing requirements, documentation friction, and any proposed focused contribution. Separate completed tests from unverified behavior.
+    validations:
+      required: true

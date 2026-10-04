@@ -1,29 +1,28 @@
 # Contributing to Comcom
 
-Comcom welcomes implementation reports, protocol feedback, capability proposals, schemas, tests, and documentation improvements.
+Implementation reports, focused regression tests, documentation corrections, and protocol feedback are welcome. Small documentation and test fixes can go straight to a pull request; no proposal or prior discussion is required.
 
-## Before opening a change
+## Evaluate and report
 
-- Use a GitHub Discussion or issue to describe the problem and real business interaction.
-- Search existing capabilities and proposals to avoid synonyms or overlapping semantics.
-- Show why an extension namespace cannot solve the problem first.
-- For protocol changes, include at least two independent sender/receiver use cases where possible.
+With Node.js 24, run `npm ci` and `npm run demo:v0.2`. Read the [booking and Purplecore walkthrough](docs/evaluate.html), then file an [implementation report](https://github.com/abhcr/comcom-protocol/issues/new?template=implementation-report.yml) with your commit, commands, actual results, and missing requirements. A finding that Comcom is unsuitable for your project is useful evidence too.
 
-## Pull requests
+## Focused pull requests
 
-1. Fork the repository and create a focused branch.
-2. Edit the applicable authored source under `profiles/v0.2/`; generators must not create schemas, transitions, fixtures, or business semantics.
-3. Run `npm install`, install `requirements.txt` with Python 3.13, then run `npm run build:v0.2`, `npm run check:v0.2`, `npm run conformance:v0.2`, and `npm test`.
-4. Include valid and invalid examples for behavior changes.
-5. Explain compatibility and security consequences.
+1. Fork the repository, create a focused branch, and inspect nearby code and [AGENTS.md](AGENTS.md).
+2. Make the smallest correct change. Documentation and tooling fixes do not require modifying capability profiles.
+3. Run checks relevant to the change. Site edits use `npm run build:site`, `npm run check:site`, and `npm run verify:site`. Runtime changes use `npm test` and `npm run demo:v0.2`.
+4. For protocol changes, install Python 3.13 dependencies in a virtual environment (`python -m pip install -r requirements.txt`), then run `npm run check:v0.2`, `npm run verify:release`, and `npm run conformance:v0.2` as well.
+5. Include a regression or valid/invalid example for changed behavior. Explain the compatibility or security consequences and any validation you could not run.
 
-Published versioned artifacts are immutable. Fixes to a published version are released under a new version; pull requests must not silently alter its semantics.
+Published versioned artifacts are immutable. Do not rewrite v0.1.0 or v0.2.0 artifacts. Business semantics are authored under `profiles/v0.2/`; generators must not invent schemas, transitions, fixtures, or evidence. Changes to published semantics require a new version.
 
-## Capability proposals
+## Semantic and capability proposals
+
+Open an issue or Discussion before proposing new business semantics. Describe the concrete interaction, search existing capabilities to avoid overlaps, and explain why an extension namespace does not suffice. Include two independent sender/receiver use cases where possible.
 
 A proposed core capability must define its identifier, roles, message kinds, resource, closed input/output/resource schemas, preconditions, every allowed and forbidden lifecycle transition, retry and reversal rules, positive and independently authored negative examples, security floor, relevant standards mappings, and an evidence record. Normative promotion requires two successful independent interoperability journeys plus the gates in [GOVERNANCE.md](GOVERNANCE.md).
 
-Experimental behavior should use a reverse-domain namespace such as `org.example.*`. Successful extensions can later be proposed for the core registry without breaking their original namespace.
+Experimental behavior should use a reverse-domain namespace such as `org.example.*`. Successful extensions can later be proposed for the core registry without breaking their original namespace. Purplecore is a first-party discovery deployment and does not count as independent interoperability evidence.
 
 ## License
 

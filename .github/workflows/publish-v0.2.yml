@@ -1,89 +1,68 @@
-name: Publish v0.2 releases
+name: Publish Comcom release
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths: [.github/workflows/publish-v0.2.yml]
+    inputs:
+      tag:
+        description: Existing tag to test and publish
+        required: true
+        type: choice
+        options: [v0.2.1]
 
 permissions:
   contents: write
+
+concurrency:
+  group: comcom-release
+  cancel-in-progress: false
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ inputs.tag }}
+          fetch-depth: 0
+      - name: Verify exact tag
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$(git rev-parse "refs/tags/$RELEASE_TAG^{commit}")"
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 24
           cache: npm
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: "3.13"
+          cache: pip
       - run: npm ci
-      - name: Publish immutable release gates
+      - run: python -m pip install -r requirements.txt
+      - run: npm audit --audit-level=moderate
+      - run: npm run check:generated
+      - run: npm run check:v0.2
+      - run: npm run check:v0.2.1
+      - run: npm run check:site
+      - run: npm run verify:release
+      - run: npm run verify:site
+      - run: npm test
+      - run: npm run conformance:v0.2
+      - run: npm run demo:v0.2
+      - name: Publish tested immutable assets
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag }}
         run: |
           set -euo pipefail
-          gh release edit v0.1.0 \
-            --title "Comcom Protocol v0.1.0 — Experimental prototype" \
-            --notes "Experimental prototype retained for compatibility. See advisories/v0.1.md for known semantic and security limitations. Use the evidence-gated v0.2 line for current work."
-
-          for release in \
-            v0.2.0-alpha.1 v0.2.0-alpha.2 v0.2.0-alpha.3 \
-            v0.2.0-alpha.4 v0.2.0-alpha.5 v0.2.0-alpha.6 \
-            v0.2.0-beta.1 v0.2.0-rc.1 v0.2.0
-          do
-            if gh release view "$release" >/dev/null 2>&1; then
-              echo "$release already exists"
-              continue
-            fi
-
-            case "$release" in
-              v0.2.0-alpha.1)
-                title="Comcom v0.2.0-alpha.1 — Hardened kernel"
-                gate="Hardened kernel: RFC 9727 discovery, manifest, security, envelope, operation, release, raw validation, safe URL, and idempotency rules."
-                ;;
-              v0.2.0-alpha.2)
-                title="Comcom v0.2.0-alpha.2 — Commerce profiles"
-                gate="Commerce batch: 39 catalog, pricing, order, and procurement capabilities."
-                ;;
-              v0.2.0-alpha.3)
-                title="Comcom v0.2.0-alpha.3 — Transaction profiles"
-                gate="Transactions batch: 48 booking, scheduling, service, subscription, and support capabilities."
-                ;;
-              v0.2.0-alpha.4)
-                title="Comcom v0.2.0-alpha.4 — Operations profiles"
-                gate="Operations batch: 42 logistics, inventory, production, digital, IoT, and communication capabilities."
-                ;;
-              v0.2.0-alpha.5)
-                title="Comcom v0.2.0-alpha.5 — Identity profiles"
-                gate="Identity batch: 38 identity, privacy, trust, contract, credential, and workforce capabilities."
-                ;;
-              v0.2.0-alpha.6)
-                title="Comcom v0.2.0-alpha.6 — Regulated and public profiles"
-                gate="Regulated/public batch: 34 finance, government, property, insurance, utility, education, healthcare, and research capabilities."
-                ;;
-              v0.2.0-beta.1)
-                title="Comcom v0.2.0-beta.1 — Complete catalog"
-                gate="Complete 201-capability catalog, documentation, fixtures, bundles, and independent conformance corpus."
-                ;;
-              v0.2.0-rc.1)
-                title="Comcom v0.2.0-rc.1 — Conformance candidate"
-                gate="Node/Python agreement, interoperability journeys, security tests, release digests, and rendered accessibility gates."
-                ;;
-              v0.2.0)
-                title="Comcom v0.2.0 — Experimental final"
-                gate="Experimental final release. No production-readiness or global-interoperability claim."
-                ;;
-            esac
-
-            npm run package:release -- "$release"
-            mapfile -d '' assets < <(find "dist/$release" -type f -print0 | sort -z)
-            notes=$(printf 'Experimental release.\n\n%s\n\nCapability maturity remains independent of release maturity. Published capabilities are not normative until their evidence gates pass.' "$gate")
-
-            if [[ "$release" == "v0.2.0" ]]; then
-              gh release create "$release" "${assets[@]}" --verify-tag --latest --title "$title" --notes "$notes"
-            else
-              gh release create "$release" "${assets[@]}" --verify-tag --prerelease --title "$title" --notes "$notes"
-            fi
-          done
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Release already exists; assets will not be replaced."
+            exit 1
+          fi
+          npm run package:release -- "$RELEASE_TAG"
+          { cat releases/v0.2.1/README.md; printf '\nTested source commit: %s\n' "$(git rev-parse HEAD)"; } > dist/release-notes.md
+          mapfile -d '' assets < <(find "dist/$RELEASE_TAG" -type f -print0 | sort -z)
+          git fetch --no-tags origin "refs/tags/$RELEASE_TAG"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse 'FETCH_HEAD^{commit}')"
+          gh release create "$RELEASE_TAG" "${assets[@]}" --verify-tag --prerelease \
+            --title "Comcom v0.2.1 — Experimental discovery publishers" --notes-file dist/release-notes.md

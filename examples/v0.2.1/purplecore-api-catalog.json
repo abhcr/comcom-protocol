@@ -1,0 +1,15 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://purplecore.in",
+      "item": [
+        {
+          "href": "https://purplecore.in/comcom/manifest.json",
+          "type": "application/vnd.comcom.manifest+json",
+          "profile": "https://abhcr.github.io/comcom-protocol/releases/v0.2.1/profiles/manifest",
+          "title": "Purplecore company discovery and enquiry contact"
+        }
+      ]
+    }
+  ]
+}

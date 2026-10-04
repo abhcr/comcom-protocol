@@ -93,10 +93,25 @@ for (const button of document.querySelectorAll('[data-copy]')) {
   });
 }
 
+const documentType = document.querySelector('#document-type');
+const manifestProfile = document.querySelector('#manifest-profile');
 const file = document.querySelector('#document-file');
 const documentJson = document.querySelector('#document-json');
 file.addEventListener('change', async () => {
   if (file.files[0]) documentJson.value = await file.files[0].text();
+});
+
+document.querySelector('#load-example').addEventListener('click', () => {
+  if (!window.comcomOffline) return;
+  const name = documentType.value === 'manifest' && manifestProfile.value.includes('/v0.2.0/') ? 'legacy-manifest' : documentType.value;
+  const example = structuredClone(window.comcomOffline.examples[name]);
+  if (example.issuedAt) {
+    const now = Date.now();
+    example.issuedAt = new Date(now).toISOString();
+    if (example.expiresAt) example.expiresAt = new Date(now + 300_000).toISOString();
+  }
+  documentJson.value = JSON.stringify(example, null, 2);
+  documentJson.focus();
 });
 
 document.querySelector('#validator-form').addEventListener('submit', event => {
@@ -107,9 +122,9 @@ document.querySelector('#validator-form').addEventListener('submit', event => {
     output.textContent = 'The bundled validator failed to load. Use the Node or Python CLI.';
     return;
   }
-  const verdict = window.comcomOffline.validate(document.querySelector('#document-type').value, documentJson.value);
+  const verdict = window.comcomOffline.validate(documentType.value, documentJson.value, { manifestProfile: manifestProfile.value });
   output.className = verdict.valid ? 'valid' : 'invalid';
   output.textContent = verdict.valid
-    ? 'Valid against the bundled v0.2 document schemas.'
+    ? 'Valid document shape against the selected bundled schemas. Transport and business behavior are not verified.'
     : `${verdict.phase}: ${verdict.code}\n${verdict.errors.map(error => `${error.path} ${error.message}`).join('\n')}`;
 });

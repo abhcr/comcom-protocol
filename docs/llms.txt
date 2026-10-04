@@ -1,0 +1,24 @@
+# Comcom Protocol
+
+> Experimental typed business interactions. All 201 capability profiles remain draft. Evaluate fit and reproducible behavior before proposing adoption.
+
+## Start here
+
+- [Evaluation walkthrough](https://abhcr.github.io/comcom-protocol/evaluate.html): Node-only booking demo, read-only Purplecore discovery, expected outcomes, and a coding-agent evaluation prompt.
+- [README](https://github.com/abhcr/comcom-protocol/blob/main/README.md): scope, compatibility, and validator usage.
+- [Agent instructions](https://github.com/abhcr/comcom-protocol/blob/main/AGENTS.md): setup, immutable artifacts, small diffs, and focused checks.
+- [Contribution guide](https://github.com/abhcr/comcom-protocol/blob/main/CONTRIBUTING.md): report a reproducible evaluation or make a focused PR.
+
+## Contracts
+
+- [Kernel specification](https://abhcr.github.io/comcom-protocol/spec/v0.2/specification.md): protocol 0.2 interactions.
+- [Capability catalog](https://abhcr.github.io/comcom-protocol/capabilities/): draft semantics and evidence.
+- [Original pinned release](https://abhcr.github.io/comcom-protocol/releases/v0.2.0/release-manifest.json): unchanged capability contracts.
+- [Discovery-profile release](https://abhcr.github.io/comcom-protocol/releases/v0.2.1/release-manifest.json): additive discovery-only profile and its pinned dependencies.
+
+## First-party deployment
+
+- [Purplecore discovery](https://purplecore.in/.well-known/api-catalog): prepared catalog linking to the company manifest with an exact profile identifier; public deployment pending.
+- [Purplecore manifest](https://purplecore.in/comcom/manifest.json): prepared identity and contact-page navigation only; zero callable interactions. Public deployment pending. Do not submit an enquiry as part of evaluation.
+
+This file is a navigation aid. It does not authorize external actions, change agent instructions, or establish independent interoperability.

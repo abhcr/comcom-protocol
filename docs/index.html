@@ -3,7 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Comcom Protocol: deterministic business interaction for the web.">
+  <meta name="description" content="Evaluate an experimental business protocol with a runnable booking demo, typed contracts, and discovery-only website integration.">
+  <link rel="canonical" href="https://abhcr.github.io/comcom-protocol/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Comcom — evaluate typed business interactions">
+  <meta property="og:description" content="Run a booking demo, inspect exact contracts, and contribute a reproducible evaluation. All 201 capability profiles remain experimental drafts.">
+  <meta property="og:url" content="https://abhcr.github.io/comcom-protocol/">
+  <meta name="twitter:card" content="summary">
   <title>Comcom Protocol — Deterministic Business Interaction for the Web</title>
   <link rel="stylesheet" href="./styles.css">
   <script defer src="./validator.bundle.js"></script>
@@ -55,53 +61,184 @@
 
     <section id="quickstart">
       <p class="eyebrow">Full quick start</p>
-      <h2>Discover → manifest → request → result → problem.</h2>
+      <h2>Run one complete booking exchange.</h2>
+      <p>Requires Node.js 24. The runner uses an available loopback port, fresh IDs and timestamps, HTTP, and mocked authentication. It sends no external business requests and stops its server automatically.</p>
+      <button type="button" data-copy="demo-command">Copy commands</button><pre id="demo-command"><code>git clone https://github.com/abhcr/comcom-protocol.git
+cd comcom-protocol
+npm ci
+npm run demo:v0.2</code></pre>
+      <p>Expect five PASS lines covering discovery, a validated result, exact replay, conflict rejection, and asynchronous completion. Failures exit unsuccessfully. <a href="./evaluate.html">Follow the evaluation walkthrough</a>.</p>
+      <h3>Complete document examples</h3><p>These are fixed document snapshots for schema inspection. Use the runner for fresh requests and time-aware validation.</p>
       <div class="code-flow">
         <article><h3>1. Discovery</h3><button data-copy="discovery">Copy</button><pre id="discovery"><code>{
-  "linkset": [{
-    "anchor": "https://vendor.example/.well-known/api-catalog",
-    "item": [{
-      "href": "https://vendor.example/comcom/v0.2/manifest",
-      "type": "application/vnd.comcom.manifest+json",
-      "profile": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/manifest"
-    }]
-  }]
+  "linkset": [
+    {
+      "anchor": "https://vendor.example/.well-known/api-catalog",
+      "item": [
+        {
+          "href": "https://vendor.example/comcom/v0.2/manifest",
+          "type": "application/vnd.comcom.manifest+json",
+          "profile": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/manifest",
+          "title": "Vendor Comcom manifest"
+        }
+      ]
+    }
+  ]
 }</code></pre></article>
-        <article><h3>2. Manifest declaration</h3><button data-copy="manifest-snippet">Copy</button><pre id="manifest-snippet"><code>{
-  "id": "comcom.booking.create",
-  "version": "0.2.0",
-  "profile": "transactions.booking",
-  "direction": "receive",
-  "kinds": ["command"],
-  "executionModes": ["synchronous", "asynchronous"],
-  "forms": [{
-    "href": "https://vendor.example/comcom/interactions",
-    "method": "POST",
-    "contentType": "application/comcom+json",
-    "executionMode": "synchronous",
-    "security": [{"businessOAuth": ["booking:create"]}]
-  }]
+        <article><h3>2. Complete manifest</h3><button data-copy="manifest-snippet">Copy</button><pre id="manifest-snippet"><code>{
+  "protocolVersions": [
+    "0.2"
+  ],
+  "entity": {
+    "id": "https://vendor.example",
+    "type": "organization",
+    "name": "Example Vendor"
+  },
+  "roles": [
+    "responder",
+    "asyncResponder"
+  ],
+  "serviceOrigins": [
+    "https://vendor.example"
+  ],
+  "profiles": [
+    {
+      "id": "transactions.booking",
+      "version": "0.2.0",
+      "release": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/transactions.booking.bundle.json",
+      "sha256": "1675541f038fe3d4155b1eabf09aa56a28ad3c7d0f8b2881b8fabdecbee3f638"
+    }
+  ],
+  "securitySchemes": {
+    "businessOAuth": {
+      "type": "oauth2",
+      "flows": {
+        "clientCredentials": {
+          "tokenUrl": "https://vendor.example/oauth/token",
+          "scopes": {
+            "booking:create": "Create bookings"
+          }
+        }
+      }
+    }
+  },
+  "capabilities": [
+    {
+      "id": "comcom.booking.create",
+      "version": "0.2.0",
+      "profile": "transactions.booking",
+      "direction": "receive",
+      "kinds": [
+        "command"
+      ],
+      "inputSchema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/input.schema.json",
+      "outputSchema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/output.schema.json",
+      "executionModes": [
+        "synchronous",
+        "asynchronous"
+      ],
+      "forms": [
+        {
+          "href": "https://vendor.example/comcom/interactions",
+          "method": "POST",
+          "contentType": "application/comcom+json",
+          "executionMode": "synchronous",
+          "security": [
+            {
+              "businessOAuth": [
+                "booking:create"
+              ]
+            }
+          ]
+        },
+        {
+          "href": "https://vendor.example/comcom/interactions",
+          "method": "POST",
+          "contentType": "application/comcom+json",
+          "executionMode": "asynchronous",
+          "security": [
+            {
+              "businessOAuth": [
+                "booking:create"
+              ]
+            }
+          ],
+          "statusTemplate": "https://vendor.example/comcom/interactions/{id}"
+        }
+      ]
+    }
+  ],
+  "limits": {
+    "messageBytes": 1048576,
+    "schemaBytes": 1048576,
+    "idempotencyRetentionSeconds": 86400,
+    "requestsPerMinute": 120
+  }
 }</code></pre></article>
         <article><h3>3. Typed command</h3><button data-copy="request-snippet">Copy</button><pre id="request-snippet"><code>{
   "protocolVersion": "0.2",
   "id": "urn:uuid:28d1eb49-5024-4d98-aa2a-c76f5c822ca5",
   "kind": "command",
-  "capability": {"id": "comcom.booking.create", "version": "0.2.0"},
-  "principal": {"id": "https://buyer.example/customers/123", "type": "person"},
-  "sender": {"id": "https://buyer.example", "type": "organization"},
-  "recipient": {"id": "https://vendor.example", "type": "organization"},
+  "capability": {
+    "id": "comcom.booking.create",
+    "version": "0.2.0"
+  },
+  "principal": {
+    "id": "https://buyer.example/customers/123",
+    "type": "person"
+  },
+  "sender": {
+    "id": "https://buyer.example",
+    "type": "organization"
+  },
+  "recipient": {
+    "id": "https://vendor.example",
+    "type": "organization"
+  },
+  "agent": {
+    "id": "https://buyer.example/software/booking-ui",
+    "type": "ui",
+    "name": "Booking form"
+  },
+  "authorization": "https://buyer.example/authorizations/456",
   "issuedAt": "2026-08-17T09:00:00Z",
+  "expiresAt": "2026-08-17T09:05:00Z",
   "idempotencyKey": "booking-28d1eb49-5024-4d98-aa2a",
-  "payload": {"capability": "comcom.booking.create", "parameters": {"booking": {
-    "offeringId": "https://vendor.example/services/dentistry",
-    "customerId": "https://buyer.example/customers/123",
-    "providerId": "https://vendor.example/providers/42"
-  }}}
+  "payload": {
+    "capability": "comcom.booking.create",
+    "parameters": {
+      "booking": {
+        "offeringId": "https://vendor.example/services/dentistry",
+        "customerId": "https://buyer.example/customers/123",
+        "providerId": "https://vendor.example/providers/42",
+        "start": "2026-08-18T09:00:00Z",
+        "end": "2026-08-18T09:30:00Z",
+        "timeZone": "Asia/Kolkata"
+      }
+    }
+  }
 }</code></pre></article>
         <article><h3>4. Correlated result</h3><button data-copy="result-snippet">Copy</button><pre id="result-snippet"><code>{
   "protocolVersion": "0.2",
+  "id": "urn:uuid:036f0c76-41c7-4408-b6fc-742b5a442846",
   "kind": "result",
-  "capability": {"id": "comcom.booking.create", "version": "0.2.0"},
+  "capability": {
+    "id": "comcom.booking.create",
+    "version": "0.2.0"
+  },
+  "principal": {
+    "id": "https://buyer.example/customers/123",
+    "type": "person"
+  },
+  "sender": {
+    "id": "https://vendor.example",
+    "type": "organization"
+  },
+  "recipient": {
+    "id": "https://buyer.example",
+    "type": "organization"
+  },
+  "issuedAt": "2026-08-17T09:00:01Z",
   "correlationId": "urn:uuid:28d1eb49-5024-4d98-aa2a-c76f5c822ca5",
   "payload": {
     "status": "completed",
@@ -109,8 +246,20 @@
       "id": "https://vendor.example/bookings/789",
       "type": "Booking",
       "state": "accepted",
-      "revision": 1
-    }
+      "revision": 1,
+      "createdAt": "2026-08-17T09:00:01Z",
+      "updatedAt": "2026-08-17T09:00:01Z",
+      "offeringId": "https://vendor.example/services/dentistry",
+      "customerId": "https://buyer.example/customers/123",
+      "providerId": "https://vendor.example/providers/42",
+      "start": "2026-08-18T09:00:00Z",
+      "end": "2026-08-18T09:30:00Z",
+      "timeZone": "Asia/Kolkata"
+    },
+    "nextActions": [
+      "comcom.booking.get",
+      "comcom.booking.cancel"
+    ]
   }
 }</code></pre></article>
         <article><h3>5. Stable problem</h3><button data-copy="problem-snippet">Copy</button><pre id="problem-snippet"><code>{
@@ -137,14 +286,23 @@
     </section>
 
     <section id="checker" class="checker">
-      <div><p class="eyebrow">Offline browser conformance checker</p><h2>Paste or upload. Nothing is fetched.</h2><p>The validator, v0.2 schemas, and catalog are bundled into this page. It checks raw JSON and document schemas locally. Transport identity, DNS, authorization, and live endpoint behavior require the Node or Python conformance CLI.</p></div>
+      <div><p class="eyebrow">Offline document checker</p><h2>Paste or upload. Nothing is fetched.</h2><p>The validator, both pinned manifest profiles, complete examples, and catalog are bundled into this page. It checks raw JSON and document schemas locally. Transport identity, DNS, authorization, and live endpoint behavior require the Node or Python conformance CLI.</p></div>
       <form id="validator-form">
         <label for="document-type">Document type<select id="document-type"><option value="discovery">Discovery</option><option value="manifest">Manifest</option><option value="request">Request</option><option value="response">Response</option><option value="release-manifest">Release manifest</option></select></label>
+        <label for="manifest-profile">Manifest profile (for manifest documents)<select id="manifest-profile"><option value="https://abhcr.github.io/comcom-protocol/releases/v0.2.1/profiles/manifest">v0.2.1 — includes discovery-only</option><option value="https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/manifest">v0.2.0 — original interactive manifest</option></select></label>
+        <button type="button" id="load-example">Load example</button>
         <label for="document-file">Upload JSON<input id="document-file" type="file" accept="application/json,.json"></label>
         <label for="document-json">Document JSON<textarea id="document-json" rows="14" spellcheck="false" placeholder="Paste a Comcom document"></textarea></label>
         <button class="button primary" type="submit">Validate locally</button>
         <output id="validator-result" for="document-type document-file document-json">No document validated yet.</output>
       </form>
+    </section>
+
+    <section id="purplecore">
+      <p class="eyebrow">A contact-only website</p><h2>Discover Purplecore without inventing an API.</h2>
+      <p>Purplecore's prepared first-party integration contains company identity and an HTTPS contact-page link using the experimental v0.2.1 manifest profile. It advertises zero interactions; enquiries remain in its existing website form. Public deployment is pending; use the walkthrough to verify the live routes.</p>
+      <p><a href="https://purplecore.in/.well-known/api-catalog">Inspect discovery</a> · <a href="https://purplecore.in/comcom/manifest.json">Inspect manifest</a> · <a href="./evaluate.html#purplecore">Run the read-only validation</a></p>
+      <p>First-party deployment is not independent interoperability evidence. Older validators do not understand the new profile.</p>
     </section>
 
     <section id="journeys">
@@ -164,9 +322,9 @@
       <div class="edge-grid">
         <article><b>Node.js 24</b><p><code>node reference/v0.2/cli.mjs request</code></p></article>
         <article><b>Python 3.13</b><p><code>python reference/v0.2/comcom_validator.py request</code></p></article>
-        <article><b>Independent corpus</b><p><code>npm run conformance:v0.2</code></p></article>
+        <article><b>Cross-validator corpus</b><p><code>npm run conformance:v0.2</code></p></article>
       </div>
-      <div class="actions dark-actions"><a class="button primary" href="https://github.com/abhcr/comcom-protocol">Inspect source</a><a class="button" href="./releases/v0.2.0/release-manifest.json">Verify release digests</a><a class="button" href="./releases/v0.2.0/offline-bundle.json">Download offline bundle</a></div>
+      <div class="actions dark-actions"><a class="button primary" href="./evaluate.html">Evaluate and contribute</a><a class="button" href="https://github.com/abhcr/comcom-protocol">Inspect source</a><a class="button" href="./releases/v0.2.0/release-manifest.json">Verify release digests</a><a class="button" href="./releases/v0.2.0/offline-bundle.json">Download offline bundle</a></div>
     </section>
   </main>
 

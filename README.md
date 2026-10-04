@@ -1,83 +1,95 @@
 # Comcom Protocol
 
-> Humans should be able to speak naturally. Businesses should communicate precisely.
+Comcom is an experimental protocol for businesses to publish exact capabilities and exchange typed, correlated JSON results. It gives a booking, order, or other supported interaction a shared capability ID, version, schema, and lifecycle. Coding agents can inspect those contracts, evaluate fit, and build an integration using ordinary HTTP and the included validators.
 
-Comcom is an open protocol for deterministic business interaction on the web. A business advertises exact, versioned capabilities; another business discovers them through RFC 9727 and exchanges authenticated, schema-valid JSON. The business-to-business path needs no model, tokens, embeddings, phone imitation, or natural-language interpretation.
+Start with the working **booking demo**, or inspect **Purplecore's prepared discovery-only website integration**. A website can publish its identity and contact link without offering a business API. Purplecore's public deployment is pending; the walkthrough reports failure until its discovery routes are deployed and verified.
 
-UI and AI adapters remain useful at the human edge:
+**Maturity:** all 201 capability profiles remain `draft`. The examples demonstrate implementation behavior; they do not establish production readiness or independent interoperability. Implement only the capabilities your application actually supports.
 
-`Human ↔ UI or AI adapter ↔ Comcom ↔ Business`
+## Run the booking evaluation
 
-The structured Comcom message and result—not an AI explanation—are the authoritative business record.
-
-## Maturity
-
-Comcom v0.2 is experimental. All 201 capability profiles are currently `draft`; catalog presence does not imply normative status or global interoperability. Each capability must pass domain, security, independent conformance, lifecycle, and interoperability evidence gates before normative promotion.
-
-V0.1.0 is a [frozen experimental prototype](advisories/v0.1.md). Its schema, registry, fixture, and specification bytes are guarded by [a recorded SHA-256 manifest](releases/v0.1.0/sha256.json).
-
-## Try v0.2
-
-Requirements are Node.js 24 and Python 3.13.
+Requires Node.js 24. No API key or Python setup is needed for this demo.
 
 ```sh
-npm install
-python -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-npm run check:v0.2
-npm test
+git clone https://github.com/abhcr/comcom-protocol.git
+cd comcom-protocol
+npm ci
+npm run demo:v0.2
+```
+
+The command starts and stops its own responder on an available loopback port. It uses fresh IDs and timestamps and fails if any assertion fails. Expected results:
+
+```text
+PASS discovery and pinned-profile manifest validation
+PASS booking.create: HTTP 200, correlated and identity-bound result
+PASS exact replay: identical response bytes
+PASS changed request with reused key: HTTP 409 idempotency-conflict
+PASS asynchronous booking: HTTP 202 → polling → completed
+Evaluation passed. No external business service was called.
+```
+
+**Demo transport:** HTTP loopback and mocked authentication headers are development-only. The advertised `vendor.example` HTTPS URLs are mapped to the local responder by this runner. Production implementations require HTTPS and real transport identity/authorization binding.
+
+Read the [booking and Purplecore evaluation walkthrough](https://abhcr.github.io/comcom-protocol/evaluate.html), or [inspect its source](docs/evaluate.html). The [offline browser checker](https://abhcr.github.io/comcom-protocol/#checker) checks document shapes; use the CLI for contextual validation.
+
+## Decide whether it fits
+
+Comcom is useful to evaluate when independent systems need shared business semantics, exact replay behavior, and machine-readable results. A contact-only website can use the discovery profile. If a project only needs its own API documented, begin with its existing API contract; Comcom adoption should follow a demonstrated interoperability need.
+
+| Interface | Main purpose | Where Comcom fits |
+| --- | --- | --- |
+| [HTTP/OpenAPI](https://spec.openapis.org/oas/v3.1.1.html) | Describe a service's HTTP operations, parameters, and responses. | Comcom adds shared business capability semantics and message/lifecycle rules. It uses OpenAPI security requirement semantics. |
+| [MCP](https://modelcontextprotocol.io/specification/2025-11-25) | Connect applications using language models to tools, resources, and prompts. | An MCP tool could wrap a Comcom capability; this repository provides no MCP server. |
+| [A2A](https://a2a-protocol.org/latest/specification/) | Enable communication and task collaboration between agents. | Comcom defines business interactions independently of whether either participant is an AI agent. |
+
+An adapter may help a human express intent. The structured business request and result remain the authoritative records.
+
+## Evaluate with a coding agent
+
+Copy this prompt into your project's agent session:
+
+> Evaluate Comcom for one concrete interaction in this project. Read its README, AGENTS.md, and evaluation walkthrough. Run `npm ci` and `npm run demo:v0.2` in a separate checkout. Compare the exact capability input/output, security, lifecycle, retry, and reversal requirements with our existing code. Report the commit, commands, observed outcomes, missing requirements, and the smallest useful integration or a reason not to adopt. Do not add a dependency, send an enquiry, or make a real business transaction without authorization. Propose a focused implementation report or contribution supported by reproducible evidence.
+
+## Discovery and compatibility
+
+Production discovery uses HTTPS `GET` or `HEAD` at `/.well-known/api-catalog` with `application/linkset+json`. Its manifest link declares an exact profile:
+
+- `https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/manifest` describes the original interactive manifest.
+- `https://abhcr.github.io/comcom-protocol/releases/v0.2.1/profiles/manifest` also accepts a discovery-only publisher: entity identity, `roles: ["discoveryPublisher"]`, empty profiles/capabilities, and an optional HTTPS `contactUrl` navigation link.
+
+The v0.2.1 profile does not create an enquiry API. A `contactUrl` may identify a page fragment and must not be interpreted as a callable endpoint. Older validators do not understand this new profile. Existing CLI/library callers default to the v0.2.0 manifest profile; pass `manifestProfile` explicitly for v0.2.1.
+
+The wire protocol remains `0.2` and existing capability versions remain `0.2.0`. Published v0.1.0/v0.2.0 artifacts are frozen. `/.well-known/comcom` is only a v0.1 compatibility route and is not an IANA-registered suffix.
+
+## Use the validators
+
+The Node and Python CLIs accept a context JSON document, a blank line, then raw document bytes on standard input. Commands are `request`, `response`, `discovery`, `manifest`, and `release-bundle`. Verdicts contain `valid`, `phase`, `code`, and normalized `errors`.
+
+```sh
+{ printf '%s\n\n' '{"manifestProfile":"https://abhcr.github.io/comcom-protocol/releases/v0.2.1/profiles/manifest"}'; cat examples/v0.2.1/purplecore-manifest.json; } \
+  | node reference/v0.2/cli.mjs manifest
+```
+
+Full request validation needs the receiver manifest, selected endpoint, and trusted transport identity/security context. Full response validation requires the original request and a trusted `transport.senderId` for the responder; do not copy that identity from an untrusted response. Validators load pinned local artifacts and do not retrieve message-supplied schema URLs.
+
+For an application integration, select one advertised capability, pin the release artifacts, map your existing business operation to its input/output contract, bind authenticated transport identity, and run the positive and negative fixtures. Do not advertise a capability until its actual behavior meets that contract. See the [kernel specification](spec/v0.2/specification.md) and [discovery-only profile](spec/v0.2.1/discovery.md).
+
+Python is optional for the booking demo and required for independent cross-validator checks:
+
+```sh
+python3.13 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r requirements.txt
 npm run conformance:v0.2
 ```
 
-Run the non-conformant HTTP-loopback demo:
+## Inspect and contribute
 
-```sh
-node reference/v0.2/server.mjs
-```
+- [Capability catalog](https://abhcr.github.io/comcom-protocol/capabilities/) and [authored profile sources](profiles/v0.2/).
+- [Pinned v0.2.0 manifest](releases/v0.2.0/release-manifest.json) and [v0.2.1 discovery release](releases/v0.2.1/release-manifest.json).
+- [Contribution guide](CONTRIBUTING.md), [agent instructions](AGENTS.md), [governance](GOVERNANCE.md), and [security](SECURITY.md).
+- [Submit an implementation report](https://github.com/abhcr/comcom-protocol/issues/new?template=implementation-report.yml) or [find contribution opportunities](https://github.com/abhcr/comcom-protocol/issues).
 
-Production discovery is HTTPS `GET` or `HEAD` at `/.well-known/api-catalog` with media type `application/linkset+json`. See the [complete discovery, manifest, request, result, and asynchronous examples](examples/v0.2/).
-
-## What v0.2 contains
-
-- [Normative kernel specification](spec/v0.2/specification.md) with RFC 9727 discovery, OpenAPI 3.1.1 security semantics, raw-byte validation order, safe URL resolution, RFC 8785 idempotency, and asynchronous operations.
-- 201 stable `comcom.*` IDs in [individually committed profile sources](profiles/v0.2/) with closed input, output, and resource schemas, lifecycle, reversal, errors, mappings, fixtures, and evidence.
-- [Machine-readable v0.2 registry](registry/v0.2/capabilities.json) and 20 profile bundles.
-- Independent Node.js and Python validators with the same CLI framing and verdict model.
-- [Independent raw conformance corpus](conformance/v0.2/cases.json), including duplicate-key and invalid-encoding cases.
-- Digest-verified [release manifest](releases/v0.2.0/release-manifest.json) and a 16-MiB-bounded [offline bundle](releases/v0.2.0/offline-bundle.json).
-- A no-AI reference responder with exact replay, conflict, synchronous, asynchronous, and polling behavior.
-- Static documentation with permanent pages for every capability, a no-JavaScript catalog, and a fully bundled offline browser checker.
-
-## Validator CLI
-
-Both implementations accept a context JSON document, a blank line, and the raw document bytes on standard input. Commands are `request`, `response`, `discovery`, `manifest`, and `release-bundle`.
-
-```sh
-{ printf '%s\n\n' '{"method":"GET","contentType":"application/linkset+json"}'; cat examples/v0.2/discovery.json; } \
-  | node reference/v0.2/cli.mjs discovery
-```
-
-Use `reference/v0.2/comcom_validator.py` in the same way for Python. Each writes JSON containing `valid`, `phase`, `code`, and normalized `errors`.
-
-## Roles and subsets
-
-Implementations declare any applicable combination:
-
-- `responder` receives queries and commands;
-- `initiator` sends interactions and may expose no receive capability;
-- `inboxReceiver` receives declared events;
-- `asyncResponder` supports operation polling.
-
-A one-capability responder is conformant. A business implements only what it actually supports.
-
-## Discovery compatibility
-
-V0.2 uses the registered RFC 9727 `/.well-known/api-catalog` mechanism. `/.well-known/comcom` exists only as an explicitly labelled v0.1 compatibility route and is not an IANA-registered suffix.
-
-## Contributing and governance
-
-Business semantics are authored under `profiles/v0.2/`. Generation is limited to indexes, detail pages, bundles, and digests; it cannot invent schemas, lifecycle transitions, fixtures, or maturity evidence. See [CONTRIBUTING.md](CONTRIBUTING.md), [GOVERNANCE.md](GOVERNANCE.md), and [SECURITY.md](SECURITY.md).
-
-## License
+Evaluate one booking capability in your project and submit a reproducible implementation report. Documentation fixes and focused regression tests can go directly to pull requests. Purplecore is a first-party deployment and does not count as independent interoperability evidence.
 
 Apache License 2.0. See [LICENSE](LICENSE).

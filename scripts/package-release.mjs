@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { cp, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -16,6 +16,14 @@ const stageBatch = {
   "v0.2.0-rc.1": 6,
   "v0.2.0": 6
 };
+if (release === "v0.2.1") {
+  const { execFileSync } = await import("node:child_process");
+  execFileSync(process.execPath, [resolve(root, "scripts/build-v0.2.1.mjs"), "--check"], { stdio: "inherit" });
+  execFileSync(process.execPath, [resolve(root, "scripts/verify-release.mjs")], { stdio: "inherit" });
+  await cp(resolve(root, "releases/v0.2.1"), resolve(root, "dist/v0.2.1"), { recursive: true });
+  console.log("Packaged v0.2.1 discovery artifacts with unchanged v0.2.0 schema dependencies.");
+  process.exit(0);
+}
 if (!stageBatch[release]) throw new Error("release must be one of the planned v0.2 tags");
 
 const target = resolve(root, "dist", release);
