@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Comcom Protocol: deterministic business interaction for the web.">
-  <title>Comcom Protocol — Deterministic Business Interaction for the Web</title>
+  <meta name="description" content="Comcom is an experimental shared language for business software. Learn what it is, why it helps, and how a booking request works.">
+  <title>Comcom — A shared language for business software</title>
   <link rel="stylesheet" href="./styles.css">
   <script defer src="./validator.bundle.js"></script>
 </head>
@@ -19,25 +19,24 @@
     <div class="hero-grid">
       <div>
         <p class="eyebrow">Open protocol · v0.2 experimental</p>
-        <h1>Humans speak naturally.<br><em>Businesses communicate precisely.</em></h1>
-        <p class="lead">Discover exact capabilities, send authenticated schema-valid requests, and receive authoritative structured results—without AI between systems.</p>
-        <div class="actions"><a class="button primary" href="#quickstart">Try the protocol</a><a class="button" href="https://github.com/abhcr/comcom-protocol/blob/main/spec/v0.2/specification.md">Read the specification</a></div>
+        <h1>A shared language<br><em>for business software.</em></h1>
+        <p class="lead">Imagine booking a dentist appointment from an app you already use. Comcom gives the app and the clinic's software a common way to ask, act, and report what happened.</p>
+        <div class="actions"><a class="button primary" href="#basics">What, why, and how</a><a class="button" href="#quickstart">See a booking example</a></div>
       </div>
-      <div class="signal" aria-label="Comcom communication model">
-        <div><small>Human boundary</small><strong>Human</strong><span>↕</span><strong>UI or AI</strong></div>
-        <i>Authoritative Comcom message begins here</i>
-        <div class="precise"><small>Deterministic exchange</small><strong>Business A</strong><span>⇄</span><strong>Business B</strong></div>
-        <p>No machines talking like humans just to reach another machine. No token cost on the wire.</p>
+      <div class="signal" aria-label="Illustrative appointment booking">
+        <div><small>Your request</small><strong>You</strong><span>→</span><strong>Book a dentist appointment</strong></div>
+        <i>When both systems support Comcom</i>
+        <div class="precise"><small>A shared request and reply format</small><strong>Your app</strong><span>⇄</span><strong>Clinic software</strong></div>
+        <p>The reply tells your app whether the booking was accepted, rejected, or is still pending. Illustrative example, not a live booking service.</p>
       </div>
     </div>
   </header>
 
   <main id="content">
-    <section class="principles" aria-label="Design principles">
-      <article><b>Deterministic</b><span>Exact IDs, versions, schemas, roles, and state transitions determine meaning.</span></article>
-      <article><b>Evidence-gated</b><span>Catalog presence is not normative maturity; independent evidence controls promotion.</span></article>
-      <article><b>Small subsets</b><span>A one-capability responder and an initiator with no receive endpoint are valid.</span></article>
-      <article><b>Human-ready</b><span>The same typed contract drives software, forms, workflows, and optional edge AI.</span></article>
+    <section class="principles" id="basics" aria-label="Comcom in plain language">
+      <article><b>What is it?</b><span>An open set of rules for business software to exchange requests and results. Developers add it to their apps; it is not a booking app or marketplace.</span></article>
+      <article><b>Why does it matter?</b><span>Connecting different business systems often takes custom work. A shared format aims to make those connections easier to build and their results easier to understand.</span></article>
+      <article><b>How does it work?</b><span>A business lists the actions it supports. An app reads the instructions, sends a request with permission, and receives a clear result. A form or AI assistant can help a person start.</span></article>
     </section>
 
     <section id="how">

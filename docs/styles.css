@@ -38,6 +38,7 @@ nav a { text-decoration: none; font-size: .9rem; }
 .eyebrow { text-transform: uppercase; letter-spacing: .14em; font-weight: 800; font-size: .75rem; color: #53695a; }
 .hero .eyebrow { color: var(--lime); }
 h1 { font-size: clamp(2.65rem, 7vw, 6.5rem); line-height: .95; letter-spacing: -.065em; margin: 18px 0 30px; max-width: 930px; }
+.hero h1 { font-size: clamp(2.45rem, 5.5vw, 5.25rem); }
 h1 em { color: var(--lime); font-style: normal; }
 .lead { color: #d5e3d9; max-width: 680px; font-size: clamp(1.05rem, 2vw, 1.25rem); }
 .lead.dark { color: var(--muted); }
@@ -54,7 +55,7 @@ h1 em { color: var(--lime); font-style: normal; }
 
 main { max-width: 1180px; margin: auto; padding: 0 24px; }
 section { padding: 95px 0; border-bottom: 1px solid var(--line); }
-.principles { margin-top: -50px; position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 28px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; box-shadow: 0 20px 70px #29362e13; }
+.principles { margin-top: -50px; position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 28px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; box-shadow: 0 20px 70px #29362e13; }
 .principles article { display: grid; gap: 8px; }
 .principles b { font-size: 1.05rem; }
 .principles span { color: var(--muted); font-size: .9rem; }

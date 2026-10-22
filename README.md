@@ -1,5 +1,29 @@
 # Comcom Protocol
 
+**A shared language for business software.**
+
+Imagine booking a dentist appointment from an app you already use. Your app needs to know what the clinic offers, how to request a booking, and whether it was accepted. Comcom proposes a common way for the two systems to exchange that information.
+
+## What is it?
+
+Comcom is an open set of rules for software to exchange business requests and results in a shared format. A request might book an appointment, place an order, or check a delivery. Developers add support to their existing software; Comcom is not a booking app or a marketplace.
+
+## Why does it matter?
+
+Businesses use different software, so connecting them often requires custom work. Even a simple booking needs both sides to agree on the details and what counts as success. A shared format aims to make those connections easier to build and the results easier to understand.
+
+## How does it work?
+
+1. **Discover:** a business publishes the actions its software supports and the details each action needs.
+2. **Request:** an app reads those instructions and sends a request with the required permission.
+3. **Get a result:** the business returns a reply the app can read, such as a booking confirmation, a rejection, or a pending status.
+
+Both systems must support Comcom for the actions they exchange. A person can start through a form or an AI assistant; the business software handles the request. The dentist example is illustrative, not a live service.
+
+**Current stage:** experimental. The examples are for evaluation; production readiness and independent interoperability have not been established.
+
+## The technical idea
+
 > Humans should be able to speak naturally. Businesses should communicate precisely.
 
 Comcom is an open protocol for deterministic business interaction on the web. A business advertises exact, versioned capabilities; another business discovers them through RFC 9727 and exchanges authenticated, schema-valid JSON. The business-to-business path needs no model, tokens, embeddings, phone imitation, or natural-language interpretation.
