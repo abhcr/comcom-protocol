@@ -18,7 +18,7 @@ async function walk(directory) {
 const htmlPaths = (await walk(docs)).filter(path => path.endsWith(".html"));
 if (htmlPaths.filter(path => path.includes("/capabilities/")).length !== 202) throw new Error("site must contain 201 detail pages and one complete catalog page");
 const index = await readFile(resolve(docs, "index.html"), "utf8");
-for (const required of ["class=\"skip\"", "Experimental v0.2 line", "not an IANA-registered", "<noscript>", "id=\"checker\"", "validator.bundle.js"]) {
+for (const required of ["class=\"skip\"", "Experimental v0.2 line", "/.well-known/api-catalog", "<noscript>", "id=\"checker\"", "validator.bundle.js"]) {
   if (!index.includes(required)) throw new Error(`site index is missing ${required}`);
 }
 if ((index.match(/aria-live=/g) ?? []).length !== 1) throw new Error("only the result count may be an ARIA live region");

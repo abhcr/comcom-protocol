@@ -38,8 +38,6 @@ The structured Comcom message and result—not an AI explanation—are the autho
 
 Comcom v0.2 is experimental. All 201 capability profiles are currently `draft`; catalog presence does not imply normative status or global interoperability. Each capability must pass domain, security, independent conformance, lifecycle, and interoperability evidence gates before normative promotion.
 
-V0.1.0 is a [frozen experimental prototype](advisories/v0.1.md). Its schema, registry, fixture, and specification bytes are guarded by [a recorded SHA-256 manifest](releases/v0.1.0/sha256.json).
-
 ## Try v0.2
 
 Requirements are Node.js 24 and Python 3.13.
@@ -93,10 +91,6 @@ Implementations declare any applicable combination:
 - `asyncResponder` supports operation polling.
 
 A one-capability responder is conformant. A business implements only what it actually supports.
-
-## Discovery compatibility
-
-V0.2 uses the registered RFC 9727 `/.well-known/api-catalog` mechanism. `/.well-known/comcom` exists only as an explicitly labelled v0.1 compatibility route and is not an IANA-registered suffix.
 
 ## Contributing and governance
 
