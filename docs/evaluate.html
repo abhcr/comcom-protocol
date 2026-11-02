@@ -17,7 +17,7 @@
 <a class="skip" href="#content">Skip to content</a>
 <header class="subhead"><nav aria-label="Primary"><a class="mark" href="./"><span>CC</span> Comcom</a><div><a href="./#checker">Document checker</a><a href="https://github.com/abhcr/comcom-protocol">GitHub</a></div></nav></header>
 <main id="content" class="detail">
-<p class="notice"><strong>Experimental v0.2 line.</strong> All 201 capabilities remain draft. Purplecore's first-party deployment is pending and supplies no independent interoperability evidence.</p>
+<p class="notice"><strong>Experimental v0.2 line.</strong> All 201 capabilities remain draft. Purplecore's first-party deployment supplies no independent interoperability evidence.</p>
 <p class="eyebrow">An evaluation you can reproduce</p><h1>One booking. One contact-only website.</h1>
 <p class="lead dark">Try the business exchange locally, then inspect public discovery without sending a business request.</p>
 <section id="booking"><h2>1. Run the booking exchange</h2>
@@ -36,7 +36,8 @@ Evaluation passed. No external business service was called.</code></pre>
 <p>Each line is backed by an assertion. The command exits unsuccessfully on a mismatch. Inspect <a href="https://github.com/abhcr/comcom-protocol/blob/main/reference/v0.2/demo.mjs">the runner</a> to see the actual exchange and <a href="./capabilities/comcom-booking-create.html">the booking contract</a> for schemas and lifecycle rules. Authentication headers in this demo are not an authentication implementation.</p>
 </section>
 <section id="purplecore"><h2>2. Inspect Purplecore discovery</h2>
-<p><strong>Deployment pending:</strong> the public routes returned website HTML during the 2026-10-04 evaluation. The local examples validate, but the command below must pass against the deployed site before launch.</p>
+<p><strong>Live deployment verified on 2026-11-02:</strong> both HTTPS endpoints returned HTTP 200 for GET and HEAD with the correct JSON media types. The live catalog and manifest passed Node and Python validation; an unknown <code>/comcom/</code> document returned HTTP 404. Rerun the command below to check the current deployment.</p>
+<p>Verified release commit: <a href="https://github.com/abhcr/comcom-protocol/commit/43a6435385824a2a24f9e8596a497ce2a95bde77"><code>43a6435385824a2a24f9e8596a497ce2a95bde77</code></a>. Website deployment revision: <code>purplecore-comcom-discovery-20261102-69cfd59d5965</code>.</p>
 <p>The public endpoints are <a href="https://purplecore.in/.well-known/api-catalog">the RFC 9727 catalog</a> and <a href="https://purplecore.in/comcom/manifest.json">the company manifest</a>. Run the following from the repository checkout. It performs two bounded HTTPS GET requests and validates their raw bytes against pinned local artifacts. Network or deployment failures fail the evaluation; do not replace missing evidence with a success claim.</p>
 <pre id="purplecore-command"><code>node --input-type=module &lt;&lt;'NODE'
 import assert from 'node:assert/strict';

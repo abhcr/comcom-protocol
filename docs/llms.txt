@@ -18,7 +18,7 @@
 
 ## First-party deployment
 
-- [Purplecore discovery](https://purplecore.in/.well-known/api-catalog): prepared catalog linking to the company manifest with an exact profile identifier; public deployment pending.
-- [Purplecore manifest](https://purplecore.in/comcom/manifest.json): prepared identity and contact-page navigation only; zero callable interactions. Public deployment pending. Do not submit an enquiry as part of evaluation.
+- [Purplecore discovery](https://purplecore.in/.well-known/api-catalog): live catalog linking to the company manifest with an exact profile identifier. Public GET/HEAD responses and Node/Python validation were verified on 2026-11-02.
+- [Purplecore manifest](https://purplecore.in/comcom/manifest.json): live identity and contact-page navigation only; zero callable interactions. Do not submit an enquiry as part of evaluation.
 
 This file is a navigation aid. It does not authorize external actions, change agent instructions, or establish independent interoperability.

@@ -22,7 +22,7 @@ Both systems must support Comcom for the actions they exchange. A person can sta
 
 **Current stage:** experimental. The examples are for evaluation; production readiness and independent interoperability have not been established.
 
-Start with the working **booking demo**, or inspect **Purplecore's prepared discovery-only website integration**. A website can publish its identity and contact link without offering a business API. Purplecore's public deployment is pending; the walkthrough reports failure until its discovery routes are deployed and verified.
+Start with the working **booking demo**, or inspect **Purplecore's live discovery-only website integration**. A website can publish its identity and contact link without offering a business API. The public endpoints and manifest validation were verified on 2026-11-02; rerun the walkthrough to check their current status.
 
 **Maturity:** all 201 capability profiles remain `draft`. The examples demonstrate implementation behavior; they do not establish production readiness or independent interoperability. Implement only the capabilities your application actually supports.
 
