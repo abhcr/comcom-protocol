@@ -1,6 +1,26 @@
 # Comcom Protocol
 
-Comcom is an experimental protocol for businesses to publish exact capabilities and exchange typed, correlated JSON results. It gives a booking, order, or other supported interaction a shared capability ID, version, schema, and lifecycle. Coding agents can inspect those contracts, evaluate fit, and build an integration using ordinary HTTP and the included validators.
+**A shared language for business software.**
+
+Imagine booking a dentist appointment from an app you already use. Your app needs to know what the clinic offers, how to request a booking, and whether it was accepted. Comcom proposes a common way for the two systems to exchange that information.
+
+## What is it?
+
+Comcom is an open set of rules for software to exchange business requests and results in a shared format. A request might book an appointment, place an order, or check a delivery. Developers add support to their existing software; Comcom is not a booking app or a marketplace.
+
+## Why does it matter?
+
+Businesses use different software, so connecting them often requires custom work. Even a simple booking needs both sides to agree on the details and what counts as success. A shared format aims to make those connections easier to build and the results easier to understand.
+
+## How does it work?
+
+1. **Discover:** a business publishes the actions its software supports and the details each action needs.
+2. **Request:** an app reads those instructions and sends a request with the required permission.
+3. **Get a result:** the business returns a reply the app can read, such as a booking confirmation, a rejection, or a pending status.
+
+Both systems must support Comcom for the actions they exchange. A person can start through a form or an AI assistant; the business software handles the request. The dentist example is illustrative, not a live service.
+
+**Current stage:** experimental. The examples are for evaluation; production readiness and independent interoperability have not been established.
 
 Start with the working **booking demo**, or inspect **Purplecore's prepared discovery-only website integration**. A website can publish its identity and contact link without offering a business API. Purplecore's public deployment is pending; the walkthrough reports failure until its discovery routes are deployed and verified.
 
@@ -59,7 +79,7 @@ Production discovery uses HTTPS `GET` or `HEAD` at `/.well-known/api-catalog` wi
 
 The v0.2.1 profile does not create an enquiry API. A `contactUrl` may identify a page fragment and must not be interpreted as a callable endpoint. Older validators do not understand this new profile. Existing CLI/library callers default to the v0.2.0 manifest profile; pass `manifestProfile` explicitly for v0.2.1.
 
-The wire protocol remains `0.2` and existing capability versions remain `0.2.0`. Published v0.1.0/v0.2.0 artifacts are frozen. `/.well-known/comcom` is only a v0.1 compatibility route and is not an IANA-registered suffix.
+The wire protocol remains `0.2` and existing capability versions remain `0.2.0`. Published v0.2.0 artifacts are frozen.
 
 ## Use the validators
 

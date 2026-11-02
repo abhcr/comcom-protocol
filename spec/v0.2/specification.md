@@ -2,11 +2,9 @@
 
 ## Status
 
-This specification defines the breaking v0.2 protocol line. Version 0.2.0 is experimental. A capability is interoperable only to the maturity stated by its own profile and evidence record; publication in the catalog does not make it normative.
+This specification defines Comcom v0.2. Version 0.2.0 is experimental. A capability is interoperable only to the maturity stated by its own profile and evidence record; publication in the catalog does not make it normative.
 
 The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHOULD**, **SHOULD NOT**, and **MAY** are to be interpreted as described by BCP 14 when they appear in capitals.
-
-Comcom v0.1.0 is a frozen experimental prototype. Its `/.well-known/comcom` route is a legacy compatibility mechanism and is not an IANA-registered well-known suffix.
 
 ## Principle and scope
 
@@ -54,8 +52,6 @@ It MUST support HTTPS `GET` and `HEAD`. A successful response has media type `ap
 - `profile` is `https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/manifest`.
 
 `HEAD` returns the same status and representation metadata as `GET` without a body. The discovery representation MUST NOT exceed 64 KiB.
-
-`/.well-known/comcom` MAY remain available for v0.1 clients. It MUST be identified as legacy v0.1 compatibility and MUST NOT be described as registered by IANA.
 
 ### Safe URL resolution
 
@@ -230,7 +226,7 @@ Internal retention, routing, storage, or ignoring behavior does not alter wire s
 
 ## Capability profiles and maturity
 
-The v0.2 catalog preserves all 201 v0.1 `comcom.*` identifiers and assigns each to an authored profile. Each capability has closed input, output, and resource schemas; actors; purpose; request kind; security floor; preconditions; execution modes; lifecycle; retry and reversal behavior; stable errors; standards mappings; examples; and evidence.
+The catalog contains 201 `comcom.*` identifiers, each assigned to an authored profile. Each capability has closed input, output, and resource schemas; actors; purpose; request kind; security floor; preconditions; execution modes; lifecycle; retry and reversal behavior; stable errors; standards mappings; examples; and evidence.
 
 Maturity states are `proposal`, `draft`, `experimental`, `normative`, `deprecated`.
 
@@ -248,7 +244,7 @@ Generation MAY build registry indexes, documentation pages, bundles, and digest 
 
 ## Releases and conformance
 
-Every release contains a compound kernel schema bundle, profile bundles, registry, independent conformance corpus, offline bundle, and SHA-256 manifest. Friendly Pages aliases MUST match the immutable release bytes. Release tags and assets SHOULD use GitHub immutable releases when available; historical v0.1 bytes are protected by a committed digest guard.
+Every release contains a compound kernel schema bundle, profile bundles, registry, independent conformance corpus, offline bundle, and SHA-256 manifest. Friendly Pages aliases MUST match the immutable release bytes. Release tags and assets SHOULD use GitHub immutable releases when available.
 
 The reference validation CLI receives a context JSON document, a blank line, and then raw document bytes on standard input. It writes one JSON verdict containing `valid`, `phase`, `code`, and normalized `errors`. Commands are `request`, `response`, `discovery`, `manifest`, and `release-bundle`.
 
@@ -256,4 +252,4 @@ Node.js 24 and Python 3.13 validators MUST agree on the independent corpus. Prod
 
 ## IANA considerations
 
-V0.2 uses the already registered RFC 9727 `api-catalog` well-known URI. This document makes no request to register `comcom` and makes no claim that it is registered. Any future registration request will be prepared and reviewed separately.
+Comcom uses the registered RFC 9727 `api-catalog` well-known URI. This specification requests no new IANA registrations.

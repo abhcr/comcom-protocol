@@ -14,7 +14,7 @@ With Node.js 24, run `npm ci` and `npm run demo:v0.2`. Read the [booking and Pur
 4. For protocol changes, install Python 3.13 dependencies in a virtual environment (`python -m pip install -r requirements.txt`), then run `npm run check:v0.2`, `npm run verify:release`, and `npm run conformance:v0.2` as well.
 5. Include a regression or valid/invalid example for changed behavior. Explain the compatibility or security consequences and any validation you could not run.
 
-Published versioned artifacts are immutable. Do not rewrite v0.1.0 or v0.2.0 artifacts. Business semantics are authored under `profiles/v0.2/`; generators must not invent schemas, transitions, fixtures, or evidence. Changes to published semantics require a new version.
+Published versioned artifacts are immutable. Do not rewrite published artifacts. Business semantics are authored under `profiles/v0.2/`; generators must not invent schemas, transitions, fixtures, or evidence. Changes to published semantics require a new version.
 
 ## Semantic and capability proposals
 

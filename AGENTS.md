@@ -19,7 +19,7 @@ Read [README.md](README.md), [CONTRIBUTING.md](CONTRIBUTING.md), and nearby code
 
 ## Sources and checks
 
-Business semantics are authored in `profiles/v0.2/`. Published v0.1.0 and v0.2.0 schemas, profiles, examples, registry, specification, and release artifacts are immutable. Use a new version for semantic changes. Do not regenerate historical artifacts to make a failing digest check pass.
+Business semantics are authored in `profiles/v0.2/`. Published v0.2.0 schemas, profiles, examples, registry, specification, and release artifacts are immutable. Use a new version for semantic changes. Do not regenerate historical artifacts to make a failing digest check pass.
 
 `site/browser-validator.mjs` and `scripts/build-site.mjs` produce `docs/validator.bundle.js`, capability pages, and the sitemap; edit their sources, then run `npm run build:site`. The home page, app, and evaluation guide are authored directly under `docs/`.
 
