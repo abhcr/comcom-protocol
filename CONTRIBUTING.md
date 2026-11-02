@@ -4,7 +4,7 @@ Implementation reports, focused regression tests, documentation corrections, and
 
 ## Evaluate and report
 
-With Node.js 24, run `npm ci` and `npm run demo:v0.2`. Read the [booking and Purplecore walkthrough](docs/evaluate.html), then file an [implementation report](https://github.com/abhcr/comcom-protocol/issues/new?template=implementation-report.yml) with your commit, commands, actual results, and missing requirements. A finding that Comcom is unsuitable for your project is useful evidence too.
+With Node.js 24, run `npm ci` and `npm run demo:v0.2`. Read the [evaluation walkthrough](docs/evaluate.html), then file an [implementation report](https://github.com/abhcr/comcom-protocol/issues/new?template=implementation-report.yml) with your commit, commands, actual results, and missing requirements. A finding that Comcom is unsuitable for your project is useful evidence too.
 
 ## Focused pull requests
 
@@ -22,7 +22,7 @@ Open an issue or Discussion before proposing new business semantics. Describe th
 
 A proposed core capability must define its identifier, roles, message kinds, resource, closed input/output/resource schemas, preconditions, every allowed and forbidden lifecycle transition, retry and reversal rules, positive and independently authored negative examples, security floor, relevant standards mappings, and an evidence record. Normative promotion requires two successful independent interoperability journeys plus the gates in [GOVERNANCE.md](GOVERNANCE.md).
 
-Experimental behavior should use a reverse-domain namespace such as `org.example.*`. Successful extensions can later be proposed for the core registry without breaking their original namespace. Purplecore is a first-party discovery deployment and does not count as independent interoperability evidence.
+Experimental behavior should use a reverse-domain namespace such as `org.example.*`. Successful extensions can later be proposed for the core registry without breaking their original namespace. First-party examples do not count as independent interoperability evidence.
 
 ## License
 

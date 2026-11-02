@@ -296,13 +296,6 @@ npm run demo:v0.2</code></pre>
       </form>
     </section>
 
-    <section id="purplecore">
-      <p class="eyebrow">A contact-only website</p><h2>Discover Purplecore without inventing an API.</h2>
-      <p>Purplecore's live first-party integration publishes company identity and an HTTPS contact-page link using the experimental v0.2.1 manifest profile. It advertises zero interactions; enquiries remain in its existing website form. Public GET/HEAD responses and manifest validation were verified on 2026-11-02; use the walkthrough to check the live routes.</p>
-      <p><a href="https://purplecore.in/.well-known/api-catalog">Inspect discovery</a> · <a href="https://purplecore.in/comcom/manifest.json">Inspect manifest</a> · <a href="./evaluate.html#purplecore">Run the read-only validation</a></p>
-      <p>First-party deployment is not independent interoperability evidence. Older validators do not understand the new profile.</p>
-    </section>
-
     <section id="journeys">
       <p class="eyebrow">One authoritative message, three entry paths</p>
       <h2>The booking command stays the same.</h2>
@@ -323,6 +316,7 @@ npm run demo:v0.2</code></pre>
         <article><b>Cross-validator corpus</b><p><code>npm run conformance:v0.2</code></p></article>
       </div>
       <div class="actions dark-actions"><a class="button primary" href="./evaluate.html">Evaluate and contribute</a><a class="button" href="https://github.com/abhcr/comcom-protocol">Inspect source</a><a class="button" href="./releases/v0.2.0/release-manifest.json">Verify release digests</a><a class="button" href="./releases/v0.2.0/offline-bundle.json">Download offline bundle</a></div>
+      <p id="purplecore">Example implementation: <a href="./evaluate.html#purplecore">Purplecore</a> publishes company identity and a contact link through discovery, with no callable interactions. This is a first-party example.</p>
     </section>
   </main>
 

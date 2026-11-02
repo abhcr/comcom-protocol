@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Evaluate Comcom: booking and Purplecore discovery</title>
-  <meta name="description" content="Run a complete booking exchange, validate Purplecore's discovery-only website, and contribute reproducible implementation evidence.">
+  <title>Evaluate Comcom: run a booking exchange and assess fit</title>
+  <meta name="description" content="Run a complete booking exchange, inspect the protocol contracts, and contribute reproducible implementation evidence.">
   <link rel="canonical" href="https://abhcr.github.io/comcom-protocol/evaluate.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Evaluate Comcom: one booking, one contact-only website">
+  <meta property="og:title" content="Evaluate Comcom: run a booking exchange and assess fit">
   <meta property="og:description" content="A practical walkthrough of the experimental business protocol, with expected outcomes and honest implementation boundaries.">
   <meta property="og:url" content="https://abhcr.github.io/comcom-protocol/evaluate.html">
   <meta name="twitter:card" content="summary">
@@ -17,9 +17,9 @@
 <a class="skip" href="#content">Skip to content</a>
 <header class="subhead"><nav aria-label="Primary"><a class="mark" href="./"><span>CC</span> Comcom</a><div><a href="./#checker">Document checker</a><a href="https://github.com/abhcr/comcom-protocol">GitHub</a></div></nav></header>
 <main id="content" class="detail">
-<p class="notice"><strong>Experimental v0.2 line.</strong> All 201 capabilities remain draft. Purplecore's first-party deployment supplies no independent interoperability evidence.</p>
-<p class="eyebrow">An evaluation you can reproduce</p><h1>One booking. One contact-only website.</h1>
-<p class="lead dark">Try the business exchange locally, then inspect public discovery without sending a business request.</p>
+<p class="notice"><strong>Experimental v0.2 line.</strong> All 201 capabilities remain draft. First-party examples supply no independent interoperability evidence.</p>
+<p class="eyebrow">An evaluation you can reproduce</p><h1>Try Comcom in your project.</h1>
+<p class="lead dark">Run a booking exchange locally, inspect its contract, and decide whether it fits your project.</p>
 <section id="booking"><h2>1. Run the booking exchange</h2>
 <p>Use Node.js 24. This first evaluation requires no Python, API key, or account:</p>
 <pre><code>git clone https://github.com/abhcr/comcom-protocol.git
@@ -35,7 +35,8 @@ PASS asynchronous booking: HTTP 202 → polling → completed
 Evaluation passed. No external business service was called.</code></pre>
 <p>Each line is backed by an assertion. The command exits unsuccessfully on a mismatch. Inspect <a href="https://github.com/abhcr/comcom-protocol/blob/main/reference/v0.2/demo.mjs">the runner</a> to see the actual exchange and <a href="./capabilities/comcom-booking-create.html">the booking contract</a> for schemas and lifecycle rules. Authentication headers in this demo are not an authentication implementation.</p>
 </section>
-<section id="purplecore"><h2>2. Inspect Purplecore discovery</h2>
+<details id="purplecore"><summary>Optional example: a discovery-only website</summary>
+<p>Purplecore is a small first-party implementation that publishes company identity and a contact link without offering callable business interactions.</p>
 <p><strong>Live deployment verified on 2026-11-02:</strong> both HTTPS endpoints returned HTTP 200 for GET and HEAD with the correct JSON media types. The live catalog and manifest passed Node and Python validation; an unknown <code>/comcom/</code> document returned HTTP 404. Rerun the command below to check the current deployment.</p>
 <p>Verified release commit: <a href="https://github.com/abhcr/comcom-protocol/commit/43a6435385824a2a24f9e8596a497ce2a95bde77"><code>43a6435385824a2a24f9e8596a497ce2a95bde77</code></a>. Website deployment revision: <code>purplecore-comcom-discovery-20261102-69cfd59d5965</code>.</p>
 <p>The public endpoints are <a href="https://purplecore.in/.well-known/api-catalog">the RFC 9727 catalog</a> and <a href="https://purplecore.in/comcom/manifest.json">the company manifest</a>. Run the following from the repository checkout. It performs two bounded HTTPS GET requests and validates their raw bytes against pinned local artifacts. Network or deployment failures fail the evaluation; do not replace missing evidence with a success claim.</p>
@@ -68,8 +69,8 @@ console.log('PASS Purplecore discovery-only manifest', manifest.value);
 NODE</code></pre>
 <p>The result identifies Purplecore Software Systems Pvt Ltd and points to its existing contact form. Empty profiles and capabilities mean it advertises zero interactions. The <code>contactUrl</code> is a navigation link, not a submission endpoint. This walkthrough never fetches that contact link or sends an enquiry.</p>
 <p>To inspect the same shape without network access, select “Manifest” and “v0.2.1” in the <a href="./#checker">browser checker</a>, then “Load example”. That validates document shape only. The public command above additionally checks the live HTTP responses.</p>
-</section>
-<section id="adopt"><h2>3. Decide what your project actually needs</h2>
+</details>
+<section id="adopt"><h2>2. Decide what your project actually needs</h2>
 <p>Compare one business interaction with its exact capability contract. Check input/output semantics, lifecycle, retry/replay, reversal, permissions, and what your system can guarantee. A passing example is not enough to claim your service conforms.</p>
 <ol>
 <li>Pin an immutable release and verify artifact digests. The provided validators verify their local schema and registry bytes before use.</li>
@@ -90,29 +91,29 @@ Do not add a dependency, submit an enquiry, or make a real business
 transaction without authorization. Propose a focused contribution
 only where reproducible evidence supports it.</code></pre>
 </section>
-<section id="contribute"><h2>4. Share a reproducible evaluation</h2>
+<section id="contribute"><h2>3. Share a reproducible evaluation</h2>
 <p><a href="https://github.com/abhcr/comcom-protocol/issues/new?template=implementation-report.yml">Submit an implementation report</a> with your commit, environment, commands, outcomes, and gaps. Include whether you implemented both sides yourself or worked with an independent counterparty. Sanitize credentials and customer data.</p>
 <p>Useful bounded contributions include a Python booking initiator, additional discovery compatibility cases, contextual response-identity regressions, and independent booking implementation reports. Small documentation and test fixes can go directly to a PR; semantic changes follow the <a href="https://github.com/abhcr/comcom-protocol/blob/main/CONTRIBUTING.md">contribution guide</a>.</p>
 <p><strong>Invitation:</strong> Evaluate one booking capability in your project and submit a reproducible implementation report. A well-supported “not a fit” result is useful too.</p>
 </section>
 <section id="launch-drafts"><h2>Launch materials — drafts for review</h2>
-<p>These materials are prepared for review, not evidence of an external announcement. Publish only after the tagged checks, live Purplecore checks, and two fresh agent evaluations pass. Record the tested release SHA and public verification date alongside the published article.</p>
+<p>These materials are prepared for review, not evidence of an external announcement. Publish only after the tagged checks, live example checks, and two fresh agent evaluations pass. Record the tested release SHA and public verification date alongside the published article.</p>
 <details><summary>Developer article draft</summary>
 <h3>Can a business contract be small enough for an agent to evaluate?</h3>
 <p>Comcom is an experimental attempt to make business interactions explicit: discover a website's manifest, select an exact capability version, validate a typed request, and use the correlated result as the business record. The first reproducible exercise is booking creation.</p>
 <p>Clone the repository and run <code>npm ci &amp;&amp; npm run demo:v0.2</code> with Node.js 24. The demo checks discovery, a booking result, exact replay, a changed request reusing the same key, and asynchronous completion. It uses loopback HTTP and mocked authentication; production identity and authorization remain the implementer's responsibility.</p>
-<p>The second exercise is smaller. Purplecore's website publishes its company identity and a contact-page link through a discovery-only manifest. It declares no callable capabilities. That makes its existing enquiry route discoverable without implying that a business API exists.</p>
-<p>Comcom is complementary to service descriptions and agent interfaces: it experiments with shared business capability semantics. All 201 catalog profiles are still draft. Purplecore and the booking responder are first-party examples; independent interoperability has not been established by those examples.</p>
+<p>The walkthrough also includes a small discovery-only website example: company identity and a contact-page link, with no callable capabilities.</p>
+<p>Comcom is complementary to service descriptions and agent interfaces: it experiments with shared business capability semantics. All 201 catalog profiles are still draft. The reference examples do not establish independent interoperability.</p>
 <p>We are looking for narrow evaluations: does one booking contract fit your project, which fields or lifecycle rules do not, and can you reproduce the result? Use the walkthrough and submit an implementation report or a focused regression/documentation PR.</p>
 <p>Try it: <a href="https://abhcr.github.io/comcom-protocol/evaluate.html">the runnable walkthrough</a>. Source: <a href="https://github.com/abhcr/comcom-protocol">Comcom on GitHub</a>.</p>
 </details>
 <details><summary>Show HN submission draft</summary>
 <p><strong>Title:</strong> Show HN: Comcom — typed business contracts with a runnable booking demo</p>
 <p><strong>URL:</strong> https://abhcr.github.io/comcom-protocol/evaluate.html</p>
-<p><strong>Opening comment:</strong> I am experimenting with exact, versioned business interactions that conventional software or coding agents can inspect and evaluate. The Node-only demo creates a booking, validates the result, checks exact replay and conflict handling, and polls an asynchronous operation. A second walkthrough reads Purplecore's discovery-only manifest; it exposes company identity and a contact link, with zero callable interactions. All profiles are experimental drafts, and the demo mocks authentication. I would value reproducible evaluations, especially cases where an existing API contract is sufficient or these semantics do not fit. The repository includes validators, fixtures, and small contribution opportunities.</p>
+<p><strong>Opening comment:</strong> I am experimenting with exact, versioned business interactions that conventional software or coding agents can inspect and evaluate. The Node-only demo creates a booking, validates the result, checks exact replay and conflict handling, and polls an asynchronous operation. All profiles are experimental drafts, and the demo mocks authentication. I would value reproducible evaluations, especially cases where an existing API contract is sufficient or these semantics do not fit. The repository includes validators, fixtures, and small contribution opportunities.</p>
 </details>
 <details><summary>Short demo recording sequence</summary>
-<ol><li>Show the experimental-status notice and the Node-only quickstart.</li><li>Run the booking command and record the five actual PASS lines.</li><li>Open the runner beside a complete correlated result and explain the mocked transport.</li><li>Run the read-only Purplecore command, showing its empty capabilities and contact-page link.</li><li>Show the implementation-report form and ask viewers to evaluate one capability.</li></ol>
+<ol><li>Show the experimental-status notice and the Node-only quickstart.</li><li>Run the booking command and record the five actual PASS lines.</li><li>Open the runner beside a complete correlated result and explain the mocked transport.</li><li>Optionally inspect the discovery-only example.</li><li>Show the implementation-report form and ask viewers to evaluate one capability.</li></ol>
 <p>Keep credentials, private windows, and customer data out of the recording. The launch recording must show the tested release and real command output.</p>
 </details>
 </section>

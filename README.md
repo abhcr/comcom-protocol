@@ -22,8 +22,6 @@ Both systems must support Comcom for the actions they exchange. A person can sta
 
 **Current stage:** experimental. The examples are for evaluation; production readiness and independent interoperability have not been established.
 
-Start with the working **booking demo**, or inspect **Purplecore's live discovery-only website integration**. A website can publish its identity and contact link without offering a business API. The public endpoints and manifest validation were verified on 2026-11-02; rerun the walkthrough to check their current status.
-
 **Maturity:** all 201 capability profiles remain `draft`. The examples demonstrate implementation behavior; they do not establish production readiness or independent interoperability. Implement only the capabilities your application actually supports.
 
 ## Run the booking evaluation
@@ -50,7 +48,7 @@ Evaluation passed. No external business service was called.
 
 **Demo transport:** HTTP loopback and mocked authentication headers are development-only. The advertised `vendor.example` HTTPS URLs are mapped to the local responder by this runner. Production implementations require HTTPS and real transport identity/authorization binding.
 
-Read the [booking and Purplecore evaluation walkthrough](https://abhcr.github.io/comcom-protocol/evaluate.html), or [inspect its source](docs/evaluate.html). The [offline browser checker](https://abhcr.github.io/comcom-protocol/#checker) checks document shapes; use the CLI for contextual validation.
+Read the [evaluation walkthrough](https://abhcr.github.io/comcom-protocol/evaluate.html), or [inspect its source](docs/evaluate.html). The [offline browser checker](https://abhcr.github.io/comcom-protocol/#checker) checks document shapes; use the CLI for contextual validation.
 
 ## Decide whether it fits
 
@@ -81,6 +79,8 @@ The v0.2.1 profile does not create an enquiry API. A `contactUrl` may identify a
 
 The wire protocol remains `0.2` and existing capability versions remain `0.2.0`. Published v0.2.0 artifacts are frozen.
 
+Example implementation: [Purplecore](https://abhcr.github.io/comcom-protocol/evaluate.html#purplecore) publishes its identity and a contact link, with no callable interactions. This first-party discovery example is not independent interoperability evidence.
+
 ## Use the validators
 
 The Node and Python CLIs accept a context JSON document, a blank line, then raw document bytes on standard input. Commands are `request`, `response`, `discovery`, `manifest`, and `release-bundle`. Verdicts contain `valid`, `phase`, `code`, and normalized `errors`.
@@ -110,6 +110,6 @@ npm run conformance:v0.2
 - [Contribution guide](CONTRIBUTING.md), [agent instructions](AGENTS.md), [governance](GOVERNANCE.md), and [security](SECURITY.md).
 - [Submit an implementation report](https://github.com/abhcr/comcom-protocol/issues/new?template=implementation-report.yml) or [find contribution opportunities](https://github.com/abhcr/comcom-protocol/issues).
 
-Evaluate one booking capability in your project and submit a reproducible implementation report. Documentation fixes and focused regression tests can go directly to pull requests. Purplecore is a first-party deployment and does not count as independent interoperability evidence.
+Evaluate one booking capability in your project and submit a reproducible implementation report. Documentation fixes and focused regression tests can go directly to pull requests.
 
 Apache License 2.0. See [LICENSE](LICENSE).
