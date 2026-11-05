@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Comcom is an experimental shared language for business software. Learn what it is, why it helps, and how a booking request works.">
+  <meta name="description" content="Comcom is an experimental open protocol to standardise recurring requests, responses, and status updates between two or more businesses or organisations.">
   <link rel="canonical" href="https://abhcr.github.io/comcom-protocol/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Comcom — A shared language for business software">
-  <meta property="og:description" content="Run a booking demo, inspect exact contracts, and contribute a reproducible evaluation. All 201 capability profiles remain experimental drafts.">
+  <meta property="og:title" content="Comcom — Standardise inter-business communication">
+  <meta property="og:description" content="Standardise recurring communication between business partners. Start with one shared workflow and contribute to the open-source protocol. All 201 capabilities remain drafts.">
   <meta property="og:url" content="https://abhcr.github.io/comcom-protocol/">
   <meta name="twitter:card" content="summary">
-  <title>Comcom — A shared language for business software</title>
+  <title>Comcom — Standardise inter-business communication</title>
   <link rel="stylesheet" href="./styles.css">
   <script defer src="./validator.bundle.js"></script>
 </head>
@@ -20,34 +20,34 @@
   <header class="hero" id="top">
     <nav aria-label="Primary">
       <a class="mark" href="#top" aria-label="Comcom home"><span>CC</span> Comcom</a>
-      <div><a href="#quickstart">Try</a><a href="#catalog">Inspect</a><a href="#checker">Validate</a><a href="#implement">Implement</a><a href="https://github.com/abhcr/comcom-protocol">GitHub</a></div>
+      <div><a href="#quickstart">Example</a><a href="#catalog">Inspect</a><a href="#checker">Validate</a><a href="#implement">Implement</a><a href="https://github.com/abhcr/comcom-protocol">GitHub</a></div>
     </nav>
     <div class="hero-grid">
       <div>
         <p class="eyebrow">Open protocol · v0.2 experimental</p>
-        <h1>A shared language<br><em>for business software.</em></h1>
-        <p class="lead">Imagine booking a dentist appointment from an app you already use. Comcom gives the app and the clinic's software a common way to ask, act, and report what happened.</p>
-        <div class="actions"><a class="button primary" href="#basics">What, why, and how</a><a class="button" href="#quickstart">See a booking example</a></div>
+        <h1>Standardise how<br><em>businesses communicate.</em></h1>
+        <p class="lead">Comcom is an open protocol for two or more businesses or organisations that frequently interact. It defines shared formats for their systems to exchange requests, responses, and status updates.</p>
+        <div class="actions"><a class="button primary" href="#basics">What, why, and how</a><a class="button" href="#quickstart">See the purchase-order example</a></div>
       </div>
-      <div class="signal" aria-label="Illustrative appointment booking">
-        <div><small>Your request</small><strong>You</strong><span>→</span><strong>Book a dentist appointment</strong></div>
-        <i>When both systems support Comcom</i>
-        <div class="precise"><small>A shared request and reply format</small><strong>Your app</strong><span>⇄</span><strong>Clinic software</strong></div>
-        <p>The reply tells your app whether the booking was accepted, rejected, or is still pending. Illustrative example, not a live booking service.</p>
+      <div class="signal" aria-label="Illustrative trader and manufacturer exchange">
+        <div><small>Purchase order via Comcom</small><strong>Trader software</strong><span>→</span><strong>Manufacturer software</strong></div>
+        <i>Partners agree to connect and automate their separate systems</i>
+        <div class="precise"><small>Order status via Comcom</small><strong>Manufacturer software</strong><span>→</span><strong>Trader software</strong></div>
+        <p>After accepting the purchase order, the manufacturer’s configured automation starts its internal manufacturing workflow. The trader can request status through Comcom. Illustrative workflow, not a live service.</p>
       </div>
     </div>
   </header>
 
   <main id="content">
     <section class="principles" id="basics" aria-label="Comcom in plain language">
-      <article><b>What is it?</b><span>An open set of rules for business software to exchange requests and results. Developers add it to their apps; it is not a booking app or marketplace.</span></article>
-      <article><b>Why does it matter?</b><span>Connecting different business systems often takes custom work. A shared format aims to make those connections easier to build and their results easier to understand.</span></article>
-      <article><b>How does it work?</b><span>A business lists the actions it supports. An app reads the instructions, sends a request with permission, and receives a clear result. A form or AI assistant can help a person start.</span></article>
+      <article><b>What is it?</b><span>An open-source protocol for inter-business communication. Developers or integration partners connect the businesses’ existing systems; operations teams use the resulting workflows.</span></article>
+      <article><b>Why does it matter?</b><span>Repeated orders, enquiries, and status checks often involve emails, manual entry, or custom integrations. Shared request and response formats aim to reduce that repeated work across partners.</span></article>
+      <article><b>How does it work?</b><span>Partners agree on a workflow and implement the relevant capabilities. Their systems exchange authorised requests and structured results, while each business keeps its own internal processes.</span></article>
     </section>
 
     <section id="how">
       <p class="eyebrow">The exact protocol path</p>
-      <h2>Known website in. Validated outcome out.</h2>
+      <h2>How systems exchange a request.</h2>
       <ol class="steps">
         <li><span>01</span><div><b>Discover</b><p>GET or HEAD RFC 9727 <code>/.well-known/api-catalog</code> over HTTPS.</p></div></li>
         <li><span>02</span><div><b>Verify</b><p>Load the manifest and digest-verified profile release bundle.</p></div></li>
@@ -58,53 +58,58 @@
     </section>
 
     <section id="quickstart">
-      <p class="eyebrow">Full quick start</p>
-      <h2>Run one complete booking exchange.</h2>
-      <p>Requires Node.js 24. The runner uses an available loopback port, fresh IDs and timestamps, HTTP, and mocked authentication. It sends no external business requests and stops its server automatically.</p>
-      <button type="button" data-copy="demo-command">Copy commands</button><pre id="demo-command"><code>git clone https://github.com/abhcr/comcom-protocol.git
-cd comcom-protocol
-npm ci
-npm run demo:v0.2</code></pre>
-      <p>Expect five PASS lines covering discovery, a validated result, exact replay, conflict rejection, and asynchronous completion. Failures exit unsuccessfully. <a href="./evaluate.html">Follow the evaluation walkthrough</a>.</p>
-      <h3>Complete document examples</h3><p>These are fixed document snapshots for schema inspection. Use the runner for fresh requests and time-aware validation.</p>
-      <div class="code-flow">
-        <article><h3>1. Discovery</h3><button data-copy="discovery">Copy</button><pre id="discovery"><code>{
+      <p class="eyebrow">Example: trader and manufacturer</p>
+      <h2>A purchase order starts a manufacturing workflow.</h2>
+      <p>A trader and a manufacturer agree to partner and automate a recurring order process. Each connects its own software to the agreed Comcom capabilities and authorises the other business to use them.</p>
+      <ol class="steps">
+        <li><span>01</span><div><b>Agree and connect</b><p>Both partners agree on products, order details, permissions, and acceptance rules. Developers connect their separate systems.</p></div></li>
+        <li><span>02</span><div><b>Send the purchase order</b><p>The trader’s software sends PO-1042 for 500 steel brackets to the manufacturer’s software using Comcom.</p></div></li>
+        <li><span>03</span><div><b>Check and accept</b><p>The manufacturer’s software validates the request and applies its own commercial and capacity checks.</p></div></li>
+        <li><span>04</span><div><b>Start manufacturing</b><p>Once the order is accepted, the manufacturer’s configured automation creates an internal production job and schedules the work.</p></div></li>
+        <li><span>05</span><div><b>Return status</b><p>The trader’s software requests order status through Comcom. The manufacturer returns the agreed status from its system.</p></div></li>
+      </ol>
+      <p class="rule">Comcom is the shared language between the businesses. The manufacturer implements the link from an accepted order to its manufacturing workflow; each partner keeps control of its own system.</p>
+      <details>
+        <summary>Inspect the Comcom purchase-order messages</summary>
+        <p>Illustrative document snapshots using the existing draft <code>comcom.order.create</code> capability. The result confirms creation of a proposed order, not completion of manufacturing. Partner approval and the internal production workflow follow the agreed business rules. These fixed timestamps are for inspection, not live submission.</p>
+        <div class="code-flow">
+          <article><h3>1. Discovery</h3><button data-copy="discovery">Copy</button><pre id="discovery"><code>{
   "linkset": [
     {
-      "anchor": "https://vendor.example/.well-known/api-catalog",
+      "anchor": "https://manufacturer.example/.well-known/api-catalog",
       "item": [
         {
-          "href": "https://vendor.example/comcom/v0.2/manifest",
+          "href": "https://manufacturer.example/comcom/v0.2/manifest",
           "type": "application/vnd.comcom.manifest+json",
           "profile": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/manifest",
-          "title": "Vendor Comcom manifest"
+          "title": "Manufacturer Comcom manifest"
         }
       ]
     }
   ]
 }</code></pre></article>
-        <article><h3>2. Complete manifest</h3><button data-copy="manifest-snippet">Copy</button><pre id="manifest-snippet"><code>{
+          <article><h3>2. Manufacturer manifest</h3><button data-copy="manifest-snippet">Copy</button><pre id="manifest-snippet"><code>{
   "protocolVersions": [
     "0.2"
   ],
   "entity": {
-    "id": "https://vendor.example",
+    "id": "https://manufacturer.example",
     "type": "organization",
-    "name": "Example Vendor"
+    "name": "Example Manufacturer"
   },
   "roles": [
     "responder",
     "asyncResponder"
   ],
   "serviceOrigins": [
-    "https://vendor.example"
+    "https://manufacturer.example"
   ],
   "profiles": [
     {
-      "id": "transactions.booking",
+      "id": "commerce.orders",
       "version": "0.2.0",
-      "release": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/transactions.booking.bundle.json",
-      "sha256": "1675541f038fe3d4155b1eabf09aa56a28ad3c7d0f8b2881b8fabdecbee3f638"
+      "release": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/commerce.orders.bundle.json",
+      "sha256": "072947b1373a7deb1173a631853b30ab9a38327890013cab524cade0aab0734f"
     }
   ],
   "securitySchemes": {
@@ -112,9 +117,9 @@ npm run demo:v0.2</code></pre>
       "type": "oauth2",
       "flows": {
         "clientCredentials": {
-          "tokenUrl": "https://vendor.example/oauth/token",
+          "tokenUrl": "https://manufacturer.example/oauth/token",
           "scopes": {
-            "booking:create": "Create bookings"
+            "order:create": "Create orders"
           }
         }
       }
@@ -122,46 +127,46 @@ npm run demo:v0.2</code></pre>
   },
   "capabilities": [
     {
-      "id": "comcom.booking.create",
+      "id": "comcom.order.create",
       "version": "0.2.0",
-      "profile": "transactions.booking",
+      "profile": "commerce.orders",
       "direction": "receive",
       "kinds": [
         "command"
       ],
-      "inputSchema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/input.schema.json",
-      "outputSchema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/transactions.booking/comcom-booking-create/schemas/output.schema.json",
+      "inputSchema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.orders/comcom-order-create/schemas/input.schema.json",
+      "outputSchema": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/profiles/v0.2/commerce.orders/comcom-order-create/schemas/output.schema.json",
       "executionModes": [
         "synchronous",
         "asynchronous"
       ],
       "forms": [
         {
-          "href": "https://vendor.example/comcom/interactions",
+          "href": "https://manufacturer.example/comcom/interactions",
           "method": "POST",
           "contentType": "application/comcom+json",
           "executionMode": "synchronous",
           "security": [
             {
               "businessOAuth": [
-                "booking:create"
+                "order:create"
               ]
             }
           ]
         },
         {
-          "href": "https://vendor.example/comcom/interactions",
+          "href": "https://manufacturer.example/comcom/interactions",
           "method": "POST",
           "contentType": "application/comcom+json",
           "executionMode": "asynchronous",
           "security": [
             {
               "businessOAuth": [
-                "booking:create"
+                "order:create"
               ]
             }
           ],
-          "statusTemplate": "https://vendor.example/comcom/interactions/{id}"
+          "statusTemplate": "https://manufacturer.example/comcom/interactions/{id}"
         }
       ]
     }
@@ -173,67 +178,73 @@ npm run demo:v0.2</code></pre>
     "requestsPerMinute": 120
   }
 }</code></pre></article>
-        <article><h3>3. Typed command</h3><button data-copy="request-snippet">Copy</button><pre id="request-snippet"><code>{
+          <article><h3>3. Purchase-order request</h3><button data-copy="request-snippet">Copy</button><pre id="request-snippet"><code>{
   "protocolVersion": "0.2",
   "id": "urn:uuid:28d1eb49-5024-4d98-aa2a-c76f5c822ca5",
   "kind": "command",
   "capability": {
-    "id": "comcom.booking.create",
+    "id": "comcom.order.create",
     "version": "0.2.0"
   },
   "principal": {
-    "id": "https://buyer.example/customers/123",
-    "type": "person"
+    "id": "https://trader.example",
+    "type": "organization"
   },
   "sender": {
-    "id": "https://buyer.example",
+    "id": "https://trader.example",
     "type": "organization"
   },
   "recipient": {
-    "id": "https://vendor.example",
+    "id": "https://manufacturer.example",
     "type": "organization"
   },
   "agent": {
-    "id": "https://buyer.example/software/booking-ui",
-    "type": "ui",
-    "name": "Booking form"
+    "id": "https://trader.example/software/purchasing",
+    "type": "software",
+    "name": "Trader purchasing system"
   },
-  "authorization": "https://buyer.example/authorizations/456",
+  "authorization": "https://trader.example/authorizations/456",
   "issuedAt": "2026-08-17T09:00:00Z",
   "expiresAt": "2026-08-17T09:05:00Z",
-  "idempotencyKey": "booking-28d1eb49-5024-4d98-aa2a",
+  "idempotencyKey": "order-28d1eb49-5024-4d98-aa2a",
   "payload": {
-    "capability": "comcom.booking.create",
+    "capability": "comcom.order.create",
     "parameters": {
-      "booking": {
-        "offeringId": "https://vendor.example/services/dentistry",
-        "customerId": "https://buyer.example/customers/123",
-        "providerId": "https://vendor.example/providers/42",
-        "start": "2026-08-18T09:00:00Z",
-        "end": "2026-08-18T09:30:00Z",
-        "timeZone": "Asia/Kolkata"
+      "order": {
+        "buyerId": "https://trader.example",
+        "sellerId": "https://manufacturer.example",
+        "supplierId": "https://manufacturer.example",
+        "referenceNumber": "PO-1042",
+        "lines": [
+          {
+            "itemId": "https://manufacturer.example/products/bracket-a",
+            "description": "Steel bracket A",
+            "quantity": "500",
+            "unitCode": "C62"
+          }
+        ]
       }
     }
   }
 }</code></pre></article>
-        <article><h3>4. Correlated result</h3><button data-copy="result-snippet">Copy</button><pre id="result-snippet"><code>{
+          <article><h3>4. Order-created result</h3><button data-copy="result-snippet">Copy</button><pre id="result-snippet"><code>{
   "protocolVersion": "0.2",
   "id": "urn:uuid:036f0c76-41c7-4408-b6fc-742b5a442846",
   "kind": "result",
   "capability": {
-    "id": "comcom.booking.create",
+    "id": "comcom.order.create",
     "version": "0.2.0"
   },
   "principal": {
-    "id": "https://buyer.example/customers/123",
-    "type": "person"
+    "id": "https://trader.example",
+    "type": "organization"
   },
   "sender": {
-    "id": "https://vendor.example",
+    "id": "https://manufacturer.example",
     "type": "organization"
   },
   "recipient": {
-    "id": "https://buyer.example",
+    "id": "https://trader.example",
     "type": "organization"
   },
   "issuedAt": "2026-08-17T09:00:01Z",
@@ -241,39 +252,45 @@ npm run demo:v0.2</code></pre>
   "payload": {
     "status": "completed",
     "resource": {
-      "id": "https://vendor.example/bookings/789",
-      "type": "Booking",
-      "state": "accepted",
+      "id": "https://manufacturer.example/orders/789",
+      "type": "Order",
+      "state": "proposed",
       "revision": 1,
       "createdAt": "2026-08-17T09:00:01Z",
       "updatedAt": "2026-08-17T09:00:01Z",
-      "offeringId": "https://vendor.example/services/dentistry",
-      "customerId": "https://buyer.example/customers/123",
-      "providerId": "https://vendor.example/providers/42",
-      "start": "2026-08-18T09:00:00Z",
-      "end": "2026-08-18T09:30:00Z",
-      "timeZone": "Asia/Kolkata"
+      "buyerId": "https://trader.example",
+      "sellerId": "https://manufacturer.example",
+      "supplierId": "https://manufacturer.example",
+      "referenceNumber": "PO-1042",
+      "lines": [
+        {
+          "itemId": "https://manufacturer.example/products/bracket-a",
+          "description": "Steel bracket A",
+          "quantity": "500",
+          "unitCode": "C62"
+        }
+      ]
     },
     "nextActions": [
-      "comcom.booking.get",
-      "comcom.booking.cancel"
+      "comcom.order.get"
     ]
   }
 }</code></pre></article>
-        <article><h3>5. Stable problem</h3><button data-copy="problem-snippet">Copy</button><pre id="problem-snippet"><code>{
+          <article><h3>5. Rejected identity</h3><button data-copy="problem-snippet">Copy</button><pre id="problem-snippet"><code>{
   "type": "https://abhcr.github.io/comcom-protocol/releases/v0.2.0/problems/sender-identity-mismatch",
   "title": "Sender identity mismatch",
   "status": 403,
   "phase": "identity",
   "code": "sender-identity-mismatch"
 }</code></pre></article>
-      </div>
+        </div>
+      </details>
     </section>
 
     <section id="catalog">
       <div class="catalog-head">
         <div><p class="eyebrow">Draft profile catalog</p><h2><span id="count">201</span> authored capabilities.</h2></div>
-        <label for="search">Search capabilities<input id="search" type="search" placeholder="booking, invoice, product search…" autocomplete="off"></label>
+        <label for="search">Search capabilities<input id="search" type="search" placeholder="order, invoice, product search…" autocomplete="off"></label>
       </div>
       <p id="catalog-status" class="result-count" aria-live="polite">Showing 201 results.</p>
       <div id="profiles" class="domains" role="group" aria-label="Filter profiles"></div>
@@ -297,30 +314,31 @@ npm run demo:v0.2</code></pre>
     </section>
 
     <section id="journeys">
-      <p class="eyebrow">One authoritative message, three entry paths</p>
-      <h2>The booking command stays the same.</h2>
+      <p class="eyebrow">Start with existing business partners</p>
+      <h2>Agree on one recurring workflow.</h2>
       <div class="edge-grid">
-        <article><b>Direct automation</b><p>A buyer system discovers the provider, checks availability, and submits the exact booking command.</p></article>
-        <article><b>Generated UI</b><p>A conventional form uses schema labels, formats, constraints, and enumerations to produce that command.</p></article>
-        <article><b>AI-assisted</b><p>An edge AI gathers intent and confirmation, then submits that same command and explains its structured result.</p></article>
+        <article><b>Choose a shared task</b><p>Start with an order, availability check, or status request that your organisations already exchange frequently.</p></article>
+        <article><b>Connect both systems</b><p>Developers map the agreed capabilities to each partner’s internal system. Implement only the subset the workflow needs.</p></article>
+        <article><b>Test together, then expand</b><p>Check requests, results, and failures with your partner. Reuse compatible contracts as more workflows or partners join.</p></article>
       </div>
-      <p class="rule">Natural language can explain the record. It never becomes the authoritative transaction.</p>
-      <div class="journey-list"><span>Product search → availability → quote → order</span><span>Appointment availability → booking → status → cancellation</span><span>Offer or announcement → accepted, discarded, or duplicate receipt</span></div>
+      <p class="rule">Evaluation can begin with two willing partners; it does not require an entire industry to adopt Comcom first.</p>
+      <div class="journey-list"><span>Product search → availability → quote → order</span><span>Purchase order → acceptance → internal production → order status</span><span>Offer or announcement → accepted, discarded, or duplicate receipt</span></div>
     </section>
 
     <section id="implement" class="implement">
-      <p class="eyebrow">Implement and inspect</p><h2>No model dependency. Two agreeing validators.</h2>
+      <p class="eyebrow">Implement and inspect</p><h2>Validate your implementation.</h2>
       <div class="edge-grid">
         <article><b>Node.js 24</b><p><code>node reference/v0.2/cli.mjs request</code></p></article>
         <article><b>Python 3.13</b><p><code>python reference/v0.2/comcom_validator.py request</code></p></article>
         <article><b>Cross-validator corpus</b><p><code>npm run conformance:v0.2</code></p></article>
       </div>
       <div class="actions dark-actions"><a class="button primary" href="./evaluate.html">Evaluate and contribute</a><a class="button" href="https://github.com/abhcr/comcom-protocol">Inspect source</a><a class="button" href="./releases/v0.2.0/release-manifest.json">Verify release digests</a><a class="button" href="./releases/v0.2.0/offline-bundle.json">Download offline bundle</a></div>
+      <p>Comcom is an open-source community contribution. Help improve it with real business workflows, implementation reports, and protocol feedback.</p>
       <p id="purplecore">Example implementation: <a href="./evaluate.html#purplecore">Purplecore</a> publishes company identity and a contact link through discovery, with no callable interactions. This is a first-party example.</p>
     </section>
   </main>
 
-  <footer><div class="mark"><span>CC</span> Comcom</div><p>Experimental deterministic business interaction for the web. Apache-2.0.</p></footer>
+  <footer><div class="mark"><span>CC</span> Comcom</div><p>Experimental open protocol for inter-business communication. Apache-2.0.</p></footer>
   <script type="module" src="./app.js"></script>
 </body>
 </html>
