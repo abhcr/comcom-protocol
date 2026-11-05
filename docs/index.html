@@ -9,7 +9,9 @@
   <meta property="og:title" content="Comcom — Standardise inter-business communication">
   <meta property="og:description" content="Standardise recurring communication between business partners. Start with one shared workflow and contribute to the open-source protocol. All 201 capabilities remain drafts.">
   <meta property="og:url" content="https://abhcr.github.io/comcom-protocol/">
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:image" content="https://abhcr.github.io/comcom-protocol/images/comcom-cover.png">
+  <meta property="og:image:alt" content="Comcom: an experimental open protocol for automating communication between businesses.">
   <title>Comcom — Standardise inter-business communication</title>
   <link rel="stylesheet" href="./styles.css">
   <script defer src="./validator.bundle.js"></script>
@@ -48,6 +50,10 @@
     <section id="how">
       <p class="eyebrow">The exact protocol path</p>
       <h2>How systems exchange a request.</h2>
+      <figure class="illustration">
+        <a href="./images/communication-workflows.png"><img src="./images/communication-workflows.png" width="1672" height="941" loading="lazy" decoding="async" alt="Email automation interprets a request and its reply. With Comcom, business A sends a structured request, business B validates permissions and business rules and returns a result, and A updates its status. A polls for pending work."></a>
+        <figcaption>Both businesses implement the agreed contract so their systems can process requests and results directly. Select the image to enlarge.</figcaption>
+      </figure>
       <ol class="steps">
         <li><span>01</span><div><b>Discover</b><p>GET or HEAD RFC 9727 <code>/.well-known/api-catalog</code> over HTTPS.</p></div></li>
         <li><span>02</span><div><b>Verify</b><p>Load the manifest and digest-verified profile release bundle.</p></div></li>
@@ -316,11 +322,10 @@
     <section id="journeys">
       <p class="eyebrow">Start with existing business partners</p>
       <h2>Agree on one recurring workflow.</h2>
-      <div class="edge-grid">
-        <article><b>Choose a shared task</b><p>Start with an order, availability check, or status request that your organisations already exchange frequently.</p></article>
-        <article><b>Connect both systems</b><p>Developers map the agreed capabilities to each partner’s internal system. Implement only the subset the workflow needs.</p></article>
-        <article><b>Test together, then expand</b><p>Check requests, results, and failures with your partner. Reuse compatible contracts as more workflows or partners join.</p></article>
-      </div>
+      <figure class="illustration">
+        <a href="./images/implementation-and-operation.png"><img src="./images/implementation-and-operation.png" width="1672" height="941" loading="lazy" decoding="async" alt="Implementation: select needed capabilities, connect existing systems, and test compatibility using documentation, examples, and validators. Operation: business A and business B exchange structured requests and results under a shared contract, without AI interpretation for supported exchanges."></a>
+        <figcaption>Implement only the capabilities your shared workflow needs. Test together, then reuse compatible contracts as more workflows or partners join. Select the image to enlarge.</figcaption>
+      </figure>
       <p class="rule">Evaluation can begin with two willing partners; it does not require an entire industry to adopt Comcom first.</p>
       <div class="journey-list"><span>Product search → availability → quote → order</span><span>Purchase order → acceptance → internal production → order status</span><span>Offer or announcement → accepted, discarded, or duplicate receipt</span></div>
     </section>

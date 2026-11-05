@@ -103,6 +103,10 @@ input, select, textarea { width: 100%; min-width: 0; background: var(--card); co
 .checker output { display: block; white-space: pre-wrap; overflow-wrap: anywhere; border-radius: 10px; background: #e9ece8; padding: 14px; }
 .checker output.valid { color: #0c5129; background: #dff3e6; }
 .checker output.invalid { color: #721d1d; background: #ffe3e3; }
+.illustration { margin: 28px 0; }
+.illustration img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 17px; }
+.illustration figcaption { margin-top: 12px; color: var(--muted); font-size: .9rem; }
+
 .edge-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .edge-grid article { min-width: 0; background: var(--green-dark); color: white; border-radius: 17px; padding: 26px; }
 .edge-grid b { font-size: 1.1rem; }
