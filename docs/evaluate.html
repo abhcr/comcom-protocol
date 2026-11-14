@@ -35,40 +35,10 @@ PASS asynchronous booking: HTTP 202 → polling → completed
 Evaluation passed. No external business service was called.</code></pre>
 <p>Each line is backed by an assertion. The command exits unsuccessfully on a mismatch. Inspect <a href="https://github.com/abhcr/comcom-protocol/blob/main/reference/v0.2/demo.mjs">the runner</a> to see the actual exchange and <a href="./capabilities/comcom-booking-create.html">the booking contract</a> for schemas and lifecycle rules. Authentication headers in this demo are not an authentication implementation.</p>
 </section>
-<details id="purplecore"><summary>Optional example: a discovery-only website</summary>
-<p>Purplecore is a small first-party implementation that publishes company identity and a contact link without offering callable business interactions.</p>
-<p><strong>Live deployment verified on 2026-11-02:</strong> both HTTPS endpoints returned HTTP 200 for GET and HEAD with the correct JSON media types. The live catalog and manifest passed Node and Python validation; an unknown <code>/comcom/</code> document returned HTTP 404. Rerun the command below to check the current deployment.</p>
-<p>Verified release commit: <a href="https://github.com/abhcr/comcom-protocol/commit/43a6435385824a2a24f9e8596a497ce2a95bde77"><code>43a6435385824a2a24f9e8596a497ce2a95bde77</code></a>. Website deployment revision: <code>purplecore-comcom-discovery-20261102-69cfd59d5965</code>.</p>
-<p>The public endpoints are <a href="https://purplecore.in/.well-known/api-catalog">the RFC 9727 catalog</a> and <a href="https://purplecore.in/comcom/manifest.json">the company manifest</a>. Run the following from the repository checkout. It performs two bounded HTTPS GET requests and validates their raw bytes against pinned local artifacts. Network or deployment failures fail the evaluation; do not replace missing evidence with a success claim.</p>
-<pre id="purplecore-command"><code>node --input-type=module &lt;&lt;'NODE'
-import assert from 'node:assert/strict';
-import { createProtocolV02 } from './reference/v0.2/protocol.mjs';
-import { secureFetch } from './reference/v0.2/secure-fetch.mjs';
-const protocol = await createProtocolV02();
-const catalog = await secureFetch('https://purplecore.in/.well-known/api-catalog');
-assert.equal(catalog.status, 200);
-assert.equal(catalog.headers['content-type'].split(';')[0], 'application/linkset+json');
-const discovery = protocol.validateDiscovery(catalog.body, {
-  method: 'GET', contentType: catalog.headers['content-type']
-});
-assert.equal(discovery.valid, true, JSON.stringify(discovery));
-const profile = 'https://abhcr.github.io/comcom-protocol/releases/v0.2.1/profiles/manifest';
-const link = discovery.value.linkset.flatMap(entry => entry.item)
-  .find(item => item.profile === profile);
-assert.ok(link, 'Expected the v0.2.1 manifest profile');
-const document = await secureFetch(link.href);
-assert.equal(document.status, 200);
-assert.equal(document.headers['content-type'].split(';')[0], 'application/vnd.comcom.manifest+json');
-const manifest = protocol.validateManifest(document.body, { manifestProfile: link.profile });
-assert.equal(manifest.valid, true, JSON.stringify(manifest));
-assert.equal(manifest.value.entity.id, 'https://purplecore.in');
-assert.deepEqual(manifest.value.roles, ['discoveryPublisher']);
-assert.deepEqual(manifest.value.capabilities, []);
-assert.equal(manifest.value.contactUrl, 'https://purplecore.in/#contact-form');
-console.log('PASS Purplecore discovery-only manifest', manifest.value);
-NODE</code></pre>
-<p>The result identifies Purplecore Software Systems Pvt Ltd and points to its existing contact form. Empty profiles and capabilities mean it advertises zero interactions. The <code>contactUrl</code> is a navigation link, not a submission endpoint. This walkthrough never fetches that contact link or sends an enquiry.</p>
-<p>To inspect the same shape without network access, select “Manifest” and “v0.2.1” in the <a href="./#checker">browser checker</a>, then “Load example”. That validates document shape only. The public command above additionally checks the live HTTP responses.</p>
+<details id="publisher"><summary>Optional example: a discovery-only website</summary>
+<p>Example Company is a fictional discovery-only publisher. Its local fixtures illustrate company identity and a contact link without offering callable business interactions. The <code>publisher.example</code> URLs are placeholders, not live endpoints.</p>
+<p>Select “Manifest” and “v0.2.1” in the <a href="./#checker">browser checker</a>, then “Load example”. This validates the local document shape without network access.</p>
+<p>Empty profiles and capabilities mean the example advertises zero interactions. The <code>contactUrl</code> is a navigation link, not a submission endpoint.</p>
 </details>
 <section id="adopt"><h2>2. Decide what your project actually needs</h2>
 <p>Compare one business interaction with its exact capability contract. Check input/output semantics, lifecycle, retry/replay, reversal, permissions, and what your system can guarantee. A passing example is not enough to claim your service conforms.</p>
@@ -81,7 +51,7 @@ NODE</code></pre>
 <p>No SDK or MCP server is required by this repository. Your current HTTP client can send the document; the <a href="https://github.com/abhcr/comcom-protocol/blob/main/README.md#use-the-validators">CLI framing</a> is the integration starting point. Python 3.13 plus <code>requirements.txt</code> enables the independent cross-validator checks via <code>npm run conformance:v0.2</code>.</p>
 <h3>Prompt for a coding agent</h3>
 <pre><code>Evaluate Comcom for one concrete interaction in this project.
-Read its README, AGENTS.md, and evaluation walkthrough.
+Read its README and evaluation walkthrough.
 Use a separate checkout. Run npm ci and npm run demo:v0.2.
 Compare one exact capability's semantics, security, lifecycle,
 retry, and reversal requirements with our current code.

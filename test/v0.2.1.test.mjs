@@ -26,8 +26,8 @@ function cli(runtime, directory, command, document, context = {}) {
 
 test("Node and Python agree on offline manifest profiles, discovery safety, and response identity", async () => {
   const protocol = await createProtocolV02();
-  const discoveryManifest = await readJson("examples/v0.2.1/purplecore-manifest.json");
-  const catalog = await readJson("examples/v0.2.1/purplecore-api-catalog.json");
+  const discoveryManifest = await readJson("examples/v0.2.1/publisher-manifest.json");
+  const catalog = await readJson("examples/v0.2.1/publisher-api-catalog.json");
   const legacyManifest = await readJson("examples/v0.2/vendor-manifest.json");
   const request = await readJson("examples/v0.2/booking-create.request.json");
   const response = await readJson("examples/v0.2/booking-create.result.json");
@@ -54,8 +54,8 @@ test("Node and Python agree on offline manifest profiles, discovery safety, and 
     roles: ["discoveryPublisher", "responder"], protocolVersions: ["0.2", "0.2"]
   })) add(`closed discovery field ${field}`, "manifest", { ...discoveryManifest, [field]: value }, manifestContext, false);
   for (const contactUrl of [
-    "http://purplecore.in/#contact-form", "javascript:alert(1)", "https://user:secret@purplecore.in/",
-    "https://purplecore.in\\@attacker.example/", "https:///contact", "https://purplecore.in/a b"
+    "http://publisher.example/#contact-form", "javascript:alert(1)", "https://DUMMY_USER:DUMMY_PASSWORD@example.com/",
+    "https://publisher.example\\@attacker.example/", "https:///contact", "https://publisher.example/a b"
   ]) add(`unsafe contact ${contactUrl}`, "manifest", { ...discoveryManifest, contactUrl }, manifestContext, false);
   add("new discovery", "discovery", catalog, {}, true);
   const legacyCatalog = structuredClone(catalog);
@@ -65,7 +65,7 @@ test("Node and Python agree on offline manifest profiles, discovery safety, and 
   unknownCatalog.linkset[0].item[0].profile = "https://attacker.example/schema.json";
   add("unknown discovery profile", "discovery", unknownCatalog, {}, false);
   const unsafeAnchor = structuredClone(catalog);
-  unsafeAnchor.linkset[0].anchor = "http://purplecore.in";
+  unsafeAnchor.linkset[0].anchor = "http://publisher.example";
   add("unsafe discovery anchor", "discovery", unsafeAnchor, {}, false, "unsafe-url");
   const responseContext = { request, now: "2026-08-17T09:00:02Z" };
   add("trusted responder", "response", response, { ...responseContext, transport: { senderId: "https://vendor.example" } }, true);
@@ -110,7 +110,7 @@ test("both CLIs reject changed kernel, profile, registry, and release metadata b
       await cp(resolve(root, `releases/${version}/release-manifest.json`), resolve(directory, `releases/${version}/release-manifest.json`));
     }
     await symlink(resolve(root, "node_modules"), resolve(directory, "node_modules"), "dir");
-    const manifest = await readJson("examples/v0.2.1/purplecore-manifest.json");
+    const manifest = await readJson("examples/v0.2.1/publisher-manifest.json");
     for (const path of [
       "schemas/v0.2/entity.schema.json", "schemas/v0.2.1/manifest.schema.json",
       "profiles/v0.2/transactions.booking/comcom-booking-create/schemas/input.schema.json",

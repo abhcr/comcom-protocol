@@ -8,7 +8,7 @@ With Node.js 24, run `npm ci` and `npm run demo:v0.2`. Read the [evaluation walk
 
 ## Focused pull requests
 
-1. Fork the repository, create a focused branch, and inspect nearby code and [AGENTS.md](AGENTS.md).
+1. Fork the repository, create a focused branch, and inspect nearby code.
 2. Make the smallest correct change. Documentation and tooling fixes do not require modifying capability profiles.
 3. Run checks relevant to the change. Site edits use `npm run build:site`, `npm run check:site`, and `npm run verify:site`. Runtime changes use `npm test` and `npm run demo:v0.2`.
 4. For protocol changes, install Python 3.13 dependencies in a virtual environment (`python -m pip install -r requirements.txt`), then run `npm run check:v0.2`, `npm run verify:release`, and `npm run conformance:v0.2` as well.

@@ -24,12 +24,17 @@
     "demo": "node reference/server.mjs",
     "demo:caller": "node reference/caller.mjs",
     "demo:v0.2": "node reference/v0.2/demo.mjs",
+    "discover": "node reference/v0.2/discover-cli.mjs",
+    "mcp": "node reference/v0.2/mcp-server.mjs",
+    "mcp:example": "node reference/v0.2/mcp-example.mjs",
     "test": "node --test"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
     "ajv": "8.20.0",
     "ajv-formats": "3.0.1",
-    "canonicalize": "4.0.0"
+    "canonicalize": "4.0.0",
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "esbuild": "0.28.2"

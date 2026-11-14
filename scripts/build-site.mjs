@@ -27,8 +27,8 @@ const schemaPaths = [
 const schemas = await Promise.all(schemaPaths.map(async path => JSON.parse(await readFile(path, "utf8"))));
 const examples = {};
 for (const [name, path] of Object.entries({
-  discovery: "examples/v0.2.1/purplecore-api-catalog.json",
-  manifest: "examples/v0.2.1/purplecore-manifest.json",
+  discovery: "examples/v0.2.1/publisher-api-catalog.json",
+  manifest: "examples/v0.2.1/publisher-manifest.json",
   "legacy-manifest": "examples/v0.2/vendor-manifest.json",
   request: "examples/v0.2/booking-create.request.json",
   response: "examples/v0.2/booking-create.result.json",

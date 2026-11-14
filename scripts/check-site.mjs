@@ -52,7 +52,7 @@ assert.equal(checker.validate("manifest", JSON.stringify(checker.examples.manife
 assert.equal(checker.validate("manifest", JSON.stringify(checker.examples["legacy-manifest"])).valid, true);
 assert.equal(checker.validate("manifest", JSON.stringify(checker.examples.manifest), { manifestProfile: "https://untrusted.example/schema" }).code, "unsupported-manifest-profile");
 assert.equal(checker.validate("manifest", JSON.stringify(checker.examples["legacy-manifest"]), { manifestProfile: null }).code, "unsupported-manifest-profile");
-for (const contactUrl of ["http://purplecore.in/", "https://user:password@purplecore.in/", "javascript:alert(1)"]) {
+for (const contactUrl of ["http://publisher.example/", "https://DUMMY_USER:DUMMY_PASSWORD@example.com/", "javascript:alert(1)"]) {
   assert.equal(checker.validate("manifest", JSON.stringify({ ...checker.examples.manifest, contactUrl }), { manifestProfile: newProfile }).valid, false);
 }
 assert.equal(checker.validate("manifest", JSON.stringify({ ...checker.examples.manifest, serviceOrigins: [] }), { manifestProfile: newProfile }).valid, false);

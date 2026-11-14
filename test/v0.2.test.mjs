@@ -127,7 +127,7 @@ describe("v0.2 responder", () => {
       method: "POST",
       headers: {
         "content-type": "application/comcom+json",
-        authorization: "Bearer test",
+        authorization: "Bearer demo-only-not-a-real-token",
         "x-comcom-sender": "https://buyer.example",
         "x-comcom-scopes": "booking:create",
         ...(prefer ? { prefer } : {})

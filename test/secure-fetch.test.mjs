@@ -56,3 +56,45 @@ test("a DNS hostname uses the pinned address with Node's address selection", asy
   assert.equal(response.status, 200);
   assert.equal(response.body.toString(), "pinned");
 });
+
+test("a lookup that blocks past the timeout and then returns starts no request, including on a redirect hop", { timeout: 5000 }, async t => {
+  const requests = [];
+  const connections = [];
+  const server = createServer((request, response) => {
+    requests.push(request.url);
+    if (request.url === "/") response.writeHead(302, { location: "/next" });
+    response.end("ok");
+  });
+  server.on("connection", () => connections.push(requests.length));
+  server.listen(0, "127.0.0.1");
+  await once(server, "listening");
+  t.after(() => new Promise(resolve => { server.closeAllConnections(); server.close(resolve); }));
+  const url = `http://localhost:${server.address().port}/`;
+  const blockOn = call => {
+    let calls = 0;
+    return () => {
+      calls += 1;
+      if (calls === call) { const until = performance.now() + 300; while (performance.now() < until); }
+      return [{ address: "127.0.0.1", family: 4 }];
+    };
+  };
+
+  // The server shares this process, so let it handle anything already sent.
+  const settle = () => new Promise(resolve => setTimeout(resolve, 200));
+  await assert.rejects(secureFetch(url, { allowInsecureLoopback: true, timeoutMs: 100, resolver: blockOn(1) }), { code: "fetch-timeout" });
+  await settle();
+  assert.deepEqual([requests, connections], [[], []], "first hop: no connection or request");
+
+  await assert.rejects(secureFetch(url, { allowInsecureLoopback: true, timeoutMs: 10_000, deadline: performance.now() + 100, resolver: blockOn(2) }), { code: "fetch-timeout" });
+  await settle();
+  assert.deepEqual(requests, ["/"], "redirect hop: /next was never requested");
+});
+
+test("an already expired deadline stops retrieval before DNS resolution", async () => {
+  let lookups = 0;
+  await assert.rejects(secureFetch("https://example.com/", {
+    deadline: performance.now() - 1,
+    resolver: async () => { lookups += 1; return [{ address: "93.184.215.14", family: 4 }]; }
+  }), { code: "fetch-timeout" });
+  assert.equal(lookups, 0);
+});

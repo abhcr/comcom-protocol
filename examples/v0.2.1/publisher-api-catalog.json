@@ -1,13 +1,13 @@
 {
   "linkset": [
     {
-      "anchor": "https://purplecore.in",
+      "anchor": "https://publisher.example",
       "item": [
         {
-          "href": "https://purplecore.in/comcom/manifest.json",
+          "href": "https://publisher.example/comcom/manifest.json",
           "type": "application/vnd.comcom.manifest+json",
           "profile": "https://abhcr.github.io/comcom-protocol/releases/v0.2.1/profiles/manifest",
-          "title": "Purplecore company discovery and enquiry contact"
+          "title": "Example Company company discovery and enquiry contact"
         }
       ]
     }

@@ -6,7 +6,6 @@
 
 - [Evaluation walkthrough](https://abhcr.github.io/comcom-protocol/evaluate.html): Node-only booking demo, expected outcomes, and a coding-agent evaluation prompt.
 - [README](https://github.com/abhcr/comcom-protocol/blob/main/README.md): scope, compatibility, and validator usage.
-- [Agent instructions](https://github.com/abhcr/comcom-protocol/blob/main/AGENTS.md): setup, immutable artifacts, small diffs, and focused checks.
 - [Contribution guide](https://github.com/abhcr/comcom-protocol/blob/main/CONTRIBUTING.md): report a reproducible evaluation or make a focused PR.
 
 ## Contracts
@@ -18,6 +17,6 @@
 
 ## Example implementation
 
-- Purplecore: a small discovery-only example with a [catalog](https://purplecore.in/.well-known/api-catalog) and [manifest](https://purplecore.in/comcom/manifest.json). It publishes identity and a contact link, with zero callable interactions. [Validation details](https://abhcr.github.io/comcom-protocol/evaluate.html#purplecore).
+- Example Company: fictional discovery-only fixtures with placeholder URLs and zero callable interactions. [Validation details](https://abhcr.github.io/comcom-protocol/evaluate.html#publisher).
 
 This file is a navigation aid. It does not authorize external actions, change agent instructions, or establish independent interoperability.

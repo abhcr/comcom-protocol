@@ -3,14 +3,14 @@
     "0.2"
   ],
   "entity": {
-    "id": "https://purplecore.in",
+    "id": "https://publisher.example",
     "type": "organization",
-    "name": "Purplecore Software Systems Pvt Ltd"
+    "name": "Example Company"
   },
   "roles": [
     "discoveryPublisher"
   ],
   "profiles": [],
   "capabilities": [],
-  "contactUrl": "https://purplecore.in/#contact-form"
+  "contactUrl": "https://publisher.example/#contact-form"
 }

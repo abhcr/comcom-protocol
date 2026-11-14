@@ -1,6 +1,6 @@
 # Comcom v0.2.1 — Experimental discovery publishers
 
-This release adds a discovery-only manifest profile. A website can publish its identity and a human contact link without claiming to receive Comcom interactions. Purplecore's documents are the first-party example; they are not independent interoperability evidence.
+This release adds a discovery-only manifest profile. A website can publish its identity and a human contact link without claiming to receive Comcom interactions. Example Company's documents are fictional fixtures with placeholder URLs; they are not independent interoperability evidence.
 
 Wire protocol `0.2`, all 201 draft capability profiles, and published v0.2.0 artifact bytes remain unchanged. Upgraded clients support both pinned manifest profiles; older clients do not recognize the new profile. The validator CLI defaults to the legacy manifest profile unless `manifestProfile` is supplied explicitly.
 

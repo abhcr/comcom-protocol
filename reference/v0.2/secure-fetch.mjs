@@ -2,6 +2,7 @@ import { lookup as dnsLookup } from "node:dns/promises";
 import http from "node:http";
 import https from "node:https";
 import { isIP } from "node:net";
+import { performance } from "node:perf_hooks";
 
 export class UnsafeUrlError extends Error {
   constructor(code, message) {
@@ -102,15 +103,30 @@ async function addressesFor(hostname, resolver) {
   return records;
 }
 
+// options.deadline: optional absolute performance.now() timestamp. Retrieval
+// stops at the earlier of it and timeoutMs after the call.
+// options.body: optional request body (string or Buffer), sent on every hop;
+// callers sending a body should pass maxRedirects: 0.
 export async function secureFetch(urlValue, options = {}) {
   const controller = new AbortController();
   const timeoutError = new UnsafeUrlError("fetch-timeout", "Retrieval exceeded the total timeout");
+  if (options.deadline !== undefined && !Number.isFinite(options.deadline)) throw new TypeError("deadline must be a finite performance.now() timestamp");
+  const expiresAt = Math.min(performance.now() + (options.timeoutMs ?? 10_000), options.deadline ?? Infinity);
+  // The timer cannot fire while the event loop is blocked (for example by a
+  // slow synchronous resolver), so the clock is also checked explicitly before
+  // every DNS resolution and before every request, including redirect hops.
+  const ensureTime = () => {
+    if (performance.now() >= expiresAt) {
+      controller.abort();
+      throw timeoutError;
+    }
+  };
   let timer;
   const timeout = new Promise((_, reject) => {
     timer = setTimeout(() => {
       controller.abort();
       reject(timeoutError);
-    }, options.timeoutMs ?? 10_000);
+    }, Math.max(0, expiresAt - performance.now()));
   });
   const maxRedirects = options.maxRedirects ?? 3;
   const maxBytes = options.maxBytes ?? 1_048_576;
@@ -124,7 +140,9 @@ export async function secureFetch(urlValue, options = {}) {
       const parsed = parseUrl(current, options.allowInsecureLoopback === true);
       nonConformantDevelopment ||= parsed.development;
       const hostname = parsed.url.hostname.replace(/^\[|\]$/g, "");
+      ensureTime();
       const records = await Promise.race([addressesFor(hostname, resolver), timeout]);
+      ensureTime();
       if (!parsed.development && records.some(record => !isPublicAddress(record.address))) throw new UnsafeUrlError("unsafe-address", "Host resolves to a non-public address");
       if (parsed.development && records.some(record => !loopbackAddress(record.address))) throw new UnsafeUrlError("unsafe-address", "Development HTTP is limited to loopback addresses");
       const pinned = records[0];
@@ -155,7 +173,7 @@ export async function secureFetch(urlValue, options = {}) {
           else if (!parsed.development && !isPublicAddress(socket.remoteAddress)) request.destroy(new UnsafeUrlError("unsafe-address", "Connected address is not public"));
         }));
         request.on("error", reject);
-        request.end();
+        request.end(options.body);
       }), timeout]);
 
       if ([301, 302, 303, 307, 308].includes(response.status) && response.headers.location) {

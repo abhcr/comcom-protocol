@@ -27,4 +27,4 @@ The updated discovery schema accepts both the v0.2.0 and v0.2.1 profile identifi
 
 Older validators will reject or not recognize the new profile. Publishers must not label discovery-only documents with the v0.2.0 profile. Existing interactive manifests remain valid with their original profile and are also accepted by the new profile's legacy branch.
 
-The [Purplecore fixtures](../../examples/v0.2.1/) illustrate this profile. The first-party Purplecore deployment is an evaluation example, not independent interoperability evidence.
+The [Example Company fixtures](../../examples/v0.2.1/) illustrate this profile. Example Company is fictional; its URLs are placeholders, not live endpoints or interoperability evidence.
